@@ -1,0 +1,31 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					a(href="/bnPdsecs") Product List
+					span &nbsp; | &nbsp;
+					a(href="/bnPdsec/"+pdthd.pdsec._id) #{pdthd.pdsec.code}
+					span &nbsp; | &nbsp;
+					span #{pdthd.code}
+			hr
+		.info
+			.row
+				.col-4.text-right 编号:
+				.col-8 #{pdthd.code}
+				.col-4.text-right 价格:
+				.col-8.text-info #{pdthd.price} €
+				.col-4.text-right 备注:
+				.col-8 #{pdthd.note}
+				.col-4.text-right 材料:
+				.col-8
+					each mater in pdthd.maters
+						if mater && mater.length > 0
+							-a;
+							span [#{mater}] 
+				.col-12.text-right
+					a.btn.btn-warning(href="/bnPdthdUp/"+pdthd._id) 更新

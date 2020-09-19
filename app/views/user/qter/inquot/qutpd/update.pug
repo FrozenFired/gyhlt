@@ -1,0 +1,81 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-9 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/qtQut/"+qutpd.inquot._id) 询价单
+					span &nbsp; | &nbsp;
+					span Inquiry Detail
+				.col-3.text-right
+					a.btn.btn-secondary(href="/qtQutpd/"+qutpd._id) 取消
+			hr
+
+		form#qutpdNewForm(method="post", action="/qtQutpdUpd", enctype="multipart/form-data")
+			input#inquotIpt(type="hidden", name="obj[_id]", value=qutpd._id)
+			.row.my-3
+				.col-4.col-lg-2.mt-3
+					input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly", value=qutpd.brand)
+					input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="品牌", value=qutpd.brandNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=qutpd.pdfir)
+					input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="系列", value=qutpd.firNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=qutpd.pdsec)
+					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品", value=qutpd.secNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="材料", value=qutpd.thdNome)
+					- let pdthdId = '';
+					#materialDiv
+						if qutpd.pdthd
+							-pdthdId = qutpd.pdthd._id;
+							each mater in qutpd.pdthd.maters
+								-a;
+								.text-dark.mt-2 #{mater}
+					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthdId)
+				.col-4.col-lg-2.mt-3
+					input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量", value=qutpd.quant)
+				.col-4.col-lg-2.mt-3
+					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=qutpd.note)
+
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@qt")
+			.ajax#brandsElem
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@qt")
+			.ajax#pdfirsElem
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@qt")
+			.ajax#pdsecsElem
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
+			.ajax#pdthdsElem
+
+			hr
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="priceIpt") 价格预估
+				.col-5.col-sm-6
+					input#priceIpt.form-control(type="text", name="obj[price]", value=qutpd.price)
+				.col-4.col-sm-2
+					select#unitIpt.form-control(name="obj[unit]", data-style="btn-info")
+						each ut in Conf.unit
+							-a;
+							if ut.num == qutpd.unit
+								-a;
+								option(value=ut.num, selected="selected") #{ut.val}
+							else
+								option(value=ut.num) #{ut.val}
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label 状态
+				each sts in Conf.qntpdSts
+					- checked = false;
+					if Conf.status[sts].num == qutpd.qntpdSts
+						- checked = true;
+					.col-3.col-sm-2
+						.form-check.form-check-inline
+							input.form-check-input(type="radio", name="obj[qntpdSts]", value=Conf.status[sts].num, checked=checked)
+							label.form-check-label(for="ctercterNome") #{Conf.status[sts].val}
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="提交")
+
+	script(src="/js/user/qter/qutpd/edit.js")

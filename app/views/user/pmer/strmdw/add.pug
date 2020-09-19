@@ -1,0 +1,72 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.title #{title}
+		hr
+		form#strmdwAddForm(method="post", action="/pmStrmdwNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 名称
+				.col-8.col-sm-10
+					input#nomeIpt.form-control(type="text", name="obj[nome]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="noteIpt") 备注
+				.col-8.col-sm-10
+					input#noteIpt.form-control(type="text", name="obj[note]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label 类型
+				.col-8.col-sm-10
+					select.form-control(name="obj[categFirm]", data-style="btn-info")
+						each categFirm in Conf.categFirm
+							-a;
+							option(value=categFirm.num) #{categFirm.val}
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="countryIpt") 所属国家
+				.col-8.col-sm-10
+					input#countryIpt.form-control(type="text", name="obj[country]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="addrIpt") 地址
+				.col-8.col-sm-10
+					input#addrIpt.form-control(type="text", name="obj[addr]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="respIpt") 负责人
+				.col-8.col-sm-10
+					input#respIpt.form-control(type="text", name="obj[resp]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="telIpt") 电话
+				.col-8.col-sm-10
+					input#telIpt.form-control(type="text", name="obj[tel]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="emailIpt") 邮箱
+				.col-8.col-sm-10
+					input#emailIpt.form-control(type="text", name="obj[email]")
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="acIpt") 首款
+				.col-3.col-sm-4
+					input#acIpt.form-control(type="text", name="obj[ac]")
+				label.col-3.col-sm-2.col-form-label.text-right(for="saIpt") 尾款
+				.col-3.col-sm-4
+					input#saIpt.form-control(type="text", name="obj[sa]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="payNoteIpt") 付款说明
+				.col-8.col-sm-10
+					input#payNoteIpt.form-control(type="text", name="obj[payNote]")
+			hr
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="shelfIpt") 上下架
+				.col-8.col-sm-4
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each key in Object.keys(Conf.shelf)
+							if key == crUser.shelf
+								-a;
+								option(value=key, selected="selected") #{Conf.shelf[key]}
+							else
+								option(value=key) #{Conf.shelf[key]}
+				label.col-4.col-sm-2.text-right.col-form-label(for="weightIpt") 权重
+				.col-8.col-sm-4
+					input#weightIpt.form-control(type="number", name="obj[weight]", value=0)
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="添加")
+	script(src="/js/user/pmer/strmdw/edit.js")

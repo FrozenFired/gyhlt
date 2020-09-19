@@ -1,0 +1,19 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		h3 批量修改, 请谨慎
+		hr
+		form#form(method="post", action="/bnPdfirsUpdPdnomeForce", enctype="multipart/form-data")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="pdnomeIpt") 原名称
+				.col-8.col-sm-10
+					input#pdnomeIpt.form-control(type="text", name="obj[pdnome]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="valIpt") 新品类名称
+				.col-8.col-sm-10
+					input#valIpt.form-control(type="text", name="obj[val]")
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="更新")

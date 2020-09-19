@@ -1,0 +1,24 @@
+.row
+	.col-6.text-right 公司编号:
+	.col-6 
+		- let categ = '';
+		each categFirm in Conf.categFirm
+			- categ = '';
+			if categFirm.num == firm.categ
+				- categ = '['+categFirm.val+']: ';
+				- break;
+		span #{categ}#{firm.code}
+	.col-6.text-right 公司名:
+	.col-6 #{firm.nome}
+	.col-6.text-right 联系人: 
+	.col-6 #{firm.resp}
+	.col-6.text-right 电话:
+	.col-6 #{firm.tel}
+	.col-6.text-right 国家:
+	.col-6 #{firm.nation}
+	.col-6.text-right 城市:
+	.col-6 #{firm.city}
+	.col-6.text-right 银行:
+	.col-6 #{firm.bank}
+	.col-6.text-right iban:
+	.col-6 #{firm.iban}

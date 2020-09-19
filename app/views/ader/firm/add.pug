@@ -1,0 +1,74 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		h1 #{title}
+		hr
+		form#firmForm(method="post", action="/adFirmNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="codeIpt") 公司编号
+				.col-8.col-sm-6
+					input#codeIpt.form-control(type="text", name="obj[code]")
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="categIpt") 公司类型
+				.col-9.col-sm-6
+					select#categIpt.form-control(name="obj[categ]", data-style="btn-info")
+						option 请选择
+						each categFirm in Conf.categFirm
+							-a;
+							option(value=categFirm.num) #{categFirm.val}
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 公司名称
+				.col-8.col-sm-6
+					input#nomeIpt.form-control(type="text", name="obj[nome]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="ivaIpt") Iva
+				.col-8.col-sm-6
+					input#ivaIpt.form-control(type="text", name="obj[iva]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="cfIpt") C.F.
+				.col-8.col-sm-6
+					input#cfIpt.form-control(type="text", name="obj[cf]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="respIpt") 联系人
+				.col-8.col-sm-6
+					input#respIpt.form-control(type="text", name="obj[resp]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="telIpt") 电话
+				.col-8.col-sm-6
+					input#telIpt.form-control(type="text", name="obj[tel]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="emailIpt") 邮件
+				.col-8.col-sm-6
+					input#emailIpt.form-control(type="text", name="obj[email]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nationIpt") 国家
+				.col-8.col-sm-6
+					input#nationIpt.form-control(type="text", name="obj[nation]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="cityIpt") 城市
+				.col-8.col-sm-6
+					input#cityIpt.form-control(type="text", name="obj[city]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="addrIpt") 地址
+				.col-8.col-sm-6
+					input#addrIpt.form-control(type="text", name="obj[addr]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="postIpt") 邮编
+				.col-8.col-sm-6
+					input#postIpt.form-control(type="text", name="obj[post]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="iptBank") 银行
+				.col-8.col-sm-6
+					input#iptBank.form-control(type="text", name="obj[bank]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="iptIban") iban
+				.col-8.col-sm-6
+					input#iptIban.form-control(type="text", name="obj[iban]")
+			hr
+			.form-group.row
+				.offset-sm-6.col-sm-2
+					input.btn.btn-success.btn-block(type="submit" value="提交")
+
+	script(src="/js/ader/firmEdit.js")

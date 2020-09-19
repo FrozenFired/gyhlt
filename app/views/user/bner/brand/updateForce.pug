@@ -1,0 +1,51 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		- let logo = brand.logo;
+		if !logo
+			- logo = Conf.picDefault.brand;
+		.row
+			.col-8 更新
+			.col-4.text-right
+				a.btn.btn-secondary(href="/bnBrand/"+brand._id) 取消
+		hr
+		form#brandUpForm(method="post", action="/bnBrandUpdForce", enctype="multipart/form-data")
+			input(type="hidden", name="obj[_id]", value=brand._id)
+			input(type="hidden", name="picDir", value=Conf.picPath.brand)
+			input(type="hidden", name="obj[picOld]", value=logo)
+			input#picName(type="hidden", name="picName", value=brand.nome)
+
+			.row.my-2
+				.col-12(align="center")
+					img#crtImg(src=logo, width="200px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="picUpload") PdImg
+				.col-8
+					input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="logoIpt") 品牌Logo
+				.col-8.col-sm-10
+					input#logoIpt.form-control(type="text", name="obj[logo]", value=brand.logo)
+			hr
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 品牌名称
+				.col-8.col-sm-10
+					input#nomeIpt.form-control(type="text", name="obj[nome]", placeholder="品牌名称", value=brand.nome)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="shelfIpt") 上下架
+				.col-8.col-sm-10
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each key in Object.keys(Conf.shelf)
+							if key == brand.shelf
+								-a;
+								option(value=key, selected="selected") #{Conf.shelf[key]}
+							else
+								option(value=key) #{Conf.shelf[key]}
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success.btn-block(type="submit" value="更新")
+		div(style="height: 300px")
+		a.btn.btn-warning(href="/bnBrandUp/"+brand._id) 普通更新
+	script(src="/js/user/bner/brand/edit.js")

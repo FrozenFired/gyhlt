@@ -1,0 +1,28 @@
+extends ../../../aalayout/layout
+
+block content
+	input#crUserRole(type="hidden", value=crUser.role)
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span Quote List
+				.col-3.text-right
+					//- a.btn.btn-info(href="#") +
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#qutSearch(type="text", placeholder="报价单名称搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			button.mr-5.btn.statusClick.btn-success(type="button", data-status=Conf.status.quoting.num) #{Conf.status.quoting.val}
+			button.mr-5.btn.statusClick(class=stsBtn, data-status='qter', type="button") 完成
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 所有
+		.qutsList.mt-3
+			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#qutsElem@qt@&status="+Conf.status.quoting.num)
+			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#qutsElem")
+			#qutsElem.mt-5
+
+		script(src="/js/user/ajaxGet/qut.js")
+		script(src="/js/user/qter/qut/list.js")

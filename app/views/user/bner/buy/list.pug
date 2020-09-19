@@ -1,0 +1,19 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			a(href="/bner") Home
+			span &nbsp; | &nbsp;
+			span 供应商折扣
+			hr
+
+		.addButton.text-right
+			a.btn.btn-warning(href="/bnBuyAdd") +
+		.buysList
+			input#buyFilterAjax(type="hidden", value="/usBuysAjax?@#buysElem@bn")
+			//- input#buyFilterAjax(type="hidden", value="?key=xxx@#buysElem")
+			#buysElem.mt-5
+
+	script(src="/js/user/ajaxGet/buy.js")
+	script(src="/js/user/bner/buy/list.js")

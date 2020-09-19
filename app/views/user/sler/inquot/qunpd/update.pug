@@ -1,0 +1,58 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-9 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/slQun/"+qunpd.inquot._id) 询价单
+					span &nbsp; | &nbsp;
+					span Inquiry Detail
+				.col-3.text-right
+					a.btn.btn-secondary(href="/slQunpd/"+qunpd._id) 取消
+			hr
+
+		form#qunpdNewForm(method="post", action="/slQunpdUpd", enctype="multipart/form-data")
+			input#inquotIpt(type="hidden", name="obj[_id]", value=qunpd._id)
+			.row.my-3
+				.col-4.col-lg-2.mt-3
+					input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly", value=qunpd.brand)
+					input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="品牌", value=qunpd.brandNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=qunpd.pdfir)
+					input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="系列", value=qunpd.firNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=qunpd.pdsec)
+					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品", value=qunpd.secNome)
+				.col-4.col-lg-2.mt-3
+					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=qunpd.pdthd)
+					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="材料", value=qunpd.thdNome)
+					- let pdthdId = '';
+					#materialDiv
+						if qunpd.pdthd
+							-pdthdId = qunpd.pdthd._id;
+							each mater in qunpd.pdthd.maters
+								-a;
+								.text-dark.mt-2 #{mater}
+					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthdId)
+				.col-4.col-lg-2.mt-3
+					input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量", value=qunpd.quant)
+				.col-4.col-lg-2.mt-3
+					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=qunpd.note)
+
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@sl")
+			.ajax#brandsElem
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
+			.ajax#pdfirsElem
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
+			.ajax#pdsecsElem
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
+			.ajax#pdthdsElem
+
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="提交")
+
+	script(src="/js/user/sler/qunpd/edit.js")

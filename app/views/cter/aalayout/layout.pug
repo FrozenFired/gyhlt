@@ -1,0 +1,13 @@
+doctype
+html
+	head
+		title #{title}
+		include ./head
+	body
+		.pcSpace.noprint(style="height:90px")
+		.mbSpace.noprint(style="height:58px")
+		block content
+		//- .mbSpace.noprint(style="height:58px")
+		include ./footer
+
+		include ./header

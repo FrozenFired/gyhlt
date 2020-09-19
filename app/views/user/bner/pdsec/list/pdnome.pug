@@ -1,0 +1,7 @@
+if firm.pdnomes && firm.pdnomes.length > 0
+	-a;
+	button.mt-3.btn.btn-success.btn-block.pdnomeClick#pdnomeAll(type="button") 品类
+	each pdnome in firm.pdnomes
+		-a;
+		button.mt-2.btn.btn-default.btn-block.pdnomeClick(type="button", data-pdnome=pdnome) #{pdnome}
+div(style="height:160px")

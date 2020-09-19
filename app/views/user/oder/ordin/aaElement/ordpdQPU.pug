@@ -1,0 +1,17 @@
+.quant 数量: #{compd.quant}
+- let unit = '';
+each ut in Conf.unit
+	- unit = '';
+	if ut.num == compd.unit
+		- unit = ut.val;
+		- break;
+
+if compd.price
+	- price = compd.price;
+	.price 价格: #{compd.price}#{unit}
+else
+	.price.text-warning  未报价
+- let total = compd.quant * compd.price;
+if !isNaN(total)
+	- total;
+	h5.total.text-info 总价: #{total}#{unit}

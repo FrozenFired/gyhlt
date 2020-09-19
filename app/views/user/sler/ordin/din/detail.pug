@@ -1,0 +1,24 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/slDins") 列表
+					span &nbsp; | &nbsp;
+					span 销售订单
+			hr
+		.info.my-3
+			include ./detail/info
+		.dinpd.text-right
+			if din.status == Conf.status.init.num
+				-a;
+				
+			include ./compd/list
+		
+		include ../../../aaPlugin/comment/list
+
+	script(src="/js/user/ajaxChange/status.js")

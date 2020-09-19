@@ -1,0 +1,17 @@
+.row
+	.col-12.col-md-6.text-center
+		a(href=photo, target="_blank")
+			img(src=photo, width="200px")
+	.col-12.col-md-6
+		.row
+			.col-4.text-right 产品编号:
+			.col-8 #{pdsec.code}
+			.col-4.text-right 产品规格尺寸:
+			.col-8 #{pdsec.spec}
+			-website = pdsec.website;
+			if website && website.slice(0, 4) != 'http'
+				-website = 'http://'+website;
+			.col-12.text-right
+				a.btn.btn-warning(href="/bnPdsecUp/"+pdsec._id) 更新
+.row
+	.col-12 !{pdsec.desp}

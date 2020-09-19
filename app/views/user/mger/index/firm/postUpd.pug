@@ -1,0 +1,62 @@
+.row.my-3
+	.col-6
+		if !firm.posts || firm.posts.length < 6
+			-a;
+			a.btn.btn-success(href="#", data-toggle="modal", data-target="#addPost") <span class="oi oi-plus"></span> 公司海报
+	.col-6.text-right
+		if firm.posts && firm.posts.length > 0
+			-a;
+			a.btn.btn-danger(href="#", data-toggle="modal", data-target="#delPost") <span class="oi oi-trash"></span>
+
+#addPost.modal.fade
+	.modal-dialog
+		.modal-content
+			form#upGroup(method="post", action="/mgFirmPostNew", enctype="multipart/form-data")
+				.modal-header
+					h5 添加海报
+				.modal-body
+					input(type="hidden", name="picName", value=firm.code)
+					input(type="hidden", name="picDir", value='/firm/')
+					.row.mb-3
+						.col-12(align="center")
+							img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
+					.form-group.row.udPhoto(style="display:none")
+						label.col-4.col-form-label(for="picUpload") PdImg
+						.col-8
+							input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+					.form-group.row
+						label.col-4.col-form-label 主题
+						.col-8
+							input.form-control(type="text", name="obj[title]", autocomplete="off")
+					.form-group.row
+						label.col-4.col-form-label 描述
+						.col-8
+							input.form-control(type="text", name="obj[desp]", autocomplete="off")
+					.form-group.row
+						label.col-4.col-form-label 排序
+						.col-8
+							input.form-control(type="number", name="obj[weight]", autocomplete="off")
+				.modal-footer
+					.col-6
+						button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+					.col-6.text-right
+						button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
+#delPost.modal.fade
+	.modal-dialog
+		.modal-content
+			.modal-header
+				h5 删除海报
+			.modal-body
+				each post in firm.posts
+					-a;
+					.row.mt-5
+						.col-12
+							img(src=post.photo, width="100%")
+					.row.mt-3
+						.col-9 #{post.title}
+						.col-3
+							a.btn.btn-danger(href="/mgFirmPostDel/"+post._id) 删除
+			.modal-footer
+				.col-6
+					button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+				.col-6.text-right

@@ -1,0 +1,29 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		h1 #{title}
+		hr
+		form#categForm(method="post", action="/adCategNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="codeIpt") 默认名称
+				.col-8.col-sm-6
+					input#codeIpt.form-control(type="text", name="obj[code]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="enIpt") 英文名称
+				.col-8.col-sm-6
+					input#enIpt.form-control(type="text", name="obj[en]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="cnIpt") 中文名称
+				.col-8.col-sm-6
+					input#cnIpt.form-control(type="text", name="obj[cn]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="itIpt") 意大利文
+				.col-8.col-sm-6
+					input#itIpt.form-control(type="text", name="obj[it]")
+			hr
+			.form-group.row
+				.offset-sm-6.col-sm-2
+					input.btn.btn-success.btn-block(type="submit" value="提交")
+
+	script(src="/js/ader/categEdit.js")

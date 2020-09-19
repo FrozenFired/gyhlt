@@ -1,0 +1,9 @@
+if sells && sells.length > 0
+	-a;
+	each sell in sells
+		-let brand = sell.brand;
+		.row.mt-3.border
+			.col-6 #{brand.nome}
+			.col-6 
+				h3 #{sell.discount}
+				div #{sell.note}

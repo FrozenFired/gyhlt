@@ -1,0 +1,31 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		- let photo = pdsec.photo;
+		if !photo
+			- photo = Conf.picDefault.pdsec;
+		
+		.title
+			.row
+				.col-12 
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					a(href="/bnPdsecs") Product List
+					span &nbsp; | &nbsp;
+					a(href="/bnPdfir/"+pdsec.pdfir._id) #{pdsec.pdfir.code}
+					span &nbsp; | &nbsp;
+					span #{pdsec.code}
+			hr
+		.info
+			include ./detail/info
+			hr
+
+		.pdthd
+			include ./detail/pdthd
+
+	script(src="/js/user/ajaxGet/pdthd.js")
+	script(src="/js/user/bner/pdthd/list.js")
+
+	script(src="/js/user/bner/pdsec/pdthd.js")
+	script(src="/js/user/bner/pdthd/edit.js")

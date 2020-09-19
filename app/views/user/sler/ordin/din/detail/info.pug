@@ -1,0 +1,51 @@
+.row.py-2.text-center.border
+	.col-4
+		.cter 客户:
+			if din.cter
+				- cter = din.cter;
+				span #{cter.nome} [#{cter.code}]
+			else
+				span #{din.cterNome}
+		.din 
+			span 销售员:
+			if din.diner
+				- diner = din.diner;
+				span #{diner.nome} [ #{diner.code} ]
+			else
+				span 数据丢失
+		.note #{din.note}
+		.time
+			span 询价时间: 
+			span #{moment(din.dinAt).format('DD/MM/YYYY HH:mm:ss')}
+		.excel.mt-3
+			a.btn.btn-info.btn-block(href="/slDinExcel/"+din._id) Excel
+	.col-4
+		h3.code #{din.dateCd}#{din.code}
+			
+
+
+	.col-4
+		- let stsBg = 'bg-default';
+		if din.status == Conf.status.init.num
+			- stsBg = 'bg-secondary';
+		else if din.status == Conf.status.done.num
+			- stsBg = 'bg-info';
+		else if din.status == Conf.status.ord.num
+			- stsBg = 'bg-success';
+		else if din.status == Conf.status.unord.num
+			- stsBg = 'bg-danger';
+		.status(class=stsBg)
+			- let status = '';
+			each sts in Conf.status
+				- status = '';
+				if sts.num == din.status
+					- status = sts.val;
+					- break;
+			span 状态: #{status}
+
+		.statusChange.text-right.mt-5
+			if din.status == Conf.status.init.num
+				-a;
+				if dinpds && dinpds.length > 0
+					- a;
+					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-checking", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.checking.num) 确认

@@ -1,0 +1,52 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span #{title}
+				.col-3.text-right
+					a.btn.btn-secondary(href="/pmNotices") 取消
+		.info
+			form#addForm(method="post", action="/pmArticleNew", enctype="multipart/form-data")
+				input(type="hidden", name="obj[categ]", value=Conf.article.notice.num)
+				input(type="hidden", name="picDir", value=Conf.picPath.article)
+				input#picName(type="hidden", name="picName", value=Conf.article.notice.num)
+				.row
+					.col-12(align="center")
+						img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
+				.form-group.row.udPhoto(style="display:none")
+					label.col-4.col-form-label(for="picUpload") PdImg
+					.col-8
+						input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="photoIpt") 新闻图片
+					.col-8.col-sm-10
+						input#photoIpt.form-control(type="text", name="obj[photo]", autocomplete="off")
+				hr
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="titleIpt") 新闻标题
+					.col-8.col-sm-10
+						input#titleIpt.form-control(type="text", name="obj[title]", autocomplete="off")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="despIpt") 简要描述
+					.col-8.col-sm-10
+						textarea#despIpt.form-control(type="text", rows="4", name="obj[desp]", placeholder="简要描述")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="contentIpt") 新闻内容
+					.col-8.col-sm-10
+						textarea#contentIpt.form-control(type="text", rows="10", name="obj[content]", placeholder="新闻内容")
+				hr
+				each i in [0, 1, 2, 3, 4, 5]
+					- a;
+					.form-group.row
+						label.col-4.col-sm-2.col-form-label 子图片[#{i+1}]
+						.col-8.col-sm-10
+							input.form-control(type="text", name="obj[photos]["+i+"]")
+				.form-group.row
+					.col-12.text-right
+						input.btn.btn-success(type="submit" value="添加")
+	script(src="/js/user/pmer/article/edit.js")

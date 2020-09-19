@@ -1,0 +1,27 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		- var photo = pdfir.photo;
+		if !photo
+			- photo = Conf.picDefault.pdfir;
+		
+		.title
+			a.text-dark(href="/cter") Home
+			span &nbsp; | &nbsp;
+			a.text-dark.breadPdfir(href="/ctPdfirs") Serie List
+			span &nbsp; | &nbsp;
+			a.text-dark(href="/ctBrand/"+pdfir.brand._id) #{pdfir.brand.nome}
+			span &nbsp; | &nbsp;
+			span #{pdfir.code}
+			hr
+		.info
+			include ./detail/info
+			hr
+
+		.pdsec
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?pdfirId="+pdfir._id+"@#pdsecsElem@ct")
+			#pdsecsElem.mt-5
+	script(src="/js/user/cter/pdfir/detail.js")
+	script(src="/js/user/ajaxGet/pdsec.js")
+	script(src="/js/user/cter/pdsec/list.js")

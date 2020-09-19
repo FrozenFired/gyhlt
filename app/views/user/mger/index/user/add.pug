@@ -1,0 +1,52 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		h1 #{title}
+		hr
+		form#userForm(method="post", action="/userNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="codeIpt") 帐号
+				.col-9.col-sm-6
+					input#codeIpt.form-control(type="text", name="obj[code]")
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="pwdIpt") 密码
+				.col-9.col-sm-6
+					input#pwdIpt.form-control(type="text", name="obj[pwd]")
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="roleIpt") role
+				.col-9.col-sm-6
+					select#roleIpt.form-control(name="obj[role]", data-style="btn-info")
+						each roleUser in Conf.roleUser
+							if roleUser.num > crUser.role
+								-a;
+								option(value=roleUser.num) #{roleUser.val}
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="shelfIpt") 管理上下架
+				.col-9.col-sm-6
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each key in Object.keys(Conf.shelf)
+							if key == crUser.shelf
+								-a;
+								option(value=key, selected="selected") #{Conf.shelf[key]}
+							else
+								option(value=key) #{Conf.shelf[key]}
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="langIpt") Language
+				.col-9.col-sm-6
+					select#langIpt.form-control(name="obj[lang]", data-style="btn-info")
+						each userLang in Conf.userLang
+							-a;
+							option(value=userLang.num) #{userLang.val}
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="nomeIpt") Name
+				.col-9.col-sm-6
+					input#nomeIpt.form-control(type="text", name="obj[nome]")
+				.offset-3.col-9.col-form-label.text-danger
+			.form-group.row
+				.offset-sm-6.col-sm-2
+					input.btn.btn-success.btn-block(type="submit" value="添加")

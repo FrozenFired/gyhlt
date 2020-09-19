@@ -1,0 +1,67 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		- let post = brand.post;
+		if !post
+			- post = Conf.picDefault.brand;
+		.row
+			.col-8 更新
+			.col-4.text-right
+				a.btn.btn-secondary(href="/bnBrand/"+brand._id) 取消
+		hr
+		form#brandUpForm(method="post", action="/bnBrandUpd", enctype="multipart/form-data")
+			input(type="hidden", name="obj[_id]", value=brand._id)
+			input(type="hidden", name="picDir", value=Conf.picPath.brand)
+			input(type="hidden", name="obj[picOld]", value=post)
+			input#picName(type="hidden", name="picName", value=brand.nome)
+
+			.row.my-2
+				.col-12(align="center")
+					img#crtImg(src=post, width="200px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="picUpload") PdImg
+				.col-8
+					input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="postIpt") 品牌海报
+				.col-8.col-sm-10
+					input#postIpt.form-control(type="text", name="obj[post]", value=brand.post)
+			hr
+			.form-group.row
+				input#despData(type="hidden", value=brand.desp)
+				label.col-4.col-form-label(for="despIpt") 品牌描述
+				.col-8
+					textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="品牌描述")
+			.form-group.row
+				label.col-4.col-form-label(for="websiteIpt") 品牌官网
+				.col-8
+					input#websiteIpt.form-control(type="text", name="obj[website]", placeholder="品牌官网", value=brand.website)
+			.form-group.row
+				input#webNoteData(type="hidden", value=brand.webNote)
+				label.col-4.col-form-label(for="webNoteIpt") 网址备注
+				.col-8
+					textarea#webNoteIpt.form-control(type="text", rows="3", name="obj[webNote]", placeholder="网址备注")
+			.form-group.row
+				label.col-4.col-form-label(for="firmNameIpt") 企业名称
+				.col-8
+					input#firmNameIpt.form-control(type="text", name="obj[firmName]", placeholder="企业名称", value=brand.firmName)
+			.form-group.row
+				label.col-4.col-form-label(for="countryIpt") 所属国家
+				.col-8
+					input#countryIpt.form-control(type="text", name="obj[country]", placeholder="所属国家", value=brand.country)
+			.form-group.row
+				label.col-4.col-form-label(for="pTimeIpt") 生产周期
+				.col-8
+					input#pTimeIpt.form-control(type="text", name="obj[pTime]", placeholder="生产周期", value=brand.pTime)
+			.form-group.row
+				label.col-4.col-form-label(for="weightIpt") 权重
+				.col-8
+					input#weightIpt.form-control(type="number", name="obj[weight]", value=brand.weight)
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success.btn-block(type="submit" value="更新")
+		div(style="height: 300px")
+		a.btn.btn-danger(href="/bnBrandUp/"+brand._id+'?force=1') 强制更新
+	script(src="/js/user/bner/brand/edit.js")

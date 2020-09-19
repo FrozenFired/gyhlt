@@ -1,0 +1,35 @@
+table.mt-3.table.table-hover.bg-light
+	tr
+		td <strong>公司编号:</strong>
+		td #{object.code}
+	tr
+		td <strong>公司名:</strong>
+		td #{object.nome}
+	tr
+		td <strong>类型:</strong>
+		td 
+			- let categ = '';
+			each categFirm in Conf.categFirm
+				- categ = '';
+				if categFirm.num == object.categ
+					- categ = categFirm.val;
+					- break;
+			span #{categ}
+	tr
+		td <strong>联系人:</strong> 
+		td #{object.resp}
+	tr
+		td <strong>电话:</strong>
+		td #{object.tel}
+	tr
+		td <strong>国家:</strong>
+		td #{object.nation}
+	tr
+		td <strong>城市:</strong>
+		td #{object.city}
+	tr
+		td <strong>银行:</strong>
+		td #{object.bank}
+	tr
+		td <strong>iban:</strong>
+		td #{object.iban}

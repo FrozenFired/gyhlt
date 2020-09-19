@@ -1,0 +1,32 @@
+.info.row.border.py-3(style="display:none")
+	.col-6.col-md-3
+		.note #{strmdw.note}
+		.categFirm
+			- let categ = '';
+			each categFirm in Conf.categFirm
+				if categFirm.num == strmdw.categFirm
+					- categ = categFirm.val;
+					-break;
+			span #{categ}
+	.col-6.col-md-3
+		.firmUp
+			if strmdw.firmUp
+				-a;
+				span [#{strmdw.firmUp.code}]客户已入驻
+		.accept
+			- let acpt = '';
+			each accept in Conf.accept
+				if accept.num == strmdw.accept
+					- acpt = accept.val;
+					- break;
+			span #{acpt}
+	.col-6.col-md-3
+		.ac 首款: #{strmdw.ac} %
+		.sa 尾款: #{strmdw.sa} %
+		.payNote 付款方式备注: #{strmdw.payNote}
+	.col-6.col-md-3
+		.resp #{strmdw.resp}
+		.tel #{strmdw.tel}
+		.email #{strmdw.email}
+		.addr #{strmdw.addr}
+		.country #{strmdw.country}

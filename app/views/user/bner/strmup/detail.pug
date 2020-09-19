@@ -1,0 +1,23 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					a(href="/bnStrmups") Suppliers
+					span &nbsp; | &nbsp;
+					span #{strmup.nome}
+			hr
+		.basic.text-center
+			.row
+				.col-10
+					h3.nome #{strmup.nome}
+				.col-2
+					a.btn.btn-warning(href="/bnStrmupUp/"+strmup._id) 更新
+			include ./detail/info
+		.buys
+			include ./detail/buy
+	script(src="/js/user/bner/strmup/detail.js")

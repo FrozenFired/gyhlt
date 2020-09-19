@@ -1,0 +1,69 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		h1 #{title}
+		hr
+		form#brandForm(method="post", action="/bnBrandNew", enctype="multipart/form-data")
+			input(type="hidden", name="picDir", value=Conf.picPath.brand)
+			input#picName(type="hidden", name="picName")
+			.row
+				.col-12(align="center")
+					img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="200px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="picUpload") PdImg
+				.col-8
+					input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="logoIpt") Logo图片
+				.col-8.col-sm-6
+					input#logoIpt.form-control(type="text", name="obj[logo]", autocomplete="off")
+			hr
+			//- .form-group.row
+			//- 	label.col-4.col-sm-2.col-form-label(for="codeIpt") 品牌编号
+			//- 	.col-8.col-sm-6
+			//- 		input#codeIpt.form-control(type="text", name="obj[code]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 品牌名称
+				.col-8.col-sm-6
+					input#nomeIpt.form-control(type="text", name="obj[nome]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="despIpt") 品牌描述
+				.col-8.col-sm-6
+					textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="品牌描述")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="firmNameIpt") 企业名称
+				.col-8.col-sm-6
+					input#firmNameIpt.form-control(type="text", name="obj[firmName]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="countryIpt") 所属国家
+				.col-8.col-sm-6
+					input#countryIpt.form-control(type="text", name="obj[country]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="websiteIpt") 官方网站
+				.col-8.col-sm-6
+					input#websiteIpt.form-control(type="text", name="obj[website]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="webNoteIpt") 网站备注
+				.col-8.col-sm-6
+					textarea#webNoteIpt.form-control(type="text", rows="3", name="obj[webNote]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="pTimeIpt") 生产周期
+				.col-8.col-sm-6
+					input#pTimeIpt.form-control(type="text", name="obj[pTime]", autocomplete="off")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="shelfIpt") 上下架
+				.col-8.col-sm-2
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each key in Object.keys(Conf.shelf)
+							-a;
+							option(value=key) #{Conf.shelf[key]}
+				label.col-4.col-sm-2.col-form-label.text-right(for="weightIpt") 权重
+				.col-8.col-sm-2
+					input#weightIpt.form-control(type="number", name="obj[weight]", value=0)
+			hr
+			.form-group.row
+				.offset-sm-6.col-sm-2
+					input.btn.btn-success.btn-block(type="submit" value="添加")
+
+	script(src="/js/user/bner/brand/edit.js")

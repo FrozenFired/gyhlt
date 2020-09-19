@@ -1,0 +1,34 @@
+.row
+	.col-12.col-md-6.text-center
+		a(href=photo)
+			img(src=photo, width="200px")
+	.col-12.col-md-6
+		.row
+			.col-4.text-right 系列名:
+			.col-8: h5 #{pdfir.code}
+			if pdfir.brand
+				- brand = pdfir.brand;
+				.col-4.text-right 所属品牌:
+				.col-8: h6 #{brand.nome}
+			.col-4.text-right 所属品类:
+			.col-8 #{pdfir.pdnome}
+			-website = pdfir.website;
+			if website && website.slice(0, 4) != 'http'
+				-website = 'http://'+website;
+			.col-4.text-right 网站:
+			.col-8: a(href=website, target="_blank") #{pdfir.website}
+			.col-4.text-right 权重:
+			.col-8 #{pdfir.weight}
+			.col-4.text-right 上下架:
+			.col-8 #{Conf.shelf[pdfir.shelf]}
+			.col-12.text-right
+				a.btn.btn-warning(href="/bnPdfirUp/"+pdfir._id) 更新
+.row
+	.col-12 !{pdfir.desp}
+.row.mt-3
+	each photosub in pdfir.photos
+		if photosub && photosub.length > 0
+			-a;
+			.col-6.col-md-3.col-xl-2.mt-3
+				a(href=photosub)
+					img(src=photosub, width="100%", height="120px", style="object-fit: scale-down;")

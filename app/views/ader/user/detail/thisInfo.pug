@@ -1,0 +1,41 @@
+table.mt-3.table.table-hover
+	if user.firm
+		- firm = user.firm;
+		tr
+			td: strong Firm:
+			td #{firm.code}
+	tr
+		td: strong role:
+		td
+			- let role = '';
+			each roleUser in Conf.roleUser
+				- role = '';
+				if roleUser.num == user.role
+					- role = roleUser.val;
+					- break;
+			span #{role}
+	tr
+		td: strong 语言:
+		td 
+			- let lang = '';
+			each userLang in Conf.userLang
+				- lang = '';
+				if userLang.num == user.lang
+					- lang = userLang.val;
+					- break;
+			span #{lang}
+	tr
+		td: strong Code:
+		td #{user.code}
+	tr
+		td: strong name:
+		td #{user.nome}
+	tr
+		td: strong 上次登录时间:
+		td #{moment(user.lgAt).format('DD/MM/YYYY HH:mm:ss')}
+	tr
+		td: strong createAt:
+		td #{moment(user.ctAt).format('DD/MM/YYYY HH:mm:ss')}
+	tr
+		td: strong updateAt:
+		td #{moment(user.upAt).format('DD/MM/YYYY HH:mm:ss')}

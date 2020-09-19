@@ -1,0 +1,24 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/slQuns") Inquiry List
+					span &nbsp; | &nbsp;
+					span Inquiry Detail
+			hr
+		.info.my-3
+			include ./detail/info
+		.excel.mt-3
+			a.btn.btn-info(href="/slQunExcel/"+qun._id) Excel
+		.compd
+			if qun.status == Conf.status.init.num
+				-a;
+				include ./compd/add
+			include ./compd/list
+		
+		include ../../../aaPlugin/comment/list

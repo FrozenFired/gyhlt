@@ -1,0 +1,27 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/pmSells") 客户折扣
+					span &nbsp; | &nbsp;
+					span #{sell.nome}
+			hr
+		.update.text-right
+			a.btn.btn-warning(href="/pmSellUp/"+sell._id) 更新
+		.discount.border.p-2.mt-3.row.text-center
+			.col-12
+				if sell.brand
+					- brand = sell.brand;
+					h3.nome #{brand.nome}
+			.col-12
+				if sell.strmdw
+					- strmdw = sell.strmdw;
+					h3.nome #{strmdw.nome}
+			.col-12
+				h3 #{sell.discount}
+				p #{sell.note}

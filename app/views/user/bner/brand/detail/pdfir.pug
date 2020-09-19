@@ -1,0 +1,84 @@
+#pdfirsPage
+	.row
+		.col-12.col-sm-6.input-group
+			input.form-control#pdfirSearch(type="text", placeholder="搜索系列")
+			.input-group-append
+				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+		.col-6.col-sm-3
+			//- button.btn.btn-warning.btn-block(type="button") + 同步系列#
+			.count
+				span 查询条目数:
+				span#pdfirCount
+		.col-6.col-sm-3
+			button.btn.btn-info.btn-block#pdfirAddPageShow(type="button") + 添加系列
+	input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?brandId="+brand._id+"@#pdfirsElem@bn")
+	#pdfirsElem.mt-5
+
+//- 添加系列
+#pdfirAddPage(style="display:none")
+	.row
+		.col-12.col-sm-6
+		.col-12.col-sm-6
+			button.btn.btn-secondary.btn-block#pdfirsPageShow(type="button") 取消添加
+
+	form#pdfirForm(method="post", action="/bnPdfirNew", enctype="multipart/form-data")
+		input(type="hidden", name="picDir", value=Conf.picPath.pdfir)
+		input#picName(type="hidden", name="picName", value=crUser.firm.code)
+		input#brandIpt(type="hidden", name="obj[brand]", value=brand._id)
+		input(type="hidden", name="obj[reUrl]", value='/bnBrand/'+brand._id)
+		.row
+			.col-12(align="center")
+				img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+		.form-group.row.udPhoto(style="display:none")
+			label.col-4.col-form-label(for="picUpload") PdImg
+			.col-8
+				input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="photoIpt") 系列展示图
+			.col-8.col-sm-10
+				input#photoIpt.form-control(type="text", name="obj[photo]")
+		hr
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="codeIpt") 系列名称
+			.col-8.col-sm-10
+				input#codeIpt.form-control(type="text", name="obj[code]")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label 品类
+			.col-8.col-sm-10
+				select.form-control(name="obj[pdnome]", data-style="btn-info")
+					option(value="") 请选择品类
+					each pdnome in brand.pdnomes
+						-a;
+						option(value=pdnome) #{pdnome}
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="despIpt") 系列描述
+			.col-8.col-sm-10
+				textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="系列描述")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="websiteIpt") 系列网址
+			.col-8.col-sm-10
+				input#websiteIpt.form-control(type="text", name="obj[website]")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="shelfIpt") 上下架
+			.col-8.col-sm-4
+				select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+					each key in Object.keys(Conf.shelf)
+						if key == crUser.shelf
+							-a;
+							option(value=key, selected="selected") #{Conf.shelf[key]}
+						else
+							option(value=key) #{Conf.shelf[key]}
+			label.col-4.col-sm-2.text-right.col-form-label(for="weightIpt") 权重
+			.col-8.col-sm-4
+				input#weightIpt.form-control(type="number", name="obj[weight]", value=0)
+		hr
+		each i in [0, 1, 2, 3, 4, 5]
+			- a;
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label 子图片[#{i+1}]
+				.col-8.col-sm-6
+					input.form-control(type="text", name="obj[photos]["+i+"]")
+		hr
+		.form-group.row
+			.col-12.text-right
+				input.btn.btn-success(type="submit", value="添加")

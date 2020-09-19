@@ -1,0 +1,86 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		if crUser._id == user._id || user.role != 1
+			-a;
+			.row.text-right
+				.col-8.text-left
+					a.btn.btn-danger(href="/logout") 退出
+				.col-2
+					a.btn.btn-info(href="#", data-toggle="modal", data-target="#upPw") <span class="oi oi-key"></span>
+
+					#upPw.modal.fade
+						.modal-dialog
+							.modal-content
+								form#upPwd(method="post", action="/ctUserUpdPwd", enctype="multipart/form-data")
+									.modal-header: h3 重置密码
+									.modal-body
+										input(type="hidden", name="obj[_id]", value=user._id)
+										if crUser._id == user._id
+											-a;
+											.form-group.row
+												label.col-4.col-form-label(for="iptOrgPw") 原密码
+												.col-8
+													input#iptOrgPw.form-control(type="text", name="obj[pw]")
+										.form-group.row
+											label.col-4.col-form-label(for="iptPwd") 新密码
+											.col-8
+												input#iptPwd.form-control(type="text", name="obj[pwd]")
+										.form-group.row
+											label.col-4.col-form-label(for="iptCheckPw") 确认密码
+											.col-8
+												input#iptCheckPw.form-control(type="text")
+									.modal-footer
+										button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+										button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
+				.col-2
+					a.btn.btn-info(href="#", data-toggle="modal", data-target="#upMgerInfo") <span class="oi oi-cog"></span>
+
+					#upMgerInfo.modal.fade
+						.modal-dialog
+							.modal-content
+								form#updateInfo(method="post", action="/ctUserUpdInfo", enctype="multipart/form-data")
+									.modal-header: h3 设置
+									.modal-body
+										input(type="hidden", name="obj[_id]" value=user._id)
+										.form-group.row
+											label.col-4.col-form-label(for="iptName") 名字
+											.col-8
+												input#iptName.form-control(type="text", name="obj[nome]" value=user.nome, autocomplete="off")
+										.form-group.row
+											label.col-4.col-form-label(for="iptLang") 语言
+											.col-8
+												select#iptLang.form-control(name="obj[lang]", data-style="btn-info")
+													each userLang in Conf.userLang
+														-a;
+														if userLang.num == user.lang
+															-a;
+															option(value=userLang.num, selected="selected") #{userLang.val}
+														else
+															option(value=userLang.num) #{userLang.val}
+									.modal-footer
+										button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
+										button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
+		.row.mt-3
+			table.table.border
+				tr
+					td 帐号:
+					td #{user.code}
+				tr
+					td 名字:
+					td #{user.nome}
+				tr
+					td 语言:
+					td
+						- var lang = '';
+						each userLang in Conf.userLang
+							- lang = '';
+							if userLang.num == user.lang
+								- lang = userLang.val;
+								- break;
+						span #{lang}
+				tr
+					td 最近登录:
+					td #{moment(user.lgAt).format('DD/MM/YYYY HH:mm:ss')}
+	.footerSpace

@@ -1,0 +1,23 @@
+extends ./cter/aalayout/layout
+
+block content
+	.container
+		div(style="height: 120px")
+
+		form.mt-5(method="post", action="/loginUser")
+			//- .form-group.row
+			//- 	label.col-2.col-form-label.text-right(for="codeFimr") <span class="oi oi-home"></span>
+			//- 	.col-10.col-md-8
+			//- 		input.form-control#codeFimr(type="text", name="firm", placeholder="Please input your Firm code")
+			.form-group.row
+				label.col-2.col-form-label.text-right(for="codeUser") <span class="oi oi-person"></span>
+				.col-10.col-md-8
+					input.form-control#codeUser(type="text", name="code", placeholder="Please input your code")
+			.form-group.row
+				label.col-2.col-form-label.text-right(for="pwdUser") <span class="oi oi-lock-locked"></span>
+				.col-10.col-md-8
+					input.form-control#pwdUser(type="password", name="pwd", placeholder="Your password")
+			.form-group.row.mt-4
+				.col-2
+				.col-10.col-md-8
+					button.btn.btn-warning.btn-block(type="submit") <span class="oi oi-lock-unlocked"></span>

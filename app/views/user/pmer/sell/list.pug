@@ -1,0 +1,19 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			a(href="/") Home
+			span &nbsp; | &nbsp;
+			span 客户折扣
+			hr
+
+		.addButton.text-right
+			a.btn.btn-warning(href="/pmSellAdd") +
+		.sellsList
+			input#sellFilterAjax(type="hidden", value="/usSellsAjax?@#sellsElem@pm")
+			//- input#sellFilterAjax(type="hidden", value="?key=xxx@#sellsElem")
+			#sellsElem.mt-5
+
+	script(src="/js/user/ajaxGet/sell.js")
+	script(src="/js/user/pmer/sell/list.js")

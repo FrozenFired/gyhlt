@@ -1,0 +1,9 @@
+- var i = 0;
+input#firmPostLen(type="hidden", value=firm.posts.length)
+.firmPostBox.bg-dark
+	each post in firm.posts
+		- i++;
+		- display = 'none';
+		if i == 1
+			- display = 'block';
+		.firmPost(id="firmPost"+i, style="background-image:url('"+post.photo+"'); background-repeat:no-repeat; background-size: 100% auto; display:"+display)

@@ -1,0 +1,35 @@
+if articles && articles.length > 0
+	- var flag = 1;
+	.articlesHome
+		.pcSpace
+			.mx-5(style="background-image:url('./imgs/bgImg/articleBg.jpg'); height: 160px;")
+				.row
+					.col-6.text-right
+						h1.mt-5 Home
+					.col-6
+						h1.mt-5 
+							span.text-dark | 
+							span.text-white News
+
+		each article in articles
+			- flag = -flag;
+			.pcSpace(style="height:100px")
+			.mbSpace(style="height:50px")
+			.row.pcSpace
+				if flag == 1
+					-a;
+					.col-1
+					.col-6.px-5
+						include ../../article/list/info
+					.col-5.px-5
+						include ../../article/list/photo
+				else
+					.col-5.px-5
+						include ../../article/list/photo
+					.col-6.px-5
+						include ../../article/list/info
+			.row.mbSpace
+				.col-12
+					include ../../article/list/photo
+				.col-12
+					include ../../article/list/info

@@ -1,0 +1,26 @@
+.brandPostBox
+	- var i = 0;
+	input#brandPostLen(type="hidden", value=brands.length)
+	//- div(style="height: 100px")
+	
+	h1.text-center
+		.pcSpace(style="font-size: 70px;font-family:'Times New Roman';") Focus On
+		.mbSpace(style="font-size: 40px;font-family:'Times New Roman';") Focus On
+	h2.text-center(style="font-size: 25px;font-family:'Times New Roman';") 世界著名品牌
+	div(style="height: 100px")
+
+	.brandPostBox.bg-dark
+		each brand in brands
+			- i++;
+			//- div(style="height: 20px")
+			.brandPost.text-center(id="brandPost"+i, style="background-image:url('"+brand.post+"'); background-repeat:no-repeat; background-size: 100% auto;")
+				.brandTitle
+					a.text-white(href="/ctBrand/"+brand._id)
+						.pcSpace(style="font-size: 50px;font-family:'Times New Roman';")
+							span #{brand.nome}
+							br
+							h3 <span class="oi oi-grid-three-up"></span>
+						.mbSpace(style="font-size: 40px;font-family:'Times New Roman';")
+							span #{brand.nome}
+							br
+							h4 <span class="oi oi-grid-three-up"></span>

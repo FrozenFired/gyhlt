@@ -1,0 +1,31 @@
+extends ../../../aalayout/layout
+
+block content
+	.title.mx-5
+		.row
+			.col-12 
+				a(href="/") Home
+				span &nbsp; | &nbsp;
+				a(href="/bsQun/"+qun._id) 返回报价单
+				span &nbsp; | &nbsp;
+				span [#{qun.nome}] #{title}
+		hr
+	.m-5.row
+		.col-6.border
+			.quninfo
+				include ./add/qunInfo
+			.products.mt-5
+				include ./add/qunpdInfo
+		.col-5.ml-4.border
+			.dinInfo
+				include ./add/dinInfo
+			.dinpd.mt-5
+				include ./add/dinpdInfo
+	if din && din._id
+		-a;
+		.mt-4
+			.col-6.text-right
+				a.btn.btn-success(href="/bsDin/"+din._id) 完成
+				
+
+	script(src="/js/user/bser/din/add.js")

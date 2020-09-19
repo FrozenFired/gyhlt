@@ -1,0 +1,71 @@
+.row
+	.col-12.text-center
+		if brand.post
+			-a;
+			img(src=brand.post, width="100%")
+	.col-12.text-center
+		img(src=logo, width="200px")
+.row.mt-3.bg-light#basicTogg
+	.col-10.mt-2: h5 品牌基本信息
+	.col-2.mt-2.text-right <span class="oi oi-chevron-bottom"></span>
+.basic.bg-light(style="display:none")
+	.row
+		.brand.col-12
+			.row
+				.col-12.text-right
+					a.btn.btn-warning(href="/bnBrandUp/"+brand._id) 更新
+			.row.px-4
+				-website = brand.website;
+				if website && website.slice(0, 4) != 'http'
+					-website = 'http://'+website;
+				.col-4.text-right 网站:
+				.col-8: a(href=website target="_blank") #{brand.website}
+				.col-4.text-right webNote: 
+				.col-8 !{brand.webNote}
+
+
+				.col-4.text-right 企业名称:
+				.col-8 #{brand.firmName}
+
+				.col-4.text-right 国家:
+				.col-8 #{brand.country}
+
+				.col-4.text-right 生产周期:
+				.col-8 #{brand.pTime}
+
+				.col-4.text-right shelf:
+				.col-8 #{Conf.shelf[brand.shelf]}
+				.col-4.text-right weight:
+				.col-8 #{brand.weight}
+	.row.my-3
+		.col-12 !{brand.desp}
+	hr
+	.row
+		.col-6
+			if buys && buys.length > 0
+				-a;
+				.buy.text-center 供应商折扣信息
+				each buy in buys
+					-let strmup = buy.strmup;
+					.row.mt-3.border
+						.col-6 #{strmup.nome}
+						.col-6 
+							h3 #{buy.discount}
+							div #{buy.note}
+		.col-6
+			if sells && sells.length > 0
+				- a;
+				.sell.text-center 下游客户折扣信息
+				each sell in sells
+					-let strmdw = sell.strmdw;
+					.row.mt-3.border
+						.col-6
+							if strmdw
+								-a;
+								span #{strmdw.nome}
+							else
+								span 客户数据丢失
+						.col-6 
+							h3 #{sell.discount}
+							div #{sell.note}
+	hr

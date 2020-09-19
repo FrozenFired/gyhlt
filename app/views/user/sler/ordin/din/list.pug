@@ -1,0 +1,31 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span 销售订单列表
+				.col-3.text-right
+					//- a.btn.btn-info(href="/slDinAdd") +
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#dinSearch(type="text", placeholder="询价单名称搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			each sts in Conf.dinSts
+				- let stsBtn = "btn-default";
+				if sts == 'init'
+					- stsBtn = "btn-success";
+				button.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+				span &nbsp; &nbsp; &nbsp;
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+		.dinsList.mt-3
+			input#dinFilterAjax(type="hidden", value="/usDinsAjax?@#dinsElem@sl@&status="+Conf.status.init.num)
+			//- input#dinFilterAjax(type="hidden", value="?key=xxx@#dinsElem")
+			#dinsElem.mt-5
+
+		script(src="/js/user/ajaxGet/din.js")
+		script(src="/js/user/sler/din/list.js")

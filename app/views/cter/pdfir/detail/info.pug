@@ -1,0 +1,48 @@
+.row
+	.col-12.col-md-6
+		#carouselExampleIndicators.carousel.slide(data-ride="carousel")
+			.carousel-inner
+				.carousel-item(class='active')
+					img.d-block.w-100(src=photo)
+					.carousel-caption.d-none.d-md-block
+						h5 &nbsp;
+						p &nbsp;
+				- var i = 0;
+				each photosub in pdfir.photos
+					if photosub && photosub.length > 0
+						- i++;
+						.carousel-item()
+							img.d-block.w-100(src=photosub)
+							.carousel-caption.d-none.d-md-block
+								h5 &nbsp;
+								p &nbsp;
+			a.carousel-control-prev(href="#carouselExampleIndicators" role="button" data-slide="prev")
+				span.carousel-control-prev-icon(aria-hidden="true")
+				span.sr-only Previous
+			a.carousel-control-next(href="#carouselExampleIndicators" role="button" data-slide="next")
+				span.carousel-control-next-icon(aria-hidden="true")
+				span.sr-only Next
+	.col-12.col-md-6
+		.bt-white.mt-2.text-center
+			h5#basicTogg #{pdfir.code}
+			if pdfir.brand
+				- brand = pdfir.brand;
+				h6 [#{brand.nome}]
+			.basic
+				if pdfir.website && pdfir.website.length > 10
+					-website = pdfir.website;
+					if website && website.slice(0, 4) != 'http'
+						-website = 'http://'+website;
+					.mt-2
+						a.text-dark(href=website, target="_blank") <u>系列网址</u>
+
+				.mt-2
+					span 品类: #{pdfir.pdnome}
+				.mt-2.text-left !{pdfir.desp}
+.row.mt-5
+	each photosub in pdfir.photos
+		if photosub && photosub.length > 0
+			-a;
+			.col-6.col-md-4.col-xl-3
+				a(href=photosub)
+					img.border.border-top-0(src=photosub, width="100%" height="120px" style="object-fit: scale-down;")

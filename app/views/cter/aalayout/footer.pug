@@ -1,0 +1,74 @@
+//- .bg-dark.text-center.text-white
+	.container-fluid
+		.row.pcSpace.pt-5.pb-3
+			.col-lg-3
+				h4.mb-4 购物指南
+				p: a.text-white(href="/shopping#purch") 购买流程
+				p: a.text-white(href="/shopping#period") 订货周期
+				p: a.text-white(href="/shopping#privacy") 隐私保护
+			.col-lg-3
+				h4.mb-4 服务保障
+				p: a.text-white(href="/guarantee#authentic") 正品保证
+				p: a.text-white(href="/guarantee#advantage") 价格优势
+				p: a.text-white(href="/guarantee#discrimination") 真假鉴别
+			.col-lg-3
+				h4.mb-4 配送方式
+				p: a.text-white(href="/logistics#delivery") 配送说明
+				p: a.text-white(href="/logistics#shipping") 运费说明
+				p: a.text-white(href="/logistics#inspection") 验货签收
+			.col-lg-3
+				h4.mb-4 售后服务
+				p: a.text-white(href="/aftersale#advisory") 售后咨询
+				p: a.text-white(href="/aftersale#invoice") 发票保障
+				p: a.text-white(href="/aftersale#acq") 常见问题
+		.row.mbSpace.pt-5.pb-3
+			.col-6
+				h5.mb-4
+					a.text-white(href="/shopping") 购物指南
+			.col-6
+				h5.mb-4
+					a.text-white(href="/guarantee") 服务保障
+			.col-6
+				h5.mb-4
+					a.text-white(href="/logistics") 配送方式
+			.col-6
+				h5.mb-4
+					a.text-white(href="/aftersale") 售后服务
+.mbSpace
+	.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top.noprint
+		span &nbsp;
+		a.nav.ml-5#navHome.text-white(href="/" style="font-size: 25px;font-family:'Times New Roman';") Holartec
+		button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation")
+			<span class="navbar-toggler-icon"></span>
+
+		.collapse.navbar-collapse#navbarTogglerDemo03
+			ul.navbar-nav.mr-auto.mt-2.mt-xl-0
+				li.nav-item.active
+					a.nav-link(href="/ctBrands") 品牌
+				li.nav-item.active
+					a.nav-link(href="/ctPdfirs") 系列
+				li.nav-item.active
+					a.nav-link(href="/ctNotices") NEWS
+				li.nav-item.active
+					a.nav-link(href="/ctProjects") 项目案例
+				li.nav-item.active
+					a.nav-link(href="/us") 关于我们
+				li.nav-item.active
+					a.nav-link(href="/qr") 二维码追踪
+				li.nav-item.active
+					a.nav-link(href="/ctUser") 系统服务
+			ul.navbar-nav
+				if crUser
+					-a;
+					li
+						a(href="/ctFirm")
+							span.navbar-brand [#{crUser.firm.code}]: 
+						a(href="/crUser/"+crUser._id)
+							span.navbar-brand
+								if crUser.nome
+									-a;
+									strong #{crUser.nome}
+								else
+									strong #{crUser.code}
+					li
+						a.btn.btn-danger(href="/logout") <span class="oi oi-account-logout"></span>

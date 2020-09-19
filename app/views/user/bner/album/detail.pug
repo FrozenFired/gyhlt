@@ -1,0 +1,32 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					a(href="/bnAlbums") List
+					span &nbsp; | &nbsp;
+					span #{title}
+				.col-3.text-right
+					a.btn.btn-info(href="/bnAlbumAdd") +
+		.info
+			.row
+				.col-12 所属品牌: #{album.brand.nome}
+			.row
+				.col-12 图册名称: #{album.nome}
+				.col-12 图册描述: #{album.desp}
+				.col-12
+					span 图册: 
+					span
+						a.text-warning(href=album.pdf, target="_blank")
+							- let photo = '/upload/album/1.jpg';
+							if album.photo
+								- photo = album.photo;
+							img(src=photo, width="100px")
+
+		div(style="height: 200px")
+		.del.text-right
+			a.btn.btn-danger(href="/bnAlbumDel/"+album._id) 删除此图册

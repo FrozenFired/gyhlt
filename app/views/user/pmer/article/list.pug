@@ -1,0 +1,16 @@
+- var flag = 1;
+each article in articles
+	- flag = -flag;
+	div(style="height:100px")
+	.row
+		if flag == 1
+			-a;
+			.col-5
+				include ./list/info
+			.col-7
+				include ./list/photo
+		else
+			.col-7
+				include ./list/photo
+			.col-5
+				include ./list/info

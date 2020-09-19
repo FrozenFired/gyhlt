@@ -1,0 +1,33 @@
+extends ../../../aalayout/layout
+
+block content
+	input#crUserRole(type="hidden", value=crUser.role)
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span 未分配报价
+				.col-3.text-right
+					//- a.btn.btn-info(href="#") +
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#qutSearch(type="text", placeholder="询价单名称搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+
+			button.mr-5.btn.statusClick.btn-success(type="button", data-quter="&quter=null", data-status=Conf.status.quoting.num) 未分配
+			each sts in Conf.qutSts
+				- let stsBtn = "btn-default";
+				if sts == 'quoting'
+					- stsBtn = "btn-success";
+				button.mr-5.btn.statusClick.btn-default(type="button", data-quter="&quter=nenull", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+			button.btn.statusClick#statusAll.btn-default(type="button") 全部
+		.qutsList.mt-3
+			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#qutsElem@mg@&status="+Conf.status.quoting.num)
+			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#qutsElem")
+			#qutsElem.mt-5
+
+		script(src="/js/user/ajaxGet/qut.js")
+		script(src="/js/user/mger/qut/list.js")

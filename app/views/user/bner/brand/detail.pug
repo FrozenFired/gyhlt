@@ -1,0 +1,33 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		input#brandId(type="hidden", value=brand._id)
+		- let logo = brand.logo;
+		if !logo
+			- logo = Conf.picDefault.brand;
+		.title
+			a(href="/bner") Home
+			span &nbsp; | &nbsp;
+			a(href="/bnBrands") Brand List
+			span &nbsp; | &nbsp;
+			span 品牌: [#{brand.nome}]
+			hr
+		include ./detail/info
+
+		.row.mt-5
+			.col-12.col-sm-3
+				include ./detail/pdnome
+			.col-12.col-sm-9
+				//- 添加系列
+				include ./detail/pdfir
+
+	script(src="/js/user/bner/brand/detail.js")
+
+	script(src="/js/user/bner/brand/pdnomeBrand.js")
+
+	script(src="/js/user/ajaxGet/pdfir.js")
+	script(src="/js/user/bner/pdfir/list.js")
+
+	script(src="/js/user/bner/brand/pdfir.js")
+	script(src="/js/user/bner/pdfir/edit.js")

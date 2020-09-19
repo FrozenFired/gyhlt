@@ -1,0 +1,25 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			a(href="/bner") Home
+			span &nbsp; | &nbsp;
+			span Serie List
+			hr
+		.row.mt-3
+			.col-12.col-md-4.col-lg-3.py-4.bg-light.mt-3
+				.count
+					span 查询条目数:
+					span#pdfirCount
+				include ./list/pdnome
+			.col-12.col-md-8.col-lg-9
+				.pdfirsList
+					input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@bn")
+					//- input#pdfirFilterAjax(type="hidden", value="?key=xxx@#pdfirsElem")
+					#pdfirsElem.mt-5
+			
+	script(src="/js/user/bner/pdfir/pdnomeFirm.js")
+
+	script(src="/js/user/ajaxGet/pdfir.js")
+	script(src="/js/user/bner/pdfir/list.js")

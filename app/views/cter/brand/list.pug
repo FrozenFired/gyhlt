@@ -1,0 +1,21 @@
+extends ../aalayout/layout
+
+block content
+	- let pcVideo = "/video/nattuzzi/2.mp4";
+	- let mbVideo = "/video/nattuzzi/2.mp4";
+	include ../aaElement/bgvideoBox
+
+	.container
+		div(style="height: 100px")
+		.option.input-group
+			input.form-control.input-lg#brandSearch(type="text", placeholder="搜索品牌")
+			.input-group-append
+				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+		div(style="height: 100px")
+		.brandsList.bg-light.p-5
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@ct")
+			//- input#brandFilterAjax(type="hidden", value="?key=xxx@#brandsElem")
+			#brandsElem
+		.footerSpace
+	script(src="/js/user/ajaxGet/brand.js")
+	script(src="/js/user/cter/brand/list.js")

@@ -1,0 +1,75 @@
+- var i = -1;
+each dinpd in dinpds
+	- i++;
+	-let compd = dinpd;
+	.row.py-2.mt-2.text-center.border.dinpdCard
+		- let nomeBg = 'bg-default';
+		if dinpd.status == Conf.status.done.num
+			- nomeBg = 'bg-success';
+		else if dinpd.status == Conf.status.del.num
+			- nomeBg = 'bg-danger';
+		- let status = '';
+		each sts in Conf.status
+			- status = '';
+			if sts.num == dinpd.status
+				- status = sts.val;
+				- break;
+
+		.col-4.col-md-2.mt-2(class="dinpd-"+dinpd._id)
+			if dinpd.brand
+				- brand = dinpd.brand;
+				.text-dark [#{brand.nome}]
+			else
+				.text-muted #{dinpd.brandNome}
+		.col-4.col-md-2.mt-2
+			if dinpd.pdfir
+				- pdfir = dinpd.pdfir;
+				div [#{pdfir.code}]
+				img(src=pdfir.photo, width="100%")
+			else
+				- let firNome = '产品系列名称';
+				if dinpd.firNome
+					- firNome = dinpd.firNome;
+				.text-muted #{firNome}
+				- let photo = "/imgs/createPicture.jpg";
+				if dinpd.photo
+					- photo = dinpd.photo;
+				img#photoCrt(src=photo, width="100%")
+		.col-4.col-md-2.mt-2
+			if dinpd.pdsec
+				- pdsec = dinpd.pdsec;
+				div [#{pdsec.code}]
+				img(src=pdsec.photo, width="100%")
+			else
+				- let secNome = '产品设计图';
+				if dinpd.secNome
+					- secNome = dinpd.secNome;
+				.text-muted #{secNome}
+				- let sketch = "/imgs/createPicture.jpg";
+				if dinpd.sketch
+					- sketch = dinpd.sketch;
+				img#sketchCrt(src=sketch, width="100%")
+		.col-4.col-md-4.mt-2.border-left.border-right
+			.quant 数量: #{compd.quant}
+			- let unit = '';
+			each ut in Conf.unit
+				- unit = '';
+				if ut.num == compd.unit
+					- unit = ut.val;
+					- break;
+			if compd.price
+				- price = compd.price;
+				.price 价格: #{compd.price}#{unit}
+				- let total = compd.quant * compd.price;
+				h5.total.text-info 总价: <span id="total-"+compd._id>#{total}</span>#{unit}
+			else
+				.price.text-warning  价格错误
+		.col-4.col-md-2.mt-2
+			if dinpd.pdthd
+				- pdthd = dinpd.pdthd;
+				div [#{pdthd.code}]
+			else
+				.text-muted #{dinpd.thdNome}
+			div(style="height:15px")
+			div(class=nomeBg)
+				span 商品状态: #{status}

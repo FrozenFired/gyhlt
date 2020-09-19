@@ -1,0 +1,57 @@
+.row
+	.col-12.text-right
+		a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>
+
+#upInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#firmForm(method="post", action="/adFirmUpd", enctype="multipart/form-data")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=object._id)
+					.form-group.row
+						label.col-4.col-form-label(for="codeIpt") 公司编号
+						.col-8
+							input#codeIpt.form-control(type="text", name="obj[code]", value=object.code)
+					.form-group.row
+						label.col-4.col-form-label(for="categIpt") 公司类型
+						.col-8
+							select#categIpt.form-control(name="obj[categ]", data-style="btn-info")
+								each categFirm in Conf.categFirm
+									if categFirm.num == object.categ
+										-a;
+										option(value=categFirm.num, selected="selected") #{categFirm.val}
+									else
+										option(value=categFirm.num) #{categFirm.val}
+					.form-group.row
+						label.col-4.col-form-label(for="nomeIpt") 公司名称
+						.col-8
+							input#nomeIpt.form-control(type="text", name="obj[nome]", value=object.nome)
+					.form-group.row
+						label.col-4.col-form-label(for="respIpt") 联系人
+						.col-8
+							input#respIpt.form-control(type="text", name="obj[resp]", value=object.resp)
+					.form-group.row
+						label.col-4.col-form-label(for="telIpt") 电话
+						.col-8
+							input#telIpt.form-control(type="text", name="obj[tel]", value=object.tel)
+					.form-group.row
+						label.col-4.col-form-label(for="nationIpt") 国家
+						.col-8
+							input#nationIpt.form-control(type="text", name="obj[nation]", value=object.nation)
+					.form-group.row
+						label.col-4.col-form-label(for="cityIpt") 城市
+						.col-8
+							input#cityIpt.form-control(type="text", name="obj[city]", value=object.city)
+					.form-group.row
+						label.col-4.col-form-label(for="bankIpt") 银行
+						.col-8
+							input#bankIpt.form-control(type="text", name="obj[bank]", value=object.bank)
+					.form-group.row
+						label.col-4.col-form-label(for="ibanIpt") iban
+						.col-8
+							input#ibanIpt.form-control(type="text", name="obj[iban]", value=object.iban)
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 提交
+script(src="/js/ader/firmEdit.js")

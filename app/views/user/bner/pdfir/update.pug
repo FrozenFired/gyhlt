@@ -1,0 +1,85 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		- let photo = pdfir.photo;
+		if !photo
+			- photo = Conf.picDefault.pdfir;
+		.row
+			.col-8 品牌更新
+			.col-4.text-right
+				a.btn.btn-secondary(href="/bnPdfir/"+pdfir._id) 取消
+		hr
+		form#pdfirUpForm(method="post", action="/bnPdfirUpd", enctype="multipart/form-data")
+			input(type="hidden", name="obj[_id]", value=pdfir._id)
+			input(type="hidden", name="picDir", value=Conf.picPath.pdfir)
+			input(type="hidden", name="obj[picOld]", value=photo)
+			input#picName(type="hidden", name="picName", value=pdfir.nome)
+			.row.my-2
+				.col-12(align="center")
+					img#crtImg(src=photo, width="200px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="picUpload") PdImg
+				.col-8
+					input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="photoIpt") 系列展示图
+				.col-8.col-sm-10
+					input#photoIpt.form-control(type="text", name="obj[photo]", value=pdfir.photo)
+			hr
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="codeIpt") 系列名称
+				.col-8.col-sm-10
+					input#codeIpt.form-control(type="text", name="obj[code]", value=pdfir.code)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label 品类
+				.col-8.col-sm-10
+					select.form-control(name="obj[pdnome]", data-style="btn-info")
+						option(value="") 请选择品类
+						each pdnome in pdfir.brand.pdnomes
+							if pdfir.pdnome == pdnome
+								-a;
+								option(value=pdnome, selected="selected") #{pdnome}
+							else
+								option(value=pdnome) #{pdnome}
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="despIpt") 系列描述
+				.col-8.col-sm-10
+					textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="系列描述")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="websiteIpt") 系列网址
+				.col-8.col-sm-10
+					input#websiteIpt.form-control(type="text", name="obj[website]", value=pdfir.website)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="shelfIpt") 上下架
+				.col-8.col-sm-4
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each key in Object.keys(Conf.shelf)
+							if key == pdfir.shelf
+								-a;
+								option(value=key, selected="selected") #{Conf.shelf[key]}
+							else
+								option(value=key) #{Conf.shelf[key]}
+				label.col-4.col-sm-2.text-right.col-form-label(for="weightIpt") 权重
+				.col-8.col-sm-4
+					input#weightIpt.form-control(type="number", name="obj[weight]", value=pdfir.weight)
+			hr
+			each i in [0, 1, 2, 3, 4, 5]
+				- let photoi = '';
+				if pdfir.photos && pdfir.photos.length > i
+					- photoi = pdfir.photos[i];
+				if photoi.length > 0
+					-a;
+					.form-group.row
+						.col-4.col-sm-2
+						.col-8.col-sm-6
+							img(src=photoi, width="160px", height="100px")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="photosIpt") 子图片[#{i+1}]
+					.col-8.col-sm-6
+						input#photosIpt.form-control(type="text", name="obj[photos]["+i+"]", value=pdfir.photos[i])
+			hr
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="更新")
+	script(src="/js/user/bner/pdfir/edit.js")

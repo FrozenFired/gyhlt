@@ -1,0 +1,124 @@
+.qunpds.mt-5
+	each qunpd in qunpds
+		- let nomeBg = 'bg-default';
+		if qunpd.qntpdSts == Conf.status.done.num
+			- nomeBg = 'bg-success';
+		else if qunpd.qntpdSts == Conf.status.del.num
+			- nomeBg = 'bg-danger';
+		- let status = '';
+		each sts in Conf.status
+			- status = '';
+			if sts.num == qunpd.qntpdSts
+				- status = sts.val;
+				- break;
+
+		.row.py-2.mt-2.text-center.border.qunpdCard
+			.col-4.col-md-2.mt-2(class="qunpd-"+qunpd._id)
+				if qunpd.brand
+					- brand = qunpd.brand;
+					.text-dark [#{brand.nome}]
+				else
+					.text-muted #{qunpd.brandNome}
+				if qun.status == Conf.status.init.num
+						a-;
+						a.btn.btn-info.mt-5(href="/slQunpd/"+qunpd._id) 查看详情
+			.col-4.col-md-2.mt-2
+				if qunpd.pdfir
+					- pdfir = qunpd.pdfir;
+					div [#{pdfir.code}]
+					img(src=pdfir.photo, width="100%")
+				else
+					- let firNome = '产品系列名称';
+					if qunpd.firNome
+						- firNome = qunpd.firNome;
+					.text-muted #{firNome}
+					- let photo = "/imgs/createPicture.jpg";
+					if qunpd.photo
+						- photo = qunpd.photo;
+					img#photoCrt(src=photo, width="100%")
+					if qun.status == Conf.status.init.num
+						a-;
+						form#photoForm(style="display:none", method="post", action="/slQunpdImg", enctype="multipart/form-data")
+							input(type="hidden", name="obj[_id]", value=qunpd._id)
+							input(type="hidden", name="picDir", value=Conf.picPath.compd)
+							input(type="hidden", name="obj[picOld]", value=photo)
+							input(type="hidden", name="picName", value=crUser.firm.code+'_'+qun.nome)
+							input(type="hidden", name="obj[photo]", value=1)
+							.form-group.udPhoto.row(style="display:none")
+								.col-12
+									label.col-form-label(for="photoUpload") pdImg
+									input#photoUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+							.form-group.row
+								.col-4
+									a.btn.btn-secondary(href="/slQun/"+qun._id) 取消
+								.col-8.text-right
+									input.btn.btn-info(type="submit" value="更改图片")
+			.col-4.col-md-2.mt-2
+				if qunpd.pdsec
+					- pdsec = qunpd.pdsec;
+					div [#{pdsec.code}]
+					div [#{pdsec.spec}]
+					img(src=pdsec.photo, width="100%")
+				else
+					- let secNome = '产品设计图';
+					if qunpd.secNome
+						- secNome = qunpd.secNome;
+					.text-muted #{secNome}
+					- let sketch = "/imgs/createPicture.jpg";
+					if qunpd.sketch
+						- sketch = qunpd.sketch;
+					img#sketchCrt(src=sketch, width="100%")
+					if qun.status == Conf.status.init.num
+						a-;
+						form#sketchForm(style="display:none", method="post", action="/slQunpdImg", enctype="multipart/form-data")
+							input(type="hidden", name="obj[_id]", value=qunpd._id)
+							input(type="hidden", name="picDir", value=Conf.picPath.compd)
+							input(type="hidden", name="obj[picOld]", value=sketch)
+							input(type="hidden", name="picName", value=crUser.firm.code+'_'+qun.nome)
+							input(type="hidden", name="obj[sketch]", value=1)
+							.form-group.udPhoto.row(style="display:none")
+								.col-12
+									label.col-form-label(for="sketchUpload") pdImg
+									input#sketchUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+							.form-group.row
+								.col-4
+									a.btn.btn-secondary(href="/slQun/"+qun._id) 取消
+								.col-8.text-right
+									input.btn.btn-info(type="submit" value="更改图片")
+			.col-4.col-md-2.mt-2
+				if qunpd.pdthd
+					- pdthd = qunpd.pdthd;
+					div [#{pdthd.code}]
+					each mater in qunpd.pdthd.maters
+						-a;
+						.text-dark.mt-2 #{mater}
+				else
+					.text-muted #{qunpd.thdNome}
+			.col-4.col-md-2.mt-2.border
+				if qun.status < Conf.status.done.num
+					-a;
+					div(title="准确价格需要等待定价完成") 预估价格
+				-let compd = qunpd;
+				.quant 数量: #{compd.quant}
+				- let unit = '';
+				each ut in Conf.unit
+					- unit = '';
+					if ut.num == compd.unit
+						- unit = ut.val;
+						- break;
+
+				if compd.price
+					- price = compd.price;
+					.price 单价: #{compd.price}#{unit}
+				else
+					.price.text-warning  未报价
+				- let total = compd.quant * compd.price;
+				if !isNaN(total)
+					- total;
+					h5.total.text-info 总价: #{total}#{unit}
+			.col-4.col-md-2.mt-2
+				if qun.status > Conf.status.init.num
+					-a;
+					div(class=nomeBg) 商品状态: #{status}
+
+script(src="/js/user/sler/qun/detail/compdList.js")

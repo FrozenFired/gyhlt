@@ -1,0 +1,27 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.row.my-3
+			.col-12.text-right
+				a.btn.btn-info(href="/userAdd") +
+		table.table.table-hover.table-bordered
+			thead
+				tr
+					th 帐号
+					th 名字
+					th 角色
+			tbody
+				each user in users
+					-a;
+					tr(class="user-id-"+user._id)
+						td: a(href="/user/"+user._id) #{user.code}
+						td #{user.nome}
+						td 
+							- let role = '';
+							each roleUser in Conf.roleUser
+								- role = '';
+								if roleUser.num == user.role
+									- role = roleUser.val;
+									- break;
+							span #{role}

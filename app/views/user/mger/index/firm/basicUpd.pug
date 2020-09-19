@@ -1,0 +1,42 @@
+.row
+	.col-12.text-right
+		a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>
+
+#upInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#firmForm(method="post", action="/mgFirmUpd", enctype="multipart/form-data")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=firm._id)
+					.form-group.row
+						label.col-4.col-form-label(for="nomeIpt") 公司名称
+						.col-8
+							input#nomeIpt.form-control(type="text", name="obj[nome]", value=firm.nome)
+					.form-group.row
+						label.col-4.col-form-label(for="respIpt") 联系人
+						.col-8
+							input#respIpt.form-control(type="text", name="obj[resp]", value=firm.resp)
+					.form-group.row
+						label.col-4.col-form-label(for="telIpt") 电话
+						.col-8
+							input#telIpt.form-control(type="text", name="obj[tel]", value=firm.tel)
+					.form-group.row
+						label.col-4.col-form-label(for="nationIpt") 国家
+						.col-8
+							input#nationIpt.form-control(type="text", name="obj[nation]", value=firm.nation)
+					.form-group.row
+						label.col-4.col-form-label(for="cityIpt") 城市
+						.col-8
+							input#cityIpt.form-control(type="text", name="obj[city]", value=firm.city)
+					.form-group.row
+						label.col-4.col-form-label(for="bankIpt") 银行
+						.col-8
+							input#bankIpt.form-control(type="text", name="obj[bank]", value=firm.bank)
+					.form-group.row
+						label.col-4.col-form-label(for="ibanIpt") iban
+						.col-8
+							input#ibanIpt.form-control(type="text", name="obj[iban]", value=firm.iban)
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 提交

@@ -1,0 +1,51 @@
+a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>
+
+#upInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#upInfo(method="post", action="/adUserUpInfo", enctype="multipart/form-data")
+				.modal-header: h3 <span class="oi oi-pencil"></span>
+				.modal-body
+					input(type="hidden", name="obj[firm]", value=user.firm._id)
+					input(type="hidden", name="obj[_id]", value=user._id)
+					.form-group.row
+						label.col-3.col-form-label(for="iptNome") Name
+						.col-9
+							input#iptNome.form-control(type="text", name="obj[nome]" value=user.nome)
+						.offset-3.col-9.col-form-label.text-danger
+					.form-group.row
+						label.col-3.col-form-label(for="iptRl") role
+						.col-9
+							select#iptRl.form-control(name="obj[role]", data-style="btn-info")
+								each roleUser in Conf.roleUser
+									-a;
+									if roleUser.num == user.role
+										-a;
+										option(value=roleUser.num, selected="selected") #{roleUser.val}
+									else
+										option(value=roleUser.num) #{roleUser.val}
+					.form-group.row
+						label.col-3.col-form-label(for="shelfIpt") 管理上下架
+						.col-9
+							select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+								each key in Object.keys(Conf.shelf)
+									-a;
+									if user.shelf == key
+										-a;
+										option(value=key, selected="selected") #{Conf.shelf[key]}
+									else
+										option(value=key) #{Conf.shelf[key]}
+					.form-group.row
+						label.col-3.col-form-label(for="iptLang") language
+						.col-9
+							select#iptLang.form-control(name="obj[lang]", data-style="btn-info")
+								each userLang in Conf.userLang
+									-a;
+									if userLang.num == user.lang
+										-a;
+										option(value=userLang.num, selected="selected") #{userLang.val}
+									else
+										option(value=userLang.num) #{userLang.val}
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 提交

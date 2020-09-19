@@ -1,0 +1,12 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title.text-muted.mt-2: h5
+			a(href="/cter") Home
+			span &nbsp; | &nbsp;
+			a(href="/ctNotices") 新闻列表
+			span &nbsp; | &nbsp;
+			span #{title}
+		.info
+			include ../detail

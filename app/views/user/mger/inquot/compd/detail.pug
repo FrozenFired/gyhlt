@@ -1,0 +1,94 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-9 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/mgQut/"+qutpd.inquot._id) 报价单
+					span &nbsp; | &nbsp;
+					span 报价产品
+				.col-3.text-right
+					a.btn.btn-warning(href="/mgQutpdUp/"+qutpd._id) 更新
+			hr
+		.info
+			- let stsBg = 'bg-default';
+			if qutpd.qntpdSts == Conf.status.done.num
+				- stsBg = 'bg-success';
+			else if qutpd.qntpdSts == Conf.status.del.num
+				- stsBg = 'bg-danger';
+			- let status = '';
+			each sts in Conf.status
+				- status = '';
+				if sts.num == qutpd.qntpdSts
+					- status = sts.val;
+					- break;
+			.row.py-2.mt-2.text-center.border.qutpdCard
+				.col-4.col-md-2.mt-2
+					if qutpd.brand
+						- brand = qutpd.brand;
+						div [#{brand.nome}]
+					else
+						.text-muted #{qutpd.brandNome}
+				.col-4.col-md-2.mt-2
+					if qutpd.pdfir
+						- pdfir = qutpd.pdfir;
+						div [#{pdfir.code}]
+						img(src=pdfir.photo, width="100%")
+					else
+						- let firNome = '产品系列名称';
+						if qutpd.firNome
+							- firNome = qutpd.firNome;
+						.text-muted #{firNome}
+						- let photo = "/imgs/createPicture.jpg";
+						if qutpd.photo
+							- photo = qutpd.photo;
+						img#photoCrt(src=photo, width="100%")
+				.col-4.col-md-2.mt-2
+					if qutpd.pdsec
+						- pdsec = qutpd.pdsec;
+						div [#{pdsec.code}]
+						div [#{pdsec.spec}]
+						img(src=pdsec.photo, width="100%")
+					else
+						- let secNome = '产品设计图';
+						if qutpd.secNome
+							- secNome = qutpd.secNome;
+						.text-muted #{secNome}
+						- let sketch = "/imgs/createPicture.jpg";
+						if qutpd.sketch
+							- sketch = qutpd.sketch;
+						img#sketchCrt(src=sketch, width="100%")
+				.col-4.col-md-2.mt-2
+					if qutpd.pdthd
+						- pdthd = qutpd.pdthd;
+						div 
+							span [#{pdthd.code}] &nbsp;
+							span.text-info #{pdthd.price} €
+						each mater in qutpd.pdthd.maters
+							-a;
+							.text-dark.mt-2 #{mater}
+					else
+						.text-muted #{qutpd.thdNome}
+				.col-4.col-md-2.mt-2
+					-let compd = qutpd;
+					include ../aaElement/compdQPU
+				.col-4.col-md-2.mt-2
+					.quter.my-3
+						div 报价人: 
+						if qutpd.quter
+							- quter = qutpd.quter;
+							div #{quter.nome} [#{quter.code}]
+						else
+							div.text-warning 未分配
+						if qutpd.inquot.status >= Conf.status.pricing.num
+							-a;
+							.mt-3 供应商: 
+							if qutpd.strmup
+								- strmup = qutpd.strmup;
+								div #{strmup.nome}
+							else
+								div.text-warning 未分配
+					div(class=stsBg) #{status}

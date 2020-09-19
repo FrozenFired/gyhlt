@@ -1,0 +1,16 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/pmProjects") 项目列表
+					span &nbsp; | &nbsp;
+					span #{title}
+				.col-3.text-right
+					a.btn.btn-warning(href="/pmProjectUp/"+article._id) 更新
+		.info
+			include ../detail

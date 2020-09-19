@@ -1,0 +1,23 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/pmStrmdws") Suppliers
+					span &nbsp; | &nbsp;
+					span #{strmdw.nome}
+			hr
+		.basic.text-center
+			.row
+				.col-10
+					h3.nome #{strmdw.nome}
+				.col-2
+					a.btn.btn-warning(href="/pmStrmdwUp/"+strmdw._id) 更新
+			include ./detail/info
+		.sells
+			include ./detail/sell
+	script(src="/js/user/pmer/strmdw/detail.js")

@@ -1,0 +1,30 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		
+		table.mt-3.table.table-hover.bg-light
+			tr
+				td <strong>公司编号:</strong>
+				td #{firm.code}
+			tr
+				td <strong>公司名:</strong>
+				td #{firm.nome}
+			tr
+				td <strong>联系人:</strong> 
+				td #{firm.resp}
+			tr
+				td <strong>电话:</strong>
+				td #{firm.tel}
+			tr
+				td <strong>国家:</strong>
+				td #{firm.nation}
+			tr
+				td <strong>城市:</strong>
+				td #{firm.city}
+			tr
+				td <strong>银行:</strong>
+				td #{firm.bank}
+			tr
+				td <strong>iban:</strong>
+				td #{firm.iban}

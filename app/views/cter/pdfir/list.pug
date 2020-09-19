@@ -1,0 +1,17 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		div(style="height: 100px")
+		- var pdnomes = firm.pdnomes;
+		include ./list/pdnome
+
+		div(style="height: 100px")
+		.pdfirsList
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@ct")
+			//- input#pdfirFilterAjax(type="hidden", value="?key=xxx@#pdfirsElem")
+			#pdfirsElem
+		
+		.footerSpace
+	script(src="/js/user/ajaxGet/pdfir.js")
+	script(src="/js/user/cter/pdfir/list.js")

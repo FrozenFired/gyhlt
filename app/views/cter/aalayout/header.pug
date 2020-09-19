@@ -1,0 +1,39 @@
+.pcSpace
+	.topNav-first-header.text-center.text-white
+		.row(style="line-height: 90px;text-align: center;")
+			.col-lg-5
+				.row.mx-5
+					.col-4
+						a.nav#navBrand.text-white(href="/ctBrands") 品牌
+					.col-4
+						a.nav#navCateg.text-white(href="/ctPdfirs") 产品系列
+					.col-4
+						a.nav#navProject.text-white(href="#") 现货(更新中)
+			.col-lg-2
+				a.nav#navHome.text-white(href="/" style="font-size: 45px;font-family:'Times New Roman';") Holartec
+			.col-lg-5
+				.row.mx-5
+					.col-3
+						a.nav#navAbout.text-white(href="/us") 关于我们
+					.col-3
+						a.nav#navNews.text-white(href="/ctNotices") NEWS
+					.col-3
+						a.nav#navAbout.text-white(href="/qr") 二维码追踪
+					.col-3
+						a.nav#navContact.text-white(href="/ctUser") 系统服务
+	.topNav-second-header.border-top.navCateg(style="display:none")
+		.row.m-5
+			.col-lg-5
+				.row
+					- var i = 0;
+					each pdnome in firm .pdnomes
+						- i++;
+						if i > 10
+							- break;
+						.col-6.mt-3
+							a.text-white(href="/ctPdfirs?pdnome="+pdnome) #{pdnome}
+			.col-lg-7
+				.row#navPdfirs
+			
+
+	.topNav-second-headerHide.navCateg(style="display:none")

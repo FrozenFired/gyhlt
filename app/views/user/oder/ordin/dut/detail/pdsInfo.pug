@@ -1,0 +1,98 @@
+.dinpds.mt-5
+	each dinpd in dinpds
+		- let nomeBg = 'bg-default';
+		if dinpd.status == Conf.status.done.num
+			- nomeBg = 'bg-success';
+		else if dinpd.status == Conf.status.del.num
+			- nomeBg = 'bg-danger';
+		- let status = '';
+		each sts in Conf.status
+			- status = '';
+			if sts.num == dinpd.status
+				- status = sts.val;
+				- break;
+		.row.py-2.mt-2.text-center.border.dinpdCard
+			.col-4.col-md-2.mt-2(class="dinpd-"+dinpd._id)
+				if dinpd.brand
+					- brand = dinpd.brand;
+					.text-dark [#{brand.nome}]
+				else
+					.text-muted #{dinpd.brandNome}
+			.col-4.col-md-2.mt-2
+				if dinpd.pdfir
+					- pdfir = dinpd.pdfir;
+					div [#{pdfir.code}]
+					img(src=pdfir.photo, width="100%")
+				else
+					- let firNome = '产品系列名称';
+					if dinpd.firNome
+						- firNome = dinpd.firNome;
+					.text-muted #{firNome}
+					- let photo = "/imgs/createPicture.jpg";
+					if dinpd.photo
+						- photo = dinpd.photo;
+					img#photoCrt(src=photo, width="100%")
+					if din.status == Conf.status.init.num
+						a-;
+						form#photoForm(style="display:none", method="post", action="/bsQunpdImg", enctype="multipart/form-data")
+							input(type="hidden", name="obj[_id]", value=dinpd._id)
+							input(type="hidden", name="picDir", value=Conf.picPath.compd)
+							input(type="hidden", name="obj[picOld]", value=photo)
+							input(type="hidden", name="picName", value=crUser.firm.code+'_'+din.nome)
+							input(type="hidden", name="obj[photo]", value=1)
+							.form-group.udPhoto.row(style="display:none")
+								.col-12
+									label.col-form-label(for="photoUpload") pdImg
+									input#photoUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+							.form-group.row
+								.col-4
+									a.btn.btn-secondary(href="/bsQun/"+din._id) 取消
+								.col-8.text-right
+									input.btn.btn-info(type="submit" value="更改图片")
+			.col-4.col-md-2.mt-2
+				if dinpd.pdsec
+					- pdsec = dinpd.pdsec;
+					div [#{pdsec.code}]
+					img(src=pdsec.photo, width="100%")
+				else
+					- let secNome = '产品设计图';
+					if dinpd.secNome
+						- secNome = dinpd.secNome;
+					.text-muted #{secNome}
+					- let sketch = "/imgs/createPicture.jpg";
+					if dinpd.sketch
+						- sketch = dinpd.sketch;
+					img#sketchCrt(src=sketch, width="100%")
+					if din.status == Conf.status.init.num
+						a-;
+						form#sketchForm(style="display:none", method="post", action="/bsQunpdImg", enctype="multipart/form-data")
+							input(type="hidden", name="obj[_id]", value=dinpd._id)
+							input(type="hidden", name="picDir", value=Conf.picPath.compd)
+							input(type="hidden", name="obj[picOld]", value=sketch)
+							input(type="hidden", name="picName", value=crUser.firm.code+'_'+din.nome)
+							input(type="hidden", name="obj[sketch]", value=1)
+							.form-group.udPhoto.row(style="display:none")
+								.col-12
+									label.col-form-label(for="sketchUpload") pdImg
+									input#sketchUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+							.form-group.row
+								.col-4
+									a.btn.btn-secondary(href="/bsQun/"+din._id) 取消
+								.col-8.text-right
+									input.btn.btn-info(type="submit" value="更改图片")
+			.col-4.col-md-2.mt-2
+				if dinpd.pdthd
+					- pdthd = dinpd.pdthd;
+					div [#{pdthd.code}]
+				else
+					.text-muted #{dinpd.thdNome}
+			.col-4.col-md-2.mt-2
+				-let compd = dinpd;
+				include ../../aaElement/compdQPU
+			.col-4.col-md-2.mt-2
+				div(class=nomeBg)
+					if din.status == Conf.status.init.num
+						a-;
+						a.text-dark(href="/bsQunpd/"+dinpd._id) 商品状态: #{status}
+					else 
+						span 商品状态: #{status}

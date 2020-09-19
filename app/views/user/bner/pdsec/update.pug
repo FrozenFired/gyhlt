@@ -1,0 +1,49 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		- let photo = pdsec.photo;
+		if !photo
+			- photo = Conf.picDefault.pdsec;
+		.row
+			.col-8 品牌更新
+			.col-4.text-right
+				a.btn.btn-secondary(href="/bnPdsec/"+pdsec._id) 取消
+		hr
+		form#pdsecForm(method="post", action="/bnPdsecUpd", enctype="multipart/form-data")
+			input(type="hidden", name="obj[_id]", value=pdsec._id)
+			input#pdfirIpt(type="hidden", name="obj[pdfir]", value=pdsec.pdfir._id)
+			input(type="hidden", name="picDir", value=Conf.picPath.pdsec)
+			input(type="hidden", name="obj[picOld]", value=photo)
+			input#firmCode(type="hidden", value=crUser.firm.code)
+			input#picName(type="hidden", name="picName", value=crUser.firm.code+'_'+pdsec.code)
+			.row.my-2
+				.col-12(align="center")
+					img#crtImg(src=photo, width="150px")
+			.form-group.row.udPhoto(style="display:none")
+				label.col-4.col-form-label(for="picUpload") PdImg
+				.col-8
+					input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品展示图
+				.col-8.col-sm-10
+					input#photoIpt.form-control(type="text", name="obj[photo]", value=pdsec.photo)
+			hr
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="codeIpt") 产品编号
+				.col-8.col-sm-10
+					input#codeIpt.form-control(type="text", name="obj[code]", value=pdsec.code)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="specIpt") 产品规格尺寸
+				.col-8.col-sm-10
+					input#specIpt.form-control(type="text", name="obj[spec]", value=pdsec.spec)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="despIpt") 产品描述
+				.col-8.col-sm-10
+					textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="产品描述")
+			hr
+			
+			.form-group.row
+				.col-12.text-right
+					input.btn.btn-success(type="submit", value="提交")
+	script(src="/js/user/bner/pdsec/edit.js")

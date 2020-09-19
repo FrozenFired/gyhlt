@@ -1,0 +1,27 @@
+extends ../aalayout/layout
+
+block content
+	include ./detail/info
+	.container
+		div(style="height:80px")
+		- var pdnomes = brand.pdnomes;
+		include ../pdfir/list/pdnome
+
+		div(style="height:80px")
+
+		.row
+			.col-12.col-sm-4.pr-5
+				if brand.desp && brand.desp.length > 0
+					-a;
+					span !{brand.desp}
+			.col-12.col-sm-8.pl-5
+				input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?pagesize=6&brandId="+brand._id+"@#pdfirsElem@ct")
+				#pdfirsElem
+
+				input#ifload(type="hidden", value="loadno")
+				button.my-5.btn.btn-default.btn-block.ifload(type="button") 加载全部系列
+
+	script(src="/js/user/cter/brand/detail.js")
+
+	script(src="/js/user/ajaxGet/pdfir.js")
+	script(src="/js/user/cter/pdfir/list.js")

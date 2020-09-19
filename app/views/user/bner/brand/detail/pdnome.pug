@@ -1,0 +1,28 @@
+.row
+	.col-12
+		form#pdnomeForm(method="post", action="/bnBrandPdnomeNew",  enctype="multipart/form-data", style="display:none")
+			input(type="hidden", name="id", value=brand._id)
+			.form-group.row
+				.col-8
+					input#pdnomeBrandIpt.form-control(type="text", name="pdnome")
+				.col-4.text-right
+					input.btn.btn-success(type="submit" value="添加")
+
+.row#pdnomeBtn
+	.col-6
+		button.btn.btn-warning.pdnomeDelTogg(type="button") -
+	.col-6.text-right
+		button.btn.btn-info.pdnomeFormTogg(type="button") +
+
+if brand.pdnomes && brand.pdnomes.length > 0
+	-a;
+	.row.text-center.mt-5
+		.col-2
+		.col-10: button.btn.btn-success.btn-block.pdnomeClick#pdnomeAll(type="button") 品类
+	each pdnome in brand.pdnomes
+		-a;
+		.row.my-3(class="pdnomeRow-"+pdnome)
+			.col-2
+				button.btn.btn-danger.btn-block.pdnomeDel(type="button", data-pdnome=pdnome, data-id=brand._id, style="display:none") -
+			.col-10
+				button.btn.btn-default.btn-block.pdnomeClick(type="button", data-pdnome=pdnome) #{pdnome}

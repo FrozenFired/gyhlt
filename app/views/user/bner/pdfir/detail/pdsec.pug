@@ -1,0 +1,59 @@
+#pdsecsPage
+	.row
+		.col-12.col-sm-6.input-group
+			input.form-control#pdsecSearch(type="text", placeholder="搜索产品")
+			.input-group-append
+				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+		.col-6.col-sm-3
+			//- button.btn.btn-warning.btn-block(type="button") + 同步产品#
+			.count
+				span 查询条目数:
+				span#pdsecCount
+		.col-6.col-sm-3
+			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 添加产品
+	input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?pdfirId="+pdfir._id+"@#pdsecsElem@bn")
+	#pdsecsElem.mt-5
+
+//- 添加产品
+#pdsecAddPage(style="display:none")
+	.row.my-3
+		.col-12.col-sm-6
+		.col-12.col-sm-3
+		.col-12.col-sm-3
+			button.btn.btn-secondary.btn-block#pdsecsPageShow(type="button") 取消添加
+
+	form#pdsecForm(method="post", action="/bnPdsecNew", enctype="multipart/form-data")
+		input#pdfirIpt(type="hidden", name="obj[pdfir]", value=pdfir._id)
+
+		input(type="hidden", name="picDir", value=Conf.picPath.pdsec)
+		input#firmCode(type="hidden", value=crUser.firm.code)
+		input#picName(type="hidden", name="picName", value=crUser.firm.code)
+		.row
+			.col-12(align="center")
+				img#crtImg.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+		.form-group.row.udPhoto(style="display:none")
+			label.col-4.col-form-label(for="picUpload") PdImg
+			.col-8
+				input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品展示图
+			.col-8.col-sm-10
+				input#photoIpt.form-control(type="text", name="obj[photo]")
+		hr
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="codeIpt") 产品编号
+			.col-8.col-sm-10
+				input#codeIpt.form-control(type="text", name="obj[code]")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="nomeIpt") 产品名
+			.col-8.col-sm-10
+				input#nomeIpt.form-control(type="text", name="obj[nome]")
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="despIpt") 产品描述
+			.col-8.col-sm-10
+				textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="产品描述")
+		hr
+		
+		.form-group.row
+			.col-12.text-right
+				input.btn.btn-success(type="submit", value="添加")

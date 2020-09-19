@@ -1,0 +1,27 @@
+extends ../aalayout/layout
+
+block content
+	- let pcVideo = "/video/nattuzzi/1.mp4";
+	- let mbVideo = "/video/nattuzzi/1.mp4";
+	include ../aaElement/bgvideoBox
+
+	.homeSpace
+	if brands
+		-a;
+		include ./home/brandPost
+	.bg-light
+		.container
+			.brandsHome
+				input#brandFilterAjax(type="hidden", value="/usBrandsAjax?pagesize=6@#brandsElem@ct")
+				#brandsElem
+				.row.mx-1.text-center
+					.col-12
+						a.btn.btn-link.text-secondary(href="/ctBrands"): h5.bg-white 查看更多品牌
+		div(style="height: 150px")
+		.container-fluid
+			include ./home/article
+
+	div.bg-light(style="height: 100px")
+
+	script(src="/js/user/ajaxGet/brand.js")
+	script(src="/js/user/cter/index/index.js")

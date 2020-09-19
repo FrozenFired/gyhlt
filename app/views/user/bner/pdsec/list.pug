@@ -1,0 +1,27 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					span product List
+				.col-3.text-right
+					span#pdsecCount
+					span &nbsp;
+					button.btn.btn-light#searchTog(type="button") <span class="oi oi-align-right"></span>
+			.bg-white.input-group.py-3.my-3#searchElem(style="display:none")
+				input.form-control#pdsecSearch(type="text", placeholder="产品号搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+		.row.mt-3
+			.col-12
+				.pdsecsList
+					input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@bn")
+					//- input#pdsecFilterAjax(type="hidden", value="?key=xxx@#pdsecsElem")
+					#pdsecsElem.mt-5
+
+	script(src="/js/user/ajaxGet/pdsec.js")
+	script(src="/js/user/bner/pdsec/list.js")

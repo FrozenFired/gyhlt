@@ -1,0 +1,46 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span Inquiry List
+				.col-3.text-right
+					button.btn.btn-info.qunAddBtn(type="button") +
+					button.btn.btn-secondary.qunCancelBtn(type="button", style="display:none") 取消
+		.qunAddPage.border.p-5.my-5.bg-light(style="display:none")
+			form#qunForm(method="post", action="/slQunNew", enctype="multipart/form-data")
+				.form-group.row.ctersel#cterNome
+					label.col-3.col-form-label(for="cterNomeIpt") 客户名字
+					.col-9
+						input#cterNomeIpt.form-control(type="text", name="obj[cterNome]", placeholder="填写客户名字", autocomplete="off")
+				.form-group.row
+					label.col-3.col-form-label(for="qunNoteIpt") 备注
+					.col-9
+						input#qunNoteIpt.form-control(type="text", name="obj[qunNote]", placeholder="询价单备注", autocomplete="off")
+					.offset-3.col-9.col-form-label.text-danger
+				.form-group.row
+					.offset-sm-10.col-sm-2
+						input.btn.btn-success.btn-block(type="submit" value="下一步")
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#qunSearch(type="text", placeholder="询价单名称搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			each sts in Conf.qunSts
+				- let stsBtn = "btn-default";
+				if sts == 'init'
+					- stsBtn = "btn-success";
+				button.mr-5.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+		.qunsList.mt-3
+			input#qunFilterAjax(type="hidden", value="/usQunsAjax?@#qunsElem@sl@&status="+Conf.status.init.num)
+			//- input#qunFilterAjax(type="hidden", value="?key=xxx@#qunsElem")
+			#qunsElem.mt-5
+		script(src="/js/user/sler/qun/edit.js")
+
+		script(src="/js/user/ajaxGet/qun.js")
+		script(src="/js/user/sler/qun/list.js")

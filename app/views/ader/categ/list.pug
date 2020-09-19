@@ -1,0 +1,24 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row
+			.col-12.text-right
+				a.btn.btn-warning(href="/adCategAdd") <span class="oi oi-plus"></span>
+		.row.mt-3
+			.col-12
+				table.table.table-hover.table-bordered
+					thead
+						tr
+							th 默认名称
+							th 英文
+							th 中文
+							th 意大利文
+					tbody
+						each categ in categs
+							-a;
+							tr(class="categ-id-"+categ._id)
+								td: a(href="/adCateg/"+categ._id) #{categ.code}
+								td #{categ.en}
+								td #{categ.cn}
+								td #{categ.it}

@@ -1,0 +1,31 @@
+.row
+	.col-12.text-right
+		a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>
+
+#upInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#categForm(method="post", action="/adCategUpd", enctype="multipart/form-data")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=object._id)
+					.form-group.row
+						label.col-4.col-form-label(for="codeIpt") 品类名称
+						.col-8
+							input#codeIpt.form-control(type="text", name="obj[code]", value=object.code)
+					.form-group.row
+						label.col-4.col-form-label(for="enIpt") 英文名称
+						.col-8
+							input#enIpt.form-control(type="text", name="obj[en]", value=object.en)
+					.form-group.row
+						label.col-4.col-form-label(for="cnIpt") 中文名称
+						.col-8
+							input#cnIpt.form-control(type="text", name="obj[cn]", value=object.cn)
+					.form-group.row
+						label.col-4.col-form-label(for="itIpt") 意大利文
+						.col-8
+							input#itIpt.form-control(type="text", name="obj[it]", value=object.it)
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 提交
+script(src="/js/ader/categEdit.js")

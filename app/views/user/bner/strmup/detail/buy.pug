@@ -1,0 +1,9 @@
+if buys && buys.length > 0
+	-a;
+	each buy in buys
+		-let brand = buy.brand;
+		.row.mt-3.border
+			.col-6 #{brand.nome}
+			.col-6 
+				h3 #{buy.discount}
+				div #{buy.note}

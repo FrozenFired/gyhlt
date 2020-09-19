@@ -1,0 +1,46 @@
+#pdthdsPage
+	.row
+		.col-12.col-sm-9
+		.col-6.col-sm-3
+			button.btn.btn-info.btn-block#pdthdAddPageShow(type="button") + 添加价格单
+	input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?pdsecId="+pdsec._id+"@#pdthdsElem@bn")
+	#pdthdsElem.mt-5
+
+//- 添加产品
+#pdthdAddPage(style="display:none")
+	.row.my-3
+		.col-12.col-sm-6
+		.col-12.col-sm-3
+		.col-12.col-sm-3
+			button.btn.btn-secondary.btn-block#pdthdsPageShow(type="button") 取消添加
+
+	form#pdthdForm(method="post", action="/bnPdthdNew", enctype="multipart/form-data")
+		input#pdsecIpt(type="hidden", name="obj[pdsec]", value=pdsec._id)
+		hr
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="codeIpt") 编号
+			.col-8.col-sm-10
+				input#codeIpt.form-control(type="text", name="obj[code]")
+			.col-4.col-sm-2
+			.col-8.col-sm-10.text-danger#codeOpt
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="priceIpt") 价格
+			.col-8.col-sm-10
+				input#priceIpt.form-control(type="text", name="obj[price]")
+			.col-4.col-sm-2
+			.col-8.col-sm-10.text-danger#priceOpt
+		.form-group.row
+			label.col-4.col-sm-2.col-form-label(for="noteIpt") 备注
+			.col-8.col-sm-10
+				textarea#noteIpt.form-control(type="text", rows="3", name="obj[note]", placeholder="备注")
+		.form-group.row
+			label.col-sm-2.col-form-label 材料
+			each i in [0, 1, 2]
+				- a;
+				.col-sm-3
+					input.form-control(type="text", name="obj[maters]["+i+"]")
+		hr
+		
+		.form-group.row
+			.col-12.text-right
+				input.btn.btn-success(type="submit", value="添加")

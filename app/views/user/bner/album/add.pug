@@ -1,0 +1,48 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					span #{title}
+				.col-3.text-right
+					a.btn.btn-secondary(href="/bnAlbums") 取消
+		.info.mt-5
+			form#addForm(method="post", action="/bnAlbumNew", enctype="multipart/form-data")
+				input(type="hidden", name="fl[dir]", value=Conf.filePath.album)
+				input(type="hidden", name="fl[suffixs]", value="pdf,PDF")
+				input#fileName(type="hidden", name="fl[nome]")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="fileUpload") PdImg
+					.col-8.col-sm-10
+						input#fileUpload.btn.btn-info.btn-block(type="file", name="fileUpload")
+				hr
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="yearIpt") 年份
+					.col-8.col-sm-10
+						input#yearIpt.form-control(type="number", name="obj[year]", value=moment(Date.now()).format("YYYY"))
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="brandIpt") 品牌
+					.col-8.col-sm-10
+						input#brandIpt.form-control(type="text", autocomplete="off")
+						input#brandId(type="hidden", name="obj[brand]")
+				.form-group.row
+					.col-4.col-sm-2
+					.col-8.col-sm-10
+						.row#brandShow
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="nomeIpt") 图册名称
+					.col-8.col-sm-10
+						input#nomeIpt.form-control(type="text", name="obj[nome]", autocomplete="off")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="despIpt") 简要描述
+					.col-8.col-sm-10
+						textarea#despIpt.form-control(type="text", rows="4", name="obj[desp]", placeholder="简要描述")
+				hr
+				.form-group.row
+					.col-12.text-right
+						input.btn.btn-success(type="submit" value="添加")
+	script(src="/js/user/bner/album/edit.js")

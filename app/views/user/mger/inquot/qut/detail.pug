@@ -1,0 +1,20 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/mgQuts") Quote List
+					span &nbsp; | &nbsp;
+					span Quote Detail
+			hr
+		.info.my-3
+			include ./detail/info
+		.compd
+			//- include ./compdAdd
+			include ./compd/list
+
+		include ../../../aaPlugin/comment/list

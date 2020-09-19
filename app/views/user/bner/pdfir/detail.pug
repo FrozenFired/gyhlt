@@ -1,0 +1,31 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		- let photo = pdfir.photo;
+		if !photo
+			- photo = Conf.picDefault.pdfir;
+		
+		.title
+			.row
+				.col-12 
+					a(href="/bner") Home
+					span &nbsp; | &nbsp;
+					a(href="/bnPdfirs") Serie List
+					span &nbsp; | &nbsp;
+					a(href="/bnBrand/"+pdfir.brand._id) #{pdfir.brand.nome}
+					span &nbsp; | &nbsp;
+					span #{pdfir.code}
+			hr
+		.info
+			include ./detail/info
+			hr
+
+		.pdsec
+			include ./detail/pdsec
+
+	script(src="/js/user/ajaxGet/pdsec.js")
+	script(src="/js/user/bner/pdsec/list.js")
+
+	script(src="/js/user/bner/pdfir/pdsec.js")
+	script(src="/js/user/bner/pdsec/edit.js")
