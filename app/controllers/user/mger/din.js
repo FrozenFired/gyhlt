@@ -18,55 +18,6 @@ const _ = require('underscore');
 const moment = require('moment');
 const xl = require('excel4node');
 
-
-exports.mgDinFilter = (req, res, next) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-	if(!id) id = req.query.ordinId
-	if(!id) {
-		let dinObj = {
-			din: new Object(),
-			dinpds: new Object()
-		}
-		req.body.dinObj = dinObj;
-		next();
-	} else {
-		Ordin.findOne({_id: id})
-		.populate('diner')
-		.populate('cter')
-		.populate({
-			path: 'compds',
-			populate: [
-				{path: 'brand'},
-				{path: 'pdfir'},
-				{path: 'pdsec'},
-				{path: 'pdthd'},
-			]
-		})
-		.exec((err, din) => {
-			if(err) {
-				console.log(err);
-				info = "mger Qun, Inquot.findOne, Error!";
-				Err.usError(req, res, info);
-			} else if(!din) {
-				info = "这个询价单已经被删除, mgDinFilter";
-				Err.usError(req, res, info);
-			} else {
-				// console.log(din)
-				let dinObj = {
-					din,
-					dinpds: din.compds
-				}
-				req.body.dinObj = dinObj;
-				next();
-			}
-		})
-	}
-}
-
-
-
-
 // 订单
 exports.mgDins = (req, res) => {
 	let crUser = req.session.crUser;
@@ -81,38 +32,61 @@ exports.mgDins = (req, res) => {
 exports.mgDin = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-
 	Ordin.findOne({_id: id})
 	.populate('diner')
 	.populate('cter')
-	.populate('dutFirm')
-	.populate('nstrmup')
+	.populate({
+		path: 'compds',
+		populate: [
+			{path: 'brand'},
+			{path: 'pdfir'},
+			{path: 'pdsec'},
+			{path: 'pdthd'},
+			
+			{path: 'strmup'},
+			{path: 'cter'},
+		]
+	})
 	.exec((err, din) => {
 		if(err) {
 			console.log(err);
-			info = "mger Qun, Ordin.findOne, Error!";
+			info = "mger Qun, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!din) {
-			info = "这个订单已经被删除";
+			info = "这个询价单已经被删除, mgDinFilter";
 			Err.usError(req, res, info);
 		} else {
 			// console.log(din)
-			Compd.find({ordin: id})
-			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-			.populate('diner')
-			.populate('cter')
-			.populate('dutFirm').populate('nstrmup')
-			.sort({'status': 1, 'weight': -1, 'dinAt': -1})
-			.exec((err, dinpds) => {
+			Strmup.find({
+				firm: crUser.firm,
+			})
+			.sort({'role': -1})
+			.exec((err, strmups) => {
 				if(err) {
-					info = "cter CompdsAjax, Compd.find(), Error!";
-					Err.jsonErr(req, res, info);
+					console.log(err);
+					info = 'mger QutAdd, Strmup.find, Error!';
+					Err.usError(req, res, info);
 				} else {
-					res.render('./user/mger/ordin/din/detail', {
-						title: '订单详情',
-						crUser,
-						din,
-						dinpds,
+					User.find({
+						firm: crUser.firm,
+						role: Conf.roleUser.customer.num
+					})
+					.exec((err, cters) => {
+						if(err) {
+							console.log(err);
+							info = 'mger QutAdd, Strmup.find, Error!';
+							Err.usError(req, res, info);
+						} else {
+							res.render('./user/mger/ordin/din/detail', {
+								title: '订单详情',
+								crUser,
+								din,
+								dinpds: din.compds,
+
+								strmups,
+								cters
+							})
+						}
 					})
 				}
 			})
@@ -208,8 +182,6 @@ exports.mgDinDel = (req, res) => {
 exports.mgDinUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	if(!obj.nstrmup || obj.nstrmup.length == 0) obj.nstrmup = null;
-	if(!obj.cter || obj.cter.length == 0) obj.cter = null;
 	if(obj.cterNome) obj.cterNome = obj.cterNome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	Ordin.findOne({
 		firm: crUser.firm,
@@ -223,93 +195,33 @@ exports.mgDinUpd = (req, res) => {
 			info = '此订单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
-			mgerDinNstrmupSel(req, res, obj, ordin);
+			mgerDinCterSel(req, res, obj, ordin);
 		}
 	})
 }
-let mgerDinNstrmupSel = (req, res, obj, ordin) => {
-	if(ordin && (String(ordin.nstrmup) == obj.nstrmup)) {
-		// 如果是更新， 则判断如果nstrmup没有变化, 则跳过此步骤
-		mgerDinCterSel(req, res, obj, ordin);
-	} else {
-		let crUser = req.session.crUser;
-		if(!obj.nstrmup || obj.nstrmup.length < 20) {
-			// 说明本订单的 合作报价公司为 本公司， 以询价视角看供应商公司为null, 以报价视角看下游客户公司为null
-			obj.nstrmup = null;
-			obj.tstrmdw = null;
-			obj.dutFirm = crUser.firm;
-			mgerDinCterSel(req, res, obj, ordin);
-		} else {
-			// 如果订单的上游公司不为空, 就要看上游报价公司是否在本平台, 并且是否和本公司建立联系
-			Strmup.findOne({
-				firm: crUser.firm,
-				_id: obj.nstrmup
-			}, (err, nstrmup) => {
-				if(err) {
-					console.log(err);
-					info = "mger QunNew, Strmup.findOne, Error!"
-					Err.usError(req, res, info);
-				} else if(!nstrmup) {	// 本公司数据库中没有此供应商
-					info = "本公司数据库中没有此供应商! "
-					Err.usError(req, res, info);
-				} else if(nstrmup.accept != Conf.accept.yes.num) {
-					// 如果询价公司没有跟上游报价公司建立联系
-					obj.dutFirm = null;
-					obj.tstrmdw = null;
-					mgerDinCterSel(req, res, obj, ordin);
-				} else {
-					// 如果询价公司和报价公司建立了联系
-					obj.dutFirm = nstrmup.firmUp;
-					Strmdw.findOne({
-						firm: obj.dutFirm,
-						firmDw: crUser.firm
-					}, (err, tstrmdw) => {
-						if(err) {
-							console.log(err);
-							info = "mger QunNew, Strmup.findOne, Error!"
-							Err.usError(req, res, info);
-						} else if(!tstrmdw){
-							info = "对方没有跟我们建立联系, 请联系对方公司! "
-							Err.usError(req, res, info);
-						} else {
-							obj.tstrmdw = tstrmdw._id;
-							mgerDinCterSel(req, res, obj, ordin);
-						}
-					})
-				}
-			})
-		}
-	}
-}
 let mgerDinCterSel = (req, res, obj, ordin) => {
-	let crUser = req.session.crUser;
-	obj.nome = obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-
-	let cterSel = req.body.cterSel
-	if(cterSel == 'cterNome') {
-		obj.cter = null;
+	if(ordin && (String(ordin.cter) == String(obj.cter))) {
+		// 如果是更新， 则判断如果 cter 没有变化, 则跳过此步骤
 		mgerdinSave(req, res, obj, ordin);
-	} else if(cterSel == 'cter') {
-		if(ordin && (String(ordin.cter) == obj.cter)) {
-			mgerdinSave(req, res, obj, ordin);
-		} else {
-			User.findOne({
-				firm: crUser.firm,
-				_id: obj.cter
-			}, (err, cter) => {
-				if(err) {
-					console.log(err);
-					info = "mger QunNew, User.findOne, Error!"
-					Err.usError(req, res, info);
-				} else if(!cter) {
-					info = "您选的客户不存在! "
-					Err.usError(req, res, info);
-				} else {
-					obj.cterNome = cter.nome + ' ' + [cter.code]
-					mgerdinSave(req, res, obj, ordin);
-				}
-			})
-		}
+	} else if(!obj.cter) {
+		obj.cter = ordin.cter;
+		mgerdinSave(req, res, obj, ordin);
+	} else {
+		if(obj.cter == "null") obj.cter = null;
+		Compd.updateMany({
+			_id: ordin.compds,
+			cter: ordin.cter
+		}, {
+			cter: obj.cter
+		},(err, compds) => {
+			if(err) {
+				console.log(err);
+				info = "mger QuterSel, Compd.find(), Error!";
+				Err.usError(req, res, info);
+			} else {
+				mgerdinSave(req, res, obj, ordin);
+			}
+		})
 	}
 }
 let mgerdinSave = (req, res, obj, ordin) => {

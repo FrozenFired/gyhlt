@@ -35,7 +35,7 @@ exports.mgQut = (req, res) => {
 	.populate('strmup')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'status': 1 } },
+		options: { sort: { 'qntpdSts': 1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},
@@ -207,6 +207,7 @@ let mgerQuterSel = (req, res, obj, inquot) => {
 	} else {
 		if(obj.quter == "null") obj.quter = null;
 		Compd.updateMany({
+			_id: inquot.compds,
 			quter: inquot.quter
 		}, {
 			quter: obj.quter
@@ -231,6 +232,7 @@ let mgerStrmupSel = (req, res, obj, inquot) => {
 	} else {
 		if(obj.strmup == "null") obj.strmup = null;
 		Compd.updateMany({
+			_id: inquot.compds,
 			strmup: inquot.strmup
 		}, {
 			strmup: obj.strmup

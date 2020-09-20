@@ -1,12 +1,34 @@
 .row.py-2.text-center.border
 	.col-4
+		.cterNome 客户姓名 #{din.cterNome}
 		.cter 客户:
 			if din.cter
 				- cter = din.cter;
-				span #{cter.nome} [#{cter.code}]
+				span.text-info.ordinUpClick#cter-span #{cter.nome} [#{cter.code}]
 			else
-				span #{din.cterNome}
-		.din 
+				span.text-info.ordinUpClick#cter-span 未分配
+			form#cter-form(method="post", action="/mgDinUpd", enctype="multipart/form-data", style="display:none")
+				input(type="hidden", name="obj[_id]", value=din._id)
+				.form-group.row.px-5.text-center
+					.col-12
+						select.inquotUpSel#dinNote-ipt.form-control(name="obj[cter]", data-style="btn-info")
+							option(value='null') 请选择客户
+							each cter in cters
+								-a;
+								if !din.cter
+									-a;
+									option(value=cter._id) #{cter.nome}[#{cter.code}]
+								else if String(cter._id) == String(din.cter._id)
+									-a;
+									option(value=cter._id, selected="selected") #{cter.nome}[#{cter.code}]
+								else
+									option(value=cter._id) #{cter.nome}[#{cter.code}]
+				.form-group.row
+					.col-6
+						button.inquotCancelClick#cter-cancel.btn.btn-secondary(type="button") 取消
+					.col-6
+						input.btn.btn-success(type="submit" value="提交")
+		.din
 			span 销售员:
 			if din.diner
 				- diner = din.diner;
@@ -78,3 +100,6 @@
 					.col-6.text-left
 						button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-delivering", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.delivering.num) 返回发货
 					.col-6.text-right
+
+script(src="/js/user/mger/din/detail/info.js")
+script(src="/js/user/ajaxChange/status.js")

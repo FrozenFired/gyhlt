@@ -215,7 +215,7 @@ let Conf = {
 	qunSts: [ 'init', 'quoting', 'pricing', 'done', 'unord'],	// 询价单状态
 	qutSts: [ 'quoting', 'pricing', 'done', 'ord', 'unord' ],	// 报价单状态
  
- 	dinpdSts: [ 'init', 'proding', 'traning', 'stocking' ],
-	dinSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done', 'del'],	// 销售订单状态
-	dutSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done', 'del'],	// 采购订单状态
+ 	dinpdSts: [ 'init', 'proding', 'traning', 'stocking', 'done' ],
+	dinSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done'],	// 销售订单状态
+	dutSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done'],	// 采购订单状态
 }

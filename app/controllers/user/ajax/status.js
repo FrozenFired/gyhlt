@@ -164,42 +164,46 @@ exports.usOrdinStatusAjax = function(req, res) {
 				}
 				else if(oldStatus == Conf.status.checking.num && newStatus == Conf.status.paiding.num) {
 					// 管理员审核
-					ordin.status = parseInt(newStatus);
-					info = null;
+					if(ordin.cter) {
+						ordin.status = parseInt(newStatus);
+						info = null;
+					} else {
+						info = "请添加客户信息到数据库"
+					}
 				}
 				else if(oldStatus == Conf.status.paiding.num && newStatus == Conf.status.dealing.num) {
 					// 完成付款, 开始处理订单
-					ordinCompdSave(req, res, compds, Conf.status.proding.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.proding.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.dealing.num && newStatus == Conf.status.delivering.num) {
 					// 订单已经全部到达仓库, 准备发货
-					ordinCompdSave(req, res, compds, Conf.status.stocking.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.stocking.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.delivering.num && newStatus == Conf.status.done.num) {
 					// 发货时, 点击完成订单
-					ordinCompdSave(req, res, compds, Conf.status.done.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.done.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.delivering.num) {
 					// 从完成返回 准备发货
-					ordinCompdSave(req, res, compds, Conf.status.stocking.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.stocking.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.delivering.num && newStatus == Conf.status.dealing.num) {
 					// 从准备发货, 返回到正在处理
-					ordinCompdSave(req, res, compds, Conf.status.proding.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.proding.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.dealing.num && newStatus == Conf.status.paiding.num) {
 					// 从正在处理, 返回等待首款
-					ordinCompdSave(req, res, compds, Conf.status.init.num, 0);
+					ordinCompdStatus(req, res, compds, Conf.status.init.num, 0);
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
@@ -237,14 +241,14 @@ let usOrdinStatusSave = (req, res, ordin) => {
 	})
 }
 
-let ordinCompdSave = (req, res, compds, newStatus, n) => {
+let ordinCompdStatus = (req, res, compds, newStatus, n) => {
 	if(n == compds.length) {
 		return;
 	} else {
 		compds[n].dinpdSts = newStatus;
 		compds[n].save((err, compdSave) => {
 			if(err) console.log(err);
-			ordinCompdSave(req, res, compds, newStatus, n+1);
+			ordinCompdStatus(req, res, compds, newStatus, n+1);
 		})
 	}
 }

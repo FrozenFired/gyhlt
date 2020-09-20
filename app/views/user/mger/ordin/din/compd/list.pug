@@ -77,6 +77,18 @@
 					span 销售总价: 
 					span(id="dinPrTot-"+dinpd._id) #{dinpd.quant * dinpd.dinPr}
 			.col-4.col-md-1.mt-2
+				.strmup.mb-4
+					if dinpd.strmup
+						-a;
+						span #{dinpd.strmup.nome}
+					else
+						span 数据丢失
+				.cter.mb-4
+					if dinpd.cter
+						-a;
+						span #{dinpd.cter.nome}[#{dinpd.cter.code}]
+					else
+						span 数据丢失
 				- let status = '';
 				each sts in Conf.status
 					- status = '';

@@ -33,7 +33,7 @@ exports.qtQut = (req, res) => {
 	.populate('quter')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'status': 1 } },
+		options: { sort: { 'qntpdSts': 1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},

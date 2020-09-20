@@ -64,7 +64,7 @@ module.exports = function(app){
 
 	/* =================================== Din =================================== */
 	app.get('/mgDins', MdRole.mgerIsLogin, Din.mgDins)
-	app.get('/mgDin/:id', MdRole.mgerIsLogin, Din.mgDinFilter, Din.mgDin)
+	app.get('/mgDin/:id', MdRole.mgerIsLogin, Din.mgDin)
 	app.get('/mgDinUp/:id', MdRole.mgerIsLogin, Din.mgDinUp)
 	app.get('/mgDinDel/:id', MdRole.mgerIsLogin, Din.mgDinDel)
 
