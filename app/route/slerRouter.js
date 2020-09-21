@@ -32,7 +32,7 @@ module.exports = function(app){
 	app.get('/slQunpdDel/:id', MdRole.slerIsLogin, Qunpd.slQunpdDel)
 
 	app.post('/slQunpdImg', MdRole.slerIsLogin, postForm, MdPicture.pictureNew, Qunpd.slQunpdImg)
-	app.post('/slQunpdNew', MdRole.slerIsLogin, postForm, Qunpd.slQunpdNew)
+	app.post('/slQunpdNew', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdNew)
 	app.post('/slQunpdUpd', MdRole.slerIsLogin, postForm, Qunpd.slQunpdUpd)
 	/* =================================== Inquot 询价 =================================== */
 	app.get('/slQuns', MdRole.slerIsLogin, Qun.slQuns)

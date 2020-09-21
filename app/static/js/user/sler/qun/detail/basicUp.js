@@ -19,7 +19,7 @@ $(function() {
 				data: data,
 				success: function(results) {
 					if(results.status === 1) {
-						$("#"+htmlId+"-span").text("备注: " + now);
+						$("#"+htmlId+"-span").text(now);
 						$("#"+htmlId+"-org").val(now);
 						$("#"+htmlId+"-form").hide();
 						$("#"+htmlId+"-span").show();
@@ -32,5 +32,14 @@ $(function() {
 			$("#"+htmlId+"-form").hide();
 			$("#"+htmlId+"-span").show();
 		}
+	})
+
+	$(".delObjectBtn").click(function(e) {
+		$(".delObjectBtn").hide();
+		$(".delObject").show();
+	})
+	$(".delObjectCancel").click(function(e) {
+		$(".delObject").hide();
+		$(".delObjectBtn").show();
 	})
 })

@@ -14,7 +14,7 @@ block content
 					a.btn.btn-secondary(href="/slQunpd/"+qunpd._id) 取消
 			hr
 
-		form#qunpdNewForm(method="post", action="/slQunpdUpd", enctype="multipart/form-data")
+		form#objectForm(method="post", action="/slQunpdUpd", enctype="multipart/form-data")
 			input#inquotIpt(type="hidden", name="obj[_id]", value=qunpd._id)
 			.row.my-3
 				.col-4.col-lg-2.mt-3
@@ -28,9 +28,9 @@ block content
 					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品", value=qunpd.secNome)
 				.col-4.col-lg-2.mt-3
 					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=qunpd.pdthd)
-					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="材料", value=qunpd.thdNome)
+					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="材质", value=qunpd.thdNome)
 					- let pdthdId = '';
-					#materialDiv
+					#materDiv
 						if qunpd.pdthd
 							-pdthdId = qunpd.pdthd._id;
 							each mater in qunpd.pdthd.maters
@@ -55,4 +55,5 @@ block content
 				.col-12.text-right
 					input.btn.btn-success(type="submit", value="提交")
 
+	script(src="/js/user/compd/comGetPd.js")
 	script(src="/js/user/sler/qunpd/edit.js")

@@ -1,0 +1,12 @@
+div.text-right
+	button.btn.btn-warning.qunAddBtn(type="button") +添加询价单
+.qunAddPage.border.p-3.pt-4.my-3.bg-light(style="display:none")
+	form#qunForm(method="post", action="/slQunNew", enctype="multipart/form-data")
+		.form-group.row.ctersel#cterNome
+			label.col-md-2.col-form-label(for="cterNomeIpt") 客户姓名
+			.col-md-8
+				input#cterNomeIpt.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off")
+			.col-md-2
+				input.btn.btn-success.btn-block(type="submit" value="下一步")
+.cancel.text-right
+	button.border.border-danger.mr-4.btn.btn-default.text-danger.qunCancelBtn(type="button", style="display:none") 取消

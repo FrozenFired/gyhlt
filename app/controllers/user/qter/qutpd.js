@@ -256,7 +256,7 @@ exports.qtQutpdImg = (req, res) => {
 exports.qtQutpdNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qutAt = Date.now();
+	obj.qntcrtAt = obj.qntupdAt = Date.now();
 	obj.qntpdSts = Conf.status.quoting.num;
 	obj.quant = parseInt(obj.quant);
 	if(isNaN(obj.quant)) obj.quant = 1;

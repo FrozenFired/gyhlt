@@ -55,6 +55,7 @@ var pdthdRender = (pdthd, role) => {
 		}
 		elem += '<div class="text-dark">'+pdthd.note+'</div>'
 		for(let i=0; i<pdthd.maters.length; i++) {
+			if(i>2) break;
 			let mater = pdthd.maters[i]
 			elem += '<div class="text-dark mt-2">'+mater+'</div>'
 		}

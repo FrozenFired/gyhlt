@@ -15,28 +15,24 @@
 						a.nav-link(href="/bnPdfirs") 系列
 					li.nav-item.active
 						a.nav-link(href="/bnPdsecs") 产品
-					li.nav-item.active
-						a.nav-link(href="/bnStrmups") 供应商
-				if crUser.role == Conf.roleUser.quotation.num || Conf.roleAdmin.includes(crUser.role)
+				if crUser.role == Conf.roleUser.quotation.num
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/qtQuts") 报价
-				if crUser.role == Conf.roleUser.seller.num || Conf.roleAdmin.includes(crUser.role)
+				if crUser.role == Conf.roleUser.seller.num
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/slQuns") 询价
 					li.nav-item.active
 						a.nav-link(href="/slDins") 销售订单
-				if crUser.role == Conf.roleUser.ordin.num || Conf.roleAdmin.includes(crUser.role)
+				if crUser.role == Conf.roleUser.ordin.num
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/odDuts") 采购订单
 				if crUser.role == Conf.roleUser.manager.num || Conf.roleAdmin.includes(crUser.role)
 					-a;
 					li.nav-item.active
-						a.nav-link(href="/pmStrmdws") 下游
-				//- li.nav-item.active
-				//- 	a.nav-link(href="/odDuts") 采购订单
+						a.nav-link(href="/mgQuts") 报价管理
 			ul.navbar-nav
 				li
 					a(href="/usFirm")

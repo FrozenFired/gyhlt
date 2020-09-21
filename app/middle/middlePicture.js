@@ -41,6 +41,101 @@ let MiddlePicture = {
 			next();
 		}
 	},
+
+
+
+
+	photoNew : (req, res, next) => {
+		let obj = req.body.obj;
+		let picName = req.body.picName;			// 获取图片主要名称
+		let picDir = req.body.picDir;		// 图片要储存的位置
+		let picData = req.files.photo;	// 图片数据
+		if(picData && picData.originalFilename && picDir) {
+			let filePath = picData.path;		// 图片的位置
+			if(obj && obj.picOld){
+				MiddlePicture.deletePicture(obj.picOld, picDir);
+			}
+			fs.readFile(filePath, (err, data) => {
+				let type = picData.type.split('/')[1];		// 图片类型
+				let timestamp = Date.now();						// 时间戳
+				let picNome = picName + '_' + timestamp + '.' + type;	// 图片名称 code_2340.jpg
+				let picSrc = path.join(__dirname, '../../public/upload'+picDir);	// niu/public/upload/***/
+				let picture = picSrc + picNome;
+				fs.writeFile(picture, data, (err) => {
+					if(err) console.log(err);
+					obj.photo = '/upload'+picDir+picNome;
+					next();
+				});
+			});
+		}
+		else{
+			next();
+		}
+	},
+	sketchNew : (req, res, next) => {
+		let obj = req.body.obj;
+		let picName = req.body.picName;			// 获取图片主要名称
+		let picDir = req.body.picDir;		// 图片要储存的位置
+		let picData = req.files.sketch;	// 图片数据
+		if(picData && picData.originalFilename && picDir) {
+			let filePath = picData.path;		// 图片的位置
+			if(obj && obj.picOld){
+				MiddlePicture.deletePicture(obj.picOld, picDir);
+			}
+			fs.readFile(filePath, (err, data) => {
+				let type = picData.type.split('/')[1];		// 图片类型
+				let timestamp = Date.now();						// 时间戳
+				let picNome = picName + '_' + timestamp + '.' + type;	// 图片名称 code_2340.jpg
+				let picSrc = path.join(__dirname, '../../public/upload'+picDir);	// niu/public/upload/***/
+				let picture = picSrc + picNome;
+				fs.writeFile(picture, data, (err) => {
+					if(err) console.log(err);
+					obj.sketch = '/upload'+picDir+picNome;
+					next();
+				});
+			});
+		}
+		else{
+			next();
+		}
+	},
+	imgsNew : (req, res, next) => {
+		let imgsDatas = req.files.images;	// 图片数据
+		MiddlePicture.imgsCallback(req, res, next, imgsDatas, 0);
+	},
+
+	imgsCallback : (req, res, next, imgsDatas, n) => {
+		if(n == imgsDatas.length) {
+			next()
+		}else{
+			let obj = req.body.obj;
+			let picName = req.body.picName;			// 获取图片主要名称
+			let picDir = req.body.picDir;		// 图片要储存的位置
+			let picData = imgsDatas[n]
+			if(picData && picData.originalFilename && picDir) {
+				let filePath = picData.path;		// 图片的位置
+				if(obj && obj.picOld){
+					MiddlePicture.deletePicture(obj.picOld, picDir);
+				}
+				fs.readFile(filePath, (err, data) => {
+					let type = picData.type.split('/')[1];		// 图片类型
+					let timestamp = Date.now();						// 时间戳
+					let picNome = picName + '_' + timestamp + '.' + type;	// 图片名称 code_2340.jpg
+					let picSrc = path.join(__dirname, '../../public/upload'+picDir);	// niu/public/upload/***/
+					let picture = picSrc + picNome;
+					fs.writeFile(picture, data, (err) => {
+						if(err) console.log(err);
+						if(!obj.images) obj.images = new Array();
+						obj.images[n] = '/upload'+picDir+picNome;
+						MiddlePicture.imgsCallback(req, res, next, imgsDatas, n+1);
+					});
+				});
+			}
+			else{
+				MiddlePicture.imgsCallback(req, res, next, imgsDatas, n+1);
+			}
+		}
+	}
 };
 
 module.exports = MiddlePicture;

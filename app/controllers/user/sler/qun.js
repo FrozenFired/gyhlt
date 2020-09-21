@@ -31,7 +31,7 @@ exports.slQunFilter = (req, res, next) => {
 	.populate('quner')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'qntpdSts': 1 } },
+		options: { sort: { 'qntpdSts': 1, 'qntupdAt': -1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},
@@ -80,6 +80,7 @@ exports.slQunDel = (req, res) => {
 	let id = req.params.id;
 
 	Inquot.findOne({_id: id})
+	.populate('compds')
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
@@ -88,20 +89,37 @@ exports.slQunDel = (req, res) => {
 		} else if(!inquot) {
 			info = "这个询价单已经被删除";
 			Err.usError(req, res, info);
+		} else if(inquot.status != Conf.status.init.num){
+			info = "这个询价单已提交不可删除";
+			Err.usError(req, res, info);
 		} else {
-			if(inquot.compds.length > 0) {
-				info = "安全起见, 请先删除此单中的询价货物!";
-				Err.usError(req, res, info);
-			} else {
-				Inquot.deleteOne({_id: id}, (err, objRm) => {
-					if(err) {
-						info = "user InquotDel, Inquot.deleteOne, Error!";
-						Err.usError(req, res, info);
-					} else {
-						res.redirect("/slQuns");
-					}
-				})
+			let picDels = new Array();
+			for(let i=0; i<inquot.compds.length; i++) {
+				let compd = inquot.compds[i];
+				if(compd.photo) picDels.push(compd.photo)
+				if(compd.sketch) picDels.push(compd.sketch)
+				for(let j=0; j<compd.images.length; j++) {
+					if(compd.images[j]) picDels.push(compd.images[j]);
+				}
 			}
+			Compd.deleteMany({'_id': {"$in": inquot.compds}}, function(err, compdDel) {
+				if(err) {
+					info = "sler QunDel, Compd.deleteMany, Error!";
+					Err.usError(req, res, info);
+				} else {
+					for(let i = 0; i<picDels.length; i++) {
+						MdPicture.deletePicture(picDels[i], Conf.picPath.compd);
+					}
+					Inquot.deleteOne({_id: id}, (err, objRm) => {
+						if(err) {
+							info = "user InquotDel, Inquot.deleteOne, Error!";
+							Err.usError(req, res, info);
+						} else {
+							res.redirect("/slQuns");
+						}
+					})
+				}
+			})
 		}
 	})
 }
@@ -117,7 +135,7 @@ exports.slQunNew = (req, res) => {
 	let obj = req.body.obj;
 	obj.firm = crUser.firm;
 	obj.quner = crUser._id;
-	obj.qunAt = Date.now();
+	obj.qntcrtAt = obj.qntupdAt = Date.now();
 	obj.status = Conf.status.init.num;
 
 	let now = new Date();
@@ -127,7 +145,7 @@ exports.slQunNew = (req, res) => {
 	Inquot.find({
 		firm: crUser.firm,
 		quner: crUser._id,
-		qunAt: {"$gte": initDate},
+		qntcrtAt: {"$gte": initDate},
 	}, (err, inquots) => {
 		if(err) {
 			console.log(err);
@@ -160,7 +178,7 @@ exports.slQunNew = (req, res) => {
 exports.slQunUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-
+	obj.qntupdAt = Date.now();
 	Inquot.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -213,7 +231,7 @@ exports.slQunExcel = (req, res) => {
 			// console.log(qun)
 			Compd.find({inquot: id})
 			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-			.sort({'status': 1, 'qunAt': -1})
+			.sort({'status': 1, 'qntcrtAt': -1})
 			.exec((err, qunpds) => {
 				if(err) {
 					info = "cter CompdsAjax, Compd.find(), Error!";

@@ -14,7 +14,8 @@ let dbSchema = new Schema({
 	code: String,
 	price: Float,
 	note: String,
-	maters: [{type: String}], 			// 材料
+	maters: [{type: String}], 			// 材质
+	crafts: [{type: String}], 			// 工艺面料
 
 	shelf: {type: Number, default: 0},	// 上架 下架
 	status: {type: Number, default: 0},	// 品牌状态 

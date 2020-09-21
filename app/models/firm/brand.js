@@ -15,7 +15,6 @@ let dbSchema = new Schema({
 
 	post: String,								// 公司海报
 	firmName: String, 								// 所属公司名称
-	firm: {type: ObjectId, ref: 'Firm'},			// 所属公司
 	country: String,							// 所属国家名称
 	// nation: {type: ObjectId, ref: 'Nation'},	// 所属国家
 	/* ===================== 不可更改 ==================== */

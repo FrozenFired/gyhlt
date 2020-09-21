@@ -2,48 +2,99 @@
 	.row
 		.col-12.col-sm-9
 		.col-12.col-sm-3
-			button.btn.btn-info.btn-block#qunpdAddPageShow(type="button") + 添加询价商品
+			button.btn.btn-warning.btn-block#qunpdAddPageShow(type="button") + 添加询价商品
 //- 添加产品
-#qunpdAddPage.border(style="display:none")
-	.row.my-3
-		.col-12.col-sm-6
-		.col-12.col-sm-3
-		.col-12.col-sm-3
-			button.btn.btn-secondary.btn-block#qunpdsPageShow(type="button") 取消添加
-
-	form#qunpdNewForm(method="post", action="/slQunpdNew", enctype="multipart/form-data")
+#qunpdAddPage.border.border-dark(style="display:none")
+	form#objectForm(method="post", action="/slQunpdNew", enctype="multipart/form-data")
 		input#inquotIpt(type="hidden", name="obj[inquot]", value=qun._id)
-		.row.my-3
-			.col-4.col-lg-2.mt-3
-				input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly",)
-				input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="填写品牌名")
-			.col-4.col-lg-2.mt-3
-				input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly")
-				input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="系列")
-			.col-4.col-lg-2.mt-3
-				input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly")
-				input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品")
-			.col-4.col-lg-2.mt-3
-				input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly")
-				input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="材料")
-			.col-4.col-lg-2.mt-3
-				input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量")
-			.col-4.col-lg-2.mt-3
-				input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注")
-		hr
 
+		input(type="hidden", name="picDir", value=Conf.picPath.compd)
+		input#picName(type="hidden", name="picName", value=crUser.firm.code)
+
+		.row.my-3
+			.col-md-2.mt-3.text-right 品牌信息:
+			.col-md-3.mt-3
+				input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...")
+			.col-md-3.mt-3
+				input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly",)
+				input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名")
 		input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@sl")
 		.ajax#brandsElem
+
+		.row.my-3
+			.col-md-2.mt-3.text-right 系列信息:
+			.col-md-3.mt-3
+				input.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...")
+			.col-md-3.mt-3
+				input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly")
+				input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称")
+		.row.my-3
+			.col-md-2.mt-3.text-right 产品图片:
+			.col-md-3.mt-4#firImg(align="center")
+			.col-md-3.mt-3(align="center")
+				div 自定义:
+				img.picImg#img-photo.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
+
 		input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
 		.ajax#pdfirsElem
+
+		.row.my-3
+			.col-md-2.mt-3.text-right 产品信息:
+			.col-md-3.mt-3
+				input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly")
+				input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号")
+			.col-md-3.mt-3
+				input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高")
+		.row.my-3
+			.col-md-2.mt-3.text-right 线稿图:
+			.col-md-3.mt-4#secImg(align="center")
+			.col-md-3.mt-3(align="center")
+				div 自定义:
+				img.picImg#img-sketch.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
 		input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
 		.ajax#pdsecsElem
+
+		.row.my-3
+			.col-md-2.mt-3.text-right 材质工艺:
+			.col-md-3.mt-3
+				input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly")
+				input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="编号(帮助选择)")
+			.col-md-3.mt-3
+				input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质")
+			.col-md-3.mt-3
+				input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色")
+			.col-md-2.mt-3.pt-5.text-right 材质图片:
+			.col-md-2.mt-3(align="center")
+				img.picImg#img-images0.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
+			.col-md-2.mt-3(align="center")
+				img.picImg#img-images1.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
+			.col-md-2.mt-3(align="center")
+				img.picImg#img-images2.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
+			.col-md-2.mt-3(align="center")
+				img.picImg#img-images3.rounded-circle(src="/imgs/createPicture.jpg", width="120px")
+				input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
 		input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
 		.ajax#pdthdsElem
 
+		.row.my-3
+			.col-md-2.mt-3.text-right 备注:
+			.col-md-8.mt-3
+				input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注")
+		.row.my-3
+			.col-md-2.mt-3.text-right 数量:
+			.col-md-2.mt-3
+				input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量")
+
+
 		.form-group.row
 			.col-12.text-right
-				input.btn.btn-success(type="submit", value="添加")
+				button.border.border-danger.mr-4.btn.btn-default.text-danger#qunpdsPageShow(type="button") 取消
+				input.btn.btn-success(type="submit", value="确认添加")
 
-script(src="/js/user/sler/qun/detail/compdAdd.js")
 script(src="/js/user/sler/qunpd/edit.js")
+script(src="/js/user/compd/comGetPd.js")

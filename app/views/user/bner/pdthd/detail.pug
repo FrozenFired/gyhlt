@@ -21,11 +21,17 @@ block content
 				.col-8.text-info #{pdthd.price} €
 				.col-4.text-right 备注:
 				.col-8 #{pdthd.note}
-				.col-4.text-right 材料:
+				.col-4.text-right 材质:
 				.col-8
 					each mater in pdthd.maters
 						if mater && mater.length > 0
 							-a;
-							span [#{mater}] 
+							span.mr-2 [#{mater}] 
+				.col-4.text-right 工艺面料:
+				.col-8
+					each craft in pdthd.crafts
+						if craft && craft.length > 0
+							-a;
+							span.mr-2 [#{craft}]  
 				.col-12.text-right
 					a.btn.btn-warning(href="/bnPdthdUp/"+pdthd._id) 更新

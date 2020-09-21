@@ -44,18 +44,6 @@ var qunsRender = (quns, elemId, isReload, role) => {
 	$(elemId).append(elem);
 }
 var qunRender = (qun, role) => {
-	let stsBg = 'bg-default';
-	if(qun.status == Conf.status.init.num) {
-		stsBg = 'bg-secondary';
-	} else if(qun.status == Conf.status.quoting.num) {
-		stsBg = 'bg-default';
-	} else if(qun.status == Conf.status.done.num) {
-		stsBg = 'bg-info';
-	} else if(qun.status == Conf.status.ord.num) {
-		stsBg = 'bg-success';
-	} else if(qun.status == Conf.status.unord.num) {
-		stsBg = 'bg-danger';
-	}
 	let status = '';
 	for(sts in Conf.status) {
 		status = '';
@@ -66,8 +54,16 @@ var qunRender = (qun, role) => {
 	}
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border qunCard">'
-		elem += '<div class="col-4 mt-3">'
-			elem += '客户名称: ' + qun.cterNome
+		elem += '<div class="col-md-6">'
+			elem += '<a class="btn btn-info" href="/'+role+'Qun/'+qun._id+'">'
+				elem += '<div style="font-size: 23px;">'+qun.code+'</div>'
+			elem += '</a>'
+			elem += '<div>'
+				elem += '创建时间: '
+				qntcrtAt = Date.now();
+				if(qun.qntcrtAt) qntcrtAt = new Date(qun.qntcrtAt)
+				elem += transformTime(qntcrtAt, 0, 10)
+			elem += '</div>'
 			elem += '<div>'
 				elem += '询价人:'
 				if(qun.quner) {
@@ -76,33 +72,19 @@ var qunRender = (qun, role) => {
 					elem += '数据丢失';
 				}
 			elem += '</div>'
-			elem += '<div>'
-				elem += '询价时间: '
-				qunAt = Date.now();
-				if(qun.qunAt) qunAt = new Date(qun.qunAt)
-				elem += transformTime(qunAt, 0, 10)
-			elem += '</div>'
 		elem += '</div>'
 
-		elem += '<div class="col-4">'
-			elem += '<a href="/'+role+'Qun/'+qun._id+'">'
-				elem += '<h3 class="text-dark">'+qun.code+'</h3>'
-			elem += '</a>'
-			elem += '<div>'
-				elem += qun.qunNote
-			elem += '</div>'
-		elem += '</div>'
-
-		elem += '<div class="col-4 mt-3">'
+		elem += '<div class="col-md-6">'
+			elem += '<div>客户姓名: ' + qun.cterNome +'</div>'
 			if(qun.status == Conf.status.done.num) {
 				elem += '<h4 class="p-2">'
 					elem += '总价格:'
 					elem += qun.price
 				elem += '</h4>'
 			}
-			elem += '<span class="p-2 '+stsBg+'">'
+			elem += '<div class="p-2">'
 				elem += '状态: ' + status
-			elem += '</span>'
+			elem += '</div>'
 		elem += '</div>'
 	elem += '</div>'
 	return elem;

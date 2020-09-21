@@ -5,16 +5,15 @@ block content
 		.title
 			.row
 				.col-12 
-					a(href="/") Home
+					a(href="/") 主页
 					span &nbsp; | &nbsp;
-					a(href="/slQuns") Inquiry List
+					a(href="/slQuns") 询价单列表
 					span &nbsp; | &nbsp;
-					span Inquiry Detail
+					span 询价单详情
 			hr
 		.info.my-3
 			include ./detail/info
-		.excel.mt-3
-			a.btn.btn-info(href="/slQunExcel/"+qun._id) Excel
+		div(style="height:50px")
 		.compd
 			if qun.status == Conf.status.init.num
 				-a;

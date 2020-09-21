@@ -11,20 +11,40 @@ block content
 			input(type="hidden", name="obj[_id]", value=pdthd._id)
 			input#pdsecIpt(type="hidden", name="obj[pdsec]", value=pdthd.pdsec._id)
 			.form-group.row
-				label.col-4.col-sm-2.col-form-label(for="priceIpt") 价格
-				.col-8.col-sm-10
+				label.col-4.col-md-2.col-form-label(for="codeIpt") 编号
+				.col-8.col-md-10
+					input#codeIpt.form-control(type="text", name="obj[code]", value=pdthd.code)
+				.col-4.col-md-2
+				.col-8.col-md-10.text-danger#codeOpt
+			.form-group.row
+				label.col-4.col-md-2.col-form-label(for="priceIpt") 价格
+				.col-8.col-md-10
 					input#priceIpt.form-control(type="text", name="obj[price]", value=pdthd.price)
 			.form-group.row
-				label.col-4.col-sm-2.col-form-label(for="noteIpt") 备注
+				label.col-4.col-md-2.col-form-label(for="noteIpt") 备注
 				input#noteData.form-control(type="hidden", value=pdthd.note)
-				.col-8.col-sm-10
+				.col-8.col-md-10
 					textarea#noteIpt.form-control(type="text", rows="3", name="obj[note]", placeholder="备注")
 			.form-group.row
-				label.col-sm-2.col-form-label 材料
-				each i in [0, 1, 2]
-					- a;
-					.col-sm-3
+				label.col-md-2.col-form-label 材质
+				- j = 0;
+				each i in [0, 1, 2, 3, 4, 5]
+					if j == 2 || j == 4
+						- a;
+						.col-md-2
+					- j++;
+					.col-md-5
 						input.form-control(type="text", name="obj[maters]["+i+"]", value=pdthd.maters[i])
+			.form-group.row
+				label.col-md-2.col-form-label 工艺面料
+				- j = 0;
+				each i in [0, 1, 2, 3, 4, 5]
+					if j == 2 || j == 4
+						- a;
+						.col-md-2
+					- j++;
+					.col-md-5
+						input.form-control(type="text", name="obj[crafts]["+i+"]", value=pdthd.crafts[i])
 			hr
 			
 			.form-group.row

@@ -3,34 +3,34 @@ let pdfirs;
 let pdsecs;
 let pdthds;
 $(function() {
-	$("#qutpdNewForm").submit(function(e) {
-		let brandIpt = $("#brandIpt").val();
-		let brandNomeIpt = $("#brandNomeIpt").val();
-		if(!brandIpt && !brandNomeIpt) {
-			alert("请输入品牌")
-			e.preventDefault();
-		}
+	// $("#objectForm").submit(function(e) {
+	// 	let brandIpt = $("#brandIpt").val();
+	// 	let brandNomeIpt = $("#brandNomeIpt").val();
+	// 	if(!brandIpt && !brandNomeIpt) {
+	// 		alert("请输入品牌")
+	// 		e.preventDefault();
+	// 	}
 
-		let status = $("input[name='obj[status]']:checked").val();
-		if(status == Conf.status.done.num) {
-			let pdfirIpt = $("#pdfirIpt").val();
-			let pdsecIpt = $("#pdsecIpt").val();
-			let pdthdIpt = $("#pdthdIpt").val();
-			if(!brandIpt || brandIpt.length < 20) {
-				alert("请完善[品牌]数据库数据, 并同步到此处")
-				e.preventDefault();
-			} else if(!pdfirIpt || pdfirIpt.length < 20) {
-				alert("请完善[系列]数据库数据, 并同步到此处")
-				e.preventDefault();
-			} else if(!pdsecIpt || pdsecIpt.length < 20) {
-				alert("请完善[产品]数据库数据, 并同步到此处")
-				e.preventDefault();
-			} else if(!pdthdIpt || pdthdIpt.length < 20) {
-				alert("请完善[商品]数据库数据, 并同步到此处")
-				e.preventDefault();
-			}
-		}
-	})
+	// 	let status = $("input[name='obj[status]']:checked").val();
+	// 	if(status == Conf.status.done.num) {
+	// 		let pdfirIpt = $("#pdfirIpt").val();
+	// 		let pdsecIpt = $("#pdsecIpt").val();
+	// 		let pdthdIpt = $("#pdthdIpt").val();
+	// 		if(!brandIpt || brandIpt.length < 20) {
+	// 			alert("请完善[品牌]数据库数据, 并同步到此处")
+	// 			e.preventDefault();
+	// 		} else if(!pdfirIpt || pdfirIpt.length < 20) {
+	// 			alert("请完善[系列]数据库数据, 并同步到此处")
+	// 			e.preventDefault();
+	// 		} else if(!pdsecIpt || pdsecIpt.length < 20) {
+	// 			alert("请完善[产品]数据库数据, 并同步到此处")
+	// 			e.preventDefault();
+	// 		} else if(!pdthdIpt || pdthdIpt.length < 20) {
+	// 			alert("请完善[商品]数据库数据, 并同步到此处")
+	// 			e.preventDefault();
+	// 		}
+	// 	}
+	// })
 
 
 	/*   数据初始化  */
@@ -62,22 +62,41 @@ $(function() {
 	funcInit();
 
 	/* ======================== 品牌选择 ======================== */
-	$("#qutpdNewForm").on('input', '#brandNomeIpt', function(e) {
-		$(".ajax").hide();
-		$("#brandsElem").show();
+	$("#brandNomeIpt").focus(function(e) {
+		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		brandNomeIptFunc(keyword)
+	})
+	$("#brandNomeIpt").blur(function(e) {
+		let brandIpt = $("#brandIpt").val();
+		if(brandIpt && brandIpt.length > 20) {
+			$(".brandsElem").remove();
+		}
+	})
+	$("#objectForm").on('input', '#brandNomeIpt', function(e) {
+		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
 		$("#brandIpt").val('')
 
 		$("#pdfirIpt").val('')
 		$("#firNomeIpt").val('')
+		$(".firImg").remove();
 
 		$("#pdsecIpt").val('')
+		$("#specfIpt").val('')
 		$("#secNomeIpt").val('')
+		$(".secImg").remove();
 
 		$("#pdthdIpt").val('')
 		$("#thdNomeIpt").val('')
+		$("#materIpt").val('')
+		$("#craftIpt").val('')
 
-		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		brandNomeIptFunc(keyword)
+	})
+	var brandNomeIptFunc = function(keyword) {
+		$(".ajax").hide();
+		$("#brandsElem").show();
+
 		if(keyword && keyword.length > 0) {
 			keyword = "&keyword=" + keyword;
 		} else {
@@ -96,7 +115,8 @@ $(function() {
 				}
 			}
 		});
-	})
+
+	}
 	$("#brandsElem").on('click', '.brandCard', function(e) {
 		$(".ajax").hide();
 		let brandId = $(this).attr("id").split("-")[1]
@@ -112,28 +132,44 @@ $(function() {
 	})
 
 	/* ======================== 系列选择 ======================== */
-	$("#qutpdNewForm").on('input', '#firNomeIpt', function(e) {
-		$(".ajax").hide();
-		$("#pdfirsElem").show();
+	$("#firNomeIpt").focus(function(e) {
+		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		firNomeIptFunc(keyword)
+	})
+	$("#firNomeIpt").blur(function(e) {
+		let pdfirIpt = $("#pdfirIpt").val();
+		if(pdfirIpt && pdfirIpt.length > 20) {
+			$(".pdfirsElem").remove();
+		}
+	})
+	$("#objectForm").on('input', '#firNomeIpt', function(e) {
+		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
 		$("#pdfirIpt").val('')
+		$(".firImg").remove();
 
 		$("#pdsecIpt").val('')
+		$("#specfIpt").val('')
 		$("#secNomeIpt").val('')
+		$(".secImg").remove();
 
 		$("#pdthdIpt").val('')
 		$("#thdNomeIpt").val('')
+		$("#materIpt").val('')
+		$("#craftIpt").val('')
 
-		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		firNomeIptFunc(keyword)
+	})
+	let firNomeIptFunc = function(keyword) {
+		$(".ajax").hide();
+		$("#pdfirsElem").show();
+
 		if(keyword && keyword.length > 0) {
 			keyword = "&keyword=" + keyword;
-		} else {
-			keyword = "&keyword=" + 'null';
 		}
 		let brandId = $("#brandIpt").val();
 		if(brandId && brandId.length > 20) {
 			brandCond = "&brandId=" + brandId
-			
 			urlPdfir = pdfirParam + brandCond + keyword;
 			$.ajax({
 				type: "GET",
@@ -148,7 +184,7 @@ $(function() {
 				}
 			});
 		}
-	})
+	}
 	$("#pdfirsElem").on('click', '.pdfirCard', function(e) {
 		$(".ajax").hide();
 		let pdfirId = $(this).attr("id").split("-")[1]
@@ -161,9 +197,11 @@ $(function() {
 		}
 		$("#pdfirIpt").val(pdfirId)
 		$("#firNomeIpt").val(pdfir.code)
-		let brand = pdfir.brand;
-		$("#brandIpt").val(brand._id)
-		$("#brandNomeIpt").val(brand.nome)
+		let elem = '<div class="firImg text-right">'
+			elem += '<img src="'+pdfir.photo+'", width="120px">'
+			elem += '<a href="'+pdfir.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+		elem += '</div>'
+		$("#firImg").append(elem)
 	})
 
 	/* ======================== 产品选择 ======================== */
@@ -171,22 +209,34 @@ $(function() {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		secNomeIptFunc(keyword)
 	})
-	$("#qutpdNewForm").on('input', '#secNomeIpt', function(e) {
+	$("#secNomeIpt").blur(function(e) {
+		let pdsecIpt = $("#pdsecIpt").val();
+		if(pdsecIpt && pdsecIpt.length > 20) {
+			$(".pdsecsElem").remove();
+		}
+	})
+	$("#objectForm").on('input', '#secNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+
+		$("#pdsecIpt").val('')
+		$("#specfIpt").val('')
+		$(".secImg").remove();
+		
+		$("#pdthdIpt").val('')
+		$("#thdNomeIpt").val('')
+		$("#materIpt").val('')
+		$("craftIpt").val('')
+
 		secNomeIptFunc(keyword)
 	})
 	var secNomeIptFunc = function(keyword) {
 		$(".ajax").hide();
 		$("#pdsecsElem").show();
 
-		$("#pdsecIpt").val('')
-
-		$("#pdthdIpt").val('')
-		$("#thdNomeIpt").val('')
-
 		if(keyword && keyword.length > 0) {
 			keyword = "&keyword=" + keyword;
 		}
+
 		let brandId = $("#brandIpt").val();
 		if(brandId && brandId.length > 20) {
 			brandCond = "&brandId=" + brandId
@@ -222,13 +272,13 @@ $(function() {
 			}
 		}
 		$("#pdsecIpt").val(pdsecId)
+		$("#specfIpt").val(pdsec.spec)
 		$("#secNomeIpt").val(pdsec.code)
-		let pdfir = pdsec.pdfir;
-		$("#pdfirIpt").val(pdfir._id)
-		$("#firNomeIpt").val(pdfir.code)
-		let brand = pdfir.brand;
-		$("#brandIpt").val(brand._id)
-		$("#brandNomeIpt").val(brand.nome)
+		let elem = '<div class="secImg text-right">'
+			elem += '<img src="'+pdsec.photo+'", width="120px">'
+			elem += '<a href="'+pdsec.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+		elem += '</div>'
+		$("#secImg").append(elem)
 	})
 
 	/* ======================== 具体商品选择 ======================== */
@@ -236,16 +286,24 @@ $(function() {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		thdNomeIptFunc(keyword)
 	})
-	$("#qutpdNewForm").on('input', '#thdNomeIpt', function(e) {
+	$("#thdNomeIpt").blur(function(e) {
+		let pdthdIpt = $("#pdthdIpt").val();
+		if(pdthdIpt && pdthdIpt.length > 20) {
+			$(".pdthdsElem").remove();
+		}
+	})
+	$("#objectForm").on('input', '#thdNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+
+		$("#pdthdIpt").val('')
+		$("#materIpt").val('')
+		$("#craftIpt").val('')
+
 		thdNomeIptFunc(keyword)
 	})
 	var thdNomeIptFunc = function(keyword) {
 		$(".ajax").hide();
 		$("#pdthdsElem").show();
-
-		$("#pdthdIpt").val('')
-
 
 		if(keyword && keyword.length > 0) {
 			keyword = "&keyword=" + keyword;
@@ -278,6 +336,7 @@ $(function() {
 				}
 			}
 		}
+
 	}
 	$("#pdthdsElem").on('click', '.pdthdCard', function(e) {
 		$(".ajax").hide();
@@ -291,6 +350,20 @@ $(function() {
 		}
 		$("#pdthdIpt").val(pdthdId)
 		$("#thdNomeIpt").val(pdthd.code)
+		let mater = '';
+		for(let i=0; i<pdthd.maters.length; i++) {
+			if(pdthd.maters[i].length >0) {
+				mater += '['+pdthd.maters[i] + '] ';
+			}
+		}
+		$("#materIpt").val(mater)
+		let craft = '';
+		for(let i=0; i<pdthd.crafts.length; i++) {
+			if(pdthd.crafts[i].length >0) {
+				craft += '['+pdthd.crafts[i] + '] ';
+			}
+		}
+		$("#craftIpt").val(craft)
 	})
 
 })
@@ -363,12 +436,13 @@ var pdsecRender = (pdsec) => {
 		elem += '<div class="text-dark text-center">['+pdsec.pdfir.brand.nome+']</div>'
 		elem += '<div class="text-dark text-center">['+pdsec.pdfir.code+']</div>'
 		elem += '<div class="text-info text-center">'+pdsec.code+'</div>'
+		elem += '<div class="text-info text-center">'+pdsec.spec+'</div>'
 	elem += '</div>'
 	return elem;
 }
 
 var pdthdsRender = (pdthdsOption, elemId) => {
-	let elem = '<div class="row pdthdsElem">'
+	let elem = '<div class="row text-center mx-3 pdthdsElem">'
 		for(let i=0; i<pdthdsOption.length; i++) {
 			let pdthd = pdthdsOption[i];
 			elem += pdthdRender(pdthd)
@@ -382,9 +456,11 @@ var pdthdRender = (pdthd) => {
 	let photo = pdthd.photo;
 	if(!photo) photo = '/upload/pdthd/1.jpg';
 	let elem = '';
-	elem += '<div class="col-3 col-md-2 mt-2 card pdthdCard" id="pdthdCard-'+pdthd._id+'">'
-		elem += '<div class="text-center">['+pdthd.code+']</div>'
-		elem += '<div class="text-info text-center">'+pdthd.price+'</div>'
+	elem += '<div class="col-3 col-md-2 mt-2 p-3 border pdthdCard" id="pdthdCard-'+pdthd._id+'">'
+		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.pdfir.brand.nome+']</div>'
+		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.pdfir.nome+']</div>'
+		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.code+']</div>'
+		elem += '<div class="text-info text-center">'+pdthd.code+'</div>'
 		for(let i=0; i<pdthd.maters.length; i++) {
 			let mater = pdthd.maters[i]
 			elem += '<div class="text-dark mt-2">'+mater+'</div>'

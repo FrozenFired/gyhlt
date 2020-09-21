@@ -10,16 +10,18 @@ let dbSchema = new Schema({
 	/* 本公司报价 */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
-	qunAt: Date,								// 询价时间
-	cterNome: String, 							// 客户名字
+	cterNome: String, 							// 客户姓名
+
+	qntcrtAt: Date,								// 询价时间
+	qntupdAt: Date,								// 询价时间
+	qntfnlAt: Date,								// 报价完成时间
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
-	qutAt: Date,								// 报价完成时间
 	/* 上游公司报价 */
 
 	/* ========== 基本信息 ========== */
 	code: String,								// 编号
-	qunNote: String,							// 备注
+	times: Number,								// 编号
 	qutNote: String,							// 备注
 	strmup: {type: ObjectId, ref: 'Strmup'},	// 同步采购公司用的
 
@@ -34,6 +36,7 @@ let dbSchema = new Schema({
 dbSchema.pre('save', function(next) {	
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
+		if(!this.times) this.times = 1;
 		this.ctAt = Date.now();
 	} else {
 		

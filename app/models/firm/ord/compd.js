@@ -9,20 +9,27 @@ let dbSchema = new Schema({
 	/* ==================================== 默认继承 询价单 ==================================== */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 
+	pdnum: Number,								// 产品编号
+	area: String,								// 所属区域
+
 	brand: {type: ObjectId, ref: 'Brand'},		// 品牌
 	brandNome: String, 
 
 	pdfir: {type: ObjectId, ref: 'Pdfir'},		// 系列
-	firNome: String,								// 系列名
+	firNome: String,							// 系列名
+	pdNome: String,								// 品类
 	photo: String,								// 照片
 
 	pdsec: {type: ObjectId, ref: 'Pdsec'},		// 产品
-	secNome: String,							// 产品编号(可填产品规格, 尺寸等)
+	secNome: String,							// 产品编号
+	specf: String,								// 产品规格
 	sketch: String,								// 草图
 
 	pdthd: {type: ObjectId, ref: 'Pdthd'},		// 子产品
 	thdNome: String,
-	material: String,
+	mater: String,
+	craft: String,
+	images: [{type: String}],					// 材质图片
 
 	note: String,
 
@@ -31,10 +38,12 @@ let dbSchema = new Schema({
 	/* ============================= 询价单 ============================= */
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
-	qunAt: Date,								// 询价时间
+
+	qntcrtAt: Date,								// 询价时间
+	qntupdAt: Date,								// 询价时间
+	qntfnlAt: Date,								// 报价完成时间
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
-	qutAt: Date,								// 报价完成时间
 	price: Float,
 
 	qntpdSts: {type: Number, default: 0},			// 商品状态 

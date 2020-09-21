@@ -110,16 +110,21 @@ exports.slQunpdDel = (req, res) => {
 					info = "user CompdDel, inquot.save, Error!";
 					Err.usError(req, res, info);
 				} else {
-					let photoDel = compd.photo;
-					let sketchDel = compd.sketch;
+					let picDels = compd.images;
+					picDels.push(compd.photo)
+					picDels.push(compd.sketch)
 					let qunId = inquot._id;
 					Compd.deleteOne({_id: id}, (err, objRm) => {
 						if(err) {
 							info = "user CompdDel, Compd.deleteOne, Error!";
 							Err.usError(req, res, info);
 						} else {
-							MdPicture.deletePicture(photoDel, Conf.picPath.compd);
-							MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
+							for(let i = 0; i<picDels.length; i++) {
+								let picDel = picDels[i];
+								if(picDel) {
+									MdPicture.deletePicture(picDel, Conf.picPath.compd);
+								}
+							}
 							res.redirect("/slQun/"+qunId);
 						}
 					})
@@ -136,6 +141,7 @@ exports.slQunpdDel = (req, res) => {
 exports.slQunpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
+	obj.qntupdAt = Date.now();
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -236,7 +242,7 @@ exports.slQunpdImg = (req, res) => {
 exports.slQunpdNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qunAt = Date.now();
+	obj.qntcrtAt = obj.qntupdAt = Date.now();
 	obj.qntpdSts = Conf.status.quoting.num;
 	obj.quant = parseInt(obj.quant);
 	if(isNaN(obj.quant)) obj.quant = 1;
@@ -264,6 +270,7 @@ exports.slQunpdNew = (req, res) => {
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
 			let _compd = new Compd(obj)
+			// console.log(_compd)
 			inquot.compds.unshift(_compd._id);
 			inquot.save((err, inquotSave) => {
 				if(err) {
