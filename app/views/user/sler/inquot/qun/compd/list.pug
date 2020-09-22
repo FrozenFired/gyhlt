@@ -4,16 +4,11 @@ table.table.table-bordered
 		th 系列
 		th 产品规格
 		th 工艺面料
+		th(style="width:10%") 备注
 		th 数量价格
-		th 备注状态
 	thead
 		each qunpd in qunpds
-			- let status = '';
-			each sts in Conf.status
-				- status = '';
-				if sts.num == qunpd.qntpdSts
-					- status = sts.val;
-					- break;
+			-a;
 			tr.text-info
 				td
 					if qunpd.brand
@@ -30,7 +25,7 @@ table.table.table-bordered
 
 					if qun.status == Conf.status.init.num
 							a-;
-							a.btn.btn-info.mt-5(href="/slQunpd/"+qunpd._id) 查看详情
+							a.btn.border-warning.text-warning.mt-5(href="/slQunpdUp/"+qunpd._id) 更改商品
 				td
 					.pdnome
 						span.text-dark 品类: 
@@ -51,28 +46,19 @@ table.table.table-bordered
 						- let photo = "/imgs/createPicture.jpg";
 						if qunpd.photo
 							- photo = qunpd.photo;
+							img(src=photo, width="120px")
+							form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
+								input(type="hidden", name="compdId", value=qunpd._id)
+								input(type="hidden", name="picField", value="photo")
+								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.pdfir
 							- photo = qunpd.pdfir.photo;
-						img#photoCrt(src=photo, width="120px")
-						.linkpic.text-info
-							a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
-						if qun.status == Conf.status.init.num
-							a-;
-							form#photoForm(style="display:none", method="post", action="/slQunpdImg", enctype="multipart/form-data")
-								input(type="hidden", name="obj[_id]", value=qunpd._id)
-								input(type="hidden", name="picDir", value=Conf.picPath.compd)
-								input(type="hidden", name="obj[picOld]", value=photo)
-								input(type="hidden", name="picName", value=crUser.firm.code+'_'+qun.nome)
-								input(type="hidden", name="obj[photo]", value=1)
-								.form-group.udPhoto.row(style="display:none")
-									.col-12
-										label.col-form-label(for="photoUpload") pdImg
-										input#photoUpload.btn.btn-info.btn-block(type="file", name="picUpload")
-								.form-group.row
-									.col-4
-										a.btn.btn-secondary(href="/slQun/"+qun._id) 取消
-									.col-8.text-right
-										input.btn.btn-info(type="submit" value="更改图片")
+							img(src=photo, width="120px")
+							.picLink
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+						else
+							img(src=photo, width="120px")
 				td
 					if qunpd.pdsec
 						- pdsec = qunpd.pdsec;
@@ -94,29 +80,20 @@ table.table.table-bordered
 						- let sketch = "/imgs/createPicture.jpg";
 						if qunpd.sketch
 							- sketch = qunpd.sketch;
+							img#sketchCrt(src=sketch, width="120px")
+							form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
+								input(type="hidden", name="compdId", value=qunpd._id)
+								input(type="hidden", name="picField", value="sketch")
+								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.pdsec
 							-a;
 							- sketch = qunpd.pdsec.photo;
-						img#sketchCrt(src=sketch, width="120px")
-						.linkpic.text-info
-							a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
-						if qun.status == Conf.status.init.num
-							a-;
-							form#sketchForm(style="display:none", method="post", action="/slQunpdImg", enctype="multipart/form-data")
-								input(type="hidden", name="obj[_id]", value=qunpd._id)
-								input(type="hidden", name="picDir", value=Conf.picPath.compd)
-								input(type="hidden", name="obj[picOld]", value=sketch)
-								input(type="hidden", name="picName", value=crUser.firm.code+'_'+qun.nome)
-								input(type="hidden", name="obj[sketch]", value=1)
-								.form-group.udPhoto.row(style="display:none")
-									.col-12
-										label.col-form-label(for="sketchUpload") pdImg
-										input#sketchUpload.btn.btn-info.btn-block(type="file", name="picUpload")
-								.form-group.row
-									.col-4
-										a.btn.btn-secondary(href="/slQun/"+qun._id) 取消
-									.col-8.text-right
-										input.btn.btn-info(type="submit" value="更改图片")
+							img#sketchCrt(src=sketch, width="120px")
+							.picLink
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+						else
+							img#sketchCrt(src=sketch, width="120px")
 				td
 					- let pdthdcode = '查找数据库';
 					if qunpd.pdthd
@@ -125,39 +102,61 @@ table.table.table-bordered
 					.pdmater.mt-3 #{qunpd.mater}
 					.pdcraft.mt-3 #{qunpd.craft}
 					.images
+						- let subsp = -1;
 						each image in qunpd.images
-							-a;
+							- subsp++;
 							if image && image.length > 5
 								-a;
 								img.mt-2(src=image, width="120px")
-								.linkpic.text-info
+								form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
+									input(type="hidden", name="compdId", value=qunpd._id)
+									input(type="hidden", name="picField", value="images")
+									input(type="hidden", name="subsp", value=subsp)
+									button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
 									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
-					if qun.status < Conf.status.done.num
+					span #{qunpd.note}
+				td
+					if qun.status == Conf.status.quoting.num
 						-a;
 						div(title="准确价格需要等待定价完成") 预估价格
-					-let compd = qunpd;
-					.quant 数量: #{compd.quant}
 					- let unit = '';
 					each ut in Conf.unit
 						- unit = '';
-						if ut.num == compd.unit
+						if ut.num == qunpd.unit
 							- unit = ut.val;
 							- break;
+					.quant
+						span.text-dark 数量: 
+						span #{qunpd.quant}
 
-					if compd.price
-						- price = compd.price;
-						.price 单价: #{compd.price}#{unit}
-					else
-						.price.text-warning  未报价
-					- let total = compd.quant * compd.price;
-					if !isNaN(total)
-						- total;
-						h5.total.text-info 总价: #{total}#{unit}
-				td
-					div #{status}
-					if qun.status > Conf.status.init.num
-						-a;
-						div 商品状态: #{status}
+					.price.mt-3
+						span.text-dark 单价:
+						if qunpd.price
+							- price = qunpd.price;
+							span #{qunpd.price}#{unit}
+						else
+							span.text-dark  未报价
 
-script(src="/js/user/sler/qun/detail/compdList.js")
+					h5.total.mt-2
+						span.text-dark 总价: 
+						- let total = qunpd.quant * qunpd.price;
+						if !isNaN(total)
+							- total;
+							span #{total}#{unit}
+						else
+							span.text-dark  未报价
+
+					.qunpdSts.mt-5
+						- let status = '';
+						each sts in Conf.status
+							- status = '';
+							if sts.num == qunpd.qntpdSts
+								- status = sts.val;
+								- break;
+						span.text-dark 商品状态: 
+						if qun.status > Conf.status.init.num
+							-a;
+							span.text-danger #{status}
+						else
+							span.text-danger 创建中

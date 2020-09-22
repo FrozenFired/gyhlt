@@ -31,9 +31,9 @@ module.exports = function(app){
 	app.get('/slQunpdUp/:id', MdRole.slerIsLogin, Qunpd.slQunpdUp)
 	app.get('/slQunpdDel/:id', MdRole.slerIsLogin, Qunpd.slQunpdDel)
 
-	app.post('/slQunpdImg', MdRole.slerIsLogin, postForm, MdPicture.pictureNew, Qunpd.slQunpdImg)
+	app.post('/slQunpdDelPic', MdRole.slerIsLogin, postForm, Qunpd.slQunpdDelPic)
 	app.post('/slQunpdNew', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdNew)
-	app.post('/slQunpdUpd', MdRole.slerIsLogin, postForm, Qunpd.slQunpdUpd)
+	app.post('/slQunpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdUpd)
 	/* =================================== Inquot 询价 =================================== */
 	app.get('/slQuns', MdRole.slerIsLogin, Qun.slQuns)
 	app.get('/slQun/:id', MdRole.slerIsLogin, Qun.slQunFilter, Qun.slQun)

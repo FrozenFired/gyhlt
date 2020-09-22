@@ -55,6 +55,8 @@ exports.slQunpdUp = (req, res) => {
 	Compd.findOne({_id: id})
 	.populate('inquot')
 	.populate('ordin')
+	.populate('pdfir')
+	.populate('pdsec')
 	.populate('pdthd')
 	.exec((err, qunpd) => {
 		if(err) {
@@ -176,6 +178,13 @@ exports.slQunpdUpd = (req, res) => {
 				obj.sketch = '';
 				sketchDel = compd.sketch;
 			}
+			if(obj.images && compd.images) {
+				for(let i=0; i<obj.images.length; i++) {
+					if(compd.images.length>=i && !obj.images[i]) {
+						obj.images[i] = compd.images[i];
+					}
+				}
+			}
 			let _compd = _.extend(compd, obj);
 			_compd.save((err, objSave) => {
 				if(err) {
@@ -185,60 +194,57 @@ exports.slQunpdUpd = (req, res) => {
 				} else {
 					MdPicture.deletePicture(photoDel, Conf.picPath.compd);
 					MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
-					res.redirect('/slQunpd/'+objSave._id)
+					res.redirect('/slQun/'+objSave.inquot._id)
+				}
+			})
+		}
+	})
+}
+exports.slQunpdDelPic = (req, res) => {
+	let crUser = req.session.crUser;
+	let compdId = req.body.compdId;
+	let picField = req.body.picField;
+	let subsp = req.body.subsp;
+	Compd.findOne({
+		_id: compdId,
+		quner: crUser._id
+	})
+	.exec((err, compd) => {
+		if(err) {
+			console.log(err);
+			info = "sler QunpdDelPic, Compd.findOne, Error!"
+			Err.usError(req, res, info);
+		} else if(!compd) {
+			info = '此询价单已经被删除, 请刷新查看';
+			Err.usError(req, res, info);
+		} else if(!picField) {
+			info = '操作错误, 请截图 联系管理员 sler QunpdDelPic';
+			Err.usError(req, res, info);
+		} else {
+			let picDel = compd[picField];
+			if(subsp) {
+				picDel = compd[picField][subsp];
+				// compd[picField][subsp] = '';
+				compd.images.remove(picDel)
+			} else {
+				picDel = compd[picField];
+				compd[picField] = '';
+			}
+			// return;
+			compd.save((err, compdSave) => {
+				if(err) {
+					console.log(err);
+					info = "sler QunpdDelPic, Compd.save, Error!"
+					Err.usError(req, res, info);
+				} else {
+					MdPicture.deletePicture(picDel, Conf.picPath.compd);
+					res.redirect('/slQun/'+compdSave.inquot)
 				}
 			})
 		}
 	})
 }
 
-exports.slQunpdImg = (req, res) => {
-	let crUser = req.session.crUser;
-	let obj = req.body.obj;
-	let picDel = obj.picture;
-	if(obj.picture) {
-		if(obj.photo == 1) {
-			obj.photo = obj.picture;
-		} else if(obj.sketch) {
-			obj.sketch = obj.picture;
-		}
-	}
-	Compd.findOne({
-		firm: crUser.firm,
-		_id: obj._id
-	}, (err, compd) => {
-		if(err) {
-			console.log(err);
-			MdPicture.deletePicture(picDel, Conf.picPath.compd);
-			info = "sler QunpdUpd, Strmup.findOne, Error!"
-			Err.usError(req, res, info);
-		} else if(!compd) {
-			MdPicture.deletePicture(picDel, Conf.picPath.compd);
-			info = '此询价单已经被删除, 请刷新查看';
-			Err.usError(req, res, info);
-		} else {
-			let qunId = compd.inquot;
-			let picOld;
-			if(obj.photo == 1) {
-				picOld = compd.photo;
-			}  else if(obj.sketch) {
-				picOld = compd.sketch;
-			}
-
-			let _compd = _.extend(compd, obj)
-			_compd.save((err, objSave) => {
-				if(err) {
-					MdPicture.deletePicture(picDel, Conf.picPath.compd);
-					info = "添加询价单时 数据库保存错误, 请截图后, 联系管理员";
-					Err.usError(req, res, info);
-				} else {
-					MdPicture.deletePicture(picOld, Conf.picPath.compd);
-					res.redirect('/slQun/'+qunId)
-				}
-			})			
-		}
-	})
-}
 exports.slQunpdNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;

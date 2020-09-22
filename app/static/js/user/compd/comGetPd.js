@@ -75,21 +75,33 @@ $(function() {
 	$("#objectForm").on('input', '#brandNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
-		$("#brandIpt").val('')
+		let brandIpt = $("#brandIpt").val();
+		if(brandIpt && brandIpt.length > 20) {
+			$("#brandIpt").val('')
+		}
+		// 如果本数据库中的数据 那么当上级更改时, 这个就不会存在
+		let pdfirIpt = $("#pdfirIpt").val();
+		if(pdfirIpt && pdfirIpt.length > 20) {
+			$("#pdfirIpt").val('')
+			$("#firNomeIpt").val('')
+			$(".firImg").remove();
+		}
 
-		$("#pdfirIpt").val('')
-		$("#firNomeIpt").val('')
-		$(".firImg").remove();
+		let pdsecIpt = $("#pdsecIpt").val();
+		if(pdsecIpt && pdsecIpt.length > 20) {
+			$("#pdsecIpt").val('')
+			$("#specfIpt").val('')
+			$("#secNomeIpt").val('')
+			$(".secImg").remove();
+		}
 
-		$("#pdsecIpt").val('')
-		$("#specfIpt").val('')
-		$("#secNomeIpt").val('')
-		$(".secImg").remove();
-
-		$("#pdthdIpt").val('')
-		$("#thdNomeIpt").val('')
-		$("#materIpt").val('')
-		$("#craftIpt").val('')
+		let pdthdIpt = $("#pdthdIpt").val();
+		if(pdthdIpt && pdthdIpt.length > 20) {
+			$("#pdthdIpt").val('')
+			$("#thdNomeIpt").val('')
+			$("#materIpt").val('')
+			$("#craftIpt").val('')
+		}
 
 		brandNomeIptFunc(keyword)
 	})
@@ -145,18 +157,27 @@ $(function() {
 	$("#objectForm").on('input', '#firNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
-		$("#pdfirIpt").val('')
-		$(".firImg").remove();
+		let pdfirIpt = $("#pdfirIpt").val();
+		if(pdfirIpt && pdfirIpt.length > 20) {
+			$("#pdfirIpt").val('')
+			$(".firImg").remove();
+		}
 
-		$("#pdsecIpt").val('')
-		$("#specfIpt").val('')
-		$("#secNomeIpt").val('')
-		$(".secImg").remove();
+		let pdsecIpt = $("#pdsecIpt").val();
+		if(pdsecIpt && pdsecIpt.length > 20) {
+			$("#pdsecIpt").val('')
+			$("#specfIpt").val('')
+			$("#secNomeIpt").val('')
+			$(".secImg").remove();
+		}
 
-		$("#pdthdIpt").val('')
-		$("#thdNomeIpt").val('')
-		$("#materIpt").val('')
-		$("#craftIpt").val('')
+		let pdthdIpt = $("#pdthdIpt").val();
+		if(pdthdIpt && pdthdIpt.length > 20) {
+			$("#pdthdIpt").val('')
+			$("#thdNomeIpt").val('')
+			$("#materIpt").val('')
+			$("#craftIpt").val('')
+		}
 
 		firNomeIptFunc(keyword)
 	})
@@ -218,14 +239,20 @@ $(function() {
 	$("#objectForm").on('input', '#secNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
-		$("#pdsecIpt").val('')
-		$("#specfIpt").val('')
-		$(".secImg").remove();
+		let pdsecIpt = $("#pdsecIpt").val();
+		if(pdsecIpt && pdsecIpt.length > 20) {
+			$("#pdsecIpt").val('')
+			$("#specfIpt").val('')
+			$(".secImg").remove();
+		}
 		
-		$("#pdthdIpt").val('')
-		$("#thdNomeIpt").val('')
-		$("#materIpt").val('')
-		$("craftIpt").val('')
+		let pdthdIpt = $("#pdthdIpt").val();
+		if(pdthdIpt && pdthdIpt.length > 20) {
+			$("#pdthdIpt").val('')
+			$("#thdNomeIpt").val('')
+			$("#materIpt").val('')
+			$("craftIpt").val('')
+		}
 
 		secNomeIptFunc(keyword)
 	})
@@ -295,9 +322,12 @@ $(function() {
 	$("#objectForm").on('input', '#thdNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
-		$("#pdthdIpt").val('')
-		$("#materIpt").val('')
-		$("#craftIpt").val('')
+		let pdthdIpt = $("#pdthdIpt").val();
+		if(pdthdIpt && pdthdIpt.length > 20) {
+			$("#pdthdIpt").val('')
+			$("#materIpt").val('')
+			$("#craftIpt").val('')
+		}
 
 		thdNomeIptFunc(keyword)
 	})

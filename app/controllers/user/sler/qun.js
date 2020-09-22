@@ -217,8 +217,6 @@ exports.slQunExcel = (req, res) => {
 
 	Inquot.findOne({_id: id})
 	.populate('firm')
-	.populate('quner')
-	.populate('quter')
 	.exec((err, qun) => {
 		if(err) {
 			console.log(err);
@@ -248,31 +246,41 @@ exports.slQunExcel = (req, res) => {
 					let ws = wb.addWorksheet('Sheet 1');
 					ws.column(1).setWidth(5);
 					ws.column(2).setWidth(15);
-					ws.column(3).setWidth(20);
+					ws.column(3).setWidth(10);
 					ws.column(4).setWidth(20);
 					ws.column(5).setWidth(20);
 					ws.column(6).setWidth(15);
 					ws.column(7).setWidth(10);
-					ws.column(8).setWidth(20);
+					ws.column(8).setWidth(15);
+					ws.column(9).setWidth(10);
+					ws.column(10).setWidth(10);
+					ws.column(11).setWidth(10);
 					
 					// header
 					ws.cell(1,1).string('NB.');
 					ws.cell(1,2).string('Brand');
-					ws.cell(1,3).string('Product');
-					ws.cell(1,4).string('Code');
-					ws.cell(1,5).string('Specif');
-					ws.cell(1,6).string('Price Unit');
-					ws.cell(1,7).string('Qunant');
-					ws.cell(1,8).string('Total');
+					ws.cell(1,3).string('Area');
+					ws.cell(1,4).string('Product');
+					ws.cell(1,5).string('code规格');
+					ws.cell(1,6).string('material');
+					ws.cell(1,7).string('craft');
+					ws.cell(1,8).string('Note');
+					ws.cell(1,9).string('Price Unit');
+					ws.cell(1,10).string('Qunant');
+					ws.cell(1,11).string('Total Price');
 
 					for(let i=0; i<qunpds.length; i++){
 						ws.cell((i+2), 1).string(String(i+1));
+
 						let qunpd = qunpds[i];
 						if(qunpd.brand) {
 							ws.cell((i+2), 2).string(String(qunpd.brand.nome));
 						} else if(qunpd.brandNome) {
 							ws.cell((i+2), 2).string(String(qunpd.brandNome));
 						}
+
+						if(qunpd.area) ws.cell((i+2), 3).string(String(qunpd.area));
+
 						if(qunpd.pdfir) {
 							// ws.addImage({
 							// 	path: qunpd.pdfir.photo,
@@ -287,33 +295,43 @@ exports.slQunExcel = (req, res) => {
 							// 		},
 							// 	},
 							// });
-							ws.cell((i+2), 3).string(String(qunpd.pdfir.code));
-						} else if(qunpd.firNome) {
-							ws.cell((i+2), 3).string(String(qunpd.firNome));
-						}
-						if(qunpd.pdsec) {
-							ws.cell((i+2), 4).string(String(qunpd.pdsec.code));
+							ws.cell((i+2), 4).string(String(qunpd.pdfir.code));
 						} else if(qunpd.firNome) {
 							ws.cell((i+2), 4).string(String(qunpd.firNome));
+						}
+						if(qunpd.pdsec) {
+							ws.cell((i+2), 5).string("产品编号:" + String(qunpd.pdsec.code));
+							ws.cell((i+2), 5).string("规格尺寸:" +String(qunpd.pdsec.spec));
+						} else if(qunpd.firNome) {
+							ws.cell((i+2), 5).string(String(qunpd.firNome));
+							ws.cell((i+2), 5).string(String(qunpd.specf));
 						}
 						if(qunpd.pdthd) {
 							let maters = '';
 							for(let j=0; j<qunpd.pdthd.maters.length; j++){
 								maters += qunpd.pdthd.maters[j] + ' ';
 							}
-							ws.cell((i+2), 5).string(maters);
+							ws.cell((i+2), 6).string(maters);
+							let crafts = '';
+							for(let j=0; j<qunpd.pdthd.crafts.length; j++){
+								crafts += qunpd.pdthd.crafts[j] + ' ';
+							}
+							ws.cell((i+2), 7).string(crafts);
 						} else if(qunpd.thdNome) {
-							ws.cell((i+2), 5).string(String(qunpd.thdNome));
+							ws.cell((i+2), 6).string(String(qunpd.mater));
+							ws.cell((i+2), 7).string(String(qunpd.craft));
 						}
+
+						if(qunpd.note) ws.cell((i+2), 8).string(String(qunpd.note));
 
 						if(qunpd.price && qunpd.quant) {
 							let price = parseFloat(qunpd.price);
 							let quant = parseInt(qunpd.quant);
-							ws.cell((i+2), 6).string(String(price + ' ' + Conf.unitVal[qunpd.unit]));
-							ws.cell((i+2), 7).string(String(quant));
+							ws.cell((i+2), 9).string(String(price + ' ' + Conf.unitVal[qunpd.unit]));
+							ws.cell((i+2), 10).string(String(quant));
 							if(!isNaN(price) && !isNaN(quant)) {
 								let tot = price * quant;
-								ws.cell((i+2), 8).string(String(tot + ' ' + Conf.unitVal[qunpd.unit]));
+								ws.cell((i+2), 11).string(String(tot + ' ' + Conf.unitVal[qunpd.unit]));
 							}
 						}
 					}
