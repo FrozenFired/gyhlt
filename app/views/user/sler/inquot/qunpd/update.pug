@@ -2,13 +2,16 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			a(href="/") Home
-			span &nbsp; | &nbsp;
-			a(href="/slQun/"+qunpd.inquot._id) 询价单
-			span &nbsp; | &nbsp;
-			span 更新询价商品
-			hr
+		.title.row
+			.col-md-9
+				a(href="/") Home
+				span &nbsp; | &nbsp;
+				a(href="/slQun/"+qunpd.inquot._id) 询价单
+				span &nbsp; | &nbsp;
+				span 更新询价商品
+			.col-md-3.text-right
+				a.btn.btn-danger(href="/slQunpdDel/"+qunpd._id) 删除此询价商品
+		hr
 
 		form#objectForm(method="post", action="/slQunpdUpd", enctype="multipart/form-data")
 			input#inquotIpt(type="hidden", name="obj[_id]", value=qunpd._id)
@@ -138,7 +141,7 @@ block content
 
 			.form-group.row
 				.col-12.text-right
-					button.border.border-danger.mr-4.btn.btn-default.text-danger#qunpdsPageShow(type="button") 取消
+					a.border.border-danger.mr-4.btn.btn-default.text-danger#qunpdsPageShow(href="/slQun/"+qunpd.inquot._id) 取消
 					input.btn.btn-success(type="submit", value="确认更新")
 
 	script(src="/js/user/sler/qunpd/edit.js")
