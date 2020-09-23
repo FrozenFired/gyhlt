@@ -65,18 +65,12 @@ each qunpd in qunpds
 					label.col-4.col-form-label 数量
 					.col-8
 						input.quantIpt.form-control(id="quantIpt-"+compd._id, type="text", name="obj[quant]", value=compd.quant)
-				- let unit = '';
-				each ut in Conf.unit
-					- unit = '';
-					if ut.num == compd.unit
-						- unit = ut.val;
-						- break;
 
-				.price 价格: #{price}#{unit}
+				.price 价格: #{price}
 				- let total = compd.quant * price;
 				if !isNaN(total)
 					- total;
-					h5.total.text-info 总价: <span id="total-"+compd._id>#{total}</span>#{unit}
+					h5.total.text-info 总价: <span id="total-"+compd._id>#{total}</span>
 			.col-4.col-md-2.mt-2
 				if qunpd.pdthd
 					- pdthd = qunpd.pdthd;

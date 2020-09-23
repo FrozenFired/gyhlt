@@ -44,16 +44,6 @@ var qutsRender = (quts, elemId, isReload, role) => {
 	$(elemId).append(elem);
 }
 var qutRender = (qut, role) => {
-	let stsBg = 'bg-default';
-	if(qut.status == Conf.status.quoting.num) {
-		stsBg = 'bg-default';
-	} else if(qut.status == Conf.status.done.num) {
-		stsBg = 'bg-info';
-	} else if(qut.status == Conf.status.ord.num) {
-		stsBg = 'bg-success';
-	} else if(qut.status == Conf.status.unord.num) {
-		stsBg = 'bg-danger';
-	}
 	let status = '';
 	for(sts in Conf.status) {
 		status = '';
@@ -66,7 +56,20 @@ var qutRender = (qut, role) => {
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border qutCard">'
 
-		elem += '<div class="col-4 mt-3">'
+		elem += '<div class="col-md-4">'
+			elem += '<a class="btn btn-info" href="/'+role+'Qut/'+qut._id+'">'
+				elem += '<div style="font-size: 23px;">'+qut.code+'</div>'
+			elem += '</a>'
+		elem += '</div>'
+
+		elem += '<div class="col-md-4">'
+			elem += '<div>'
+				elem += '询价时间: '
+				qntcrtAt = Date.now();
+				if(qut.qntcrtAt) qntcrtAt = new Date(qut.qntcrtAt)
+				elem += transformTime(qntcrtAt, 0, 10)
+			elem += '</div>'
+
 			elem += '<div>'
 				elem += '询价人:'
 				if(qut.quner) {
@@ -75,33 +78,21 @@ var qutRender = (qut, role) => {
 					elem += '数据丢失';
 				}
 			elem += '</div>'
+
 			elem += '<div>'
-				elem += '询价时间: '
-				qntcrtAt = Date.now();
-				if(qut.qntcrtAt) qntcrtAt = new Date(qut.qntcrtAt)
-				elem += transformTime(qntcrtAt, 0, 10)
+				elem += '报价次数: '+ qut.times
 			elem += '</div>'
-		elem += '</div>'
-
-		elem += '<div class="col-4">'
-			elem += '<a href="/'+role+'Qut/'+qut._id+'">'
-				elem += '<h3 class="text-dark">'+qut.code+'</h3>'
-			elem += '</a>'
-			if(qut.qutNote) {
-				elem += '<div>'
-					elem += qut.qutNote
-				elem += '</div>'
-			}
 
 		elem += '</div>'
 
-		elem += '<div class="col-4 mt-3">'
+		elem += '<div class="col-md-4">'
 			if(qut.status == Conf.status.done.num) {
 				elem += '<h4 class="p-2">'
 					elem += '总价格:'
-					elem += qut.price
+					elem += qut.qntPr
 				elem += '</h4>'
 			}
+
 			elem += '<div>'
 				elem += '报价人:'
 				if(qut.quter) {
@@ -110,7 +101,8 @@ var qutRender = (qut, role) => {
 					elem += '未分配';
 				}
 			elem += '</div>'
-			elem += '<div class="'+stsBg+'">'
+
+			elem += '<div class="mt-3">'
 				elem += status
 			elem += '</div>'
 		elem += '</div>'

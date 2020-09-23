@@ -18,17 +18,14 @@ let dbSchema = new Schema({
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
 	/* 上游公司报价 */
-
+	qntPr: Float,
 	/* ========== 基本信息 ========== */
 	code: String,								// 编号
-	times: Number,								// 编号
-	qutNote: String,							// 备注
+	times: Number,								// 报价次数
 	strmup: {type: ObjectId, ref: 'Strmup'},	// 同步采购公司用的
 
 	/* ========== 商品信息 ========== */
 	compds: [{type: ObjectId, ref: 'Compd'}],
-	/* ========== 付款信息 ========== */
-	price: Float,
 
 	status: {type: Number, default: 0},			// 系列状态 
 });

@@ -1,5 +1,5 @@
-table.table.table-bordered
-	thead.thead-dark
+table.mt-3.table.table-bordered
+	thead.thead-light
 		th 品牌
 		th 系列
 		th 产品规格
@@ -7,6 +7,8 @@ table.table.table-bordered
 		th(style="width:10%") 备注
 		th 数量价格
 	thead
+		- let estTot = 0;
+		- let qntTot = 0;
 		each qunpd in qunpds
 			-a;
 			tr.text-info
@@ -23,7 +25,7 @@ table.table.table-bordered
 							span.text-dark 区域: 
 							span #{qunpd.area}
 
-					if qun.status == Conf.status.init.num
+					if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
 							a-;
 							a.btn.border-warning.text-warning.mt-5(href="/slQunpdUp/"+qunpd._id) 更改商品
 				td
@@ -117,35 +119,50 @@ table.table.table-bordered
 				td
 					span #{qunpd.note}
 				td
-					if qun.status == Conf.status.quoting.num
-						-a;
-						div(title="准确价格需要等待定价完成") 预估价格
-					- let unit = '';
-					each ut in Conf.unit
-						- unit = '';
-						if ut.num == qunpd.unit
-							- unit = ut.val;
-							- break;
 					.quant
 						span.text-dark 数量: 
 						span #{qunpd.quant}
 
+					- let estimate = '未预估';
+					if qunpd.estimate
+						- estimate += parseFloat(qunpd.estimate);
+						if !isNaN(estTot)
+						- estimate = qunpd.estimate;
+					else
+						- estTot = '未预估';
 					.price.mt-3
-						span.text-dark 单价:
-						if qunpd.price
-							- price = qunpd.price;
-							span #{qunpd.price}#{unit}
+						if qun.status == Conf.status.quoting.num
+							-a;
+							span.text-dark 预估单价:
+							if qunpd.estimate
+								- a;
+								span #{qunpd.estimate}
+							else
+								span.text-dark  未预估
 						else
-							span.text-dark  未报价
+							span.text-dark 单价:
+							if qunpd.qntPr
+								- a;
+								span #{qunpd.qntPr}
+							else
+								span.text-dark  未报价
 
 					h5.total.mt-2
-						span.text-dark 总价: 
-						- let total = qunpd.quant * qunpd.price;
-						if !isNaN(total)
-							- total;
-							span #{total}#{unit}
+						if qun.status == Conf.status.quoting.num
+							-a;
+							span.text-dark 预估总价:
+							if qunpd.estimate
+								- a;
+								span #{qunpd.estimate * qunpd.quant}
+							else
+								span.text-dark  未预估
 						else
-							span.text-dark  未报价
+							span.text-dark 总价:
+							if qunpd.qntPr
+								- qntPr = qunpd.qntPr;
+								span #{qunpd.qntPr * qunpd.quant}
+							else
+								span.text-dark  未报价
 
 					.qunpdSts.mt-5
 						- let status = '';

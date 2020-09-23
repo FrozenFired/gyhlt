@@ -47,16 +47,11 @@ module.exports = function(app){
 	/* =================================== compd 报价商品 =================================== */
 	app.get('/mgQutpds', MdRole.mgerIsLogin, Qutpd.mgQutpds)
 	app.get('/mgQutpd/:id', MdRole.mgerIsLogin, Qutpd.mgQutpd)
-	app.get('/mgQutpdUp/:id', MdRole.mgerIsLogin, Qutpd.mgQutpdUp)
-	app.get('/mgQutpdDel/:id', MdRole.mgerIsLogin, Qutpd.mgQutpdDel)
 
-	app.post('/mgQutpdImg', MdRole.mgerIsLogin, postForm, MdPicture.pictureNew, Qutpd.mgQutpdImg)
-	app.post('/mgQutpdNew', MdRole.mgerIsLogin, postForm, Qutpd.mgQutpdNew)
-	app.post('/mgQutpdUpd', MdRole.mgerIsLogin, postForm, Qutpd.mgQutpdUpd)
+	app.post('/mgQutpdUpdAjax', MdRole.mgerIsLogin, postForm, Qutpd.mgQutpdUpdAjax)
 	/* =================================== Inquot 报价 =================================== */
 	app.get('/mgQuts', MdRole.mgerIsLogin, Qut.mgQuts)
 	app.get('/mgQut/:id', MdRole.mgerIsLogin, Qut.mgQut)
-	app.get('/mgQutUp/:id', MdRole.mgerIsLogin, Qut.mgQutUp)
 	app.get('/mgQutDel/:id', MdRole.mgerIsLogin, Qut.mgQutDel)
 
 	app.post('/mgQutUpd', MdRole.mgerIsLogin, postForm, Qut.mgQutUpd)

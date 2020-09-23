@@ -5,7 +5,7 @@
 
 			.time
 				span 询价时间: 
-				span #{moment(qun.qntcrtAt).format('DD/MM/YYYY')}
+				span #{moment(qun.qntcrtAt).format('YYYY年MM月DD日')}
 			.qun 
 				span 询价人:
 				if qun.quner
@@ -30,7 +30,7 @@
 				-a;
 				h4 
 					span 总价格: 
-					span.text-info #{qun.price} €
+					span.text-info #{qun.qntPr} €
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
@@ -57,8 +57,10 @@
 
 		else if qun.status == Conf.status.done.num
 			-a;
-			.col-6
+			.col-3
 				button.btn.btn-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-unord", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.unord.num, title="客户不需要") 无效询价
+			.col-3
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num, title="客户不需要") 重新报价
 			.col-6
 				a.btn.btn-success(href="/slDinGen/"+qun._id) 去生成订单
 script(src="/js/user/ajaxChange/status.js")

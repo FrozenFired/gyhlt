@@ -52,8 +52,8 @@ exports.qtQutpdUp = (req, res) => {
 
 	Compd.findOne({_id: id})
 	.populate('inquot')
+	.populate('pdfir').populate('pdsec').populate('pdthd')
 	.populate('ordin')
-	.populate('pdthd')
 	.exec((err, qutpd) => {
 		if(err) {
 			console.log(err);
@@ -155,8 +155,8 @@ exports.qtQutpdDel = (req, res) => {
 exports.qtQutpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	if(obj.price) obj.price = parseFloat(obj.price);
-	if(isNaN(obj.price)) obj.price = 0;
+	if(obj.estimate) obj.estimate = parseFloat(obj.estimate);
+	obj.qntupdAt = Date.now();
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -182,124 +182,65 @@ exports.qtQutpdUpd = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			let photoDel = sketchDel = null;
-			if(obj.pdfir) {
-				obj.photo = '';
-				photoDel = compd.photo;
-			}
-			if(obj.pdsec) {
-				obj.sketch = '';
-				sketchDel = compd.sketch;
+			if(obj.images && compd.images) {
+				for(let i=0; i<obj.images.length; i++) {
+					if(compd.images.length>=i && !obj.images[i]) {
+						obj.images[i] = compd.images[i];
+					}
+				}
 			}
 			let _compd = _.extend(compd, obj);
 			_compd.save((err, objSave) => {
 				if(err) {
 					console.log(err)
-					info = "qter QutpdUpd 更新报价单时 数据库保存错误, 请截图后, 联系管理员";
+					info = "添加询价单时 qter QutpdUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					MdPicture.deletePicture(photoDel, Conf.picPath.compd);
-					MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
-					res.redirect('/qtQutpd/'+objSave._id)
+					res.redirect('/qtQut/'+objSave.inquot._id)
 				}
 			})
 		}
 	})
 }
-exports.qtQutpdImg = (req, res) => {
+exports.qtQutpdDelPic = (req, res) => {
 	let crUser = req.session.crUser;
-	let obj = req.body.obj;
-	let picDel = obj.picture;
-	if(obj.picture) {
-		if(obj.photo == 1) {
-			obj.photo = obj.picture;
-		} else if(obj.sketch) {
-			obj.sketch = obj.picture;
-		}
-	}
+	let compdId = req.body.compdId;
+	let picField = req.body.picField;
+	let subsp = req.body.subsp;
 	Compd.findOne({
-		firm: crUser.firm,
-		_id: obj._id
-	}, (err, compd) => {
+		_id: compdId,
+		firm: crUser.firm
+	})
+	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			MdPicture.deletePicture(picDel, Conf.picPath.compd);
-			info = "qter QutpdUpd, Compd.findOne, Error!"
+			info = "qter QutpdDelPic, Compd.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			MdPicture.deletePicture(picDel, Conf.picPath.compd);
-			info = '此报价单已经被删除, 请刷新查看';
+			info = '此询价单已经被删除, 请刷新查看';
+			Err.usError(req, res, info);
+		} else if(!picField) {
+			info = '操作错误, 请截图 联系管理员 qter QutpdDelPic';
 			Err.usError(req, res, info);
 		} else {
-			let qutId = compd.inquot;
-			let picOld;
-			if(obj.photo == 1) {
-				picOld = compd.photo;
-			}  else if(obj.sketch) {
-				picOld = compd.sketch;
+			let picDel = compd[picField];
+			if(subsp) {
+				picDel = compd[picField][subsp];
+				// compd[picField][subsp] = '';
+				compd.images.remove(picDel)
+			} else {
+				picDel = compd[picField];
+				compd[picField] = '';
 			}
-
-			let _compd = _.extend(compd, obj)
-			_compd.save((err, objSave) => {
-				if(err) {
-					MdPicture.deletePicture(picDel, Conf.picPath.compd);
-					info = "添加报价单时 数据库保存错误, 请截图后, 联系管理员";
-					Err.usError(req, res, info);
-				} else {
-					MdPicture.deletePicture(picOld, Conf.picPath.compd);
-					res.redirect('/qtQut/'+qutId)
-				}
-			})			
-		}
-	})
-}
-exports.qtQutpdNew = (req, res) => {
-	let crUser = req.session.crUser;
-	let obj = req.body.obj;
-	obj.qntcrtAt = obj.qntupdAt = Date.now();
-	obj.qntpdSts = Conf.status.quoting.num;
-	obj.quant = parseInt(obj.quant);
-	if(isNaN(obj.quant)) obj.quant = 1;
-	Inquot.findOne({
-		firm: crUser.firm,
-		_id: obj.inquot
-	}, (err, inquot) => {
-		if(err) {
-			console.log(err);
-			info = "qter QutpdNew, Inquot.findOne, Error!"
-			Err.usError(req, res, info);
-		} else if(!inquot) {
-			info = "报价单不存在, 请刷新查看!"
-			Err.usError(req, res, info);
-		} else if(inquot.status != Conf.status.quoting.num) {
-			info = "状态已经改变, 不可操作!"
-			Err.usError(req, res, info);
-		} else {
-			obj.firm = inquot.firm
-			obj.quner = inquot.quner
-			obj.quter = inquot.quter
-
-			if(!obj.brand || obj.brand.length < 20) obj.brand = null;
-			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
-			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
-			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			let _compd = new Compd(obj)
-			inquot.compds.unshift(_compd._id);
-			inquot.save((err, inquotSave) => {
+			// return;
+			compd.save((err, compdSave) => {
 				if(err) {
 					console.log(err);
-					info = "添加询价单商品时 数据库保存错误 inquot.save, 请截图后, 联系管理员!";
+					info = "qter QutpdDelPic, Compd.save, Error!"
 					Err.usError(req, res, info);
 				} else {
-					_compd.save((err, objSave) => {
-						if(err) {
-							console.log(err);
-							info = "添加询价单商品时 数据库保存错误 _compd.save, 请截图后, 联系管理员!";
-							Err.usError(req, res, info);
-						} else {
-							res.redirect('/qtQut/'+obj.inquot)
-						}
-					})
+					MdPicture.deletePicture(picDel, Conf.picPath.compd);
+					res.redirect('/qtQut/'+compdSave.inquot)
 				}
 			})
 		}

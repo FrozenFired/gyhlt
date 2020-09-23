@@ -54,16 +54,21 @@ var qunRender = (qun, role) => {
 	}
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border qunCard">'
-		elem += '<div class="col-md-6">'
+		elem += '<div class="col-md-4">'
 			elem += '<a class="btn btn-info" href="/'+role+'Qun/'+qun._id+'">'
 				elem += '<div style="font-size: 23px;">'+qun.code+'</div>'
 			elem += '</a>'
+			
+		elem += '</div>'
+
+		elem += '<div class="col-md-4">'
 			elem += '<div>'
 				elem += '创建时间: '
 				qntcrtAt = Date.now();
 				if(qun.qntcrtAt) qntcrtAt = new Date(qun.qntcrtAt)
 				elem += transformTime(qntcrtAt, 0, 10)
 			elem += '</div>'
+
 			elem += '<div>'
 				elem += '询价人:'
 				if(qun.quner) {
@@ -72,17 +77,24 @@ var qunRender = (qun, role) => {
 					elem += '数据丢失';
 				}
 			elem += '</div>'
+
+			elem += '<div>'
+				elem += '报价次数: '+ qun.times
+			elem += '</div>'
+		
 		elem += '</div>'
 
-		elem += '<div class="col-md-6">'
+		elem += '<div class="col-md-4">'
 			elem += '<div>客户姓名: ' + qun.cterNome +'</div>'
+
 			if(qun.status == Conf.status.done.num) {
-				elem += '<h4 class="p-2">'
+				elem += '<h4 class="mt-2">'
 					elem += '总价格:'
-					elem += qun.price
+					elem += qun.qntPr
 				elem += '</h4>'
 			}
-			elem += '<div class="p-2">'
+
+			elem += '<div class="mt-2">'
 				elem += '状态: ' + status
 			elem += '</div>'
 		elem += '</div>'

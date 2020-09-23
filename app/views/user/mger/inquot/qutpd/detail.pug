@@ -3,16 +3,12 @@ extends ../../../aalayout/layout
 block content
 	.container
 		.title
-			.row
-				.col-9 
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/mgQut/"+qutpd.inquot._id) 报价单
-					span &nbsp; | &nbsp;
-					span 报价产品
-				.col-3.text-right
-					a.btn.btn-warning(href="/mgQutpdUp/"+qutpd._id) 更新
-			hr
+			a(href="/") Home
+			span &nbsp; | &nbsp;
+			a(href="/mgQut/"+qutpd.inquot._id) 报价单
+			span &nbsp; | &nbsp;
+			span 报价产品
+		hr
 		.info
 			- let stsBg = 'bg-default';
 			if qutpd.qntpdSts == Conf.status.done.num
@@ -70,8 +66,17 @@ block content
 					else
 						.text-muted #{qutpd.mater}
 				.col-4.col-md-2.mt-2
-					-let compd = qutpd;
-					include ../aaElement/compdQPU
+					.quant 数量: #{qutpd.quant}
+
+					if qutpd.price
+						- price = qutpd.price;
+						.price 单价: #{qutpd.price}
+					else
+						.price.text-warning  未报价
+					- let total = qutpd.quant * qutpd.price;
+					if !isNaN(total)
+						- total;
+						h5.total.text-info 总价: #{total}
 				.col-4.col-md-2.mt-2
 					.strmup
 						div 供应公司: 

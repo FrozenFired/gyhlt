@@ -327,11 +327,11 @@ exports.slQunExcel = (req, res) => {
 						if(qunpd.price && qunpd.quant) {
 							let price = parseFloat(qunpd.price);
 							let quant = parseInt(qunpd.quant);
-							ws.cell((i+2), 9).string(String(price + ' ' + Conf.unitVal[qunpd.unit]));
+							ws.cell((i+2), 9).string(String(price + ' €'));
 							ws.cell((i+2), 10).string(String(quant));
 							if(!isNaN(price) && !isNaN(quant)) {
 								let tot = price * quant;
-								ws.cell((i+2), 11).string(String(tot + ' ' + Conf.unitVal[qunpd.unit]));
+								ws.cell((i+2), 11).string(String(tot + ' €'));
 							}
 						}
 					}

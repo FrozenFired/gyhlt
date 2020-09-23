@@ -29,9 +29,8 @@ module.exports = function(app){
 	app.get('/qtQutpdUp/:id', MdRole.qterIsLogin, Qutpd.qtQutpdUp)
 	app.get('/qtQutpdDel/:id', MdRole.qterIsLogin, Qutpd.qtQutpdDel)
 
-	app.post('/qtQutpdImg', MdRole.qterIsLogin, postForm, MdPicture.pictureNew, Qutpd.qtQutpdImg)
-	app.post('/qtQutpdNew', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdNew)
-	app.post('/qtQutpdUpd', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdUpd)
+	app.post('/qtQutpdDelPic', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdDelPic)
+	app.post('/qtQutpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qutpd.qtQutpdUpd)
 	/* =================================== Inquot 报价 =================================== */
 	app.get('/qtQuts', MdRole.qterIsLogin, Qut.qtQuts)
 	app.get('/qtQut/:id', MdRole.qterIsLogin, Qut.qtQut)

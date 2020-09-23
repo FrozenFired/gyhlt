@@ -182,14 +182,6 @@ let Conf = {
 		album: '/album/',					// 图册
 	},
 
-	unit: {
-		eur: { num: 1, val: 'EUR'},
-		cyn: { num: 2, val: 'CYN'},
-		usd: { num: 3, val: 'USD'},
-		gbp: { num: 4, val: 'GBP'},
-	},
-	unitVal: {1: 'EUR', 2: 'CYN', 3: 'USD', 4: 'GBP',},
-
 	status: {
 		init: { num: 10, val: '创建中'},
 

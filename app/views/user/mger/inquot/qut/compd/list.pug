@@ -1,84 +1,191 @@
-.qutpds.mt-5
-	each qutpd in qutpds
-		- let stsBg = 'bg-default';
-		if qutpd.qntpdSts == Conf.status.done.num
-			- stsBg = 'bg-success';
-		else if qutpd.qntpdSts == Conf.status.del.num
-			- stsBg = 'bg-danger';
-		- let status = '';
-		each sts in Conf.status
-			- status = '';
-			if sts.num == qutpd.qntpdSts
-				- status = sts.val;
-				- break;
-		.row.py-2.mt-2.text-center.border.qutpdCard
-			.col-4.col-md-2.mt-2(class="qutpd-"+qutpd._id)
-				if qutpd.brand
-					- brand = qutpd.brand;
-					div [#{brand.nome}]
-				else
-					.text-muted #{qutpd.brandNome}
-				if qut.status == Conf.status.pricing.num
-					-a;
-					a.btn.btn-info.mt-5(href="/mgQutpd/"+qutpd._id) 查看详情
-			.col-4.col-md-2.mt-2
-				if qutpd.pdfir
-					- pdfir = qutpd.pdfir;
-					div [#{pdfir.code}]
-					img(src=pdfir.photo, width="100%")
-				else
-					- let firNome = '产品系列名称';
-					if qutpd.firNome
-						- firNome = qutpd.firNome;
-					.text-muted #{firNome}
-					- let photo = "/imgs/createPicture.jpg";
-					if qutpd.photo
-						- photo = qutpd.photo;
-					img(src=photo, width="100%")
-			.col-4.col-md-2.mt-2
-				if qutpd.pdsec
-					- pdsec = qutpd.pdsec;
-					div [#{pdsec.code}]
-					div [#{pdsec.spec}]
-					img(src=pdsec.photo, width="100%")
-				else
-					- let secNome = '产品设计图';
-					if qutpd.secNome
-						- secNome = qutpd.secNome;
-					.text-muted #{secNome}
-					- let sketch = "/imgs/createPicture.jpg";
-					if qutpd.sketch
-						- sketch = qutpd.sketch;
-					img(src=sketch, width="100%")
-			.col-4.col-md-2.mt-2
-				if qutpd.pdthd
-					- pdthd = qutpd.pdthd;
-					div 
-						span [#{pdthd.code}] &nbsp;
-						span.text-info #{pdthd.price} €
-					each mater in qutpd.pdthd.maters
-						-a;
-						span.text-dark.mt-2 #{mater} &nbsp;
-				else
-					.text-muted #{qutpd.thdNome}
-			.col-4.col-md-2.mt-2
-				-let compd = qutpd;
-				include ../../aaElement/compdQPU
-			.col-4.col-md-2.mt-2
-				.quter.my-3
-					div 报价人: 
-					if qutpd.quter
-						- quter = qutpd.quter;
-						div #{quter.nome} [#{quter.code}]
+table.mt-3.table.table-bordered
+	thead.thead-light
+		th 品牌
+		th 系列
+		th 产品规格
+		th 工艺面料
+		th(style="width:10%") 备注
+		th(style="width:18%") 数量价格
+	thead
+		- let estTot = 0;
+		- let qntTot = 0;
+		each qutpd in qutpds
+			-a;
+			tr.text-info
+				td
+					if qutpd.brand
+						- brand = qutpd.brand;
+						.brandnome [#{brand.nome}]
 					else
-						div.text-warning 未分配
-					if qut.status >= Conf.status.pricing.num
+						.brandnome #{qutpd.brandNome}
+
+					if qutpd.area
 						-a;
-						.mt-3 供应商: 
-						if qutpd.strmup
-							- strmup = qutpd.strmup;
-							div #{strmup.nome}
+						.pdarea.mt-3
+							span.text-dark 区域: 
+							span #{qutpd.area}
+
+					if qut.status == Conf.status.pricing.num
+							a-;
+							a.btn.border-warning.text-warning.mt-5(href="/mgQunpdUp/"+qutpd._id) 更改商品
+				td
+					.pdnome
+						span.text-dark 品类: 
+						span #{qutpd.pdNome}
+					if qutpd.pdfir
+						- pdfir = qutpd.pdfir;
+						.pdfircode.mt-3
+							span.text-dark 系列名: 
+							span [#{pdfir.code}]
+					else
+						- let firNome = '产品系列名称';
+						if qutpd.firNome
+							- firNome = qutpd.firNome;
+						.firnome.mt-3
+							span.text-dark 系列名: 
+							span #{firNome}
+					.photo.mt-3
+						- let photo = "/imgs/createPicture.jpg";
+						if qutpd.photo
+							- photo = qutpd.photo;
+							img(src=photo, width="120px")
+							.picLink
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+						else if qutpd.pdfir
+							- photo = qutpd.pdfir.photo;
+							img(src=photo, width="120px")
+							.picLink
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
-							div.text-warning 未分配
-				div(class=stsBg) 商品状态: #{status}
-				input.statusInput(type="hidden", value=qutpd.qntpdSts)
+							img(src=photo, width="120px")
+				td
+					if qutpd.pdsec
+						- pdsec = qutpd.pdsec;
+						.pdseccode
+							span.text-dark 产品编码: 
+							span [#{pdsec.code}]
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span [#{pdsec.spec}]
+					else
+						.pdseccode
+							span.text-dark 产品编码: 
+							span #{qutpd.secNome}
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span #{qutpd.specf}
+
+					.sketch.mt-3
+						- let sketch = "/imgs/createPicture.jpg";
+						if qutpd.sketch
+							- sketch = qutpd.sketch;
+							img#sketchCrt(src=sketch, width="120px")
+							.picLink
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+						else if qutpd.pdsec
+							-a;
+							- sketch = qutpd.pdsec.photo;
+							img#sketchCrt(src=sketch, width="120px")
+							.picLink
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+						else
+							img#sketchCrt(src=sketch, width="120px")
+				td
+					- let pdthdcode = '查找数据库';
+					if qutpd.pdthd
+						- pdthdcode = '['+qutpd.pdthd.code+']';
+						.pdthdPrice.text-dark [原价: #{qutpd.pdthd.price}]
+					.pdthdcode #{pdthdcode}
+					.pdmater.mt-3 #{qutpd.mater}
+					.pdcraft.mt-3 #{qutpd.craft}
+					.images
+						- let subsp = -1;
+						each image in qutpd.images
+							- subsp++;
+							if image && image.length > 5
+								-a;
+								img.mt-2(src=image, width="120px")
+								.picLink
+									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+				td
+					span #{qutpd.note}
+				td
+					.quant
+						span.text-dark 数量: 
+						span #{qutpd.quant}
+						input(id="quant-qntPr-"+qutpd._id, type="hidden", value=qutpd.quant)
+
+					.qntPr.mt-3
+						span.text-dark 单价:
+						if qutpd.qntPr
+							- a;
+							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{qutpd.qntPr}
+						else
+							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) 未报价
+						form(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+							input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
+							input(type="hidden", name="obj[_id]", value=qutpd._id)
+							.form-group.row
+								.col-12
+									input.blurup.form-control(id="ipt-qntPr-"+qutpd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=qutpd.qntPr)
+					h5.text-dark.total.mt-2
+						span 总价:
+						if qutpd.qntPr
+							- qntPr = qutpd.qntPr;
+							span(id="tot-qntPr-"+qutpd._id) #{qutpd.qntPr * qutpd.quant}
+						else
+							span(id="tot-qntPr-"+qutpd._id)  未报价
+
+					.strmup.mt-3
+						span.text-dark 供应商: 
+						if qut.status >= Conf.status.pricing.num
+							-a;
+							if qutpd.strmup
+								- strmup = qutpd.strmup;
+								span.text-warning.clickup(id="span-strmup-"+qutpd._id) #{strmup.nome}
+							else
+								span.text-warning.clickup(id="span-strmup-"+qutpd._id) 未分配
+						form(id="form-strmup-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+							input(type="hidden", name="obj[_id]", value=qutpd._id)
+							.form-group.row
+								.col-12
+									select.selectup.form-control(id="sel-strmup-"+qutpd._id, name="obj[strmup]", data-style="btn-info")
+										option(value='null') 请选供应商
+										each strmup in strmups
+											-a;
+											if !qutpd.strmup
+												-a;
+												option(value=strmup._id) #{strmup.nome}
+											else if String(strmup._id) == String(qutpd.strmup._id)
+												-a;
+												option(value=strmup._id, selected="selected") #{strmup.nome}
+											else
+												option(value=strmup._id) #{strmup.nome}
+					.qutpdSts.mt-3
+						input.statusInput(type="hidden", value=qutpd.qntpdSts)
+						- let status = '';
+						each sts in Conf.status
+							- status = '';
+							if sts.num == qutpd.qntpdSts
+								- status = sts.val;
+								- break;
+						span.text-dark 商品状态: 
+						if qut.status > Conf.status.init.num
+							-a;
+							span.text-danger #{status}
+						else
+							span.text-danger 创建中
+					.hideInfo(style="display:none")
+						.estimate.text-dark.mt-3
+								span 预估单价:
+								if qutpd.estimate
+									- a;
+									span #{qutpd.estimate}
+						.quter.mt-3
+							div 报价人: 
+							if qutpd.quter
+								- quter = qutpd.quter;
+								div #{quter.nome} [#{quter.code}]
+							else
+								div.text-warning 未分配
+script(src="/js/user/qter/qutpd/soleup.js")

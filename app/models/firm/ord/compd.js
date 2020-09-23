@@ -34,17 +34,17 @@ let dbSchema = new Schema({
 	note: String,
 
 	quant: Number,
-	unit: Number, 	// 币种
 	/* ============================= 询价单 ============================= */
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
 
 	qntcrtAt: Date,								// 询价时间
-	qntupdAt: Date,								// 询价时间
+	qntupdAt: Date,								// 询价更新
 	qntfnlAt: Date,								// 报价完成时间
+	estimate: Float,							// 预估价格
+	qntPr: Float,								// 报价价格
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
-	price: Float,
 
 	qntpdSts: {type: Number, default: 0},			// 商品状态 
 

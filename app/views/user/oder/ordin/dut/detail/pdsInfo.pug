@@ -87,8 +87,17 @@
 				else
 					.text-muted #{dinpd.thdNome}
 			.col-4.col-md-2.mt-2
-				-let compd = dinpd;
-				include ../../aaElement/compdQPU
+				.quant 数量: #{dinpd.quant}
+
+				if dinpd.price
+					- price = dinpd.price;
+					.price 价格: #{dinpd.price}
+				else
+					.price.text-warning  未报价
+				- let total = dinpd.quant * dinpd.price;
+				if !isNaN(total)
+					- total;
+					h5.total.text-info 总价: #{total}
 			.col-4.col-md-2.mt-2
 				div(class=nomeBg)
 					if din.status == Conf.status.init.num

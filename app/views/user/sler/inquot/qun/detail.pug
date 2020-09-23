@@ -15,7 +15,7 @@ block content
 			include ./detail/info
 		div(style="height:50px")
 		.compd
-			if qun.status == Conf.status.init.num
+			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
 				-a;
 				include ./compd/add
 			include ./compd/list

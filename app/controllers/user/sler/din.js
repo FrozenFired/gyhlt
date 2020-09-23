@@ -546,11 +546,11 @@ exports.slDinExcel = (req, res) => {
 						if(dinpd.price && dinpd.quant) {
 							let price = parseFloat(dinpd.price);
 							let quant = parseInt(dinpd.quant);
-							ws.cell((i+2), 6).string(String(price + ' ' + Conf.unitVal[dinpd.unit]));
+							ws.cell((i+2), 6).string(String(price + ' €'));
 							ws.cell((i+2), 7).string(String(quant));
 							if(!isNaN(price) && !isNaN(quant)) {
 								let tot = price * quant;
-								ws.cell((i+2), 8).string(String(tot + ' ' + Conf.unitVal[dinpd.unit]));
+								ws.cell((i+2), 8).string(String(tot + ' €'));
 							}
 						}
 					}

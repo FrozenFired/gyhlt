@@ -69,7 +69,7 @@ exports.slQunpdUp = (req, res) => {
 		} else if(qunpd.ordin) {
 			info = "您现在无权修改此商品信息, 因为已经生成订单";
 			Err.usError(req, res, info);
-		} else if(qunpd.inquot.status != Conf.status.init.num) {
+		} else if(qunpd.inquot.status != Conf.status.init.num && qunpd.inquot.status != Conf.status.quoting.num) {
 			info = "您现在无权修改此商品信息, 因为询价单状态已经被修改";
 			Err.usError(req, res, info);
 		} else {
@@ -144,6 +144,7 @@ exports.slQunpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	obj.qntupdAt = Date.now();
+	obj.qntpdSts = Conf.status.quoting.num;
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -161,7 +162,7 @@ exports.slQunpdUpd = (req, res) => {
 		} else if(compd.ordin) {
 			info = "您现在无权修改此商品信息, 因为已经生成订单";
 			Err.usError(req, res, info);
-		} else if(compd.inquot.status != Conf.status.init.num) {
+		} else if(compd.inquot.status != Conf.status.init.num && compd.inquot.status != Conf.status.quoting.num) {
 			info = "您现在无权修改此商品信息, 因为询价单状态已经被修改";
 			Err.usError(req, res, info);
 		} else {
@@ -169,15 +170,6 @@ exports.slQunpdUpd = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			let photoDel = sketchDel = null;
-			if(obj.pdfir) {
-				obj.photo = '';
-				photoDel = compd.photo;
-			}
-			if(obj.pdsec) {
-				obj.sketch = '';
-				sketchDel = compd.sketch;
-			}
 			if(obj.images && compd.images) {
 				for(let i=0; i<obj.images.length; i++) {
 					if(compd.images.length>=i && !obj.images[i]) {
@@ -189,17 +181,16 @@ exports.slQunpdUpd = (req, res) => {
 			_compd.save((err, objSave) => {
 				if(err) {
 					console.log(err)
-					info = "添加询价单时 数据库保存错误, 请截图后, 联系管理员";
+					info = "添加询价单时 sler QunpdUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					MdPicture.deletePicture(photoDel, Conf.picPath.compd);
-					MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
 					res.redirect('/slQun/'+objSave.inquot._id)
 				}
 			})
 		}
 	})
 }
+
 exports.slQunpdDelPic = (req, res) => {
 	let crUser = req.session.crUser;
 	let compdId = req.body.compdId;
@@ -207,7 +198,7 @@ exports.slQunpdDelPic = (req, res) => {
 	let subsp = req.body.subsp;
 	Compd.findOne({
 		_id: compdId,
-		quner: crUser._id
+		firm: crUser.firm
 	})
 	.exec((err, compd) => {
 		if(err) {
@@ -263,7 +254,7 @@ exports.slQunpdNew = (req, res) => {
 		} else if(!inquot) {
 			info = "询价单不存在, 请刷新查看!"
 			Err.usError(req, res, info);
-		} else if(inquot.status != Conf.status.init.num) {
+		} else if(inquot.status != Conf.status.init.num && inquot.status != Conf.status.quoting.num) {
 			info = "状态已经改变, 不可操作!"
 			Err.usError(req, res, info);
 		} else {

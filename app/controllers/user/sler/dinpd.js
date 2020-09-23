@@ -215,7 +215,6 @@ exports.slDinOptpd = (req, res) => {
 							if(qunpd.pdthd) compdObj.pdthd = qunpd.pdthd;
 							if(qunpd.thdNome) compdObj.thdNome = qunpd.thdNome;
 
-							if(qunpd.unit) compdObj.unit = qunpd.unit;
 							if(qunpd.price) compdObj.price = parseFloat(qunpd.price);
 							compdObj.quant = parseInt(obj.quant);
 

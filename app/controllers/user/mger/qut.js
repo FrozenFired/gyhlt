@@ -98,48 +98,7 @@ exports.mgQut = (req, res) => {
 		}
 	})
 }
-exports.mgQutUp = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-	Inquot.findOne({_id: id})
-	.exec((err, qut) => {
-		if(err) {
-			console.log(err);
-			info = "mger Qut, Inquot.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!qut) {
-			info = "此报价单已经被删除";
-			Err.usError(req, res, info);
-		} else if(qut.status == Conf.status.init.num){
-			info = "此报价单, 您无权查看";
-			Err.usError(req, res, info);
-		} else {
-			User.find({
-				firm: crUser.firm,
-				$or:[
-					{'role': {"$in": Conf.roleAdmin}},
-					{'role': {"$eq": Conf.roleUser.quotation.num}},
-				]
-			})
-			.sort({'role': -1})
-			.exec((err, quters) => {
-				if(err) {
-					console.log(err);
-					info = 'mger QutAdd, User.find, Error!';
-					Err.usError(req, res, info);
-				} else {
-					res.render('./user/mger/inquot/qut/update', {
-						title: '报价单修改',
-						crUser,
-						qut,
 
-						quters
-					})
-				}
-			})
-		}
-	})
-}
 exports.mgQutDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
@@ -170,11 +129,6 @@ exports.mgQutDel = (req, res) => {
 		}
 	})
 }
-
-
-
-
-
 
 
 
