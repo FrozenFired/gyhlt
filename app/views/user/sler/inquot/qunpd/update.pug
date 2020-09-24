@@ -10,7 +10,12 @@ block content
 				span &nbsp; | &nbsp;
 				span 更新询价商品
 			.col-md-3.text-right
-				a.btn.btn-danger(href="/slQunpdDel/"+qunpd._id) 删除此询价商品
+				if qunpd.inquot.status == Conf.status.init.num
+					-a;
+					a.btn.btn-danger(href="/slQunpdDel/"+qunpd._id) 删除此询价商品
+				else if qunpd.inquot.status == Conf.status.quoting.num && qunpd.qntpdSts == Conf.status.del.num
+					-a;
+					a.btn.btn-danger(href="/slQunpdDel/"+qunpd._id) 删除此询价商品
 		hr
 
 		form#objectForm(method="post", action="/slQunpdUpd", enctype="multipart/form-data")

@@ -47,6 +47,7 @@ module.exports = function(app){
 	/* =================================== compd 报价商品 =================================== */
 	app.get('/mgQutpds', MdRole.mgerIsLogin, Qutpd.mgQutpds)
 	app.get('/mgQutpd/:id', MdRole.mgerIsLogin, Qutpd.mgQutpd)
+	app.get('/mgQutpdDel/:id', MdRole.mgerIsLogin, Qutpd.mgQutpdDel)
 
 	app.post('/mgQutpdUpdAjax', MdRole.mgerIsLogin, postForm, Qutpd.mgQutpdUpdAjax)
 	/* =================================== Inquot 报价 =================================== */

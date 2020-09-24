@@ -1,5 +1,5 @@
 .border.border-dark.p-3
-	.row.py-2.mt-3.text-center
+	.row.text-center
 		.col-md-6
 			h5.code 询价单号: #{qun.code}
 
@@ -60,7 +60,7 @@
 			.col-3
 				button.btn.btn-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-unord", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.unord.num, title="客户不需要") 无效询价
 			.col-3
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num, title="客户不需要") 重新报价
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num, title="其他需求") 重新报价
 			.col-6
 				a.btn.btn-success(href="/slDinGen/"+qun._id) 去生成订单
 script(src="/js/user/ajaxChange/status.js")

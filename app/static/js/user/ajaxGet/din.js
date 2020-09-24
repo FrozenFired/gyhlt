@@ -45,18 +45,6 @@ var dinsRender = (dins, elemId, isReload, role) => {
 	$(elemId).append(elem);
 }
 var dinRender = (din, role) => {
-	let stsBg = 'bg-default';
-	if(din.status == Conf.status.init.num) {
-		stsBg = 'bg-secondary';
-	} else if(din.status == Conf.status.quoting.num) {
-		stsBg = 'bg-default';
-	} else if(din.status == Conf.status.done.num) {
-		stsBg = 'bg-info';
-	} else if(din.status == Conf.status.ord.num) {
-		stsBg = 'bg-success';
-	} else if(din.status == Conf.status.unord.num) {
-		stsBg = 'bg-danger';
-	}
 	let status = '';
 	for(sts in Conf.status) {
 		status = '';
@@ -68,16 +56,12 @@ var dinRender = (din, role) => {
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border dinCard">'
 		elem += '<div class="col-4">'
+			elem += '<a class="btn btn-info" href="/'+role+'Din/'+din._id+'">'
+				elem += '<div style="font-size: 23px;">'+din.code+'</div>'
+			elem += '</a>'
+		elem += '</div>'
 
-			if(din.cter) {
-				elem += '<div>客户: '
-					let nome = '';
-					if(din.cter.nome) nome = din.cter.nome;
-					elem += nome + ' [' + din.cter.code + ']'
-				elem += '</div>'
-			} else {
-				elem += '<div>'+din.cterNome+'</div>'
-			}
+		elem += '<div class="col-4">'
 			elem += '<div>'
 				elem += '销售员:'
 				if(din.diner) {
@@ -93,19 +77,22 @@ var dinRender = (din, role) => {
 				elem += transformTime(dinAt, 0, 10)
 			elem += '</div>'
 		elem += '</div>'
-		elem += '<div class="col-4">'
-			elem += '<a href="/'+role+'Din/'+din._id+'">'
-				elem += '<h3 class="text-dark">'+din.code+'</h3>'
-			elem += '</a>'
-			if(din.note) {
-				elem += '<div>'
-					elem += din.note
-				elem += '</div>'
-			}
-		elem += '</div>'
 
-		elem += '<div class="col-4 mt-3">'
-			elem += '<div class="'+stsBg+'">'
+		elem += '<div class="col-4">'
+			elem += '<div>'
+				elem += '<span>客户: </span>'
+				if(din.cter) {
+					elem += '<span>'
+						let nome = '';
+						if(din.cter.nome) nome = din.cter.nome;
+						elem += nome + ' [' + din.cter.code + ']'
+					elem += '</span>'
+				} else {
+					elem += '<span>'+din.cterNome+'</span>'
+				}
+			elem += '</div>'
+
+			elem += '<div>'
 				elem += '状态: ' + status
 			elem += '</div>'
 		elem += '</div>'

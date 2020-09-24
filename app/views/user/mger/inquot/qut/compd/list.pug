@@ -122,8 +122,8 @@ table.mt-3.table.table-bordered
 							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{qutpd.qntPr}
 						else
 							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) 未报价
+						input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
 						form(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
-							input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
 							input(type="hidden", name="obj[_id]", value=qutpd._id)
 							.form-group.row
 								.col-12

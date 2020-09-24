@@ -2,15 +2,12 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title.row
-			.col-md-9
-				a(href="/") Home
-				span &nbsp; | &nbsp;
-				a(href="/qtQut/"+qutpd.inquot._id) 询价单
-				span &nbsp; | &nbsp;
-				span 更新询价商品
-			.col-md-3.text-right
-				a.btn.btn-danger(href="/qtQutpdDel/"+qutpd._id) 删除此询价商品
+		.title
+			a(href="/") Home
+			span &nbsp; | &nbsp;
+			a(href="/qtQut/"+qutpd.inquot._id) 报价单
+			span &nbsp; | &nbsp;
+			span 更新报价商品
 		hr
 
 		form#objectForm(method="post", action="/qtQutpdUpd", enctype="multipart/form-data")

@@ -11,7 +11,7 @@ table.mt-3.table.table-bordered
 		- let qntTot = 0;
 		each qunpd in qunpds
 			-a;
-			tr.text-info
+			tr.text-info(id="tr-compdid-"+qunpd._id)
 				td
 					if qunpd.brand
 						- brand = qunpd.brand;

@@ -100,8 +100,11 @@ exports.slQunpdDel = (req, res) => {
 		} else if(compd.ordin) {
 			info = "您现在无权修改此商品信息, 因为已经生成订单";
 			Err.usError(req, res, info);
-		} else if(compd.inquot.status != Conf.status.init.num) {
+		} else if(compd.inquot.status != Conf.status.init.num && compd.inquot.status != Conf.status.quoting.num) {
 			info = "您现在无权修改此商品信息, 因为询价单状态已经被修改";
+			Err.usError(req, res, info);
+		} else if(compd.inquot.status == Conf.status.quoting.num && compd.qntpdSts != Conf.status.del.num) {
+			info = "请先让报价员把询价商品改变为删除状态";
 			Err.usError(req, res, info);
 		} else {
 			let inquot = compd.inquot;
@@ -170,6 +173,7 @@ exports.slQunpdUpd = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
+			// if(obj.pdthd) obj.qntpdSts = Conf.status.done.num;
 			if(obj.images && compd.images) {
 				for(let i=0; i<obj.images.length; i++) {
 					if(compd.images.length>=i && !obj.images[i]) {
@@ -266,6 +270,7 @@ exports.slQunpdNew = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
+			// if(obj.pdthd) obj.qntpdSts = Conf.status.done.num;
 			let _compd = new Compd(obj)
 			// console.log(_compd)
 			inquot.compds.unshift(_compd._id);

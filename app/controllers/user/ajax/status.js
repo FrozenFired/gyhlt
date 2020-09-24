@@ -18,10 +18,10 @@ exports.usInquotStatusAjax = function(req, res) {
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
-			info = "user ChangeStatusAjax, findOne(), Error!";
+			info = "user InquotStatusAjax, findOne(), Error!, 请截图后, 联系管理员";
 			Err.jsonErr(req, res, info);
 		} else if(!inquot) {
-			info = "没有找到数据!";
+			info = "user InquotStatusAjax 没有找到数据!, 请截图后, 联系管理员";
 			Err.jsonErr(req, res, info);
 		} else {
 			let compds = inquot.compds;
@@ -29,7 +29,7 @@ exports.usInquotStatusAjax = function(req, res) {
 			// return;
 			info = '错误操作, 请截图后, 联系管理员(usInquotStatusAjax)';
 			if(oldStatus != inquot.status) {
-				info = '数据不符, 请截图后, 联系管理员';
+				info = 'user InquotStatusAjax 数据不符, 刷新重试, 如果还是不能操作, 请截图后, 联系管理员';
 			} else {
 				if(oldStatus == Conf.status.init.num && newStatus == Conf.status.quoting.num) {
 					// 询价员提交订单时
@@ -39,10 +39,14 @@ exports.usInquotStatusAjax = function(req, res) {
 				else if(oldStatus == Conf.status.quoting.num && newStatus == Conf.status.pricing.num) {
 					// 报价员完成初步报价 进入定价环节
 					info = null;
-					for(let i=0; i<compds.length; i++) {
-						if(compds[i].qntpdSts == Conf.status.quoting.num) {
-							info = "刷新重试, 如果实在不能点击完成, 产品可选删除状态(usInquotStatusAjax quoting=>pricing)"
-							break;
+					if(compds.length == 0) {
+						info = "报价单中的商品不能为空"
+					} else {
+						for(let i=0; i<compds.length; i++) {
+							if(compds[i].qntpdSts == Conf.status.quoting.num) {
+								info = "刷新重试, 如果实在不能点击完成, 产品可选删除状态(usInquotStatusAjax quoting=>pricing)"
+								break;
+							}
 						}
 					}
 					if(!info) {
@@ -55,15 +59,15 @@ exports.usInquotStatusAjax = function(req, res) {
 					let qntPr = 0;
 					for(let i=0; i<compds.length; i++) {
 						if(compds[i].qntpdSts == Conf.status.done.num) {
-							let pdPrice = parseFloat(compds[i].qntPr);
-							if(isNaN(pdPrice)) {
+							let totpdPr = parseFloat(compds[i].qntPr)*parseInt(compds[i].quant);
+							if(isNaN(totpdPr)) {
 								info = '产品报价错误, 请仔细查看';
 								break;
 							} else if(compds[i].strmup == null) {
 								info = '产品需要选择供应商, 请仔细查看';
 								break;
 							} else {
-								qntPr += pdPrice;
+								qntPr += totpdPr;
 							}
 						}
 					}
@@ -153,15 +157,15 @@ exports.usOrdinStatusAjax = function(req, res) {
 					info = null;
 					let dinImp = 0;
 					for(let i=0; i<compds.length; i++) {
-						let pdPrice = parseFloat(compds[i].dinPr);
-						if(isNaN(pdPrice)) {
+						let totdinPr = parseFloat(compds[i].dinPr)*parseInt(compds[i].quant);
+						if(isNaN(totdinPr)) {
 							info = '产品定价错误, 请仔细查看';
 							break;
 						} else if(compds[i].strmup == null) {
 							info = '产品需要选择供应商, 请仔细查看';
 							break;
 						} else {
-							dinImp += pdPrice;
+							dinImp += totdinPr;
 						}
 					}
 					if(!info) {
