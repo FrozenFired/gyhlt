@@ -109,58 +109,72 @@ table.mt-3.table.table-bordered
 									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
 					span #{qutpd.note}
+
 				td
-					.quant
-						span.text-dark 数量: 
-						span #{qutpd.quant}
-						input(id="quant-qntPr-"+qutpd._id, type="hidden", value=qutpd.quant)
+					if qutpd.qntpdSts != Conf.status.del.num
+						-a;
+						.quant
+							span.text-dark 数量: 
+							span #{qutpd.quant}
+							input(id="quant-qntPr-"+qutpd._id, type="hidden", value=qutpd.quant)
 
-					.qntPr.mt-3
-						span.text-dark 单价:
-						if qutpd.qntPr
-							- a;
-							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{qutpd.qntPr}
-						else
-							span.text-warning.clickup(id="span-qntPr-"+qutpd._id) 未报价
-						input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
-						form(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
-							input(type="hidden", name="obj[_id]", value=qutpd._id)
-							.form-group.row
-								.col-12
-									input.blurup.form-control(id="ipt-qntPr-"+qutpd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=qutpd.qntPr)
-					h5.text-dark.total.mt-2
-						span 总价:
-						if qutpd.qntPr
-							- qntPr = qutpd.qntPr;
-							span(id="tot-qntPr-"+qutpd._id) #{qutpd.qntPr * qutpd.quant}
-						else
-							span(id="tot-qntPr-"+qutpd._id)  未报价
-
-					.strmup.mt-3
-						span.text-dark 供应商: 
-						if qut.status >= Conf.status.pricing.num
-							-a;
-							if qutpd.strmup
-								- strmup = qutpd.strmup;
-								span.text-warning.clickup(id="span-strmup-"+qutpd._id) #{strmup.nome}
+						.estimate.text-dark.mt-3
+							span 预估单价:
+							if qutpd.estimate
+								- a;
+								span #{qutpd.estimate}
 							else
-								span.text-warning.clickup(id="span-strmup-"+qutpd._id) 未分配
-						form(id="form-strmup-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
-							input(type="hidden", name="obj[_id]", value=qutpd._id)
-							.form-group.row
-								.col-12
-									select.selectup.form-control(id="sel-strmup-"+qutpd._id, name="obj[strmup]", data-style="btn-info")
-										option(value='null') 请选供应商
-										each strmup in strmups
-											-a;
-											if !qutpd.strmup
+								span 未预估
+								
+						.qntPr.mt-3
+							span.text-dark 单价:
+							if qutpd.qntPr
+								- a;
+								span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{qutpd.qntPr}
+							else
+								span.text-warning.clickup(id="span-qntPr-"+qutpd._id) 未报价
+							if qut.status == Conf.status.pricing.num
+								-a;
+								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
+								form(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+									input(type="hidden", name="obj[_id]", value=qutpd._id)
+									.form-group.row
+										.col-12
+											input.blurup.form-control(id="ipt-qntPr-"+qutpd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=qutpd.qntPr)
+						h5.text-dark.total.mt-2
+							span 总价:
+							if qutpd.qntPr
+								- qntPr = qutpd.qntPr;
+								span(id="tot-qntPr-"+qutpd._id) #{qutpd.qntPr * qutpd.quant}
+							else
+								span(id="tot-qntPr-"+qutpd._id)  未报价
+
+						.strmup.mt-3
+							if qut.status >= Conf.status.pricing.num
+								-a;
+								span.text-dark 供应商: 
+								if qutpd.strmup
+									- strmup = qutpd.strmup;
+									span.text-warning.clickup(id="span-strmup-"+qutpd._id) #{strmup.nome}
+								else
+									span.text-warning.clickup(id="span-strmup-"+qutpd._id) 未分配
+							form(id="form-strmup-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+								input(type="hidden", name="obj[_id]", value=qutpd._id)
+								.form-group.row
+									.col-12
+										select.selectup.form-control(id="sel-strmup-"+qutpd._id, name="obj[strmup]", data-style="btn-info")
+											option(value='null') 请选供应商
+											each strmup in strmups
 												-a;
-												option(value=strmup._id) #{strmup.nome}
-											else if String(strmup._id) == String(qutpd.strmup._id)
-												-a;
-												option(value=strmup._id, selected="selected") #{strmup.nome}
-											else
-												option(value=strmup._id) #{strmup.nome}
+												if !qutpd.strmup
+													-a;
+													option(value=strmup._id) #{strmup.nome}
+												else if String(strmup._id) == String(qutpd.strmup._id)
+													-a;
+													option(value=strmup._id, selected="selected") #{strmup.nome}
+												else
+													option(value=strmup._id) #{strmup.nome}
+
 					.qutpdSts.mt-3
 						input.statusInput(type="hidden", value=qutpd.qntpdSts)
 						- let status = '';
@@ -175,17 +189,4 @@ table.mt-3.table.table-bordered
 							span.text-danger #{status}
 						else
 							span.text-danger 创建中
-					.hideInfo(style="display:none")
-						.estimate.text-dark.mt-3
-								span 预估单价:
-								if qutpd.estimate
-									- a;
-									span #{qutpd.estimate}
-						.quter.mt-3
-							div 报价人: 
-							if qutpd.quter
-								- quter = qutpd.quter;
-								div #{quter.nome} [#{quter.code}]
-							else
-								div.text-warning 未分配
-script(src="/js/user/qter/qutpd/soleup.js")
+script(src="/js/user/mger/qutpd/soleup.js")

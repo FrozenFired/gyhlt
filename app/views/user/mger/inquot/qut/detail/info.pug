@@ -20,9 +20,9 @@
 					-a;
 					if qut.quter
 						- quter = qut.quter;
-						div.text-info.inquotUpClick#quter-span #{quter.nome} [ #{quter.code} ]
+						button.btn.btn-default.text-info.inquotUpClick#quter-span #{quter.nome} [ #{quter.code} ]
 					else
-						div.text-info.inquotUpClick#quter-span 未分配
+						button.btn.btn-default.text-info.inquotUpClick#quter-span 未分配
 					form#quter-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
 						input(type="hidden", name="obj[_id]", value=qut._id)
 						.form-group.row.px-5.text-center
@@ -69,25 +69,25 @@
 		if qut.status == Conf.status.pricing.num
 			- a;
 			.col-6
-				button.mr-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_quoting", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.quoting.num) 返回处理
+				button.mr-5.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_quoting", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.quoting.num) 返回处理
 			.col-6.text-right
 				button.ml-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_done", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.done.num) 完成
 		else if qut.status == Conf.status.done.num
 			-a;
-			button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+qut._id+"-done_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 返回定价
+			button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-done_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 返回定价
 		else if qut.status == Conf.status.unord.num
 			-a;
-			button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
+			button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
 if qut.status == Conf.status.pricing.num
 	-a;
 	.row.py-4.text-right
-		.col-4.col-lg-8 同步供应商
-		.col-8.col-lg-4
+		.col-4.col-md-9 同步供应商:
+		.col-8.col-md-3
 			if qut.strmup
 				- strmup = qut.strmup;
-				div.text-info.inquotUpClick#strmup-span #{strmup.nome}
+				button.btn.btn-default.inquotUpClick#strmup-span #{strmup.nome}
 			else
-				div.text-info.inquotUpClick#strmup-span 未分配
+				button.btn.btn-default.inquotUpClick#strmup-span 未分配
 			form#strmup-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
 				input(type="hidden", name="obj[_id]", value=qut._id)
 				.form-group.row.text-center

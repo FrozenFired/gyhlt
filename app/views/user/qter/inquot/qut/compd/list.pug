@@ -7,7 +7,6 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th 数量价格
 	thead
-		- let estTot = 0;
 		- let qntTot = 0;
 		each qutpd in qutpds
 			-a;
@@ -27,7 +26,7 @@ table.mt-3.table.table-bordered
 
 					if qut.status == Conf.status.quoting.num
 							a-;
-							a.btn.border-warning.text-warning.mt-5(href="/qtQutpdUp/"+qutpd._id) 更改商品
+							a.btn.border-warning.text-warning.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
 				td
 					.pdnome
 						span.text-dark 品类: 
@@ -120,41 +119,27 @@ table.mt-3.table.table-bordered
 				td
 					span #{qutpd.note}
 				td
-					.quant
-						span.text-dark 数量: 
-						span #{qutpd.quant}
+					if qutpd.qntpdSts != Conf.status.del.num
+						-a;
+						.quant
+							span.text-dark 数量: 
+							span #{qutpd.quant}
 
-					- let estimate = '未预估';
-					if qutpd.estimate
-						- estimate += parseFloat(qutpd.estimate);
-						if !isNaN(estTot)
-						- estimate = qutpd.estimate;
-					else
-						- estTot = '未预估';
-					.price.mt-3
-						span.text-dark 预估单价:
-						if qutpd.estimate
-							- a;
-							span #{qutpd.estimate}
-						else
-							span.text-dark  未预估
-
-					h5.total.mt-2
-						if qut.status == Conf.status.quoting.num
-							-a;
-							span.text-dark 预估总价:
+						.estimate.mt-3
+							span.text-dark 预估单价:
 							if qutpd.estimate
 								- a;
-								span #{qutpd.estimate * qutpd.quant}
+								span.text-warning.clickup(id="span-estimate-"+qutpd._id) #{qutpd.estimate}
 							else
-								span.text-dark  未预估
-						else
-							span.text-dark 总价:
-							if qutpd.qntPr
-								- qntPr = qutpd.qntPr;
-								span #{qutpd.qntPr * qutpd.quant}
-							else
-								span.text-dark  未报价
+								span.text-warning.clickup(id="span-estimate-"+qutpd._id) 未预估
+							if qut.status == Conf.status.quoting.num
+								-a;
+								input(id="org-estimate-"+qutpd._id, type="hidden", value=qutpd.estimate)
+								form(id="form-estimate-"+qutpd._id, action="/qtQutpdUpdAjax", style="display:none")
+									input(type="hidden", name="obj[_id]", value=qutpd._id)
+									.form-group.row
+										.col-12
+											input.blurup.form-control(id="ipt-estimate-"+qutpd._id, type="text", name="obj[estimate]", placeholder="预估单价可以是范围", autocomplete="off", value=qutpd.estimate)
 
 					.qutpdSts.mt-5
 						- let status = '';
@@ -170,3 +155,5 @@ table.mt-3.table.table-bordered
 						else
 							span.text-danger 创建中
 						input.statusInput(type="hidden", value=qutpd.qntpdSts)
+
+script(src="/js/user/qter/qutpd/soleup.js")

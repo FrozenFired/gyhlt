@@ -7,7 +7,6 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th 数量价格
 	thead
-		- let estTot = 0;
 		- let qntTot = 0;
 		each qunpd in qunpds
 			-a;
@@ -119,50 +118,40 @@ table.mt-3.table.table-bordered
 				td
 					span #{qunpd.note}
 				td
-					.quant
-						span.text-dark 数量: 
-						span #{qunpd.quant}
+					if qunpd.qntpdSts != Conf.status.del.num
+						-a;
+						.quant
+							span.text-dark 数量: 
+							span.text-warning.clickup(id="span-quant-"+qunpd._id) #{qunpd.quant}
+							input(id="org-quant-"+qunpd._id, type="hidden", value=qunpd.quant)
+							form(id="form-quant-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
+								input(type="hidden", name="obj[_id]", value=qunpd._id)
+								.form-group.row
+									.col-12
+										input.blurup.form-control(id="ipt-quant-"+qunpd._id, type="number", name="obj[quant]", placeholder="采购价格", autocomplete="off", value=qunpd.quant)
+							.text-danger(id="opt-quant-"+qunpd._id)
 
-					- let estimate = '未预估';
-					if qunpd.estimate
-						- estimate += parseFloat(qunpd.estimate);
-						if !isNaN(estTot)
-						- estimate = qunpd.estimate;
-					else
-						- estTot = '未预估';
-					.price.mt-3
-						if qun.status == Conf.status.quoting.num
-							-a;
-							span.text-dark 预估单价:
+						.estimate.text-dark.mt-3
 							if qunpd.estimate
 								- a;
-								span #{qunpd.estimate}
-							else
-								span.text-dark  未预估
-						else
-							span.text-dark 单价:
-							if qunpd.qntPr
-								- a;
-								span #{qunpd.qntPr}
-							else
-								span.text-dark  未报价
-
-					h5.total.mt-2
-						if qun.status == Conf.status.quoting.num
+								span 预估单价: #{qunpd.estimate}
+						if qun.status > Conf.status.quoting.num
 							-a;
-							span.text-dark 预估总价:
-							if qunpd.estimate
-								- a;
-								span #{qunpd.estimate * qunpd.quant}
-							else
-								span.text-dark  未预估
-						else
-							span.text-dark 总价:
-							if qunpd.qntPr
-								- qntPr = qunpd.qntPr;
-								span #{qunpd.qntPr * qunpd.quant}
-							else
-								span.text-dark  未报价
+							.qntPr.mt-3
+								span.text-dark 单价:
+								if qunpd.qntPr
+									- a;
+									span #{qunpd.qntPr}
+								else
+									span.text-dark  未报价
+
+							h5.total.mt-2
+								span.text-dark 总价:
+								if qunpd.qntPr
+									- qntPr = qunpd.qntPr;
+									span(id="span-qntPrtot-"+qunpd._id) #{qunpd.qntPr * qunpd.quant}
+								else
+									span.text-dark  未报价
 
 					.qunpdSts.mt-5
 						- let status = '';
@@ -177,3 +166,5 @@ table.mt-3.table.table-bordered
 							span.text-danger #{status}
 						else
 							span.text-danger 创建中
+
+script(src="/js/user/sler/qunpd/soleup.js")

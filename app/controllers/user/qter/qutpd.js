@@ -102,12 +102,39 @@ exports.qtQutpdUp = (req, res) => {
 
 
 
+exports.qtQutpdUpdAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+	Compd.findOne({
+		firm: crUser.firm,
+		_id: obj._id
+	}, (err, compd) => {
+		if(err) {
+			console.log(err);
+			info = "qter QutpdUpdAjax, Compd.findOne, Error!"
+			Err.jsonErr(req, res, info);
+		} else if(!compd) {
+			info = '此商品不存在, 请刷新查看';
+			Err.jsonErr(req, res, info);
+		} else {
+			_compd = _.extend(compd, obj)
+			_compd.save((err, compdSave) => {
+				if(err) {
+					console.log(err);
+					info = "qter QutpdUpdAjax, _compd.save, Error!"
+					Err.jsonErr(req, res, info);
+				} else {
+					res.json({ status: 1, msg: '', data: { } })
+				}
+			})
+		}
+	})
+}
 
 
 exports.qtQutpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	if(obj.estimate) obj.estimate = parseFloat(obj.estimate);
 	obj.qntupdAt = Date.now();
 	Compd.findOne({
 		firm: crUser.firm,

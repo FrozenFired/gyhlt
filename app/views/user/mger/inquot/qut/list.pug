@@ -8,7 +8,7 @@ block content
 				.col-9.text-muted.mt-2: h5
 					a(href="/") Home
 					span &nbsp; | &nbsp;
-					span 未分配报价
+					span 报价单列表
 				.col-3.text-right
 					//- a.btn.btn-info(href="#") +
 		.filter
@@ -17,6 +17,7 @@ block content
 				.input-group-append
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 
+			span.mr-5 查看报价单:
 			button.mr-5.btn.statusClick.btn-success(type="button", data-quter="&quter=null", data-status=Conf.status.quoting.num) 未分配
 			each sts in Conf.qutSts
 				- let stsBtn = "btn-default";

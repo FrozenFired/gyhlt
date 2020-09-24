@@ -34,6 +34,7 @@ dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
 		if(!this.times) this.times = 1;
+		if(!this.qntPr) this.qntPr = 0;
 		this.ctAt = Date.now();
 	} else {
 		

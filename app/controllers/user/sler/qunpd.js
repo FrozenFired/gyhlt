@@ -195,6 +195,72 @@ exports.slQunpdUpd = (req, res) => {
 	})
 }
 
+
+exports.slQunpdUpdAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+
+	if(obj.quant) obj.quant = parseInt(obj.quant);
+	if(isNaN(obj.quant)) {
+		info = '数量只能是整数';
+		Err.jsonErr(req, res, info);
+	} else {
+		Compd.findOne({
+			firm: crUser.firm,
+			_id: obj._id
+		})
+		.populate('inquot')
+		.populate('ordin')
+		.exec((err, compd) => {
+			if(err) {
+				console.log(err);
+				info = "sler QunpdUpd, Compd.findOne, Error!"
+				Err.jsonErr(req, res, info);
+			} else if(!compd) {
+				info = '此询价单已经被删除, 请刷新查看';
+				Err.jsonErr(req, res, info);
+			} else if(compd.ordin) {
+				info = "您现在无权修改此商品信息, 因为已经生成订单";
+				Err.jsonErr(req, res, info);
+			} else if(compd.inquot.status == Conf.status.ord.num) {
+				info = "您现在无权修改此商品信息, 因为询价单已经生成订单";
+				Err.jsonErr(req, res, info);
+			} else {
+				let balance = (obj.quant - compd.quant) * compd.qntPr
+				let inquot = compd.inquot;
+
+
+				compd.quant = obj.quant;
+				compd.save((err, compdSave) => {
+					if(err) {
+						console.log(err);
+						info = "sler QunpdUpd, compd.save, Error!"
+						Err.jsonErr(req, res, info);
+					} else {
+						inquot.qntPr += balance;
+						inquot.save((err, inquotSave) => {
+							if(err) {
+								console.log(err);
+								info = "sler QunpdUpd, inquot.save, Error!"
+								Err.jsonErr(req, res, info);
+							} else {
+								res.json({
+									status: 1,
+									msg: '',
+									data: {
+										qntPrImp: inquotSave.qntPr,
+										qntPrTot: compdSave.quant * compdSave.qntPr
+									}
+								});
+							}
+						})
+					}
+				})
+			}
+		})
+	}
+}
+
 exports.slQunpdDelPic = (req, res) => {
 	let crUser = req.session.crUser;
 	let compdId = req.body.compdId;

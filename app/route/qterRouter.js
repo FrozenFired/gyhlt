@@ -30,6 +30,7 @@ module.exports = function(app){
 
 	app.post('/qtQutpdDelPic', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdDelPic)
 	app.post('/qtQutpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qutpd.qtQutpdUpd)
+	app.post('/qtQutpdUpdAjax', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdUpdAjax)
 	/* =================================== Inquot 报价 =================================== */
 	app.get('/qtQuts', MdRole.qterIsLogin, Qut.qtQuts)
 	app.get('/qtQut/:id', MdRole.qterIsLogin, Qut.qtQut)

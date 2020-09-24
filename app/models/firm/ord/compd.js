@@ -41,7 +41,7 @@ let dbSchema = new Schema({
 	qntcrtAt: Date,								// 询价时间
 	qntupdAt: Date,								// 询价更新
 	qntfnlAt: Date,								// 报价完成时间
-	estimate: Float,							// 预估价格
+	estimate: String,							// 预估价格
 	qntPr: Float,								// 报价价格
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
@@ -71,6 +71,9 @@ let dbSchema = new Schema({
 dbSchema.pre('save', function(next) {	
 	if(this.isNew) {
 		this.inAt = Date.now();
+		if(!this.qntPr) this.qntPr = 0;
+		if(!this.dinPr) this.dinPr = 0;
+		if(!this.dutAt) this.dutAt = 0;
 	} else {
 		
 	}

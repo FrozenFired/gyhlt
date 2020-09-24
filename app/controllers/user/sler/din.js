@@ -119,6 +119,7 @@ let slerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 	} else {
 		ordin.compds.push(compds[n]._id);
 
+		compds[n].pdnum = n+1;
 		compds[n].ordin = ordin._id;
 		compds[n].dinpdSts = Conf.status.init.num;
 		compds[n].save((err, compdSave) => {
@@ -132,54 +133,6 @@ let slerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 		})
 	}
 }
-
-
-
-exports.slDinFilter = (req, res, next) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-	if(!id) id = req.query.ordinId
-	if(!id) {
-		let dinObj = {
-			din: new Object(),
-			dinpds: new Object()
-		}
-		req.body.dinObj = dinObj;
-		next();
-	} else {
-		Ordin.findOne({_id: id})
-		.populate('diner')
-		.populate('cter')
-		.populate({
-			path: 'compds',
-			populate: [
-				{path: 'brand'},
-				{path: 'pdfir'},
-				{path: 'pdsec'},
-				{path: 'pdthd'},
-			]
-		})
-		.exec((err, din) => {
-			if(err) {
-				console.log(err);
-				info = "sler Qun, Inquot.findOne, Error!";
-				Err.usError(req, res, info);
-			} else if(!din) {
-				info = "这个询价单已经被删除, slDinFilter";
-				Err.usError(req, res, info);
-			} else {
-				// console.log(din)
-				let dinObj = {
-					din,
-					dinpds: din.compds
-				}
-				req.body.dinObj = dinObj;
-				next();
-			}
-		})
-	}
-}
-
 
 
 
@@ -201,8 +154,18 @@ exports.slDin = (req, res) => {
 	Ordin.findOne({_id: id})
 	.populate('diner')
 	.populate('cter')
-	.populate('dutFirm')
-	.populate('nstrmup')
+	.populate({
+		path: 'compds',
+		options: { sort: { 'pdnum': 1,} },
+		populate: [
+			{path: 'brand'},
+			{path: 'pdfir'},
+			{path: 'pdsec'},
+			{path: 'pdthd'},
+			{path: 'diner'},
+			{path: 'cter'},
+		]
+	})
 	.exec((err, din) => {
 		if(err) {
 			console.log(err);
@@ -213,24 +176,11 @@ exports.slDin = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			// console.log(din)
-			Compd.find({ordin: id})
-			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-			.populate('diner')
-			.populate('cter')
-			.populate('dutFirm').populate('nstrmup')
-			.sort({'status': 1, 'weight': -1, 'dinAt': -1})
-			.exec((err, dinpds) => {
-				if(err) {
-					info = "cter CompdsAjax, Compd.find(), Error!";
-					Err.jsonErr(req, res, info);
-				} else {
-					res.render('./user/sler/ordin/din/detail', {
-						title: '订单详情',
-						crUser,
-						din,
-						dinpds,
-					})
-				}
+			res.render('./user/sler/ordin/din/detail', {
+				title: '订单详情',
+				crUser,
+				din,
+				dinpds: din.compds,
 			})
 		}
 	})
