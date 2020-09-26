@@ -46,7 +46,8 @@ let dbSchema = new Schema({
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
 
-	qntpdSts: {type: Number, default: 0},			// 商品状态 
+	qntpdSts: {type: Number, default: 0},			// 商品询报价状态
+	delNote: String, 							// 为什么是无效产品
 
 	/* ============================= 销售订单 ============================= */
 	ordin: {type: ObjectId, ref: 'Ordin'},		// 所属订单

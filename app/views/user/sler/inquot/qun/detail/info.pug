@@ -14,21 +14,21 @@
 				else
 					span 数据丢失
 		.col-md-6
-			.cterNome &nbsp; 客户姓名: 
-				if qun.status == Conf.status.init.num
-					-a;
-					.text-info.inquotUpClick#cterNome-span #{qun.cterNome}
-				else
-					div #{qun.cterNome}
+			.cterNome
+				span 客户姓名: 
+				span.text-warning.inquotUpClick#cterNome-span #{qun.cterNome}
 				form#cterNome-form(action="/slQunUpdAjax", style="display:none")
 					input#cterNome-org(type="hidden", value=qun.cterNome)
 					input(type="hidden", name="obj[_id]", value=qun._id)
 					.form-group.row
 						.col-12
 							input.inquotUpIpt#cterNome-ipt.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off", value=qun.cterNome)
+			.quantTotal
+				span 总数量: 
+				span#span-quantTotal
 			if qun.status == Conf.status.done.num
 				-a;
-				h4 
+				h5
 					span 总价格: 
 					span.text-info(id="span-qntPrImp") #{qun.qntPr} €
 			.status.mt-3
@@ -54,7 +54,14 @@
 				if qunpds && qunpds.length > 0
 					- a;
 					button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num) 提交
-
+		else if qun.status == Conf.status.quoting.num
+				- a;
+				.col-6
+				.col-6
+					if qun.compds.length > 0
+						-a;
+						button.btn.btn-secondary.quotingBtnShow(type="button", title="必须完善具体工艺面料等细节") 申请精确报价
+						button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qun._id+"-done", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pricing.num, style="display:none") 申请精确报价
 		else if qun.status == Conf.status.done.num
 			-a;
 			.col-3

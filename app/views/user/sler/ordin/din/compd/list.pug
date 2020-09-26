@@ -4,7 +4,7 @@ table.mt-3.table.table-bordered
 		th 系列
 		th 产品规格
 		th 工艺面料
-		th(style="width:10%") 折扣价
+		th.qntPrTd(style="width:10%; display:none") 报价
 		th(style="width:18%") 销售价
 	thead
 		each dinpd in dinpds
@@ -102,7 +102,7 @@ table.mt-3.table.table-bordered
 								img.mt-2(src=image, width="120px")
 								.picLink
 									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
-				td
+				td.qntPrTd(style="display:none")
 					.qntPr.mt-3
 						.qntPr
 							span.text-dark 单价:

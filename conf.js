@@ -79,7 +79,7 @@ let Conf = {
 	},
 
  	qntpdSts: [ 'quoting', 'done', 'del' ],
-	qunSts: [ 'init', 'quoting', 'pricing', 'done', 'unord'],	// 询价单状态
+	qunSts: [ 'init', 'quoting', 'pricing', 'done', 'ord', 'unord'],	// 询价单状态
 	qutSts: [ 'quoting', 'pricing', 'done', 'ord', 'unord' ],	// 报价单状态
  
  	dinpdSts: [ 'init', 'proding', 'traning', 'stocking', 'done' ],

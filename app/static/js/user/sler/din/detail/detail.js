@@ -15,4 +15,19 @@ $(function() {
 		}
 	}
 	ifChangeStatus();
+
+	// 删除订单操作按钮
+	$(".delObjectBtn").click(function(e) {
+		$(".delObjectBtn").hide();
+		$(".delObject").show();
+	})
+	$(".delObjectCancel").click(function(e) {
+		$(".delObject").hide();
+		$(".delObjectBtn").show();
+	})
+
+	// 查看报价按钮
+	$(".qntPrTdBtn").click(function(e) {
+		$(".qntPrTd").toggle();
+	})
 })

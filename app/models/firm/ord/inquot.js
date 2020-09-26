@@ -10,6 +10,7 @@ let dbSchema = new Schema({
 	/* 本公司报价 */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
+	cter: {type: ObjectId, ref: 'User'}, 		// 客户
 	cterNome: String, 							// 客户姓名
 
 	qntcrtAt: Date,								// 询价时间

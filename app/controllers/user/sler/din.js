@@ -84,6 +84,7 @@ exports.slDinGen = (req, res) => {
 
 					let ordinObj = new Object();
 					ordinObj.inquot = inquot._id;
+					ordinObj.cter = inquot.cter;
 					ordinObj.cterNome = inquot.cterNome;
 					ordinObj.firm = crUser.firm;
 					ordinObj.diner = crUser._id;
@@ -117,20 +118,24 @@ let slerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 		})
 		return;
 	} else {
-		ordin.compds.push(compds[n]._id);
+		if(compds[n].quant > 0) {
+			ordin.compds.push(compds[n]._id);
 
-		compds[n].pdnum = n+1;
-		compds[n].ordin = ordin._id;
-		compds[n].dinpdSts = Conf.status.init.num;
-		compds[n].save((err, compdSave) => {
-			if(err) {
-				console.log(err);
-				info = 'slerOrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
-				Err.usError(req, res, info);
-			} else {
-				slerOrdinSave(req, res, _ordin, inquot, compds, n+1);
-			}
-		})
+			compds[n].pdnum = n+1;
+			compds[n].ordin = ordin._id;
+			compds[n].dinpdSts = Conf.status.init.num;
+			compds[n].save((err, compdSave) => {
+				if(err) {
+					console.log(err);
+					info = 'slerOrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
+					Err.usError(req, res, info);
+				} else {
+					slerOrdinSave(req, res, _ordin, inquot, compds, n+1);
+				}
+			})
+		} else {
+			slerOrdinSave(req, res, _ordin, inquot, compds, n+1);
+		}
 	}
 }
 
@@ -237,8 +242,8 @@ exports.slDinUp = (req, res) => {
 exports.slDinDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-
 	Ordin.findOne({_id: id})
+	.populate('inquot')
 	.exec((err, ordin) => {
 		if(err) {
 			console.log(err);
@@ -247,20 +252,30 @@ exports.slDinDel = (req, res) => {
 		} else if(!ordin) {
 			info = "这个订单已经被删除";
 			Err.usError(req, res, info);
+		} else if(ordin.status != Conf.status.init.num) {
+			info = "订单状态已经改变, 不可删除";
+			Err.usError(req, res, info);
+		} else if(!ordin.inquot) {
+			info = "这个订单的询价单, 已经不存在, 请联系管理员";
+			Err.usError(req, res, info);
 		} else {
-			if(ordin.compds.length > 0) {
-				info = "安全起见, 请先删除此单中的询价货物!";
-				Err.usError(req, res, info);
-			} else {
-				Ordin.deleteOne({_id: id}, (err, objRm) => {
-					if(err) {
-						info = "user OrdinDel, Ordin.deleteOne, Error!";
-						Err.usError(req, res, info);
-					} else {
-						res.redirect("/slDins");
-					}
-				})
-			}
+			let inquot = ordin.inquot;
+			Ordin.deleteOne({_id: id}, (err, objRm) => {
+				if(err) {
+					info = "user OrdinDel, Ordin.deleteOne, Error!";
+					Err.usError(req, res, info);
+				} else {
+					inquot.status = Conf.status.done.num;
+					inquot.save((err, inquotSave) => {
+						if(err) {
+							info = "user OrdinDel, inquot.save, Error!";
+							Err.usError(req, res, info);
+						} else {
+							res.redirect("/slQun/"+inquotSave._id);
+						}
+					})
+				}
+			})
 		}
 	})
 }

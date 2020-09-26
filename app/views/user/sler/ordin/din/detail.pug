@@ -16,9 +16,11 @@ block content
 		.dinpd
 			if din.status == Conf.status.init.num
 				-a;
-				
+			.row
+				.col-12
+					button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>		
 			include ./compd/list
 		
 		include ../../../aaPlugin/comment/list
 
-	script(src="/js/user/sler/din/detail.js")
+	script(src="/js/user/sler/din/detail/detail.js")

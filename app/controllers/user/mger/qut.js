@@ -30,6 +30,7 @@ exports.mgQut = (req, res) => {
 
 	Inquot.findOne({_id: id})
 	// .populate('firm')
+	.populate('cter')
 	.populate('quner')
 	.populate('quter')
 	.populate('strmup')
@@ -82,14 +83,27 @@ exports.mgQut = (req, res) => {
 							info = 'mger QutAdd, Strmup.find, Error!';
 							Err.usError(req, res, info);
 						} else {
-							res.render('./user/mger/inquot/qut/detail', {
-								title: '报价单详情',
-								crUser,
+							User.find({
+								firm: crUser.firm,
+								role: Conf.roleUser.customer.num
+							})
+							.exec((err, cters) => {
+								if(err) {
+									console.log(err);
+									info = 'mger QutAdd, Strmup.find, Error!';
+									Err.usError(req, res, info);
+								} else {
+									res.render('./user/mger/inquot/qut/detail', {
+										title: '报价单详情',
+										crUser,
 
-								qut,
-								qutpds,
-								quters,
-								strmups,
+										qut,
+										qutpds,
+										quters,
+										strmups,
+										cters
+									})
+								}
 							})
 						}
 					})
@@ -154,10 +168,10 @@ exports.mgQutUpd = (req, res) => {
 let mgerQuterSel = (req, res, obj, inquot) => {
 	if(String(inquot.quter) == String(obj.quter)) {
 		// 如果是更新， 则判断如果 quter 没有变化, 则跳过此步骤
-		mgerStrmupSel(req, res, obj, inquot);
+		mgercterSel(req, res, obj, inquot);
 	} else if(!obj.quter) {
 		obj.quter = inquot.quter;
-		mgerStrmupSel(req, res, obj, inquot);
+		mgercterSel(req, res, obj, inquot);
 	} else {
 		if(obj.quter == "null") obj.quter = null;
 		Compd.updateMany({
@@ -169,6 +183,31 @@ let mgerQuterSel = (req, res, obj, inquot) => {
 			if(err) {
 				console.log(err);
 				info = "mger QuterSel, Compd.find(), Error!";
+				Err.usError(req, res, info);
+			} else {
+				mgercterSel(req, res, obj, inquot);
+			}
+		})
+	}
+}
+let mgercterSel = (req, res, obj, inquot) => {
+	if(String(inquot.cter) == String(obj.cter)) {
+		// 如果是更新， 则判断如果 cter 没有变化, 则跳过此步骤
+		mgerStrmupSel(req, res, obj, inquot);
+	} else if(!obj.cter) {
+		obj.cter = inquot.cter;
+		mgerStrmupSel(req, res, obj, inquot);
+	} else {
+		if(obj.cter == "null") obj.cter = null;
+		Compd.updateMany({
+			_id: inquot.compds,
+			cter: inquot.cter
+		}, {
+			cter: obj.cter
+		},(err, compds) => {
+			if(err) {
+				console.log(err);
+				info = "mger cterSel, Compd.find(), Error!";
 				Err.usError(req, res, info);
 			} else {
 				mgerStrmupSel(req, res, obj, inquot);

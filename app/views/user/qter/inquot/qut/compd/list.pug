@@ -7,7 +7,7 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th 数量价格
 	thead
-		- let qntTot = 0;
+		- let quantTotal = 0;
 		each qutpd in qutpds
 			-a;
 			tr.text-info
@@ -119,8 +119,9 @@ table.mt-3.table.table-bordered
 				td
 					span #{qutpd.note}
 				td
+					input.statusInput(type="hidden", value=qutpd.qntpdSts)
 					if qutpd.qntpdSts != Conf.status.del.num
-						-a;
+						- quantTotal += qutpd.quant;
 						.quant
 							span.text-dark 数量: 
 							span #{qutpd.quant}
@@ -140,7 +141,8 @@ table.mt-3.table.table-bordered
 									.form-group.row
 										.col-12
 											input.blurup.form-control(id="ipt-estimate-"+qutpd._id, type="text", name="obj[estimate]", placeholder="预估单价可以是范围", autocomplete="off", value=qutpd.estimate)
-
+					else 
+						.delNote.text-danger #{qutpd.delNote}
 					.qutpdSts.mt-5
 						- let status = '';
 						each sts in Conf.status
@@ -154,6 +156,7 @@ table.mt-3.table.table-bordered
 							span.text-danger #{status}
 						else
 							span.text-danger 创建中
-						input.statusInput(type="hidden", value=qutpd.qntpdSts)
-
+.row
+	.col-12.text-right
+		input#ipt-quantTotal(type="hidden", value=quantTotal)
 script(src="/js/user/qter/qutpd/soleup.js")

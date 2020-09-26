@@ -55,10 +55,12 @@ exports.mgQutpd = (req, res) => {
 exports.mgQutpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	if(obj.qntPr) obj.qntPr = parseFloat(obj.qntPr);
 	info = null;
-	if(obj.qntPr && isNaN(obj.qntPr)) {
-		info = "请输入正确的报价"
+	if(obj.qntPr) {
+		obj.qntPr = parseFloat(obj.qntPr);
+		if(isNaN(obj.qntPr)) {
+			info = "请输入正确的报价"
+		}
 	}
 	if(info) {
 		Err.jsonErr(req, res, info);

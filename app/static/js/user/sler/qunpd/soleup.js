@@ -11,7 +11,10 @@ $(function() {
 		let id = strids[2];
 		let orgVal = parseInt($("#org-"+field+"-"+id).val());
 		let newVal = parseInt($(this).val());
-		if(orgVal != newVal) {
+		if(newVal < 0) {
+			alert("数量不能为负数");
+		}
+		else if(orgVal != newVal) {
 			let form =$("#form-"+field+"-"+id);
 			let data = form.serialize();
 			let url = form.attr('action');
@@ -27,6 +30,11 @@ $(function() {
 						$("#ipt-"+field+"-"+id).val(newVal);
 						$("#span-qntPrtot-"+id).text(data.qntPrTot);
 						$("#span-qntPrImp").text(data.qntPrImp);
+
+						let orgTotal = parseInt($("#ipt-quantTotal").val());
+						let newTotal = orgTotal - orgVal + newVal; 
+						$("#ipt-quantTotal").val(newTotal)
+						$("#span-quantTotal").text(newTotal)
 						// $("#span-qntPrtot-"+id).val(data.qntPr);
 					} else if(results.status === 0) {
 						alert(results.msg)

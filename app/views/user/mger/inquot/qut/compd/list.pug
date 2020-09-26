@@ -7,8 +7,7 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th(style="width:18%") 数量价格
 	thead
-		- let estTot = 0;
-		- let qntTot = 0;
+		- let quantTotal = 0;
 		each qutpd in qutpds
 			-a;
 			tr.text-info
@@ -112,7 +111,7 @@ table.mt-3.table.table-bordered
 
 				td
 					if qutpd.qntpdSts != Conf.status.del.num
-						-a;
+						- quantTotal += qutpd.quant;
 						.quant
 							span.text-dark 数量: 
 							span #{qutpd.quant}
@@ -128,11 +127,13 @@ table.mt-3.table.table-bordered
 								
 						.qntPr.mt-3
 							span.text-dark 单价:
-							if qutpd.qntPr
+							if qutpd.qntPr && !isNaN(qutpd.qntPr)
 								- a;
-								span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{qutpd.qntPr}
+								span.text-warning.clickup(id="span-qntPr-"+qutpd._id) #{(qutpd.qntPr).toFixed(2)}
+								span &nbsp;€
 							else
 								span.text-warning.clickup(id="span-qntPr-"+qutpd._id) 未报价
+								span &nbsp;€
 							if qut.status == Conf.status.pricing.num
 								-a;
 								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
@@ -143,11 +144,13 @@ table.mt-3.table.table-bordered
 											input.blurup.form-control(id="ipt-qntPr-"+qutpd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=qutpd.qntPr)
 						h5.text-dark.total.mt-2
 							span 总价:
-							if qutpd.qntPr
+							if qutpd.qntPr && !isNaN(qutpd.qntPr)
 								- qntPr = qutpd.qntPr;
-								span(id="tot-qntPr-"+qutpd._id) #{qutpd.qntPr * qutpd.quant}
+								span(id="tot-qntPr-"+qutpd._id) #{(qutpd.qntPr * qutpd.quant).toFixed(2)}
+								span &nbsp;€
 							else
 								span(id="tot-qntPr-"+qutpd._id)  未报价
+								span &nbsp;€
 
 						.strmup.mt-3
 							if qut.status >= Conf.status.pricing.num
@@ -174,7 +177,8 @@ table.mt-3.table.table-bordered
 													option(value=strmup._id, selected="selected") #{strmup.nome}
 												else
 													option(value=strmup._id) #{strmup.nome}
-
+					else
+						.delNote.text-danger #{qutpd.delNote}
 					.qutpdSts.mt-3
 						input.statusInput(type="hidden", value=qutpd.qntpdSts)
 						- let status = '';
@@ -189,4 +193,7 @@ table.mt-3.table.table-bordered
 							span.text-danger #{status}
 						else
 							span.text-danger 创建中
+.row
+	.col-12.text-right
+		input#ipt-quantTotal(type="hidden", value=quantTotal)
 script(src="/js/user/mger/qutpd/soleup.js")

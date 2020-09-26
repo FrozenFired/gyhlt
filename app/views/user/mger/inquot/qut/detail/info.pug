@@ -13,6 +13,35 @@
 					span #{quner.nome} [ #{quner.code} ]
 				else
 					span 数据丢失
+			.cterNome
+				span 客户: #{qut.cterNome}
+			.cter.text-warning
+				if qut.cter
+					- cter = qut.cter;
+					span.text-info.inquotUpClick#cter-span #{cter.nome} [#{cter.code}]
+				else
+					span.text-info.inquotUpClick#cter-span 未分配
+				form#cter-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+					input(type="hidden", name="obj[_id]", value=qut._id)
+					.form-group.row.px-5.text-center
+						.col-12
+							select.inquotUpSel#qutNote-ipt.form-control(name="obj[cter]", data-style="btn-info")
+								option(value='null') 请选择客户
+								each cter in cters
+									-a;
+									if !qut.cter
+										-a;
+										option(value=cter._id) #{cter.nome}[#{cter.code}]
+									else if String(cter._id) == String(qut.cter._id)
+										-a;
+										option(value=cter._id, selected="selected") #{cter.nome}[#{cter.code}]
+									else
+										option(value=cter._id) #{cter.nome}[#{cter.code}]
+					.form-group.row
+						.col-6
+							button.inquotCancelClick#cter-cancel.btn.btn-secondary(type="button") 取消
+						.col-6
+							input.btn.btn-success(type="submit" value="提交")
 		.col-md-6
 			.quter
 				div 报价人:
@@ -50,6 +79,9 @@
 						div #{quter.nome} [ #{quter.code} ]
 					else
 						div.text-warning 未分配
+			.quantTotal
+				span 总数量: 
+				span#span-quantTotal
 			if qut.status == Conf.status.done.num
 				-a;
 				h4 
@@ -110,4 +142,4 @@ if qut.status == Conf.status.pricing.num
 					.col-6
 						input.btn.btn-success(type="submit" value="提交")
 script(src="/js/user/ajaxChange/status.js")
-script(src="/js/user/qter/qut/detail/basicUp.js")
+script(src="/js/user/mger/qut/detail/basicUp.js")

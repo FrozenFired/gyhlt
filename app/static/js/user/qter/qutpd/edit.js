@@ -1,4 +1,18 @@
 $(() => {
+	var isDelNotFunc = function() {
+		let qntpdSts = $("input[name='obj[qntpdSts]']:checked").val();
+		if(qntpdSts == Conf.status.del.num) {
+			$(".delNoteRow").show();
+		} else {
+			$(".delNoteRow").hide();
+		}
+	}
+	isDelNotFunc();
+	$("input[name='obj[qntpdSts]']").change(function(e) {
+		isDelNotFunc();
+	})
+
+
 	/* ======== 询价单下的商品添加页面的切换 ======*/
 	$("#qutpdAddPageShow").click((e) => {
 		$("#qutpdsPage").hide();
@@ -44,6 +58,12 @@ $(() => {
 				e.preventDefault();
 			} else if(!pdthdIpt || pdthdIpt.length < 20) {
 				alert("请完善[商品]数据库数据, 并同步到此处")
+				e.preventDefault();
+			}
+		} else if(qntpdSts == Conf.status.del.num) {
+			let delNoteIpt = $("#delNoteIpt").val();
+			if(!delNoteIpt || delNoteIpt.length < 3) {
+				alert("请说明删除原因")
 				e.preventDefault();
 			}
 		}

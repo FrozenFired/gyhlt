@@ -12,6 +12,14 @@ $(function() {
 		let orgVal = $("#org-"+field+"-"+id).val();
 		let newVal = $(this).val();
 		if(orgVal != newVal) {
+			newVal = parseFloat(newVal);
+			if(isNaN(newVal)) {
+				alert("您输入的不是小数")
+			} else if(newVal < 0) {
+				alert("价格不能是负数")
+			} else {
+				newVal = (newVal).toFixed(2);
+			}
 			let form =$("#form-"+field+"-"+id);
 			let data = form.serialize();
 			let url = form.attr('action');
@@ -23,8 +31,9 @@ $(function() {
 					if(results.status === 1) {
 						$("#span-"+field+"-"+id).text(newVal);
 						let quant = parseInt($("#quant-"+field+"-"+id).val());
-						$("#tot-"+field+"-"+id).text(quant*parseFloat(newVal));
+						$("#tot-"+field+"-"+id).text(quant*newVal);
 						$("#org-"+field+"-"+id).val(newVal);
+						$("#ipt-"+field+"-"+id).val(newVal);
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}

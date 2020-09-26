@@ -21,11 +21,9 @@
 					span #{quter.nome} [ #{quter.code} ]
 				else
 					span.text-warning 未分配
-			if qut.status == Conf.status.done.num
-				-a;
-				h4 
-					span 总价格: 
-					span.text-info #{qut.qntPr} €
+			.quantTotal
+				span 总数量: 
+				span#span-quantTotal
 			.status.mt-3
 				- var status = '';
 				each sts in Conf.status
@@ -36,7 +34,7 @@
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
 				a(href="/slQunExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
-	if qut.status == Conf.status.quoting.num
+	//- if qut.status == Conf.status.quoting.num
 			- a;
 			.statusChange.text-right.mt-2
 				if qut.compds.length > 0

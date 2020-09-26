@@ -7,7 +7,7 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th 数量价格
 	thead
-		- let qntTot = 0;
+		- let quantTotal = 0;
 		each qunpd in qunpds
 			-a;
 			tr.text-info(id="tr-compdid-"+qunpd._id)
@@ -118,8 +118,9 @@ table.mt-3.table.table-bordered
 				td
 					span #{qunpd.note}
 				td
+					input.statusInput(type="hidden", value=qunpd.qntpdSts)
 					if qunpd.qntpdSts != Conf.status.del.num
-						-a;
+						- quantTotal += qunpd.quant;
 						.quant
 							span.text-dark 数量: 
 							span.text-warning.clickup(id="span-quant-"+qunpd._id) #{qunpd.quant}
@@ -139,32 +140,38 @@ table.mt-3.table.table-bordered
 							-a;
 							.qntPr.mt-3
 								span.text-dark 单价:
-								if qunpd.qntPr
+								if qunpd.qntPr && !isNaN(qunpd.qntPr)
 									- a;
-									span #{qunpd.qntPr}
+									span #{(qunpd.qntPr).toFixed(2)} €
 								else
 									span.text-dark  未报价
 
 							h5.total.mt-2
 								span.text-dark 总价:
-								if qunpd.qntPr
-									- qntPr = qunpd.qntPr;
-									span(id="span-qntPrtot-"+qunpd._id) #{qunpd.qntPr * qunpd.quant}
+								if qunpd.qntPr && !isNaN(qunpd.qntPr)
+									-a;
+									span(id="span-qntPrtot-"+qunpd._id) #{(qunpd.qntPr * qunpd.quant).toFixed(2)} €
 								else
 									span.text-dark  未报价
+						.qunpdSts.mt-5
+							- let status = '';
+							each sts in Conf.status
+								- status = '';
+								if sts.num == qunpd.qntpdSts
+									- status = sts.val;
+									- break;
+							span.text-dark 商品状态: 
+							if qun.status > Conf.status.init.num
+								-a;
+								span.text-danger #{status}
+							else
+								span.text-danger 创建中
+					else
+						.del.text-danger
+							div 无效商品
+							.delNote.mt-3 #{qunpd.delNote}
 
-					.qunpdSts.mt-5
-						- let status = '';
-						each sts in Conf.status
-							- status = '';
-							if sts.num == qunpd.qntpdSts
-								- status = sts.val;
-								- break;
-						span.text-dark 商品状态: 
-						if qun.status > Conf.status.init.num
-							-a;
-							span.text-danger #{status}
-						else
-							span.text-danger 创建中
-
+.row
+	.col-12.text-right
+		input#ipt-quantTotal(type="hidden", value=quantTotal)
 script(src="/js/user/sler/qunpd/soleup.js")
