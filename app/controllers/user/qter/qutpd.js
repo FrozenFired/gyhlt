@@ -26,7 +26,10 @@ exports.qtQutpd = (req, res) => {
 
 	Compd.findOne({_id: id})
 	.populate('inquot')
-	.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
+	.populate('brand')
+	.populate('pdfir')
+	.populate('pdsec')
+	.populate('pdthd')
 	.populate('quter')
 	.exec((err, qutpd) => {
 		if(err) {
@@ -52,7 +55,10 @@ exports.qtQutpdUp = (req, res) => {
 
 	Compd.findOne({_id: id})
 	.populate('inquot')
-	.populate('pdfir').populate('pdsec').populate('pdthd')
+	.populate('brand')
+	.populate('pdfir')
+	.populate('pdsec')
+	.populate('pdthd')
 	.populate('ordin')
 	.exec((err, qutpd) => {
 		if(err) {

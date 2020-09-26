@@ -8,12 +8,25 @@ $(() => {
 		$("#qunpdAddPage").hide();
 		$("#qunpdsPage").show();
 	})
-
+	var ifNegativeFunc = function() {
+		let num = $("#quantIpt").val();
+		if(num < 0) {
+			alert("数量不能是负数")
+			$("#quantIpt").val(1)
+		}
+	}
+	$("#quantIpt").blur(function(e) {
+		ifNegativeFunc()
+	})
+	$("#quantIpt").change(function(e) {
+		ifNegativeFunc()
+	})
 	$("#objectForm").submit(function(e) {
 		let brandNomeIpt = $("#brandNomeIpt").val();
 		let firNomeIpt = $("#firNomeIpt").val();
 		let specfIpt = $("#specfIpt").val();
 		let materIpt = $("#materIpt").val();
+		let quantIpt = parseInt($("#quantIpt").val());
 		if(!brandNomeIpt) {
 			alert("请输入品牌")
 			e.preventDefault();
@@ -25,6 +38,9 @@ $(() => {
 			e.preventDefault();
 		} else if(!materIpt) {
 			alert("请输入材质")
+			e.preventDefault();
+		} else if(quantIpt < 0) {
+			alert("数量不能是负数")
 			e.preventDefault();
 		}
 	})

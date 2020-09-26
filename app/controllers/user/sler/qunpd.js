@@ -55,6 +55,7 @@ exports.slQunpdUp = (req, res) => {
 	Compd.findOne({_id: id})
 	.populate('inquot')
 	.populate('ordin')
+	.populate('brand')
 	.populate('pdfir')
 	.populate('pdsec')
 	.populate('pdthd')

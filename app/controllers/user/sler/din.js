@@ -266,6 +266,7 @@ exports.slDinDel = (req, res) => {
 					Err.usError(req, res, info);
 				} else {
 					inquot.status = Conf.status.done.num;
+					inquot.cter = ordin.cter;
 					inquot.save((err, inquotSave) => {
 						if(err) {
 							info = "user OrdinDel, inquot.save, Error!";

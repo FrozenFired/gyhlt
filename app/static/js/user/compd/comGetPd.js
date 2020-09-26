@@ -3,36 +3,6 @@ let pdfirs;
 let pdsecs;
 let pdthds;
 $(function() {
-	// $("#objectForm").submit(function(e) {
-	// 	let brandIpt = $("#brandIpt").val();
-	// 	let brandNomeIpt = $("#brandNomeIpt").val();
-	// 	if(!brandIpt && !brandNomeIpt) {
-	// 		alert("请输入品牌")
-	// 		e.preventDefault();
-	// 	}
-
-	// 	let status = $("input[name='obj[status]']:checked").val();
-	// 	if(status == Conf.status.done.num) {
-	// 		let pdfirIpt = $("#pdfirIpt").val();
-	// 		let pdsecIpt = $("#pdsecIpt").val();
-	// 		let pdthdIpt = $("#pdthdIpt").val();
-	// 		if(!brandIpt || brandIpt.length < 20) {
-	// 			alert("请完善[品牌]数据库数据, 并同步到此处")
-	// 			e.preventDefault();
-	// 		} else if(!pdfirIpt || pdfirIpt.length < 20) {
-	// 			alert("请完善[系列]数据库数据, 并同步到此处")
-	// 			e.preventDefault();
-	// 		} else if(!pdsecIpt || pdsecIpt.length < 20) {
-	// 			alert("请完善[产品]数据库数据, 并同步到此处")
-	// 			e.preventDefault();
-	// 		} else if(!pdthdIpt || pdthdIpt.length < 20) {
-	// 			alert("请完善[商品]数据库数据, 并同步到此处")
-	// 			e.preventDefault();
-	// 		}
-	// 	}
-	// })
-
-
 	/*   数据初始化  */
 	funcInit = () => {
 		let brandFilter = $("#brandFilterAjax").val();
@@ -77,7 +47,8 @@ $(function() {
 
 		let brandIpt = $("#brandIpt").val();
 		if(brandIpt && brandIpt.length > 20) {
-			$("#brandIpt").val('')
+			$("#brandIpt").val('');
+			$(".brandweb").remove();
 		}
 		// 如果本数据库中的数据 那么当上级更改时, 这个就不会存在
 		let pdfirIpt = $("#pdfirIpt").val();
@@ -141,6 +112,16 @@ $(function() {
 		}
 		$("#brandIpt").val(brandId)
 		$("#brandNomeIpt").val(brand.nome)
+		if(brand.website) {
+			let website = brand.website;
+			if(website && website.slice(0,4) != 'http') {
+				website = 'http://'+website
+			}
+			let elem = '<div class="brandweb">'
+				elem += '<a href="'+website+'" target="_blank">'+brand.nome+'官网</a>'
+			elem += '</div>';
+			$("#brandweb").append(elem)
+		}
 	})
 
 	/* ======================== 系列选择 ======================== */
