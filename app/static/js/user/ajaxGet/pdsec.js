@@ -71,7 +71,7 @@ var pdsecRender = (pdsec, role) => {
 			elem += '<div class="col-2 text-right">'
 				elem += '<a href="'+pdsec.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
 			elem += '</div>'
-				
+
 		elem += '</div>'
 	elem += '</div>'
 	return elem;

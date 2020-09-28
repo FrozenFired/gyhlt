@@ -24,7 +24,7 @@ $(function() {
 		let code = $("#codeIpt").val();
 		let price = $("#priceIpt").val();
 		let pdsec = $("#pdsecIpt").val();
-		
+
 		if(!code || code.length < 2) {
 			alert('请输入正确的产品价格编号')
 			$("#codeIpt").focus()

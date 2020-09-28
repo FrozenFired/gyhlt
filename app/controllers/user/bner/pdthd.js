@@ -92,7 +92,7 @@ exports.bnPdthdDel = (req, res) => {
 exports.bnPdthdNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	
+
 	Pdsec.findOne({firm: crUser.firm,_id: obj.pdsec}, (err, pdsec) => {
 		if(err) {
 			console.log(err);

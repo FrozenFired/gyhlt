@@ -41,7 +41,7 @@ let dbSchema = new Schema({
 	step: {type: Number, default: 0},		// 处理步骤 
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
 		if(!this.step) this.step = 10;

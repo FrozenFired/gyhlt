@@ -63,20 +63,20 @@ let dbSchema = new Schema({
 	dutPr: Float,								// 采购价格
 	dutAt: Date,						// 提货日期
 	dutpdSts: {type: Number, default: 0},			// 商品状态 
-	
+
 	/* ============================= 物流运输 ============================= */
 	transp: {type: ObjectId, ref: 'Transp'},
 	trpAt:Date,
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.inAt = Date.now();
 		if(!this.qntPr) this.qntPr = 0;
 		if(!this.dinPr) this.dinPr = 0;
 		if(!this.dutAt) this.dutAt = 0;
 	} else {
-		
+
 	}
 	next();
 })

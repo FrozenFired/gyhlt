@@ -58,7 +58,7 @@ var strmdwRender = (strmdw, role) => {
 		elem += '<div>' + strmdw.resp + '</div>'
 		elem += '<div>' + strmdw.tel + '</div>'
 		elem += '<div>' + strmdw.email + '</div>'
-		
+
 	elem += '</div>'
 	elem += '</div>'
 	return elem;

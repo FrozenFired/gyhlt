@@ -54,7 +54,7 @@ $(function() {
 			$("#pdnomeAll").removeClass("btn-default");
 			$("#pdnomeAll").addClass("btn-success");
 		}
-		
+
 		page = 0;
 		urlQuery = pdfirParam + keyword;
 		getPdfirs(urlQuery, pdfirElemId, 1, role);

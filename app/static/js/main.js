@@ -54,7 +54,7 @@ $(function() {
 let isFloat = function(num) {
 	if(num.length == 0){
 		return false
-	} else {			
+	} else {
 		let nums = num.split('.')
 		if(nums.length > 2){
 			return false
@@ -77,9 +77,7 @@ let isFloat = function(num) {
 						return true
 					}
 				}
-				
 			}
-			
 		}
 	}
 }

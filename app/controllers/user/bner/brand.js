@@ -35,7 +35,7 @@ exports.bnBrandNew = (req, res) => {
 	// obj.code = obj.code.replace(/^\s*/g,"").toUpperCase();
 	obj.nome = obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	obj.firm = crUser.firm;
-	
+
 	let picNew = obj.picture;
 	if(obj.picture) obj.logo = obj.picture;
 	// Brand.findOne({code: obj.code}, (err, codeSame) => {

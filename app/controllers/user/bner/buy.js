@@ -157,7 +157,7 @@ exports.bnBuyNew = (req, res) => {
 
 exports.bnBuyUpd = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	obj.updater = crUser._id;
 	let obj = req.body.obj;
 	Buy.findOne({_id: obj._id, firm: crUser.firm}, (err, buy) => {

@@ -25,11 +25,11 @@ $(function() {
 		} else {
 			categ = "&categ=" + categ;
 		}
-		
+
 		page = 0;
 		urlQuery = strmdwParam + categ;
 		getStrmdws(urlQuery, strmdwElemId, 1, role);
-		
+
 		$(".categClick").removeClass("btn-success");
 		$(".categClick").addClass("btn-default");
 

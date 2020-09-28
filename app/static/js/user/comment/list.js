@@ -102,7 +102,7 @@ var replyRender = (comment, reply, role) => {
 		elem += '<div class="form-group">'
 			elem += '<button class="btn btn-link cancelButton2" data-pos="'
 			elem += comment._id+reply.mark+'" type="button"> 取消 </button>'
-			
+
 			elem += '<button class="btn btn-primary submitButton" data-id="'
 			elem += comment._id+'" data-mark='+reply.mark+' type="button"> 回复 </button>'
 		elem += '</div>'

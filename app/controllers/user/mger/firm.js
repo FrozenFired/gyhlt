@@ -9,7 +9,7 @@ const _ = require('underscore')
 
 exports.usFirm = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	Firm.findOne({'_id': crUser.firm})
 	.exec((err, firm) => {
 		if(err) {

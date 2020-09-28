@@ -25,11 +25,11 @@ $(function() {
 		} else {
 			pdnome = "&pdnome=" + pdnome;
 		}
-		
+
 		page = 0;
 		urlQuery = pdfirParam + pdnome;
 		getPdfirs(urlQuery, pdfirElemId, 1, role);
-		
+
 		$(".pdnomeClick").removeClass("btn-success");
 		$(".pdnomeClick").addClass("btn-default");
 

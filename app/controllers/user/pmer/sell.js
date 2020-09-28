@@ -157,7 +157,7 @@ exports.pmSellNew = (req, res) => {
 
 exports.pmSellUpd = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	obj.updater = crUser._id;
 	let obj = req.body.obj;
 	Sell.findOne({_id: obj._id, firm: crUser.firm}, (err, sell) => {

@@ -38,7 +38,7 @@ let dbSchema = new Schema({
 	ctAt: Date,
 	upAt: Date,
 });
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.upAt = this.ctAt = Date.now();
 	} else {

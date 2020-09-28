@@ -50,7 +50,7 @@ exports.pmStrmdw = (req, res) => {
 					res.render('./user/pmer/strmdw/detail', {
 						title: '客户详情',
 						crUser,
-						
+
 						strmdw,
 						sells
 					})
@@ -134,7 +134,6 @@ exports.pmStrmdwNew = (req, res) => {
 			})
 		}
 	})
-	
 }
 
 

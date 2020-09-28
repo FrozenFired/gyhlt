@@ -31,7 +31,7 @@ let dbSchema = new Schema({
 	upAt: Date,
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.weight) this.weight = 0;
 		if(!this.status) this.status = 0;

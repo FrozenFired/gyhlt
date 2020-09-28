@@ -20,7 +20,7 @@ let dbSchema = new Schema({
 
 	tel: String,
 	addr: String,
-	
+
 	shelf: Number,	// 如果shelf为下架, 则此人上传的数据默认为下架
 
 	lgAt: Date,	// 上次登录时间
@@ -29,7 +29,7 @@ let dbSchema = new Schema({
 	ctAt: Date,
 	upAt: Date,
 });
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		this.upAt = this.ctAt = this.lgAt = Date.now();
 	} else {

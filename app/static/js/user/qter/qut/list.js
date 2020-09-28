@@ -28,11 +28,11 @@ $(function() {
 		} else {
 			statusParam = "&status=" + status;
 		}
-		
+
 		page = 0;
 		urlQuery = qutParam + statusParam;
 		getQuts(urlQuery, qutElemId, 1, role);
-		
+
 		$(".statusClick").removeClass("btn-success");
 		$(".statusClick").addClass("btn-default");
 
@@ -63,8 +63,6 @@ $(function() {
 		urlQuery = qutParam + keyword;
 		getQuts(urlQuery, qutElemId, 1, role);
 	})
-
-	
 
 	$(window).scroll(function(){
 		var scrollTop = $(this).scrollTop();

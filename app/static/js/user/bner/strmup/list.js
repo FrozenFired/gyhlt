@@ -25,11 +25,11 @@ $(function() {
 		} else {
 			categ = "&categ=" + categ;
 		}
-		
+
 		page = 0;
 		urlQuery = strmupParam + categ;
 		getStrmups(urlQuery, strmupElemId, 1, role);
-		
+
 		$(".categClick").removeClass("btn-success");
 		$(".categClick").addClass("btn-default");
 

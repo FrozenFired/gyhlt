@@ -41,7 +41,7 @@ exports.slDinGen = (req, res) => {
 			let minNum = 1
 			let r1 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
 			let r2 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
-			
+
 			let symAtFm = "$gte";
 			var monthStart = new Date(); //本月
 			let today = monthStart.getDate();
@@ -447,7 +447,7 @@ exports.slDinExcel = (req, res) => {
 						},
 						dateFormat: 'yyyy-mm-dd hh:mm:ss'
 					});
-					
+
 					let ws = wb.addWorksheet('Sheet 1');
 					ws.column(1).setWidth(5);
 					ws.column(2).setWidth(15);
@@ -457,7 +457,7 @@ exports.slDinExcel = (req, res) => {
 					ws.column(6).setWidth(15);
 					ws.column(7).setWidth(10);
 					ws.column(8).setWidth(20);
-					
+
 					// header
 					ws.cell(1,1).string('NB.');
 					ws.cell(1,2).string('Brand');

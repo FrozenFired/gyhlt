@@ -58,7 +58,7 @@ var qunRender = (qun, role) => {
 			elem += '<a class="btn btn-info" href="/'+role+'Qun/'+qun._id+'">'
 				elem += '<div style="font-size: 23px;">'+qun.code+'</div>'
 			elem += '</a>'
-			
+
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
@@ -81,7 +81,7 @@ var qunRender = (qun, role) => {
 			elem += '<div>'
 				elem += '报价次数: '+ qun.times
 			elem += '</div>'
-		
+
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'

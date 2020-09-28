@@ -28,11 +28,11 @@ $(function() {
 		} else {
 			statusParam = "&status=" + status;
 		}
-		
+
 		page = 0;
 		urlQuery = dinParam + statusParam;
 		getDins(urlQuery, dinElemId, 1, role);
-		
+
 		$(".statusClick").removeClass("btn-success");
 		$(".statusClick").addClass("btn-default");
 
@@ -63,8 +63,6 @@ $(function() {
 		urlQuery = dinParam + keyword;
 		getDins(urlQuery, dinElemId, 1, role);
 	})
-
-	
 
 	$(window).scroll(function(){
 		var scrollTop = $(this).scrollTop();

@@ -27,10 +27,10 @@ $(function() {
 
 	$("#despIpt").val($("#despData").val())
 	$("#webNoteIpt").val($("#webNoteData").val())
-	
+
 	$("#pdfirUpForm").submit(function(e) {
 		let code = $("#codeIpt").val();
-		
+
 		if(!code || code.length < 2){
 			alert('请输入正确的系列名称');
 			e.preventDefault();

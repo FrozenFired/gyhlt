@@ -42,7 +42,7 @@ exports.mgDin = (req, res) => {
 			{path: 'pdfir'},
 			{path: 'pdsec'},
 			{path: 'pdthd'},
-			
+
 			{path: 'strmup'},
 			{path: 'cter'},
 		]

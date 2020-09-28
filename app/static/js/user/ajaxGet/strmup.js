@@ -58,7 +58,7 @@ var strmupRender = (strmup, role) => {
 		elem += '<div>' + strmup.resp + '</div>'
 		elem += '<div>' + strmup.tel + '</div>'
 		elem += '<div>' + strmup.email + '</div>'
-		
+
 	elem += '</div>'
 	elem += '</div>'
 	return elem;

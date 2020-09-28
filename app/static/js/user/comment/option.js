@@ -57,7 +57,7 @@ $( function() {
 		var cid = target.data('cid')
 		var user = target.data('user')
 		var ctrl = target.data('ctrl')
-		
+
 		if(user){
 			$.ajax({
 				type: 'get',

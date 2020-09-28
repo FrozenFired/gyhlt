@@ -10,7 +10,7 @@ let dbSchema = new Schema({
 	firm: {type: ObjectId, ref: 'Firm'},		// 此供应商的所属公司
 
 	firmUp: {type: ObjectId, ref: 'Firm'},		// 此公司对应的上游公司供应商
-	accept: Number, 	
+	accept: Number,
 	// 由firmUp控制, 如果firmup接受 则accept变为1, 
 	// 而且firmUp会自动创建自己的客户strmdw, 其中的accept为1
 	// 如果firm删除此供应商 则供应商中的strmdw 中的accept变为0
@@ -24,7 +24,7 @@ let dbSchema = new Schema({
 	resp: String,// 负责人
 	tel: String,
 	email: String,
-	
+
 	ac: String,								// 首款比例
 	sa: String,								// 尾款比例
 	payNote: String,						// 首位款比例备注
@@ -37,7 +37,7 @@ let dbSchema = new Schema({
 	upAt: Date,
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.accept) this.accept = 0;
 		if(!this.shelf) this.shelf = 0;

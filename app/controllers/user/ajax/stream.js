@@ -9,7 +9,7 @@ let Sell = require('../../../models/firm/stream/sell');
 /* ============ 供应商 ============ */
 exports.usStrmupsAjax = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	let page = 1;
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
 		page = parseInt(req.query.page);
@@ -79,7 +79,7 @@ exports.usStrmupsAjax = (req, res) => {
 /* ============ 供应商折扣 ============ */
 exports.usBuysAjax = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	let page = 1;
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
 		page = parseInt(req.query.page);
@@ -151,7 +151,7 @@ exports.usBuysAjax = (req, res) => {
 /* ============ 下游客户 ============ */
 exports.usStrmdwsAjax = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	let page = 1;
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
 		page = parseInt(req.query.page);
@@ -221,7 +221,7 @@ exports.usStrmdwsAjax = (req, res) => {
 /* ============ 客户折扣 ============ */
 exports.usSellsAjax = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	let page = 1;
 	if(req.query.page && !isNaN(parseInt(req.query.page))) {
 		page = parseInt(req.query.page);

@@ -37,7 +37,7 @@ let dbSchema = new Schema({
 	upAt: Date,
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.accept) this.accept = 0;
 		if(!this.shelf) this.shelf = 0;

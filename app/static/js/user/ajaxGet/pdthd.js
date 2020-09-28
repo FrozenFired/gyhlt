@@ -59,7 +59,7 @@ var pdthdRender = (pdthd, role) => {
 			let mater = pdthd.maters[i]
 			elem += '<div class="text-dark mt-2">'+mater+'</div>'
 		}
-		
+
 	elem += '</div>'
 	return elem;
 }

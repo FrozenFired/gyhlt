@@ -22,10 +22,10 @@ $(function() {
 	})
 
 	$("#pdsecForm").submit(function(e) {
-		let firmCode = $("#firmCode").val();		
+		let firmCode = $("#firmCode").val();
 		let code = $("#codeIpt").val();
 		let pdfir = $("#pdfirIpt").val();
-		
+
 		if(!firmCode || firmCode.length != Conf.codeLenFirm) {
 			alert('请刷新查看');
 			e.preventDefault();

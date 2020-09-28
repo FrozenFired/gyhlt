@@ -117,7 +117,7 @@ exports.bnPdsecNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	let picDel = obj.picture;
-	
+
 	Pdfir.findOne({firm: crUser.firm,_id: obj.pdfir}, (err, pdfir) => {
 		if(err) {
 			console.log(err);

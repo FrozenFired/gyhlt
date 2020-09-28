@@ -31,14 +31,14 @@ let dbSchema = new Schema({
 	status: {type: Number, default: 0},			// 系列状态 
 });
 
-dbSchema.pre('save', function(next) {	
+dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
 		if(!this.times) this.times = 1;
 		if(!this.qntPr) this.qntPr = 0;
 		this.ctAt = Date.now();
 	} else {
-		
+
 	}
 	next();
 })

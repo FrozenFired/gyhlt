@@ -98,7 +98,7 @@ let usUser_save = (req, res, obj, user) => {
 
 exports.users = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	User.find({'firm': crUser.firm})
 	.where('role').gt(crUser.role)
 	.sort({'role': 1})
@@ -161,7 +161,7 @@ exports.userDel = (req, res) => {
 
 exports.userAdd = (req, res) => {
 	let crUser = req.session.crUser;
-	
+
 	res.render('./user/mger/index/user/add', {
 		title: '成员列表',
 		crUser,

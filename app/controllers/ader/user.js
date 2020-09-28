@@ -56,7 +56,6 @@ exports.adUserDel = (req, res) => {
 			res.redirect("/adUsers");
 		}
 	})
-		
 }
 exports.adUser = (req, res) => {
 	let objBody = new Object();

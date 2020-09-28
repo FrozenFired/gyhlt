@@ -8,7 +8,7 @@ $(function() {
 		document.getElementById('crtImg').src = src;
 		$("#crtImg").removeClass("rounded-circle")
 	})
-	
+
 	$("#addForm").submit(function(e) {
 		let title = $("#titleIpt").val();
 		if(!title || title.length < 1){
@@ -19,7 +19,7 @@ $(function() {
 
 	$("#despIpt").val($("#despData").val())
 	$("#contentIpt").val($("#contentData").val())
-	
+
 	$("#upForm").submit(function(e) {
 	})
 })

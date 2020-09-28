@@ -188,7 +188,7 @@ exports.qtQutExcel = (req, res) => {
 						},
 						dateFormat: 'yyyy-mm-dd hh:mm:ss'
 					});
-					
+
 					let ws = wb.addWorksheet('Sheet 1');
 					ws.column(1).setWidth(5);
 					ws.column(2).setWidth(15);
@@ -198,7 +198,7 @@ exports.qtQutExcel = (req, res) => {
 					ws.column(6).setWidth(15);
 					ws.column(7).setWidth(10);
 					ws.column(8).setWidth(20);
-					
+
 					// header
 					ws.cell(1,1).string('NB.');
 					ws.cell(1,2).string('Brand');

@@ -242,7 +242,7 @@ exports.slQunExcel = (req, res) => {
 						},
 						dateFormat: 'yyyy-mm-dd hh:mm:ss'
 					});
-					
+
 					let ws = wb.addWorksheet('Sheet 1');
 					ws.column(1).setWidth(5);
 					ws.column(2).setWidth(15);
@@ -255,7 +255,7 @@ exports.slQunExcel = (req, res) => {
 					ws.column(9).setWidth(10);
 					ws.column(10).setWidth(10);
 					ws.column(11).setWidth(10);
-					
+
 					// header
 					ws.cell(1,1).string('NB.');
 					ws.cell(1,2).string('Brand');

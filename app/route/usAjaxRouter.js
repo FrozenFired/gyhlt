@@ -31,7 +31,7 @@ module.exports = function(app){
 	app.get('/usBuysAjax', MdRole.userIsLogin, Stream.usBuysAjax)
 	app.get('/usStrmdwsAjax', MdRole.userIsLogin, Stream.usStrmdwsAjax)
 	app.get('/usSellsAjax', MdRole.userIsLogin, Stream.usSellsAjax)
-	
+
 	/* ===================== 获取询价报价单的结果 ===================== */
 	app.get('/usQunsAjax', MdRole.slerIsLogin, Inquot.usQunsAjax)
 	app.get('/usQutsAjax', MdRole.qterIsLogin, Inquot.usQutsAjax)

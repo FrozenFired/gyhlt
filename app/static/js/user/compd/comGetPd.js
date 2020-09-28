@@ -226,7 +226,7 @@ $(function() {
 			$("#specfIpt").val('')
 			$(".secImg").remove();
 		}
-		
+
 		let pdthdIpt = $("#pdthdIpt").val();
 		if(pdthdIpt && pdthdIpt.length > 20) {
 			$("#pdthdIpt").val('')

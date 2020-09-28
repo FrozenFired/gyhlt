@@ -50,7 +50,7 @@ exports.bnStrmup = (req, res) => {
 					res.render('./user/bner/strmup/detail', {
 						title: '供应商详情',
 						crUser,
-						
+
 						strmup,
 						buys
 					})
@@ -134,7 +134,6 @@ exports.bnStrmupNew = (req, res) => {
 			})
 		}
 	})
-	
 }
 
 

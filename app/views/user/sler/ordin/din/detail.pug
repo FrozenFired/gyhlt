@@ -14,13 +14,11 @@ block content
 		.info.my-3
 			include ./detail/info
 		.dinpd
-			if din.status == Conf.status.init.num
-				-a;
 			.row
 				.col-12
-					button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>		
+					button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>
 			include ./compd/list
-		
+
 		include ../../../aaPlugin/comment/list
 
 	script(src="/js/user/sler/din/detail/detail.js")

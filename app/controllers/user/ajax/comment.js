@@ -60,7 +60,7 @@ exports.usCommentsAjax = (req, res) => {
 exports.usCommentNewAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	
+
 	let point, relId;
 	if(obj.inquot) {
 		point = 'inquot';
