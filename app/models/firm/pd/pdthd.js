@@ -18,7 +18,7 @@ let dbSchema = new Schema({
 	crafts: [{type: String}], 			// 工艺面料
 
 	shelf: {type: Number, default: 0},	// 上架 下架
-	status: {type: Number, default: 0},	// 品牌状态 
+	status: Number,						// 品牌状态 
 	weight: {type: Number, default: 0},	// 权重 排序用的
 
 	ctAt: Date,

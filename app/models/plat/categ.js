@@ -12,7 +12,7 @@ let dbSchema = new Schema({
 	it: String,							// 意大利文
 
 	shelf: {type: Number, default: 0},	// 上架 下架
-	status: {type: Number, default: 0},	// 系列状态 
+	status: Number,						// 系列状态 
 	weight: {type: Number, default: 0},	// 权重 排序用的
 
 	ctAt: Date,

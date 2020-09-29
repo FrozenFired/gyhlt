@@ -86,13 +86,6 @@ var qutRender = (qut, role) => {
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
-			if(qut.status == Conf.status.done.num) {
-				elem += '<h4 class="p-2">'
-					elem += '总价格:'
-					elem += qut.qntPr
-				elem += '</h4>'
-			}
-
 			elem += '<div>'
 				elem += '报价人:'
 				if(qut.quter) {

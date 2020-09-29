@@ -52,41 +52,47 @@
 			.excel.text-right
 				a(href="/slDinExcel/"+din._id) Excel <span class="oi oi-data-transfer-download"></span>
 
-	.statusChange.mt-3
-		if din.status == Conf.status.checking.num
+	.statusChange.mt-3.text-center.row
+		if din.status == Conf.status.init.num
 			-a;
-			.row
-				.col-6.text-left
-					button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+din._id+"-init", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.init.num) 返回初始状态
-				.col-6.text-right
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-paiding", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.paiding.num) (核实信息)确认
+			.col-6
+				button.btn.btn-danger.delObjectBtn(type="button") 重新处理
+				.delObject(style="display:none")
+					a.mx-4.my-2.btn.btn-danger(href="/mgDinDel/"+din._id) 确定
+					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
+			.col-6
+				if dinpds && dinpds.length > 0
+					- a;
+					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-checking", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.checking.num) 确认
+		else if din.status == Conf.status.checking.num
+			-a;
+			.col-6.text-left
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+din._id+"-init", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.init.num) 返回初始状态
+			.col-6.text-right
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-paiding", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.paiding.num) (核实信息)确认
 		else if din.status == Conf.status.paiding.num
 			-a;
-			.row
-				.col-6.text-left
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-checking", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.checking.num) 返回核实
-				.col-6.text-right
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-dealing", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.dealing.num) (付款)确认
+			.col-6.text-left
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-checking", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.checking.num) 返回核实
+			.col-6.text-right
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-dealing", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.dealing.num) (付款)确认
 		else if din.status == Conf.status.dealing.num
 			-a;
-			.row
-				.col-6.text-left
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-paiding", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.paiding.num) 返回付款
-				.col-6.text-right
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-delivering", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.delivering.num) (到货)确认
+			.col-6.text-left
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-paiding", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.paiding.num) 返回付款
+			.col-6.text-right
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-delivering", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.delivering.num) (到货)确认
 		else if din.status == Conf.status.delivering.num
 			-a;
-			.row
-				.col-6.text-left
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-dealing", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.dealing.num) 返回处理
-				.col-6.text-right
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-done", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.done.num) (发货)确认
+			.col-6.text-left
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-dealing", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.dealing.num) 返回处理
+			.col-6.text-right
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-done", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.done.num) (发货)确认
 		else if din.status == Conf.status.done.num
 			-a;
-			.row
-				.col-6.text-left
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-delivering", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.delivering.num) 返回发货
-				.col-6.text-right
+			.col-6.text-left
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-delivering", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.delivering.num) 返回发货
+			.col-6.text-right
 
 script(src="/js/user/mger/din/detail/info.js")
 script(src="/js/user/ajaxChange/status.js")

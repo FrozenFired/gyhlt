@@ -201,9 +201,24 @@ exports.slQunpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 
-	if(obj.quant) obj.quant = parseInt(obj.quant);
-	if(isNaN(obj.quant)) {
-		info = '数量只能是整数';
+	info = null;
+	if(obj.quant) {
+		obj.quant = parseInt(obj.quant);
+		if(isNaN(obj.quant)) {
+			info = '数量只能是整数';
+		}
+	} else if(obj.dinPr) {
+		obj.dinPr = parseFloat(obj.dinPr);
+		if(isNaN(obj.dinPr)) {
+			info = '售价只能是数字';
+		} else if(obj.dinPr < 0) {
+			info = '售价不能是负数';
+		}
+	} else {
+		info = "您传入的参数有错误";
+	}
+
+	if(info) {
 		Err.jsonErr(req, res, info);
 	} else {
 		Compd.findOne({
@@ -227,34 +242,27 @@ exports.slQunpdUpdAjax = (req, res) => {
 				info = "您现在无权修改此商品信息, 因为询价单已经生成订单";
 				Err.jsonErr(req, res, info);
 			} else {
-				let balance = (obj.quant - compd.quant) * compd.qntPr
 				let inquot = compd.inquot;
+				if(obj.quant) {
+					compd.quant = obj.quant;
+				} else if(obj.dinPr) {
+					compd.dinPr = obj.dinPr;
+				}
 
-
-				compd.quant = obj.quant;
 				compd.save((err, compdSave) => {
 					if(err) {
 						console.log(err);
 						info = "sler QunpdUpd, compd.save, Error!"
 						Err.jsonErr(req, res, info);
 					} else {
-						inquot.qntPr += balance;
-						inquot.save((err, inquotSave) => {
-							if(err) {
-								console.log(err);
-								info = "sler QunpdUpd, inquot.save, Error!"
-								Err.jsonErr(req, res, info);
-							} else {
-								res.json({
-									status: 1,
-									msg: '',
-									data: {
-										qntPrImp: inquotSave.qntPr,
-										qntPrTot: compdSave.quant * compdSave.qntPr
-									}
-								});
+						res.json({
+							status: 1,
+							msg: '',
+							data: {
+								qntPrTot: compdSave.quant * compdSave.qntPr,
+								dinPrTot: compdSave.quant * compdSave.dinPr
 							}
-						})
+						});
 					}
 				})
 			}

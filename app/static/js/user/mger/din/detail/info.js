@@ -1,4 +1,15 @@
 $(function() {
+	// 删除订单操作按钮
+	$(".delObjectBtn").click(function(e) {
+		$(".delObjectBtn").hide();
+		$(".delObject").show();
+	})
+	$(".delObjectCancel").click(function(e) {
+		$(".delObject").hide();
+		$(".delObjectBtn").show();
+	})
+
+
 	$(".ordinUpClick").click(function(e) {
 		let htmlId = $(this).attr("id").split('-')[0]
 		$("#"+htmlId+"-form").show();

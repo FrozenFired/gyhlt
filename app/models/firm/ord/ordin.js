@@ -37,7 +37,7 @@ let dbSchema = new Schema({
 	dinDay: Number,						// 货期 xxx 天
 	dinAt: Date,						// 交货日期
 
-	status: {type: Number, default: 0},		// 系列状态 
+	status: Number,						// 系列状态 
 	step: {type: Number, default: 0},		// 处理步骤 
 });
 

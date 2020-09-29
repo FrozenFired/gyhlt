@@ -9,7 +9,9 @@ $(function() {
 	})
 	if(quotingStatus) {
 		$(".quotingBtn").hide();
+		$(".quotingSpan").show();
 	} else {
+		$(".quotingSpan").hide();
 		$(".quotingBtn").show();
 	}
 })

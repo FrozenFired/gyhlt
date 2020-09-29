@@ -33,14 +33,10 @@
 			.excel.text-right
 				a(href="/slDinExcel/"+din._id) Excel <span class="oi oi-data-transfer-download"></span>
 
-	.statusChange.text-center.mt-3.row
+	//- .statusChange.text-center.mt-3.row
 		if din.status == Conf.status.init.num
 			-a;
 			.col-6
-				button.btn.btn-danger.delObjectBtn(type="button") 重新处理
-				.delObject(style="display:none")
-					a.mx-4.my-2.btn.btn-danger(href="/slDinDel/"+din._id) 确定
-					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
 			.col-6
 				if dinpds && dinpds.length > 0
 					- a;

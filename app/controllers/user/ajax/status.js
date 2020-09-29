@@ -5,7 +5,41 @@ let Ordin = require('../../../models/firm/ord/ordin');
 let Inquot = require('../../../models/firm/ord/inquot');
 let Compd = require('../../../models/firm/ord/compd');
 
-exports.usInquotStatusAjax = function(req, res) {
+exports.usInquotQuterStAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let newStatus
+	info = null;
+	if(!req.query.newStatus) {
+		info = "user InquotQuterStAjax, if(!req.query.newStatus) 操作错误, 请联系管理员"
+	} else {
+		newStatus = parseInt(req.query.newStatus);
+		if(isNaN(newStatus)) {
+			info = "user InquotQuterStAjax, if(isNaN(newStatus)) 操作错误, 请联系管理员";
+		} else if(newStatus != Conf.status.init.num && newStatus != Conf.status.done.num) {
+			info = "user InquotQuterStAjax, 状态值错误, 请联系管理员";
+		}
+	}
+	if(info) {
+		Err.jsonErr(req, res, info);
+	} else {
+		Inquot.findOne({_id: id})
+		.exec((err, inquot) => {
+			if(err) {
+				console.log(err);
+				info = "user InquotStatusAjax, findOne(), Error!, 请截图后, 联系管理员";
+				Err.jsonErr(req, res, info);
+			} else if(!inquot) {
+				info = "user InquotStatusAjax 没有找到数据!, 请截图后, 联系管理员";
+				Err.jsonErr(req, res, info);
+			} else {
+				inquot.quterSt = newStatus;
+				usInquotStatusSave(req, res, inquot);
+			}
+		})
+	}
+}
+exports.usInquotStatusAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.query.id;
 	let oldStatus = req.query.oldStatus;
@@ -53,48 +87,74 @@ exports.usInquotStatusAjax = function(req, res) {
 						inquot.status = parseInt(newStatus);
 					}
 				}
-				else if(oldStatus == Conf.status.pricing.num && newStatus == Conf.status.done.num) {
+				else if(oldStatus == Conf.status.pricing.num && newStatus == Conf.status.confirm.num) {
 					// 完成定价, 进入销售筛选阶段
 					info = null;
-					let qntPr = 0;
 					for(let i=0; i<compds.length; i++) {
 						if(compds[i].qntpdSts == Conf.status.done.num) {
 							let totpdPr = parseFloat(compds[i].qntPr)*parseInt(compds[i].quant);
 							if(isNaN(totpdPr)) {
-								info = '产品报价错误, 请仔细查看';
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
 								break;
-							} else if(compds[i].strmup == null) {
+							} else if(totpdPr <= 0) {
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+								break;
+							}else if(compds[i].strmup == null) {
 								info = '产品需要选择供应商, 请仔细查看';
 								break;
-							} else {
-								qntPr += totpdPr;
 							}
 						}
 					}
 					if(!info) {
-						inquot.qntPr = qntPr;
 						inquot.status = parseInt(newStatus);
 					}
 				}
-				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.unord.num) {
+				else if(oldStatus == Conf.status.confirm.num && newStatus == Conf.status.pending.num) {
+					// 询价员选择成单, 确认中变为付款中
+					info = null;
+					for(let i=0; i<compds.length; i++) {
+						if(compds[i].qntpdSts == Conf.status.done.num) {
+							let totpdPr = parseFloat(compds[i].dinPr)*parseInt(compds[i].quant);
+							if(isNaN(totpdPr)) {
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+								break;
+							} else if(totpdPr <= 0) {
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+								break;
+							}else if(compds[i].strmup == null) {
+								info = '产品需要选择供应商, 请仔细查看';
+								break;
+							}
+						}
+					}
+					if(!info) {
+						inquot.status = parseInt(newStatus);
+					}
+				}
+				else if(oldStatus == Conf.status.confirm.num && newStatus == Conf.status.unord.num) {
 					// 询价员选择未成单
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}
 				else if(oldStatus == Conf.status.unord.num && newStatus == Conf.status.pricing.num) {
-					// 管理员从未成单变为重新处理
+					// 管理员从未成单变为重新处理定价
 					inquot.times++;
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}
-				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.quoting.num) {
-					// 从完成返回 报价
+				else if(oldStatus == Conf.status.pending.num && newStatus == Conf.status.confirm.num) {
+					// 管理员从付款中的状态, 退回到确认中的状态
+					inquot.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.confirm.num && newStatus == Conf.status.quoting.num) {
+					// 从确认中返回 报价
 					inquot.times++;
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}
-				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.pricing.num) {
-					// 从完成返回 定价
+				else if(oldStatus == Conf.status.confirm.num && newStatus == Conf.status.pricing.num) {
+					// 从确认中返回 定价
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}
@@ -127,7 +187,7 @@ let usInquotStatusSave = (req, res, inquot) => {
 	})
 }
 
-exports.usOrdinStatusAjax = function(req, res) {
+exports.usOrdinStatusAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.query.id;
 	let oldStatus = req.query.oldStatus;

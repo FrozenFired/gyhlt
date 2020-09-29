@@ -18,8 +18,7 @@ let dbSchema = new Schema({
 	qntfnlAt: Date,								// 报价完成时间
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
-	/* 上游公司报价 */
-	qntPr: Float,
+
 	/* ========== 基本信息 ========== */
 	code: String,								// 编号
 	times: Number,								// 报价次数
@@ -27,13 +26,16 @@ let dbSchema = new Schema({
 
 	/* ========== 商品信息 ========== */
 	compds: [{type: ObjectId, ref: 'Compd'}],
+	ordin: {type: ObjectId, ref: 'Ordin'},		// 生成的订单
 
-	status: {type: Number, default: 0},			// 系列状态 
+	status: Number,							// 系列状态
+	quterSt: Number,						// 报价员状态
 });
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
+		if(!this.quterSt) this.quterSt = 10;
 		if(!this.times) this.times = 1;
 		if(!this.qntPr) this.qntPr = 0;
 		this.ctAt = Date.now();

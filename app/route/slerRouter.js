@@ -37,7 +37,7 @@ module.exports = function(app){
 	app.post('/slQunpdUpdAjax', MdRole.slerIsLogin, postForm, Qunpd.slQunpdUpdAjax)
 	/* =================================== Inquot 询价 =================================== */
 	app.get('/slQuns', MdRole.slerIsLogin, Qun.slQuns)
-	app.get('/slQun/:id', MdRole.slerIsLogin, Qun.slQunFilter, Qun.slQun)
+	app.get('/slQun/:id', MdRole.slerIsLogin, Qun.slQun)
 	app.get('/slQunExcel/:id', MdRole.slerIsLogin, Qun.slQunExcel)
 	app.get('/slQunDel/:id', MdRole.slerIsLogin, Qun.slQunDel)
 
@@ -45,7 +45,6 @@ module.exports = function(app){
 	app.post('/slQunUpdAjax', MdRole.slerIsLogin, postForm, Qun.slQunUpdAjax)
 
 	/* =================================== Din =================================== */
-	app.get('/slDinGen/:inquotId', MdRole.slerIsLogin, Din.slDinGen)
 	app.get('/slDins', MdRole.slerIsLogin, Din.slDins)
 	app.get('/slDin/:id', MdRole.slerIsLogin, Din.slDin)
 	app.get('/slDinExcel/:id', MdRole.slerIsLogin, Din.slDinExcel)

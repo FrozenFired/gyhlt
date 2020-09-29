@@ -34,11 +34,25 @@
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
 				a(href="/slQunExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
-	//- if qut.status == Conf.status.quoting.num
-			- a;
-			.statusChange.text-right.mt-2
-				if qut.compds.length > 0
-					-a;
-					button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-done", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num, style="display:none") [初步报价] 完成
+	if qut.status == Conf.status.quoting.num
+		- a;
+		.statusChange.text-center.mt-3.row
+			if qut.compds.length == 0
+				- a;
+				.col-6
+				.col-6
+					span.p-2.border.border-danger 赞无询价商品
+			else if qut.quterSt == Conf.status.init.num
+				- a;
+				.col-6
+				.col-6
+					span.quotingSpan.p-2.border.border-danger 请完成所有商品报价
+					button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-done", type="button", data-url="/usInquotQuterStAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.done.num, style="display:none") [初步报价] 完成
+			else
+				.col-6
+				.col-3
+					span.p-2.border.border-success 已经完成
+				.col-3
+					button.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-done", type="button", data-url="/usInquotQuterStAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.init.num, style="display:none") 尚未完成
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/user/qter/qut/detail/basicUp.js")

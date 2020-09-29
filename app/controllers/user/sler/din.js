@@ -18,128 +18,6 @@ const _ = require('underscore');
 const moment = require('moment');
 const xl = require('excel4node');
 
-exports.slDinGen = (req, res) => {
-	let crUser = req.session.crUser;
-	let inquotId = req.params.inquotId;
-	Inquot.findOne({_id: inquotId})
-	.populate({
-		path: 'compds',
-		match: { 'qntpdSts': Conf.status.done.num }
-	})
-	.exec((err, inquot) => {
-		if(err) {
-			console.log(err);
-			info = 'sler DinGen, Inquot.findOne, Error!'
-			Err.usError(req, res, info);
-		} else if(!inquot) {
-			info = '没有找到询价单, 请重试!'
-			Err.usError(req, res, info);
-		} else {
-			let compds = inquot.compds;
-			// console.log(compds)
-			let maxNum = 3
-			let minNum = 1
-			let r1 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
-			let r2 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
-
-			let symAtFm = "$gte";
-			var monthStart = new Date(); //本月
-			let today = monthStart.getDate();
-			let codePre = moment(monthStart).format("YYMM");
-			monthStart.setDate(1);
-			monthStart.setHours(0);
-			monthStart.setSeconds(0);
-			monthStart.setMinutes(0);
-
-			Ordin.findOne({
-				'firm': crUser.firm,
-				'crtAt': {[symAtFm]: monthStart}
-			})
-			.sort({'crtAt': -1})
-			.exec((err, lastOrdin) => {
-				if(err) {
-					console.log(err);
-					info = "sler DinGen, Ordin.findOne, Error!";
-					Err.usError(req, res, info);
-				} else {
-					let lastDate = monthStart.getDate();
-					let codeNum = 0;
-					if(lastOrdin) {
-						lastDate = lastOrdin.crtAt.getDate();
-						codeNum = (lastOrdin.code).split('GYIS')[1];
-					}
-					let daySpan = parseInt(today) - parseInt(lastDate);
-					// console.log(codeNum)
-					codeNum = String(parseInt(codeNum) + daySpan * r1 + r2);
-					// console.log(daySpan)
-					// console.log(r1)
-					// console.log(r2)
-					// console.log(codeNum)
-					if(codeNum.length < 4) {
-						for(let i=codeNum.length; i < 4; i++) { // 序列号补0
-							codeNum = "0"+codeNum;
-						}
-					}
-					let code = codePre + 'GYIS' + codeNum;
-
-					let ordinObj = new Object();
-					ordinObj.inquot = inquot._id;
-					ordinObj.cter = inquot.cter;
-					ordinObj.cterNome = inquot.cterNome;
-					ordinObj.firm = crUser.firm;
-					ordinObj.diner = crUser._id;
-					ordinObj.code = code;
-					_ordin = new Ordin(ordinObj)
-					slerOrdinSave(req, res, _ordin, inquot, compds, 0);
-				}
-			})
-		}
-	})
-}
-let slerOrdinSave = (req, res, ordin, inquot, compds, n) => {
-	if(n == compds.length) {
-		_ordin.save((err, ordSave) => {
-			if(err) {
-				console.log(err);
-				info = 'slerOrdinSave, _ordin.save, Error, 请截图后, 联系管理员!'
-				Err.usError(req, res, info);
-			} else {
-				inquot.status = Conf.status.ord.num;
-				inquot.save((err, inquotSave) => {
-					if(err) {
-						console.log(err);
-						info = 'slerOrdinSave, inquot.save, Error, 请截图后, 联系管理员!'
-						Err.usError(req, res, info);
-					} else {
-						res.redirect('/slDin/'+ordSave._id)
-					}
-				})
-			}
-		})
-		return;
-	} else {
-		if(compds[n].quant > 0) {
-			ordin.compds.push(compds[n]._id);
-
-			compds[n].pdnum = n+1;
-			compds[n].ordin = ordin._id;
-			compds[n].dinpdSts = Conf.status.init.num;
-			compds[n].save((err, compdSave) => {
-				if(err) {
-					console.log(err);
-					info = 'slerOrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
-					Err.usError(req, res, info);
-				} else {
-					slerOrdinSave(req, res, _ordin, inquot, compds, n+1);
-				}
-			})
-		} else {
-			slerOrdinSave(req, res, _ordin, inquot, compds, n+1);
-		}
-	}
-}
-
-
 
 // 订单
 exports.slDins = (req, res) => {
@@ -265,7 +143,7 @@ exports.slDinDel = (req, res) => {
 					info = "user OrdinDel, Ordin.deleteOne, Error!";
 					Err.usError(req, res, info);
 				} else {
-					inquot.status = Conf.status.done.num;
+					inquot.status = Conf.status.pending.num;
 					inquot.cter = ordin.cter;
 					inquot.save((err, inquotSave) => {
 						if(err) {

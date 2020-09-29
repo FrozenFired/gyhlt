@@ -18,7 +18,11 @@ block content
 			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
 				-a;
 				include ./compd/add
-			include ./compd/list
+			if qun.status >= Conf.status.confirm.num
+				-a;
+				include ./compd/listConfirm
+			else
+				include ./compd/list
 
 		include ../../../aaPlugin/comment/list
 

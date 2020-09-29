@@ -1,6 +1,4 @@
 $(function() {
-	// 总数量
-	$("#span-quantTotal").text($("#ipt-quantTotal").val())
 
 	/* == 判断是否完成了所有产品的报价 == */
 	let quotingStatus = false;
@@ -22,11 +20,11 @@ $(function() {
 	})
 
 	$(".delObjectBtn").click(function(e) {
-		$(".delObjectBtn").hide();
+		$(".textinfo").hide();
 		$(".delObject").show();
 	})
 	$(".delObjectCancel").click(function(e) {
 		$(".delObject").hide();
-		$(".delObjectBtn").show();
+		$(".textinfo").show();
 	})
 })

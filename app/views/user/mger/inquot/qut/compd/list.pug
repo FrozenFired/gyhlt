@@ -10,7 +10,7 @@ table.mt-3.table.table-bordered
 		- let quantTotal = 0;
 		each qutpd in qutpds
 			-a;
-			tr.text-info
+			tr.text-info(id="compdTr-"+qutpd._id)
 				td
 					if qutpd.brand
 						- brand = qutpd.brand;

@@ -82,7 +82,7 @@
 			.quantTotal
 				span 总数量: 
 				span#span-quantTotal
-			if qut.status == Conf.status.done.num
+			if qut.status == Conf.status.confirm.num
 				-a;
 				h4 
 					span 总价格: 
@@ -97,19 +97,29 @@
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
 				a(href="/slQunExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
-	.statusChange.row.mt-3
+	.statusChange.text-center.row.mt-3
 		if qut.status == Conf.status.pricing.num
 			- a;
 			.col-6
 				button.mr-5.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_quoting", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.quoting.num) 返回处理
-			.col-6.text-right
-				button.ml-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_done", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.done.num) 完成
-		else if qut.status == Conf.status.done.num
+			.col-6
+				button.ml-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_confirm", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.confirm.num) 完成
+		else if qut.status == Conf.status.confirm.num
 			-a;
-			button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-done_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 返回定价
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-confirm_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 返回定价
+			.col-6
+		else if qut.status == Conf.status.pending.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-pending_confirm", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.confirm.num) 返回确认状态
+			.col-6
+				a.btn.btn-success(href="/mgDinGen/"+qut._id) 去生成订单
 		else if qut.status == Conf.status.unord.num
 			-a;
-			button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
+			.col-6
 if qut.status == Conf.status.pricing.num
 	-a;
 	.row.py-4.text-right

@@ -20,7 +20,7 @@ let dbSchema = new Schema({
 	compds: [{type:ObjectId, ref:'Compd'}],
 
 
-	status: {type: Number, default: 0},		// 系列状态 
+	status: Number,						// 系列状态 
 	step: {type: Number, default: 0},		// 处理步骤 
 });
 

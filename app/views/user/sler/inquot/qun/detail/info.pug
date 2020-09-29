@@ -26,11 +26,6 @@
 			.quantTotal
 				span 总数量: 
 				span#span-quantTotal
-			if qun.status == Conf.status.done.num
-				-a;
-				h5
-					span 总价格: 
-					span.text-info(id="span-qntPrImp") #{qun.qntPr} €
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
@@ -58,17 +53,33 @@
 				- a;
 				.col-6
 				.col-6
-					if qun.compds.length > 0
+					if qun.compds.length == 0
 						-a;
+						.textinfo
+							span.p-2.border.border-danger 请添加询价商品
+							span.p-2 或
+							span.p-2.border.border-danger.text-danger.delObjectBtn 删除此询价
+						.delObject(style="display:none")
+							a.btn.btn-danger(href="/slQunDel/"+qun._id) 删除
+							button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
+					else if qun.quterSt == Conf.status.init.num
+						-a;
+						span.p-2.border.border-danger 请等待报价员完成报价
+					else
 						button.btn.btn-secondary.quotingBtnShow(type="button", title="必须完善具体工艺面料等细节") 申请精确报价
-						button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qun._id+"-done", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pricing.num, style="display:none") 申请精确报价
-		else if qun.status == Conf.status.done.num
+						button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qun._id+"-pricing", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pricing.num, style="display:none") 申请精确报价
+		else if qun.status == Conf.status.confirm.num
 			-a;
 			.col-3
 				button.btn.btn-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-unord", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.unord.num, title="客户不需要") 无效询价
 			.col-3
 				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num, title="其他需求") 重新报价
 			.col-6
-				a.btn.btn-success(href="/slDinGen/"+qun._id) 去生成订单
+				button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-pending", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pending.num, title="客户确认采购") 确定
+		else if qun.status == Conf.status.ord.num
+			-a;
+			.col-6
+			.col-6
+				a.btn.btn-success(href="/slDin/"+qun.ordin) 查看订单
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/user/sler/qun/detail/basicUp.js")

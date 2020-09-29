@@ -24,7 +24,7 @@ let dbSchema = new Schema({
 	}],
 	content: String,
 
-	status: {type: Number, default: 0},	// 重点 
+	status: Number,					// 重点 
 	weight: {type: Number, default: 0},	// 权重 置顶 排序用的
 
 	ctAt: Date,

@@ -21,10 +21,9 @@ exports.slQuns = (req, res) => {
 	})
 }
 
-exports.slQunFilter = (req, res, next) => {
+exports.slQun = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-	if(!id) id = req.query.inquotId
 
 	Inquot.findOne({_id: id})
 	// .populate('firm')
@@ -51,26 +50,13 @@ exports.slQunFilter = (req, res, next) => {
 			Err.usError(req, res, info);
 		} else {
 			// console.log(qun)
-			let qunObj = {
+			res.render('./user/sler/inquot/qun/detail', {
+				title: '询价单详情',
+				crUser,
 				qun,
-				qunpds: qun.compds
-			}
-			req.body.qunObj = qunObj;
-			next();
+				qunpds: qun.compds,
+			})
 		}
-	})
-}
-exports.slQun = (req, res) => {
-	let crUser = req.session.crUser;
-	let obj = req.body.qunObj;
-	let qun = obj.qun;
-	let qunpds = obj.qunpds;
-
-	res.render('./user/sler/inquot/qun/detail', {
-		title: '询价单详情',
-		crUser,
-		qun,
-		qunpds,
 	})
 }
 
@@ -89,8 +75,11 @@ exports.slQunDel = (req, res) => {
 		} else if(!inquot) {
 			info = "这个询价单已经被删除";
 			Err.usError(req, res, info);
-		} else if(inquot.status != Conf.status.init.num){
-			info = "这个询价单已提交不可删除";
+		} else if(inquot.status != Conf.status.init.num && inquot.status != Conf.status.quoting.num){
+			info = "这个询价单不可删除, 请联系管理员";
+			Err.usError(req, res, info);
+		} else if(inquot.status == Conf.status.quoting.num && inquot.compds.length != 0){
+			info = "这个询价单不可删除, 请联系管理员";
 			Err.usError(req, res, info);
 		} else {
 			let picDels = new Array();

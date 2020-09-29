@@ -31,7 +31,7 @@ let dbSchema = new Schema({
 
 	shelf: {type: Number, default: 0},	// 上架 下架
 	weight: {type: Number, default: 0},	// 权重 排序用的
-	status: {type: Number, default: 0},	// 供应商状态 
+	status: Number,						// 供应商状态 
 
 	ctAt: Date,
 	upAt: Date,

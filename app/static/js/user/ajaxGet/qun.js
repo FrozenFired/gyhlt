@@ -87,13 +87,6 @@ var qunRender = (qun, role) => {
 		elem += '<div class="col-md-4">'
 			elem += '<div>客户姓名: ' + qun.cterNome +'</div>'
 
-			if(qun.status == Conf.status.done.num) {
-				elem += '<h4 class="mt-2">'
-					elem += '总价格:'
-					elem += qun.qntPr
-				elem += '</h4>'
-			}
-
 			elem += '<div class="mt-2">'
 				elem += '状态: ' + status
 			elem += '</div>'
