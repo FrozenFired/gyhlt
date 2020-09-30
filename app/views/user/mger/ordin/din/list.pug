@@ -17,13 +17,13 @@ block content
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 			each sts in Conf.dinSts
 				- let stsBtn = "btn-default";
-				if sts == 'checking'
+				if sts == 'unpaid'
 					- stsBtn = "btn-success";
 				button.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 				span &nbsp; &nbsp; &nbsp;
 			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
 		.dinsList.mt-3
-			input#dinFilterAjax(type="hidden", value="/usDinsAjax?@#dinsElem@mg@&status="+Conf.status.checking.num)
+			input#dinFilterAjax(type="hidden", value="/usDinsAjax?@#dinsElem@mg@&status="+Conf.status.unpaid.num)
 			//- input#dinFilterAjax(type="hidden", value="?key=xxx@#dinsElem")
 			#dinsElem.mt-5
 

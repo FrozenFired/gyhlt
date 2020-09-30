@@ -56,28 +56,54 @@ exports.qtQut = (req, res) => {
 			// console.log(qut);
 			// return;
 			let qutpds = qut.compds;
-			User.find({
-				firm: crUser.firm,
-				$or:[
-					{'role': {"$in": Conf.roleAdmin}},
-					{'role': {"$eq": Conf.roleUser.quotation.num}},
-				]
-			})
-			.sort({'role': -1})
-			.exec((err, quters) => {
-				if(err) {
-					console.log(err);
-					info = 'mger QutAdd, User.find, Error!';
-					Err.usError(req, res, info);
-				} else {
-					res.render('./user/qter/inquot/qut/detail', {
-						title: '报价单详情',
-						crUser,
-						qut,
-						qutpds,
-						quters
-					})
+			let i=0;
+			for(; i<qutpds.length; i++) {
+				if(qutpds[i].qntpdSts == Conf.status.quoting.num) {
+					break;
 				}
+			}
+			if(i == qutpds.length) {
+				qterQutRender(req, res, qut, qutpds);
+			} else {
+				// 报价状态未完成
+				qut.quterSt = Conf.status.init.num;
+				qut.save((err, qutSave) => {
+					if(err) {
+						console.log(err);
+						info = "qter Qut, qut.save, Error!"
+						Err.usError(req, res, info);
+					} else {
+						qterQutRender(req, res, qutSave, qutpds);
+					}
+				})
+			}
+			
+		}
+	})
+}
+let qterQutRender = (req, res, qut, qutpds) => {
+	let crUser = req.session.crUser;
+
+	User.find({
+		firm: crUser.firm,
+		$or:[
+			{'role': {"$in": Conf.roleAdmin}},
+			{'role': {"$eq": Conf.roleUser.quotation.num}},
+		]
+	})
+	.sort({'role': -1})
+	.exec((err, quters) => {
+		if(err) {
+			console.log(err);
+			info = 'mger QutAdd, User.find, Error!';
+			Err.usError(req, res, info);
+		} else {
+			res.render('./user/qter/inquot/qut/detail', {
+				title: '报价单详情',
+				crUser,
+				qut,
+				qutpds,
+				quters
 			})
 		}
 	})

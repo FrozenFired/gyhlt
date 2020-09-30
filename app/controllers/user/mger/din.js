@@ -124,7 +124,7 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 
 			compds[n].pdnum = n+1;
 			compds[n].ordin = ordin._id;
-			compds[n].dinpdSts = Conf.status.init.num;
+			compds[n].dinpdSts = Conf.status.waiting.num;
 			compds[n].save((err, compdSave) => {
 				if(err) {
 					console.log(err);
@@ -139,11 +139,6 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 		}
 	}
 }
-
-
-
-
-
 
 
 // 订单
@@ -283,7 +278,7 @@ exports.mgDinDel = (req, res) => {
 		} else if(!ordin) {
 			info = "这个订单已经被删除";
 			Err.usError(req, res, info);
-		} else if(ordin.status != Conf.status.init.num) {
+		} else if(ordin.status != Conf.status.unpaid.num) {
 			info = "订单状态已经改变, 不可删除";
 			Err.usError(req, res, info);
 		} else if(!ordin.inquot) {

@@ -48,18 +48,12 @@ module.exports = function(app){
 	app.get('/slDins', MdRole.slerIsLogin, Din.slDins)
 	app.get('/slDin/:id', MdRole.slerIsLogin, Din.slDin)
 	app.get('/slDinExcel/:id', MdRole.slerIsLogin, Din.slDinExcel)
-	app.get('/slDinUp/:id', MdRole.slerIsLogin, Din.slDinUp)
-	app.get('/slDinDel/:id', MdRole.slerIsLogin, Din.slDinDel)
 
 	app.post('/slDinUpd', MdRole.slerIsLogin, postForm, Din.slDinUpd)
 
 	/* =================================== Dinpd 销售商品 =================================== */
-	app.post('/slDinOptpd', MdRole.slerIsLogin, postForm, Dinpd.slDinOptpd)
-
 	app.get('/slDinpds', MdRole.slerIsLogin, Dinpd.slDinpds)
 	app.get('/slDinpd/:id', MdRole.slerIsLogin, Dinpd.slDinpd)
-	app.get('/slDinpdUp/:id', MdRole.slerIsLogin, Dinpd.slDinpdUp)
-	app.get('/slDinpdDel/:id', MdRole.slerIsLogin, Dinpd.slDinpdDel)
 
 	app.post('/slDinpdUpdAjax', MdRole.slerIsLogin, postForm, Dinpd.slDinpdUpdAjax)
 };

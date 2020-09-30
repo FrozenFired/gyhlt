@@ -43,7 +43,7 @@ let dbSchema = new Schema({
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		if(!this.status) this.status = 10;
+		if(!this.status) this.status = 100;
 		if(!this.step) this.step = 10;
 		this.crtAt = Date.now();
 	} else {

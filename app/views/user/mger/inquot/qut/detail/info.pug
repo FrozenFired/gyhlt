@@ -86,7 +86,8 @@
 				-a;
 				h4 
 					span 总价格: 
-					span.text-info #{qut.qntPr} €
+					span#span-qntPrImp.text-info #{qut.qntPr}
+					span &nbsp;€
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status

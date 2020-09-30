@@ -185,27 +185,30 @@ let Conf = {
 
 		quoting: {num: 20, val: '报价中'},
 		pricing: {num: 30, val: '定价中'},
-		ord : { num:  40, val: '已成单' },
-		unord: { num: 45, val: '未成单' },
+		confirm: {num: 35, val: '确认中'},
+		pending: {num: 40, val: '待付款'},
+		ord : { num:  45, val: '已成单' },
+		unord: { num: 50, val: '未成单' },
 
-		checking:{num: 60, val: '审核中'},
-		paiding:{num: 70, val: '付款中' },
-		dealing:{num: 100, val: '处理中'},
-		delivering:{num:200,val:'待发货'},
+		unpaid: {num: 100, val: '未付'},
+		deposit: {num: 300, val: '已付首款'},
+		payoff : {num: 500, val: '已付清'},
 
-		proding: { num: 120, val: '在产'},
-		traning: { num: 160, val: '在途'},
-		stocking:{ num: 180, val: '在库'},
+		waiting: { num: 200, val: '等待生产'},
+		proding: { num: 400, val: '在产'},
+		traning: { num: 600, val: '在途'},
+		stocking:{ num: 700, val: '在库'},
 
-		done: { num: 500, val: '完成' , },
-		del : { num: 700, val: '删除' , },
+		done: { num: 1000, val: '完成' , },
+		del : { num: 2000, val: '删除' , },
 	},
 
+	qunSts: [ 'init', 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord'],	// 询价单状态
+	qutSts: [ 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord' ],	// 报价单状态
  	qntpdSts: [ 'quoting', 'done', 'del' ],
-	qunSts: [ 'init', 'quoting', 'pricing', 'done', 'ord', 'unord'],	// 询价单状态
-	qutSts: [ 'quoting', 'pricing', 'done', 'ord', 'unord' ],	// 报价单状态
  
  	dinpdSts: [ 'init', 'proding', 'traning', 'stocking', 'done' ],
-	dinSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done'],	// 销售订单状态
-	dutSts: [ 'init', 'checking', 'paiding', 'dealing', 'delivering', 'done'],	// 采购订单状态
+
+	dinSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 销售订单状态
+	dutSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
 }

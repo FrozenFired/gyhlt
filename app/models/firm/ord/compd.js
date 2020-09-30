@@ -46,7 +46,7 @@ let dbSchema = new Schema({
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
 
-	qntpdSts: {type: Number, default: 0},			// 商品询报价状态
+	qntpdSts: Number,							// 商品询报价状态
 	delNote: String, 							// 为什么是无效产品
 
 	/* ============================= 销售订单 ============================= */
@@ -55,14 +55,14 @@ let dbSchema = new Schema({
 	cterNome: String,							// 销售价格
 	dinPr: Float,								// 销售价格
 	dinAt: Date,								// 交货日期
-	dinpdSts: {type: Number, default: 0},			// 商品状态 
+	dinpdSts: Number,							// 商品状态 
 
 	/* ============================= 采购订单 ============================= */
 	ordut: {type: ObjectId, ref: 'Ordut'},
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 	dutPr: Float,								// 采购价格
-	dutAt: Date,						// 提货日期
-	dutpdSts: {type: Number, default: 0},			// 商品状态 
+	dutAt: Date,								// 提货日期
+	dutpdSts: Number,							// 商品状态 
 
 	/* ============================= 物流运输 ============================= */
 	transp: {type: ObjectId, ref: 'Transp'},
