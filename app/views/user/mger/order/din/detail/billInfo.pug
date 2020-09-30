@@ -32,8 +32,9 @@
 		.row.mt-3
 			.col-3 付款时间 #{moment(bill.crtAt).format("YYYY年MM月DD日")}
 			.col-3 付款金额 #{(bill.billPr).toFixed(2)}
-			.col-3 #{bill.note}
-			.col-3
-				a(href="/mgBillDel/"+bill._id) 删除
+			.col-4 #{bill.note}
+			//- .col-2.text-right.billDel(style="display:none")
+			.col-2.text-right.billDel
+				a.btn.btn-danger(href="/mgBillDel/"+bill._id) 删除
 
 script(src="/js/user/mger/din/detail/billInfo.js")

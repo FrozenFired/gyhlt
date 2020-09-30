@@ -84,7 +84,7 @@ let Conf = {
 	qutSts: [ 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord' ],	// 报价单状态
  	qntpdSts: [ 'quoting', 'done', 'del' ],
  
- 	dinpdSts: [ 'init', 'proding', 'traning', 'stocking', 'done' ],
+ 	dinpdSts: [ 'init', 'waiting', 'proding', 'traning', 'stocking', 'done' ],
 
 	dinSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 销售订单状态
 	dutSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态

@@ -7,9 +7,9 @@ let Float = require('mongoose-float').loadType(mongoose, 2);
 const colection = 'Ordut';
 let dbSchema = new Schema({
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
-	/* ============ 销售订单 ============ */
+	/* ============ 采购订单 ============ */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
-	oder : {type: ObjectId, ref: 'User'},		// 订单员
+	duter : {type: ObjectId, ref: 'User'},		// 订单员
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 
 	crtAt: Date,								// 开单时间

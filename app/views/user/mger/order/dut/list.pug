@@ -1,0 +1,34 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					span 采购订单列表
+				.col-3.text-right
+					//- a.btn.btn-warning(href="/mgDutAdd") +新的采购订单
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#dutSearch(type="text", placeholder="采购单搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			each sts in Conf.dutSts
+				- let stsBtn = "btn-default";
+				if sts == 'unpaid'
+					- stsBtn = "btn-success";
+				button.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+				span &nbsp; &nbsp; &nbsp;
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+		.add.mt-3
+			include ./add
+		.dutsList.mt-3
+			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@mg@&status="+Conf.status.unpaid.num)
+			//- input#dutFilterAjax(type="hidden", value="?key=xxx@#dutsElem")
+			#dutsElem.mt-5
+
+	script(src="/js/user/mger/dut/add.js")
+
+	script(src="/js/user/ajaxGet/dut.js")

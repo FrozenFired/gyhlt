@@ -11,6 +11,8 @@ const Dinpd = require('../controllers/user/mger/dinpd');
 
 const Bill = require('../controllers/user/mger/bill');
 
+const Dut = require('../controllers/user/mger/dut');
+
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');
 const MdPicture = require('../middle/middlePicture');
@@ -68,7 +70,6 @@ module.exports = function(app){
 	app.get('/mgDinGen/:inquotId', MdRole.mgerIsLogin, Din.mgDinGen)
 	app.get('/mgDins', MdRole.mgerIsLogin, Din.mgDins)
 	app.get('/mgDin/:id', MdRole.mgerIsLogin, Din.mgDin)
-	app.get('/mgDinUp/:id', MdRole.mgerIsLogin, Din.mgDinUp)
 	app.get('/mgDinDel/:id', MdRole.mgerIsLogin, Din.mgDinDel)
 
 	app.post('/mgDinUpd', MdRole.mgerIsLogin, postForm, Din.mgDinUpd)
@@ -82,4 +83,10 @@ module.exports = function(app){
 	app.get('/mgDinpdDel/:id', MdRole.mgerIsLogin, Dinpd.mgDinpdDel)
 
 	app.post('/mgDinpdUpdAjax', MdRole.mgerIsLogin, postForm, Dinpd.mgDinpdUpdAjax)
+
+	/* =================================== Dut =================================== */
+	app.get('/mgDuts', MdRole.mgerIsLogin, Dut.mgDuts)
+	app.post('/mgDutNew', MdRole.mgerIsLogin, postForm, Dut.mgDutNew)
+	app.get('/mgDut/:id', MdRole.mgerIsLogin, Dut.mgDut)
+	app.get('/mgDutDel/:id', MdRole.mgerIsLogin, Dut.mgDutDel)
 };

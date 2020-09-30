@@ -1,0 +1,16 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			.row
+				.col-9.text-muted.mt-2: h5
+					a(href="/") Home
+					span &nbsp; | &nbsp;
+					a(href="/mgDuts") 采购订单列表
+					span &nbsp; | &nbsp;
+					span 采购单详情
+				.col-3.text-right
+					//- a.btn.btn-warning(href="/mgDutAdd") +新的采购订单
+		a(href="/mgDutDel/"+dut._id) 删除
+		p #{dut}

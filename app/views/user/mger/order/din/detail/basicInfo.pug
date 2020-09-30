@@ -67,7 +67,9 @@
 		else if din.status == Conf.status.deposit.num
 			-a;
 			.col-6
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+din._id+"-unpaid", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.unpaid.num) 返回未付款
+				if din.bills.length == 0
+					-a;
+					button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+din._id+"-unpaid", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.unpaid.num) 返回未付款
 			.col-6
 				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-payoff", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.payoff.num) 已收到全款
 		else if din.status == Conf.status.payoff.num

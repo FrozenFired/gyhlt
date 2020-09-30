@@ -193,6 +193,7 @@ exports.usOrdinStatusAjax = (req, res) => {
 	let oldStatus = req.query.oldStatus;
 	let newStatus = req.query.newStatus;
 	Ordin.findOne({_id: id})
+	.populate('bills')
 	.populate({
 		path: 'compds',
 	})
@@ -213,9 +214,15 @@ exports.usOrdinStatusAjax = (req, res) => {
 			} else {
 				if(oldStatus == Conf.status.unpaid.num && newStatus == Conf.status.deposit.num) {
 					// 确认收到首款后, 从未付款状态变为付款状态
-					ordinCompdStatus(req, res, compds, Conf.status.waiting.num, Conf.status.proding.num, 0);
-					ordin.status = parseInt(newStatus);
 					info = null;
+					if(ordin.bills.length == 0) {
+						info = "请先收款"
+					}
+					if(!info) {
+						ordinCompdStatus(req, res, compds, Conf.status.init.num, Conf.status.waiting.num, 0);
+						ordin.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.payoff.num) {
 					// 全部付款后, 状态变为付清
@@ -241,9 +248,15 @@ exports.usOrdinStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.unpaid.num) {
 					// 从完成返回 准备发货
-					ordinCompdStatus(req, res, compds,  Conf.status.proding.num, Conf.status.waiting.num, 0);
-					ordin.status = parseInt(newStatus);
 					info = null;
+					if(ordin.bills.length != 0) {
+						info = "请先删除, 已付款项"
+					}
+					if(!info) {
+						ordinCompdStatus(req, res, compds,  Conf.status.waiting.num, Conf.status.init.num, 0);
+						ordin.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 			}
 			if(info) {

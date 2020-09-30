@@ -3,7 +3,7 @@ const Prod = require('../controllers/user/ajax/prod');
 const Getdata = require('../controllers/user/ajax/getdata');
 const Stream = require('../controllers/user/ajax/stream');
 const Inquot = require('../controllers/user/ajax/inquot');
-const Ordin = require('../controllers/user/ajax/ordin');
+const Order = require('../controllers/user/ajax/order');
 const Status = require('../controllers/user/ajax/status');
 const Comment = require('../controllers/user/ajax/comment');
 
@@ -37,9 +37,8 @@ module.exports = function(app){
 	app.get('/usQutsAjax', MdRole.qterIsLogin, Inquot.usQutsAjax)
 
 	/* ===================== 获取询价报价单的结果 ===================== */
-	app.get('/usDinsAjax', MdRole.slerIsLogin, Ordin.usDinsAjax)
-	// app.get('/usDinpdsAjax', MdRole.slerIsLogin, Ordin.usDinpdsAjax)
-	app.get('/usDutsAjax', MdRole.oderIsLogin, Ordin.usDutsAjax)
+	app.get('/usDinsAjax', MdRole.slerIsLogin, Order.usDinsAjax)
+	app.get('/usDutsAjax', MdRole.oderIsLogin, Order.usDutsAjax)
 
 	/* ===================== 状态更改 ===================== */
 	app.get('/usInquotQuterStAjax', MdRole.userIsLogin, Status.usInquotQuterStAjax)

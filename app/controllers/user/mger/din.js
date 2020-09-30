@@ -129,7 +129,7 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 
 			compds[n].pdnum = n+1;
 			compds[n].ordin = ordin._id;
-			compds[n].dinpdSts = Conf.status.waiting.num;
+			compds[n].dinpdSts = Conf.status.init.num;
 			compds[n].save((err, compdSave) => {
 				if(err) {
 					console.log(err);
@@ -150,7 +150,7 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 exports.mgDins = (req, res) => {
 	let crUser = req.session.crUser;
 
-	res.render('./user/mger/ordin/din/list', {
+	res.render('./user/mger/order/din/list', {
 		title: '销售订单',
 		crUser,
 	})
@@ -179,7 +179,7 @@ exports.mgDin = (req, res) => {
 	.exec((err, din) => {
 		if(err) {
 			console.log(err);
-			info = "mger Qun, Inquot.findOne, Error!";
+			info = "mger Qun, Ordin.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!din) {
 			info = "这个询价单已经被删除, mgDinFilter";
@@ -206,7 +206,7 @@ exports.mgDin = (req, res) => {
 							info = 'mger QutAdd, Strmup.find, Error!';
 							Err.usError(req, res, info);
 						} else {
-							res.render('./user/mger/ordin/din/detail', {
+							res.render('./user/mger/order/din/detail', {
 								title: '订单详情',
 								crUser,
 								din,
@@ -222,55 +222,7 @@ exports.mgDin = (req, res) => {
 		}
 	})
 }
-exports.mgDinUp = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
 
-	Ordin.findOne({_id: id})
-	.exec((err, din) => {
-		if(err) {
-			console.log(err);
-			info = "mger Qun, Ordin.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!din) {
-			info = "此订单已经被删除";
-			Err.usError(req, res, info);
-		} else if(din.status != Conf.status.init.num){
-			info = "此订单不能被修改, 请联系报价员修改";
-			Err.usError(req, res, info);
-		} else {
-			// console.log(din)
-			Strmup.find({firm: crUser.firm})
-			.sort({'weight': -1})
-			.exec((err, nstrmups) => {
-				if(err) {
-					console.log(err);
-					info = 'mger QunAdd, Strmup.find, Error!'
-					Err.usError(req, res, info);
-				} else {
-					User.find({firm: crUser.firm, role: Conf.roleUser.customer.num})
-					.sort({'weight': -1})
-					.exec((err, cters) => {
-						if(err) {
-							console.log(err);
-							info = 'mger QunAdd, User.find, Error!';
-							Err.usError(req, res, info);
-						} else {
-							res.render('./user/mger/ordin/din/update', {
-								title: '订单修改',
-								crUser,
-								din,
-
-								nstrmups,
-								cters
-							})
-						}
-					})
-				}
-			})
-		}
-	})
-}
 exports.mgDinDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
