@@ -89,6 +89,8 @@ exports.mgDinGen = (req, res) => {
 					ordinObj.firm = crUser.firm;
 					ordinObj.diner = crUser._id;
 					ordinObj.code = code;
+					ordinObj.dinImp = 0;
+					ordinObj.billPr = 0;
 					_ordin = new Ordin(ordinObj)
 					mgerOrdinSave(req, res, _ordin, inquot, compds, 0);
 				}
@@ -98,10 +100,10 @@ exports.mgDinGen = (req, res) => {
 }
 let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 	if(n == compds.length) {
-		_ordin.save((err, ordSave) => {
+		ordin.save((err, ordSave) => {
 			if(err) {
 				console.log(err);
-				info = 'mgerOrdinSave, _ordin.save, Error, 请截图后, 联系管理员!'
+				info = 'mgerOrdinSave, ordin.save, Error, 请截图后, 联系管理员!'
 				Err.usError(req, res, info);
 			} else {
 				inquot.status = Conf.status.ord.num;
@@ -121,6 +123,9 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 	} else {
 		if(compds[n].quant > 0) {
 			ordin.compds.push(compds[n]._id);
+			if(!isNaN(compds[n].dinPr) && !isNaN(compds[n].quant)) {
+				ordin.dinImp += compds[n].dinPr * compds[n].quant;
+			}
 
 			compds[n].pdnum = n+1;
 			compds[n].ordin = ordin._id;
@@ -131,11 +136,11 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 					info = 'mgerOrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
 					Err.usError(req, res, info);
 				} else {
-					mgerOrdinSave(req, res, _ordin, inquot, compds, n+1);
+					mgerOrdinSave(req, res, ordin, inquot, compds, n+1);
 				}
 			})
 		} else {
-			mgerOrdinSave(req, res, _ordin, inquot, compds, n+1);
+			mgerOrdinSave(req, res, ordin, inquot, compds, n+1);
 		}
 	}
 }
@@ -158,6 +163,7 @@ exports.mgDin = (req, res) => {
 	Ordin.findOne({_id: id})
 	.populate('diner')
 	.populate('cter')
+	.populate('bills')
 	.populate({
 		path: 'compds',
 		populate: [

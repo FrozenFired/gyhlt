@@ -61,9 +61,9 @@
 					a.mx-4.my-2.btn.btn-danger(href="/mgDinDel/"+din._id) 确定
 					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
 			.col-6
-				if dinpds && dinpds.length > 0
+				if din.bills && din.bills.length > 0
 					- a;
-					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-deposit", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.deposit.num) 确认收款
+					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+din._id+"-deposit", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.deposit.num) 开始生产
 		else if din.status == Conf.status.deposit.num
 			-a;
 			.col-6
@@ -82,5 +82,5 @@
 				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+din._id+"-payoff", type="button", data-url="/usOrdinStatusAjax", data-id=din._id, data-stsf=din.status, data-stst=Conf.status.payoff.num) 返回发货
 			.col-6
 
-script(src="/js/user/mger/din/detail/info.js")
+script(src="/js/user/mger/din/detail/basicInfo.js")
 script(src="/js/user/ajaxChange/status.js")

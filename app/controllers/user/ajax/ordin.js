@@ -49,8 +49,8 @@ exports.usDinsAjax = (req, res) => {
 		codeCond = new RegExp(codeCond + '.*');
 	}
 
-	let statusSymb = '$in';
-	let statusConb = [Conf.status.init.num, Conf.status.quoting.num, Conf.status.done.num];
+	let statusSymb = '$ne';
+	let statusConb = -1;
 	if(req.query.status && !isNaN(parseInt(req.query.status))) {
 		statusSymb = '$eq';
 		statusConb = parseInt(req.query.status)
@@ -105,10 +105,6 @@ exports.usDinsAjax = (req, res) => {
 		}
 	})
 }
-
-
-
-
 
 
 exports.usDutsAjax = (req, res) => {

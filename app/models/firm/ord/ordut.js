@@ -28,11 +28,11 @@ let dbSchema = new Schema({
 	compds: [{type:ObjectId, ref:'Compd'}],
 	/* ========== 付款信息 ========== */
 	dutImp: Float,			// 应收
-	paidPr: Float,		// 已收
-	paidAt: Date,		// 第一次付款时间
-	paids: [{
-		paidAt: Date,
-		paid: {type: ObjectId, ref: 'Paid'}
+	billPr: Float,		// 已收
+	billAt: Date,		// 第一次付款时间
+	bills: [{
+		billAt: Date,
+		bill: {type: ObjectId, ref: 'Bill'}
 	}],
 
 	dutDay: Number,						// 货期 xxx 天

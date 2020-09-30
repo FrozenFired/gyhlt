@@ -14,10 +14,13 @@ block content
 		.info.my-3
 			include ./detail/info
 		div(style="height:50px")
-		.compd
+
+		.compdAdd
 			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
 				-a;
 				include ./compd/add
+
+		.compds
 			if qun.status >= Conf.status.confirm.num
 				-a;
 				include ./compd/listConfirm

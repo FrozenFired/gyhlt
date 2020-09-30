@@ -13,8 +13,11 @@ block content
 			hr
 		.info.my-3
 			include ./detail/info
-		.compd
-			//- include ./compdAdd
-			include ./compd/list
+		.compds
+			if qut.status >= Conf.status.confirm.num
+				-a;
+				include ./compd/listConfirm
+			else
+				include ./compd/list
 
 		include ../../../aaPlugin/comment/list

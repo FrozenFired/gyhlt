@@ -9,6 +9,8 @@ const Qut = require('../controllers/user/mger/qut');
 const Din = require('../controllers/user/mger/din');
 const Dinpd = require('../controllers/user/mger/dinpd');
 
+const Bill = require('../controllers/user/mger/bill');
+
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');
 const MdPicture = require('../middle/middlePicture');
@@ -57,6 +59,10 @@ module.exports = function(app){
 
 	app.post('/mgQutUpd', MdRole.mgerIsLogin, postForm, Qut.mgQutUpd)
 
+
+	/* =================================== Bill =================================== */
+	app.post('/mgBillNew', MdRole.mgerIsLogin, postForm, Bill.mgBillNew)
+	app.get('/mgBillDel/:id', MdRole.mgerIsLogin, Bill.mgBillDel)
 
 	/* =================================== Din =================================== */
 	app.get('/mgDinGen/:inquotId', MdRole.mgerIsLogin, Din.mgDinGen)

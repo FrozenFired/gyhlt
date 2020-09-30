@@ -238,6 +238,9 @@ exports.slQunpdUpdAjax = (req, res) => {
 			} else if(compd.ordin) {
 				info = "您现在无权修改此商品信息, 因为已经生成订单";
 				Err.jsonErr(req, res, info);
+			} else if(compd.inquot.status > Conf.status.confirm.num) {
+				info = "您现在无权修改此商品信息, 因为状态已经改变";
+				Err.jsonErr(req, res, info);
 			} else if(compd.inquot.status == Conf.status.ord.num) {
 				info = "您现在无权修改此商品信息, 因为询价单已经生成订单";
 				Err.jsonErr(req, res, info);

@@ -27,12 +27,9 @@ let dbSchema = new Schema({
 	compds: [{type:ObjectId, ref:'Compd'}],
 	/* ========== 付款信息 ========== */
 	dinImp: Float,		// 销售订单货值
-	recvPr: Float,		// 已收
-	recvAt: Date,		// 第一次付款时间
-	recvs: [{
-		recvAt: Date,
-		recv: {type: ObjectId, ref: 'Recv'}
-	}],
+	billPr: Float,		// 已收
+	billAt: Date,		// 第一次付款时间
+	bills: [{type: ObjectId, ref: 'Bill'}],
 
 	dinDay: Number,						// 货期 xxx 天
 	dinAt: Date,						// 交货日期

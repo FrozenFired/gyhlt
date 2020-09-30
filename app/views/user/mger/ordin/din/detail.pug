@@ -12,7 +12,8 @@ block content
 					span 销售订单
 			hr
 		.info.my-3
-			include ./detail/info
+			include ./detail/basicInfo
+			include ./detail/billInfo
 		.dinpd.text-right
 			if din.status == Conf.status.init.num
 				-a;
