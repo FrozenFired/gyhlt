@@ -25,11 +25,13 @@ table.mt-3.table.table-bordered
 			- qntPrImp += dinpd.quant * dinpd.qntPr;
 			tr.text-info(id="tr-compdid-"+dinpd._id)
 				td
-					if dinpd.brand
-						- brand = dinpd.brand;
-						.brandnome [#{brand.nome}]
-					else
-						.brandnome #{dinpd.brandNome}
+					.pdnum.text-left.text-dark [#{dinpd.pdnum}]
+					.brandnome.mt-5
+						if dinpd.brand
+							- brand = dinpd.brand;
+							span [#{brand.nome}]
+						else
+							span 品牌数据丢失
 
 					if dinpd.area
 						-a;

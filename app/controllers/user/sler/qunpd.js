@@ -12,42 +12,6 @@ const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
-// 询价单
-exports.slQunpds = (req, res) => {
-	let crUser = req.session.crUser;
-
-	res.render('./user/sler/inquot/qunpd/list', {
-		title: '询价单',
-		crUser,
-	})
-}
-
-exports.slQunpd = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-
-	Compd.findOne({_id: id})
-	.populate('inquot')
-	.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-	.populate('quner')
-	.exec((err, qunpd) => {
-		if(err) {
-			console.log(err);
-			info = "sler Qunpd, Compd.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!qunpd) {
-			info = "这个询价单已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			// console.log(qunpd)
-			res.render('./user/sler/inquot/qunpd/detail', {
-				title: '询价单详情',
-				crUser,
-				qunpd
-			})
-		}
-	})
-}
 exports.slQunpdUp = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;

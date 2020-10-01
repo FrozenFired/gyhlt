@@ -10,45 +10,6 @@ const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
-// 报价单
-exports.qtQutpds = (req, res) => {
-	let crUser = req.session.crUser;
-
-	res.render('./user/qter/inquot/qutpd/list', {
-		title: '报价单',
-		crUser,
-	})
-}
-
-exports.qtQutpd = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-
-	Compd.findOne({_id: id})
-	.populate('inquot')
-	.populate('brand')
-	.populate('pdfir')
-	.populate('pdsec')
-	.populate('pdthd')
-	.populate('quter')
-	.exec((err, qutpd) => {
-		if(err) {
-			console.log(err);
-			info = "qter Qutpd, Compd.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!qutpd) {
-			info = "这个报价单已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			// console.log(qutpd)
-			res.render('./user/qter/inquot/qutpd/detail', {
-				title: '报价单详情',
-				crUser,
-				qutpd
-			})
-		}
-	})
-}
 exports.qtQutpdUp = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;

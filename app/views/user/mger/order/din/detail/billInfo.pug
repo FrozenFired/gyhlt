@@ -6,7 +6,7 @@
 		.col-6
 			h5.code 付款信息:
 		.col-6.text-right
-			button.btn.btn-warning#billAddPageShow(type="button") + 首款账单
+			button.btn.btn-warning#billAddPageShow(type="button") + 收款账单
 	//- 添加产品
 	#billAddPage.border.border-dark(style="display:none")
 		form#billForm(method="post", action="/mgBillNew", enctype="multipart/form-data")
@@ -20,7 +20,7 @@
 			.row.my-3
 				.col-md-2.mt-3.text-right 备注:
 				.col-md-10.mt-3
-					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="首款备注")
+					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="收款备注")
 
 
 			.form-group.row

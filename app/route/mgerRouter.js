@@ -49,8 +49,6 @@ module.exports = function(app){
 
 
 	/* =================================== compd 报价商品 =================================== */
-	app.get('/mgQutpds', MdRole.mgerIsLogin, Qutpd.mgQutpds)
-	app.get('/mgQutpd/:id', MdRole.mgerIsLogin, Qutpd.mgQutpd)
 	app.get('/mgQutpdDel/:id', MdRole.mgerIsLogin, Qutpd.mgQutpdDel)
 
 	app.post('/mgQutpdUpdAjax', MdRole.mgerIsLogin, postForm, Qutpd.mgQutpdUpdAjax)
@@ -75,13 +73,6 @@ module.exports = function(app){
 	app.post('/mgDinUpd', MdRole.mgerIsLogin, postForm, Din.mgDinUpd)
 
 	/* =================================== Dinpd 销售商品 =================================== */
-	app.post('/mgDinOptpd', MdRole.mgerIsLogin, postForm, Dinpd.mgDinOptpd)
-
-	app.get('/mgDinpds', MdRole.mgerIsLogin, Dinpd.mgDinpds)
-	app.get('/mgDinpd/:id', MdRole.mgerIsLogin, Dinpd.mgDinpd)
-	app.get('/mgDinpdUp/:id', MdRole.mgerIsLogin, Dinpd.mgDinpdUp)
-	app.get('/mgDinpdDel/:id', MdRole.mgerIsLogin, Dinpd.mgDinpdDel)
-
 	app.post('/mgDinpdUpdAjax', MdRole.mgerIsLogin, postForm, Dinpd.mgDinpdUpdAjax)
 
 	/* =================================== Dut =================================== */
@@ -91,6 +82,8 @@ module.exports = function(app){
 	app.get('/mgDutDel/:id', MdRole.mgerIsLogin, Dut.mgDutDel)
 
 	app.post('/mgDutUpd', MdRole.mgerIsLogin, postForm, Dut.mgDutUpd)
+
+	app.post('/mgDutPlusPd', MdRole.mgerIsLogin, postForm, Dut.mgDutPlusPd)
 
 	app.get('/mgDutExcel/:id', MdRole.slerIsLogin, Dut.mgDutExcel)
 };

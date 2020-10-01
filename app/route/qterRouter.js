@@ -24,8 +24,6 @@ module.exports = function(app){
 	/* =================================== User =================================== */
 
 	/* =================================== compd 报价商品 =================================== */
-	app.get('/qtQutpds', MdRole.qterIsLogin, Qutpd.qtQutpds)
-	app.get('/qtQutpd/:id', MdRole.qterIsLogin, Qutpd.qtQutpd)
 	app.get('/qtQutpdUp/:id', MdRole.qterIsLogin, Qutpd.qtQutpdUp)
 
 	app.post('/qtQutpdDelPic', MdRole.qterIsLogin, postForm, Qutpd.qtQutpdDelPic)

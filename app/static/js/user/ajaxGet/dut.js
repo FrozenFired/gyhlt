@@ -79,15 +79,15 @@ var dutRender = (dut, role) => {
 
 		elem += '<div class="col-4">'
 			elem += '<div>'
-				elem += '<span>客户: </span>'
-				if(dut.cter) {
+				elem += '<span>供应商: </span>'
+				if(dut.strmup) {
 					elem += '<span>'
 						let nome = '';
-						if(dut.cter.nome) nome = dut.cter.nome;
-						elem += nome + ' [' + dut.cter.code + ']'
+						if(dut.strmup.nome) nome = dut.strmup.nome;
+						elem += nome
 					elem += '</span>'
 				} else {
-					elem += '<span>'+dut.cterNome+'</span>'
+					elem += '<span>'+dut.strmupNome+'</span>'
 				}
 			elem += '</div>'
 

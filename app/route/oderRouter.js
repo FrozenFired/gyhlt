@@ -23,7 +23,6 @@ module.exports = function(app){
 	});
 
 	/* =================================== Dut =================================== */
-	app.get('/odDutGen/:inquotId', MdRole.oderIsLogin, Dut.odDutGen)
 	app.get('/odDuts', MdRole.oderIsLogin, Dut.odDuts)
 	app.get('/odDut/:id', MdRole.oderIsLogin, Dut.odDutFilter, Dut.odDut)
 	app.get('/odDutExcel/:id', MdRole.oderIsLogin, Dut.odDutExcel)
@@ -33,8 +32,6 @@ module.exports = function(app){
 	app.post('/odDutUpd', MdRole.oderIsLogin, postForm, Dut.odDutUpd)
 
 	/* =================================== Dutpd 销售商品 =================================== */
-	app.post('/odDutOptpd', MdRole.oderIsLogin, postForm, Dutpd.odDutOptpd)
-
 	app.get('/odDutpds', MdRole.oderIsLogin, Dutpd.odDutpds)
 	app.get('/odDutpd/:id', MdRole.oderIsLogin, Dutpd.odDutpd)
 	app.get('/odDutpdUp/:id', MdRole.oderIsLogin, Dutpd.odDutpdUp)

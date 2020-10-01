@@ -4,7 +4,6 @@ const Qun = require('../controllers/user/sler/qun');
 const Qunpd = require('../controllers/user/sler/qunpd');
 
 const Din = require('../controllers/user/sler/din');
-const Dinpd = require('../controllers/user/sler/dinpd');
 
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');
@@ -26,8 +25,6 @@ module.exports = function(app){
 	});
 
 	/* =================================== compd 询价商品 =================================== */
-	app.get('/slQunpds', MdRole.slerIsLogin, Qunpd.slQunpds)
-	app.get('/slQunpd/:id', MdRole.slerIsLogin, Qunpd.slQunpd)
 	app.get('/slQunpdUp/:id', MdRole.slerIsLogin, Qunpd.slQunpdUp)
 	app.get('/slQunpdDel/:id', MdRole.slerIsLogin, Qunpd.slQunpdDel)
 
@@ -49,13 +46,5 @@ module.exports = function(app){
 	app.get('/slDins', MdRole.slerIsLogin, Din.slDins)
 	app.get('/slDin/:id', MdRole.slerIsLogin, Din.slDin)
 
-	app.post('/slDinUpd', MdRole.slerIsLogin, postForm, Din.slDinUpd)
-
 	app.get('/slDinExcel/:id', MdRole.slerIsLogin, Din.slDinExcel)
-
-	/* =================================== Dinpd 销售商品 =================================== */
-	app.get('/slDinpds', MdRole.slerIsLogin, Dinpd.slDinpds)
-	app.get('/slDinpd/:id', MdRole.slerIsLogin, Dinpd.slDinpd)
-
-	app.post('/slDinpdUpdAjax', MdRole.slerIsLogin, postForm, Dinpd.slDinpdUpdAjax)
 };

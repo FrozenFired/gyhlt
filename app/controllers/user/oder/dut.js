@@ -17,59 +17,6 @@ const _ = require('underscore');
 const moment = require('moment');
 const xl = require('excel4node');
 
-exports.odDutGen = (req, res) => {
-	let crUser = req.session.crUser;
-	let inquotId = req.params.inquotId;
-	Inquot.findOne({_id: inquotId})
-	.exec((err, inquot) => {
-		if(err) {
-			console.log(err);
-			info = 'oderDutGen, Inquot.findOne, Error!'
-			Err.usError(req, res, info);
-		} else if(!inquot) {
-			info = '没有找到询价单, 请重试!'
-			Err.usError(req, res, info);
-		} else {
-			let dateCd = moment(Date.now()).format('YYMM')+crUser.firm.code
-			Ordin.countDocuments({
-				firm: crUser.firm,
-				'dateCd': dateCd
-			}, (err, count) => {
-				if(err) console.log(err);
-				let today = moment(Date.now()).format('DD')
-				let code = ((parseInt(today[0])+5)*parseInt(today[1])) + String(count+1)
-				let ordinObj = new Object();
-				ordinObj.inquot = inquot._id;
-				if(inquot.quner) ordinObj.duter = inquot.quner
-				ordinObj.dutAt = ordinObj.dutAt = Date.now()
-				if(inquot.cter) ordinObj.cter = inquot.cter
-				ordinObj.cterNome = inquot.cterNome
-				if(inquot.strmup) ordinObj.strmup = inquot.strmup
-				if(inquot.quter) ordinObj.duter = inquot.quter
-				if(inquot.tstrmdw) ordinObj.tstrmdw = inquot.tstrmdw
-				if(inquot.tstrmup) ordinObj.tstrmup = inquot.tstrmup
-
-				ordinObj.dateCd = dateCd;
-				ordinObj.code = code;
-				_ordin = new Ordin(ordinObj)
-				_ordin.save((err, ordSave) => {
-					if(err) {
-						console.log(err);
-						info = '没有找到询价单, 请重试!'
-						Err.usError(req, res, info);
-					} else {
-						inquot.status = Conf.status.ord.num;
-						inquot.save((err, inquotSave) => {
-							if(err) console.log(err);
-							res.redirect('/odQunGenDut?inquotId='+inquotId+'&ordinId='+ordSave._id)
-						})
-					}
-				})
-			})
-		}
-	})
-}
-
 exports.odDutFilter = (req, res, next) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;

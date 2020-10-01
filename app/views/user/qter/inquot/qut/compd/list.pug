@@ -25,8 +25,11 @@ table.mt-3.table.table-bordered
 							span #{qutpd.area}
 
 					if qut.status == Conf.status.quoting.num
+						if qutpd.qntpdSts == Conf.status.quoting.num
 							a-;
-							a.btn.border-warning.text-warning.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
+							a.btn.border-success.text-success.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
+						else
+							a.btn.border-warning.text-warning.mt-5(href="/qtQutpdUp/"+qutpd._id) 更新报价
 				td
 					.pdnome
 						span.text-dark 品类: 

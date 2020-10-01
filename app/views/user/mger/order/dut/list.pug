@@ -17,7 +17,7 @@ block content
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 			each sts in Conf.dutSts
 				- let stsBtn = "btn-default";
-				if sts == 'unpaid'
+				if sts == 'init'
 					- stsBtn = "btn-success";
 				button.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 				span &nbsp; &nbsp; &nbsp;
@@ -25,7 +25,7 @@ block content
 		.add.mt-3
 			include ./add
 		.dutsList.mt-3
-			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@mg@&status="+Conf.status.unpaid.num)
+			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@mg@&status="+Conf.status.init.num)
 			//- input#dutFilterAjax(type="hidden", value="?key=xxx@#dutsElem")
 			#dutsElem.mt-5
 

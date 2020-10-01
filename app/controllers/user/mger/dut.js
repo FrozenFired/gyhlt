@@ -5,6 +5,7 @@ const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
 const Ordut = require('../../../models/firm/ord/ordut');
+const Ordin = require('../../../models/firm/ord/ordin');
 const Compd = require('../../../models/firm/ord/compd');
 
 const Strmup = require('../../../models/firm/stream/strmup');
@@ -67,15 +68,11 @@ exports.mgDutNew = (req, res) => {
 			let codeNum = 0;
 			if(lastOrdut) {
 				lastDate = lastOrdut.crtAt.getDate();
-				codeNum = (lastOrdut.code).split('GYIS')[1];
+				codeNum = (lastOrdut.code).split('GYIP')[1];
 			}
 			let daySpan = parseInt(today) - parseInt(lastDate);
-			// console.log(codeNum)
 			codeNum = String(parseInt(codeNum) + daySpan * r1 + r2);
-			// console.log(daySpan)
-			// console.log(r1)
-			// console.log(r2)
-			// console.log(codeNum)
+
 			if(codeNum.length < 4) {
 				for(let i=codeNum.length; i < 4; i++) { // 序列号补0
 					codeNum = "0"+codeNum;
@@ -138,13 +135,40 @@ exports.mgDut = (req, res) => {
 					info = 'mger QutAdd, Strmup.find, Error!';
 					Err.usError(req, res, info);
 				} else {
-					res.render('./user/mger/order/dut/detail', {
-						title: '订单详情',
-						crUser,
-						dut,
-						dutpds: dut.compds,
+					Ordin.find({
+						firm: crUser.firm,
+						status: {'$in': [Conf.status.deposit.num, Conf.status.payoff.num]},
+					})
+					.populate('diner')
+					.populate({
+						path: 'compds',
+						match: { 'dinpdSts': Conf.status.waiting.num, 'strmup': dut.strmup },
+						populate: [
+							{path: 'brand'},
+							{path: 'pdfir'},
+							{path: 'pdsec'},
+							{path: 'pdthd'},
 
-						strmups,
+							{path: 'strmup'},
+							{path: 'cter'},
+						]
+					})
+					.exec((err, dins) => {
+						if(err) {
+							console.log(err);
+							info = 'mger QutAdd, Ordin.find, Error!';
+							Err.usError(req, res, info);
+						} else {
+							res.render('./user/mger/order/dut/detail', {
+								title: '订单详情',
+								crUser,
+								dut,
+								dutpds: dut.compds,
+
+								strmups,
+								dins
+							})
+						}
 					})
 				}
 			})
@@ -158,7 +182,6 @@ exports.mgDutDel = (req, res) => {
 	let id = req.params.id;
 	Ordut.findOne({_id: id})
 	.populate('bills')
-	.populate('compds')
 	.exec((err, ordut) => {
 		if(err) {
 			console.log(err);
@@ -174,34 +197,122 @@ exports.mgDutDel = (req, res) => {
 			info = "此采购单已经付款, 不可删除";
 			Err.usError(req, res, info);
 		} else {
-			let compds = ordut.compds;
-			Ordut.deleteOne({_id: id}, (err, objRm) => {
+			Compd.countDocuments({
+				_id: {"$in": ordut.compds},
+				dinpdSts: Conf.status.proding.num
+			})
+			.exec((err, count) => {
 				if(err) {
-					info = "user OrdutDel, Ordut.deleteOne, Error!";
+					console.log(err);
+					info = "mger DutPlusPd, Compd.find, Error!"
+					Err.usError(req, res, info);
+				} else if(count != ordut.compds.length) {
+					info = '采购单中的商品中状态已经改变, 不可删除';
 					Err.usError(req, res, info);
 				} else {
-					mgerDutCompdStatus(req, res, compds, 0);
-					res.redirect("/mgDuts");
+					Compd.updateMany({
+						_id: {"$in": ordut.compds},
+						dinpdSts: Conf.status.proding.num
+					}, {
+						ordut: null,
+						dinpdSts: Conf.status.waiting.num
+					},(err, pdfirs) => {
+						if(err) {
+							console.log(err);
+							info = "mger DutPlusPd, Compd.updateMany, Error!"
+							Err.usError(req, res, info);
+						} else {
+							Ordut.deleteOne({_id: id}, (err, objRm) => {
+								if(err) {
+									info = "user OrdutDel, Ordut.deleteOne, Error!";
+									Err.usError(req, res, info);
+								} else {
+									res.redirect("/mgDuts");
+								}
+							})
+						}
+					})
 				}
 			})
 		}
 	})
 }
-let mgerDutCompdStatus = (req, res, compds, n) => {
-	if(n == compds.length) {
-		return;
+
+
+
+exports.mgDutPlusPd = (req, res) => {
+	let crUser = req.session.crUser;
+	let id = req.body.id;
+	let compdsArr = req.body.compds
+	if(!compdsArr || compdsArr.length == 0) {
+		info = '您需要选择添加的商品';
+		Err.usError(req, res, info);
 	} else {
-		compds[n].dinpdSts = Conf.status.waiting.num;
-		compds[n].save((err, compdSave) => {
-			if(err) console.log(err);
-			mgerDutCompdStatus(req, res, compds, n+1);
+		// 如果compdsArr不是数组 则变为数组
+		if(compdsArr.constructor != Array) {
+			compdsArr = [compdsArr];
+		}
+		Ordut.findOne({
+			firm: crUser.firm,
+			_id: id
+		}, (err, ordut) => {
+			if(err) {
+				console.log(err);
+				info = "mger DutPlusPd, Strmup.findOne, Error!"
+				Err.usError(req, res, info);
+			} else if(!ordut) {
+				info = '此订单已经被删除, 请刷新查看';
+				Err.usError(req, res, info);
+			} else {
+				// console.log(ordut)
+				Compd.countDocuments({
+					_id: {"$in": compdsArr},
+					dinpdSts: Conf.status.waiting.num
+				})
+				.exec((err, count) => {
+					if(err) {
+						console.log(err);
+						info = "mger DutPlusPd, Compd.find, Error!"
+						Err.usError(req, res, info);
+					} else if(count != compdsArr.length) {
+						console.log(count)
+						console.log(compdsArr)
+						console.log(id)
+						info = '选择的商品中存在已经改变状态的商品, 请刷新重试';
+						Err.usError(req, res, info);
+					} else {
+						for(let i=0; i<compdsArr.length; i++) {
+							ordut.compds.push(compdsArr[i])
+						}
+						ordut.save((err, ordutSave) => {
+							if(err) {
+								console.log(err);
+								info = "mger DutPlusPd, ordut.save, Error!"
+								Err.usError(req, res, info);
+							} else {
+								Compd.updateMany({
+									_id: {"$in": compdsArr},
+									dinpdSts: Conf.status.waiting.num
+								}, {
+									ordut: id,
+									dinpdSts: Conf.status.proding.num
+								},(err, pdfirs) => {
+									if(err) {
+										console.log(err);
+										info = "mger DutPlusPd, Compd.updateMany, Error!"
+										Err.usError(req, res, info);
+									} else {
+										res.redirect("/mgDut/"+id)
+									}
+								})
+							}
+						})
+					}
+				})
+			}
 		})
 	}
 }
-
-
-
-
 
 exports.mgDutUpd = (req, res) => {
 	let crUser = req.session.crUser;

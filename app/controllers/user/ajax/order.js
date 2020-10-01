@@ -172,12 +172,9 @@ exports.usDutsAjax = (req, res) => {
 			Err.jsonErr(req, res, info);
 		} else {
 			Ordut.find(param)
-			.populate('duter')
-			.populate('duter')
-			.populate('tstrmdw')
-			.populate('cter')
 			.populate('firm')
-			.populate('tstrmup')
+			.populate('duter')
+			.populate('strmup')
 			.skip(skip).limit(pagesize)
 			.sort({'status': 1, 'weight': -1, 'upAt': -1})
 			.exec((err, orduts) => {
