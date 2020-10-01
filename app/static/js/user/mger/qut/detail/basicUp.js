@@ -1,6 +1,7 @@
 $(function() {
 	$("#span-quantTotal").text($("#ipt-quantTotal").val())
 	$("#span-qntPrImp").text($("#ipt-qntPrImp").val())
+	$("#span-dinPrImp").text($("#ipt-dinPrImp").val())
 	// $(".inquotUpClick").dblclick(function(e) {
 	$(".inquotUpClick").click(function(e) {
 		let htmlId = $(this).attr("id").split('-')[0]

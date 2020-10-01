@@ -117,13 +117,18 @@ table.mt-3.table.table-bordered
 					if qutpd.qntpdSts != Conf.status.del.num
 						- let qntPrtot = qutpd.quant * qutpd.qntPr;
 						- qntPrImp += qntPrtot;
+						.dutPr.mt-3.text-white
+							span 采购单价:
+							br
+							span #{qutpd.dutPr}
+							input(id="org-dutPr-"+qutpd._id, type="hidden", value=qutpd.dutPr)
 						.qntPr.mt-3.text-white
 							.qntPr
-								span 单价:
+								span 报价单价:
 								br
 								span #{qutpd.qntPr}
 								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
-							.qntPrTot.mt-3
+							.qntPrTot.mt-2
 								span 总价:
 								br
 								span(id="span-qntPrtot-"+qutpd._id) #{qntPrtot}

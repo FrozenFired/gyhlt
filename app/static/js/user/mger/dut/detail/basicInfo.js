@@ -1,9 +1,4 @@
 $(function() {
-	// 初始化数量和总价钱
-	$("#span-quantTotal").text($("#ipt-quantTotal").val())
-	$("#span-qntPrImp").text($("#ipt-qntPrImp").val())
-	$("#span-dinPrImp").text($("#ipt-dinPrImp").val())
-
 	// 删除订单操作按钮
 	$(".delObjectBtn").click(function(e) {
 		$(".delObjectBtn").hide();
@@ -19,7 +14,7 @@ $(function() {
 		let htmlId = $(this).attr("id").split('-')[0]
 		$("#"+htmlId+"-form").toggle();
 	})
-	$(".objUpIpt").blur(function(e) {
+	$(".ordutUpIpt").blur(function(e) {
 		let htmlId = $(this).attr("id").split('-')[0]
 		let org = $("#"+htmlId+"-org").val();
 		let now = $(this).val();

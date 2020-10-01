@@ -11,6 +11,11 @@ block content
 					span &nbsp; | &nbsp;
 					span 采购单详情
 				.col-3.text-right
-					//- a.btn.btn-warning(href="/mgDutAdd") +新的采购订单
-		a(href="/mgDutDel/"+dut._id) 删除
-		p #{dut}
+			hr
+		.info.my-3
+			include ./detail/basicInfo
+			if dut.status == Conf.status.init.num
+				-a;
+				include ./compd/add
+			else
+				include ./detail/billInfo

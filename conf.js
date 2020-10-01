@@ -80,14 +80,13 @@ let Conf = {
 		del : { num: 2000, val: '删除' , },
 	},
 
-	qunSts: [ 'init', 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord'],	// 询价单状态
 	qutSts: [ 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord' ],	// 报价单状态
+	qunSts: [ 'init', 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord'],	// 询价单状态
  	qntpdSts: [ 'quoting', 'done', 'del' ],
  
- 	dinpdSts: [ 'init', 'waiting', 'proding', 'traning', 'stocking', 'done' ],
-
 	dinSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 销售订单状态
-	dutSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
+ 	dinpdSts: [ 'init', 'waiting', 'proding', 'traning', 'stocking', 'done' ],
+	dutSts: [ 'init', 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
 }
 
 module.exports = Conf

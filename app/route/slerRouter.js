@@ -38,18 +38,20 @@ module.exports = function(app){
 	/* =================================== Inquot 询价 =================================== */
 	app.get('/slQuns', MdRole.slerIsLogin, Qun.slQuns)
 	app.get('/slQun/:id', MdRole.slerIsLogin, Qun.slQun)
-	app.get('/slQunExcel/:id', MdRole.slerIsLogin, Qun.slQunExcel)
 	app.get('/slQunDel/:id', MdRole.slerIsLogin, Qun.slQunDel)
 
 	app.post('/slQunNew', MdRole.slerIsLogin, postForm, Qun.slQunNew)
 	app.post('/slQunUpdAjax', MdRole.slerIsLogin, postForm, Qun.slQunUpdAjax)
 
+	app.get('/slInquotExcel/:id', MdRole.slerIsLogin, Qun.slInquotExcel)
+
 	/* =================================== Din =================================== */
 	app.get('/slDins', MdRole.slerIsLogin, Din.slDins)
 	app.get('/slDin/:id', MdRole.slerIsLogin, Din.slDin)
-	app.get('/slDinExcel/:id', MdRole.slerIsLogin, Din.slDinExcel)
 
 	app.post('/slDinUpd', MdRole.slerIsLogin, postForm, Din.slDinUpd)
+
+	app.get('/slDinExcel/:id', MdRole.slerIsLogin, Din.slDinExcel)
 
 	/* =================================== Dinpd 销售商品 =================================== */
 	app.get('/slDinpds', MdRole.slerIsLogin, Dinpd.slDinpds)

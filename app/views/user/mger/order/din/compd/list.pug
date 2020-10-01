@@ -1,3 +1,5 @@
+- let quantTotal = 0;
+- let qntPrImp = dinPrImp = 0;
 table.mt-3.table.table-bordered
 	thead.thead-light
 		th 品牌
@@ -7,8 +9,20 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 平台报价
 		th(style="width:18%") 客户成交价
 	thead
+		tr
+			td.text-right(colspan=4) 总价值:
+			td
+				h5.text-info
+					span#span-qntPrImp
+					span &nbsp;€
+			td
+				h5.text-info
+					span#span-dinPrImp
+					span &nbsp;€
 		each dinpd in dinpds
-			-a;
+			- quantTotal += dinpd.quant;
+			- dinPrImp += dinpd.quant * dinpd.dinPr;
+			- qntPrImp += dinpd.quant * dinpd.qntPr;
 			tr.text-info(id="tr-compdid-"+dinpd._id)
 				td
 					if dinpd.brand
@@ -101,36 +115,45 @@ table.mt-3.table.table-bordered
 								.picLink
 									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
-					.strmup.m-4
+					.strmup.mt-4.text-left
+						span.text-dark 供应商:
+						br
 						if dinpd.strmup
 							-a;
-							span #{dinpd.strmup.nome}
+							span.text-warning #{dinpd.strmup.nome}
 						else
-							span 数据丢失
+							span.text-warning 数据丢失
+					if dinpd.dutPr && !isNaN(dinpd.dutPr)
+						-a;
+						.dutPr.mt-2.text-left
+							span.text-dark 采购单价:
+							br
+							span.text-warning #{(dinpd.dutPr).toFixed(2)} €
 					.qntPr.mt-3
 						.qntPr
-							span.text-dark 单价:
-							span #{dinpd.qntPr}
+							span.text-dark 报价单价:
+							br
+							span #{(dinpd.qntPr).toFixed(2)} €
 						.qntPrTot
-							span.text-dark 总价:
-							span #{dinpd.qntPr * dinpd.quant}
+							span.text-dark 报价总价:
+							br
+							span #{(dinpd.qntPr * dinpd.quant).toFixed(2)} €
 				td
 					.quant
 						span.text-dark 数量: 
 						span #{dinpd.quant}
 
-
 					.dinPr.mt-3
 						span.text-dark 单价: 
 						if dinpd.dinPr
 							-a;
-							span.text-warning.clickup(id="span-dinPr-"+dinpd._id) #{dinpd.dinPr}
+							span.clickup(id="span-dinPr-"+dinpd._id) #{(dinpd.dinPr).toFixed(2)} €
 						else
-							span.text-warning.clickup(id="span-dinPr-"+dinpd._id) 填写售价
+							span 价格错误
 					.dinPrTot
 						strong
 							span.text-dark 总价: 
-							span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr}
+							span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr} €
 
 					.dinpdSts.mt-3
 						- let status = '';
@@ -145,3 +168,7 @@ table.mt-3.table.table-bordered
 							span.text-danger #{status}
 						else
 							span.text-danger 创建中
+.hideImp
+	input#ipt-quantTotal(type="hidden", value=quantTotal)
+	input#ipt-qntPrImp(type="hidden", value=qntPrImp)
+	input#ipt-dinPrImp(type="hidden", value=dinPrImp)

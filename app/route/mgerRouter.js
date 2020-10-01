@@ -89,4 +89,8 @@ module.exports = function(app){
 	app.post('/mgDutNew', MdRole.mgerIsLogin, postForm, Dut.mgDutNew)
 	app.get('/mgDut/:id', MdRole.mgerIsLogin, Dut.mgDut)
 	app.get('/mgDutDel/:id', MdRole.mgerIsLogin, Dut.mgDutDel)
+
+	app.post('/mgDutUpd', MdRole.mgerIsLogin, postForm, Dut.mgDutUpd)
+
+	app.get('/mgDutExcel/:id', MdRole.slerIsLogin, Dut.mgDutExcel)
 };

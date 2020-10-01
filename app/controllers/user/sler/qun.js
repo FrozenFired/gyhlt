@@ -200,12 +200,23 @@ exports.slQunUpdAjax = (req, res) => {
 }
 
 
-exports.slQunExcel = (req, res) => {
+exports.slInquotExcel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 
-	Inquot.findOne({_id: id})
-	.populate('firm')
+	Inquot.findOne({_id: id, firm: crUser.firm})
+	.populate({
+		path: 'compds', 
+		options: { sort: { 'qntpdSts': 1, 'qntupdAt': -1 } },
+		populate: [
+			{path: 'brand'},
+			{path: 'pdfir'},
+			{path: 'pdsec'},
+			{path: 'pdthd'},
+
+			{path: 'quner'},
+		]
+	})
 	.exec((err, qun) => {
 		if(err) {
 			console.log(err);
@@ -215,119 +226,128 @@ exports.slQunExcel = (req, res) => {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qun)
-			Compd.find({inquot: id})
-			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-			.sort({'status': 1, 'qntcrtAt': -1})
-			.exec((err, qunpds) => {
-				if(err) {
-					info = "cter CompdsAjax, Compd.find(), Error!";
-					Err.jsonErr(req, res, info);
-				} else {
-					let wb = new xl.Workbook({
-						defaultFont: {
-							size: 12,
-							color: '333333'
-						},
-						dateFormat: 'yyyy-mm-dd hh:mm:ss'
-					});
+			let wb = new xl.Workbook({
+				defaultFont: {
+					size: 12,
+					color: '333333'
+				},
+				dateFormat: 'yyyy-mm-dd hh:mm:ss'
+			});
 
-					let ws = wb.addWorksheet('Sheet 1');
-					ws.column(1).setWidth(5);
-					ws.column(2).setWidth(15);
-					ws.column(3).setWidth(10);
-					ws.column(4).setWidth(20);
-					ws.column(5).setWidth(20);
-					ws.column(6).setWidth(15);
-					ws.column(7).setWidth(10);
-					ws.column(8).setWidth(15);
-					ws.column(9).setWidth(10);
-					ws.column(10).setWidth(10);
-					ws.column(11).setWidth(10);
+			let ws = wb.addWorksheet('Sheet 1');
+			ws.column(1).setWidth(5);
+			ws.column(2).setWidth(15);
+			ws.column(3).setWidth(10);
+			ws.column(4).setWidth(20);
+			ws.column(5).setWidth(20);
+			ws.column(6).setWidth(15);
+			ws.column(7).setWidth(10);
+			ws.column(8).setWidth(15);
+			ws.column(9).setWidth(10);
+			ws.column(10).setWidth(10);
+			ws.column(11).setWidth(10);
 
-					// header
-					ws.cell(1,1).string('NB.');
-					ws.cell(1,2).string('Brand');
-					ws.cell(1,3).string('Area');
-					ws.cell(1,4).string('Product');
-					ws.cell(1,5).string('code规格');
-					ws.cell(1,6).string('material');
-					ws.cell(1,7).string('craft');
-					ws.cell(1,8).string('Note');
-					ws.cell(1,9).string('Price Unit');
-					ws.cell(1,10).string('Qunant');
-					ws.cell(1,11).string('Total Price');
+			// header
+			ws.cell(1,1).string('NB.');
+			ws.cell(1,2).string('Brand');
+			ws.cell(1,3).string('Area');
+			ws.cell(1,4).string('Product');
+			ws.cell(1,5).string('code规格');
+			ws.cell(1,6).string('material');
+			ws.cell(1,7).string('craft');
+			ws.cell(1,8).string('Note');
+			ws.cell(1,9).string('Qunant');
+			ws.cell(1,10).string('报价价格(€)');
+			ws.cell(1,11).string('Total Price(€)');
+			ws.cell(1,12).string('销售价格(€)');
+			ws.cell(1,13).string('Total Price(€)');
 
-					for(let i=0; i<qunpds.length; i++){
-						ws.cell((i+2), 1).string(String(i+1));
+			let compds = qun.compds;
 
-						let qunpd = qunpds[i];
-						if(qunpd.brand) {
-							ws.cell((i+2), 2).string(String(qunpd.brand.nome));
-						} else if(qunpd.brandNome) {
-							ws.cell((i+2), 2).string(String(qunpd.brandNome));
-						}
+			let dinPrImp = qntPrImp = 0;
+			let i=0;
+			for(; i<compds.length; i++){
+				ws.cell((i+2), 1).string(String(i+1));
 
-						if(qunpd.area) ws.cell((i+2), 3).string(String(qunpd.area));
+				let compd = compds[i];
+				if(compd.brand) {
+					ws.cell((i+2), 2).string(String(compd.brand.nome));
+				} else if(compd.brandNome) {
+					ws.cell((i+2), 2).string(String(compd.brandNome));
+				}
 
-						if(qunpd.pdfir) {
-							// ws.addImage({
-							// 	path: qunpd.pdfir.photo,
-							// 	type: 'picture',
-							// 	position: {
-							// 		type: 'oneCellAnchor',
-							// 		from: {
-							// 			col: i+2,
-							// 			colOff: '0.5in',
-							// 			row: 3,
-							// 			rowOff: 0,
-							// 		},
-							// 	},
-							// });
-							ws.cell((i+2), 4).string(String(qunpd.pdfir.code));
-						} else if(qunpd.firNome) {
-							ws.cell((i+2), 4).string(String(qunpd.firNome));
-						}
-						if(qunpd.pdsec) {
-							ws.cell((i+2), 5).string("产品编号:" + String(qunpd.pdsec.code));
-							ws.cell((i+2), 5).string("规格尺寸:" +String(qunpd.pdsec.spec));
-						} else if(qunpd.firNome) {
-							ws.cell((i+2), 5).string(String(qunpd.firNome));
-							ws.cell((i+2), 5).string(String(qunpd.specf));
-						}
-						if(qunpd.pdthd) {
-							let maters = '';
-							for(let j=0; j<qunpd.pdthd.maters.length; j++){
-								maters += qunpd.pdthd.maters[j] + ' ';
-							}
-							ws.cell((i+2), 6).string(maters);
-							let crafts = '';
-							for(let j=0; j<qunpd.pdthd.crafts.length; j++){
-								crafts += qunpd.pdthd.crafts[j] + ' ';
-							}
-							ws.cell((i+2), 7).string(crafts);
-						} else if(qunpd.thdNome) {
-							ws.cell((i+2), 6).string(String(qunpd.mater));
-							ws.cell((i+2), 7).string(String(qunpd.craft));
-						}
+				if(compd.area) ws.cell((i+2), 3).string(String(compd.area));
 
-						if(qunpd.note) ws.cell((i+2), 8).string(String(qunpd.note));
+				if(compd.pdfir) {
+					// ws.addImage({
+					// 	path: compd.pdfir.photo,
+					// 	type: 'picture',
+					// 	position: {
+					// 		type: 'oneCellAnchor',
+					// 		from: {
+					// 			col: i+2,
+					// 			colOff: '0.5in',
+					// 			row: 3,
+					// 			rowOff: 0,
+					// 		},
+					// 	},
+					// });
+					ws.cell((i+2), 4).string(String(compd.pdfir.code));
+				} else if(compd.firNome) {
+					ws.cell((i+2), 4).string(String(compd.firNome));
+				}
+				if(compd.pdsec) {
+					ws.cell((i+2), 5).string("产品编号:" + String(compd.pdsec.code));
+					ws.cell((i+2), 5).string("规格尺寸:" +String(compd.pdsec.spec));
+				} else if(compd.firNome) {
+					ws.cell((i+2), 5).string(String(compd.firNome));
+					ws.cell((i+2), 5).string(String(compd.specf));
+				}
+				if(compd.pdthd) {
+					let maters = '';
+					for(let j=0; j<compd.pdthd.maters.length; j++){
+						maters += compd.pdthd.maters[j] + ' ';
+					}
+					ws.cell((i+2), 6).string(maters);
+					let crafts = '';
+					for(let j=0; j<compd.pdthd.crafts.length; j++){
+						crafts += compd.pdthd.crafts[j] + ' ';
+					}
+					ws.cell((i+2), 7).string(crafts);
+				} else if(compd.thdNome) {
+					ws.cell((i+2), 6).string(String(compd.mater));
+					ws.cell((i+2), 7).string(String(compd.craft));
+				}
 
-						if(qunpd.price && qunpd.quant) {
-							let price = parseFloat(qunpd.price);
-							let quant = parseInt(qunpd.quant);
-							ws.cell((i+2), 9).string(String(price + ' €'));
-							ws.cell((i+2), 10).string(String(quant));
-							if(!isNaN(price) && !isNaN(quant)) {
-								let tot = price * quant;
-								ws.cell((i+2), 11).string(String(tot + ' €'));
-							}
+				if(compd.note) ws.cell((i+2), 8).string(String(compd.note));
+
+				if(compd.quant) {
+					let quant = parseInt(compd.quant);
+					ws.cell((i+2), 9).string(String(quant));
+					if(compd.qntPr && !isNaN(parseFloat(compd.qntPr))) {
+						let qntPr = parseFloat(compd.qntPr);
+						ws.cell((i+2), 10).string(String(qntPr + ' €'));
+						if(!isNaN(qntPr) && !isNaN(quant)) {
+							let tot = qntPr * quant;
+							qntPrImp += tot;
+							ws.cell((i+2), 11).string(String(tot + ' €'));
 						}
 					}
-
-					wb.write('Inquiry_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+					if(compd.dinPr && !isNaN(parseFloat(compd.dinPr))) {
+						let dinPr = parseFloat(compd.dinPr);
+						ws.cell((i+2), 12).string(String(dinPr + ' €'));
+						if(!isNaN(dinPr) && !isNaN(quant)) {
+							let tot = dinPr * quant;
+							dinPrImp += tot;
+							ws.cell((i+2), 13).string(String(tot + ' €'));
+						}
+					}
 				}
-			})
+			}
+			i++;
+			ws.cell((i+2), 11).string(String(qntPrImp+ ' €'))
+			ws.cell((i+2), 13).string(String(dinPrImp+ ' €'))
+			wb.write('Inquiry_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 		}
 	})
 }

@@ -81,8 +81,10 @@ exports.mgDutNew = (req, res) => {
 					codeNum = "0"+codeNum;
 				}
 			}
-			let code = codePre + 'GYIS' + codeNum;
-
+			let code = codePre + 'GYIP' + codeNum;
+			obj.firm = crUser.firm;
+			obj.duter = crUser._id;
+			obj.code = code;
 			_ordut = new Ordut(obj)
 			_ordut.save((err, ordutSave) => {
 				if(err) {
@@ -165,7 +167,7 @@ exports.mgDutDel = (req, res) => {
 		} else if(!ordut) {
 			info = "这个订单已经被删除";
 			Err.usError(req, res, info);
-		} else if(ordut.status != Conf.status.unpaid.num) {
+		} else if(ordut.status == Conf.status.unpaid.num) {
 			info = "订单状态已经改变, 不可删除";
 			Err.usError(req, res, info);
 		} else if(ordut.bills.length > 0) {
@@ -178,15 +180,8 @@ exports.mgDutDel = (req, res) => {
 					info = "user OrdutDel, Ordut.deleteOne, Error!";
 					Err.usError(req, res, info);
 				} else {
-					inquot.save((err, inquotSave) => {
-						if(err) {
-							info = "user OrdutDel, inquot.save, Error!";
-							Err.usError(req, res, info);
-						} else {
-							mgerDutCompdStatus(req, res, compds, 0);
-							res.redirect("/mgQut/"+inquotSave._id);
-						}
-					})
+					mgerDutCompdStatus(req, res, compds, 0);
+					res.redirect("/mgDuts");
 				}
 			})
 		}
@@ -211,7 +206,6 @@ let mgerDutCompdStatus = (req, res, compds, n) => {
 exports.mgDutUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	if(obj.cterNome) obj.cterNome = obj.cterNome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	Ordut.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -224,24 +218,24 @@ exports.mgDutUpd = (req, res) => {
 			info = '此订单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
-			mgerDutCterSel(req, res, obj, ordut);
+			mgerDutStrmupSel(req, res, obj, ordut);
 		}
 	})
 }
-let mgerDutCterSel = (req, res, obj, ordut) => {
-	if(ordut && (String(ordut.cter) == String(obj.cter))) {
-		// 如果是更新， 则判断如果 cter 没有变化, 则跳过此步骤
+let mgerDutStrmupSel = (req, res, obj, ordut) => {
+	if(ordut && (String(ordut.strmup) == String(obj.strmup))) {
+		// 如果是更新， 则判断如果 strmup 没有变化, 则跳过此步骤
 		mgerdutSave(req, res, obj, ordut);
-	} else if(!obj.cter) {
-		obj.cter = ordut.cter;
+	} else if(!obj.strmup) {
+		obj.strmup = ordut.strmup;
 		mgerdutSave(req, res, obj, ordut);
 	} else {
-		if(obj.cter == "null") obj.cter = null;
+		if(obj.strmup == "null") obj.strmup = null;
 		Compd.updateMany({
 			_id: ordut.compds,
-			cter: ordut.cter
+			strmup: ordut.strmup
 		}, {
-			cter: obj.cter
+			strmup: obj.strmup
 		},(err, compds) => {
 			if(err) {
 				console.log(err);
@@ -267,6 +261,158 @@ let mgerdutSave = (req, res, obj, ordut) => {
 			Err.usError(req, res, info);
 		} else {
 			res.redirect('/mgDut/'+objSave._id)
+		}
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+exports.mgDutExcel = (req, res) => {
+	let crUser = req.session.crUser;
+	let id = req.params.id;
+
+	Ordut.findOne({_id: id})
+	.populate({
+		path: 'compds', 
+		options: { sort: { 'qntpdSts': 1, 'qntupdAt': -1 } },
+		populate: [
+			{path: 'brand'},
+			{path: 'pdfir'},
+			{path: 'pdsec'},
+			{path: 'pdthd'},
+
+			{path: 'quner'},
+		]
+	})
+	.exec((err, dut) => {
+		if(err) {
+			console.log(err);
+			info = "sler Qun, Ordut.findOne, Error!";
+			Err.usError(req, res, info);
+		} else if(!dut) {
+			info = "这个报价单已经被删除";
+			Err.usError(req, res, info);
+		} else {
+			// console.log(dut)
+			let wb = new xl.Workbook({
+				defaultFont: {
+					size: 12,
+					color: '333333'
+				},
+				dateFormat: 'yyyy-mm-dd hh:mm:ss'
+			});
+			
+			let ws = wb.addWorksheet('Sheet 1');
+			ws.column(1).setWidth(5);
+			ws.column(2).setWidth(15);
+			ws.column(3).setWidth(10);
+			ws.column(4).setWidth(20);
+			ws.column(5).setWidth(20);
+			ws.column(6).setWidth(15);
+			ws.column(7).setWidth(10);
+			ws.column(8).setWidth(15);
+			ws.column(9).setWidth(10);
+			ws.column(10).setWidth(10);
+			ws.column(11).setWidth(10);
+
+			// header
+			ws.cell(1,1).string('NB.');
+			ws.cell(1,2).string('Brand');
+			ws.cell(1,3).string('Area');
+			ws.cell(1,4).string('Product');
+			ws.cell(1,5).string('code规格');
+			ws.cell(1,6).string('material');
+			ws.cell(1,7).string('craft');
+			ws.cell(1,8).string('Note');
+			ws.cell(1,9).string('Qunant');
+			ws.cell(1,10).string('销售价格(€)');
+			ws.cell(1,11).string('Total Price(€)');
+
+			let compds = dut.compds;
+
+			let dutPrImp = 0;
+			let i=0;
+			for(; i<compds.length; i++){
+				ws.cell((i+2), 1).string(String(i+1));
+
+				let compd = compds[i];
+				if(compd.brand) {
+					ws.cell((i+2), 2).string(String(compd.brand.nome));
+				} else if(compd.brandNome) {
+					ws.cell((i+2), 2).string(String(compd.brandNome));
+				}
+
+				if(compd.area) ws.cell((i+2), 3).string(String(compd.area));
+
+				if(compd.pdfir) {
+					// ws.addImage({
+					// 	path: compd.pdfir.photo,
+					// 	type: 'picture',
+					// 	position: {
+					// 		type: 'oneCellAnchor',
+					// 		from: {
+					// 			col: i+2,
+					// 			colOff: '0.5in',
+					// 			row: 3,
+					// 			rowOff: 0,
+					// 		},
+					// 	},
+					// });
+					ws.cell((i+2), 4).string(String(compd.pdfir.code));
+				} else if(compd.firNome) {
+					ws.cell((i+2), 4).string(String(compd.firNome));
+				}
+				if(compd.pdsec) {
+					ws.cell((i+2), 5).string("产品编号:" + String(compd.pdsec.code));
+					ws.cell((i+2), 5).string("规格尺寸:" +String(compd.pdsec.spec));
+				} else if(compd.firNome) {
+					ws.cell((i+2), 5).string(String(compd.firNome));
+					ws.cell((i+2), 5).string(String(compd.specf));
+				}
+				if(compd.pdthd) {
+					let maters = '';
+					for(let j=0; j<compd.pdthd.maters.length; j++){
+						maters += compd.pdthd.maters[j] + ' ';
+					}
+					ws.cell((i+2), 6).string(maters);
+					let crafts = '';
+					for(let j=0; j<compd.pdthd.crafts.length; j++){
+						crafts += compd.pdthd.crafts[j] + ' ';
+					}
+					ws.cell((i+2), 7).string(crafts);
+				} else if(compd.thdNome) {
+					ws.cell((i+2), 6).string(String(compd.mater));
+					ws.cell((i+2), 7).string(String(compd.craft));
+				}
+
+				if(compd.note) ws.cell((i+2), 8).string(String(compd.note));
+
+				if(compd.quant) {
+					let quant = parseInt(compd.quant);
+					ws.cell((i+2), 9).string(String(quant));
+
+					if(compd.dutPr && !isNaN(parseFloat(compd.dutPr))) {
+						let dutPr = parseFloat(compd.dutPr);
+						ws.cell((i+2), 10).string(String(dutPr + ' €'));
+						if(!isNaN(dutPr) && !isNaN(quant)) {
+							let tot = dutPr * quant;
+							dutPrImp += tot;
+							ws.cell((i+2), 11).string(String(tot + ' €'));
+						}
+					}
+				}
+			}
+			i++;
+			ws.cell((i+2), 11).string(String(dutPrImp+ ' €'))
+			wb.write('Order_out'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 		}
 	})
 }

@@ -1,16 +1,24 @@
 .border.border-dark.mt-2.p-3
 	.row
-		.col-6 总价值: #{(din.dinImp).toFixed(2)}
-		.col-6 已收款: #{(din.billPr).toFixed(2)}
+		.col-6
+			span 总价值:
+			if dut.dutImp
+				-a;
+				span &nbsp;#{(dut.dutImp).toFixed(2)}
+		.col-6 
+			span 已收款:
+			if dut.billPr
+				-a;
+				span &nbsp;#{(dut.billPr).toFixed(2)}
 	.row
 		.col-6
 			h5.code 付款信息:
 		.col-6.text-right
-			button.btn.btn-warning#billAddPageShow(type="button") + 首款账单
+			button.btn.btn-warning#billAddPageShow(type="button") + 付款账单
 	//- 添加产品
 	#billAddPage.border.border-dark(style="display:none")
 		form#billForm(method="post", action="/mgBillNew", enctype="multipart/form-data")
-			input(type="hidden", name="obj[ordin]", value=din._id)
+			input(type="hidden", name="obj[ordut]", value=dut._id)
 			input(type="hidden", name="obj[genre]", value=1)
 
 			.row.my-3
@@ -27,7 +35,7 @@
 				.col-12.text-right
 					button.border.border-danger.mr-4.btn.btn-default.text-danger#billsPageShow(type="button") 取消
 					input.btn.btn-success(type="submit", value="确认添加")
-	each bill in din.bills
+	each bill in dut.bills
 		-a;
 		.row.mt-3
 			.col-3 付款时间 #{moment(bill.crtAt).format("YYYY年MM月DD日")}
@@ -37,4 +45,4 @@
 			.col-2.text-right.billDel
 				a.btn.btn-danger(href="/mgBillDel/"+bill._id) 删除
 
-script(src="/js/user/mger/din/detail/billInfo.js")
+script(src="/js/user/mger/dut/detail/billInfo.js")

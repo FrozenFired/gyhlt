@@ -13,11 +13,10 @@ let dbSchema = new Schema({
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 
 	crtAt: Date,								// 开单时间
-	contract: {
-		crtAt: Date,							// 开单时间
-		photo: String,							// 照片
-		contract: String,						// 合同文件
-	},
+
+	contractAt: Date,							// 签合同时间
+	photo: String,							// 合同照片
+	file: String,							// 合同文件
 
 	/* ========== 基本信息 ========== */
 	code: String,								// 采购订单编号
@@ -30,10 +29,7 @@ let dbSchema = new Schema({
 	dutImp: Float,			// 应收
 	billPr: Float,		// 已收
 	billAt: Date,		// 第一次付款时间
-	bills: [{
-		billAt: Date,
-		bill: {type: ObjectId, ref: 'Bill'}
-	}],
+	bills: [{type: ObjectId, ref: 'Bill'}],
 
 	dutDay: Number,						// 货期 xxx 天
 	dutAt: Date,						// 提货日期
@@ -46,7 +42,7 @@ dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
 		if(!this.step) this.step = 10;
-		this.ctAt = Date.now();
+		this.crtAt = Date.now();
 	} else {
 
 	}

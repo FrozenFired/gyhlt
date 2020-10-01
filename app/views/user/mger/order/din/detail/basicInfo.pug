@@ -17,9 +17,9 @@
 			.cter 客户:
 				if din.cter
 					- cter = din.cter;
-					span.text-info.ordinUpClick#cter-span #{cter.nome} [#{cter.code}]
+					span.text-warning.objUpClick#cter-span #{cter.nome} [#{cter.code}]
 				else
-					span.text-info.ordinUpClick#cter-span 未分配
+					span.text-warning.objUpClick#cter-span 未分配
 				form#cter-form(method="post", action="/mgDinUpd", enctype="multipart/form-data", style="display:none")
 					input(type="hidden", name="obj[_id]", value=din._id)
 					.form-group.row.px-5.text-center
@@ -41,7 +41,11 @@
 							button.inquotCancelClick#cter-cancel.btn.btn-secondary(type="button") 取消
 						.col-6
 							input.btn.btn-success(type="submit" value="提交")
-			.status
+			.quantTotal
+				span 总数量: 
+				span#span-quantTotal
+			h5.imp.text-info 合同价: #{(din.dinImp).toFixed(2)} €
+			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
 					- status = '';

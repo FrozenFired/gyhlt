@@ -82,12 +82,6 @@
 			.quantTotal
 				span 总数量: 
 				span#span-quantTotal
-			if qut.status == Conf.status.confirm.num
-				-a;
-				h4 
-					span 总价格: 
-					span#span-qntPrImp.text-info #{qut.qntPr}
-					span &nbsp;€
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
@@ -97,7 +91,7 @@
 						- break;
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
-				a(href="/slQunExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
+				a(href="/slInquotExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
 	.statusChange.text-center.row.mt-3
 		if qut.status == Conf.status.pricing.num
 			- a;
