@@ -25,8 +25,13 @@ table.mt-3.table.table-bordered
 			- qntPrImp += dinpd.quant * dinpd.qntPr;
 			tr.text-info(id="tr-compdid-"+dinpd._id)
 				td
-					.pdnum.text-left.text-dark [#{dinpd.pdnum}]
-					.brandnome.mt-5
+					if dinpd.ordut
+						-a;
+						.ordut.text-left
+							.text-dark 所属采购单:
+							a(href='/mgDut/'+dinpd.ordut._id, title=dinpd.ordut.compds.length) #{dinpd.ordut.code}
+					.pdnum.mt-3.text-left.text-dark [#{dinpd.pdnum}]
+					.brandnome.mt-4
 						if dinpd.brand
 							- brand = dinpd.brand;
 							span [#{brand.nome}]

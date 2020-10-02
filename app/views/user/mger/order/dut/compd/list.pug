@@ -19,8 +19,11 @@ table.mt-3.table.table-bordered
 			- dutPrImp += dutpd.quant * dutpd.dutPr;
 			tr.text-info(id="tr-compdid-"+dutpd._id)
 				td
-					.pdnum.text-left.text-dark [#{dutpd.pdnum}]
-					.brandnome.mt-5
+					.ordin.text-left
+						.text-dark 所属采购单:
+						a(href='/mgDin/'+dutpd.ordin._id, title=dutpd.ordin.compds.length) #{dutpd.ordin.code}
+					.pdnum.mt-3.text-left.text-dark [#{dutpd.pdnum}]
+					.brandnome.mt-4
 						if dutpd.brand
 							- brand = dutpd.brand;
 							span [#{brand.nome}]
@@ -118,12 +121,37 @@ table.mt-3.table.table-bordered
 						.text-dark 采购单价:
 						if dutpd.dutPr && !isNaN(dutpd.dutPr)
 							-a;
-							.text-warning #{(dutpd.dutPr).toFixed(2)} €
-							.text-dark.mt-2 总价:
-							.text-warning #{(dutpd.dutPr * dutpd.quant).toFixed(2)} €
+							span.text-warning.clickup(id="span-dutPr-"+dutpd._id) #{(dutpd.dutPr).toFixed(2)}
+							span &nbsp;€
 						else
-							span.text-danger 未填写
-
+							span.text-warning.clickup(id="span-dutPr-"+dutpd._id) 未填写
+						if dut.status == Conf.status.init.num
+							-a;
+							input(id="org-quant-"+dutpd._id, type="hidden", value=dutpd.quant)
+							input(id="org-dutPr-"+dutpd._id, type="hidden", value=dutpd.dutPr)
+							form(id="form-dutPr-"+dutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+								input(type="hidden", name="obj[_id]", value=dutpd._id)
+								.form-group.row
+									.col-12
+										input.blurup.form-control(id="ipt-dutPr-"+dutpd._id, type="text", name="obj[dutPr]", placeholder="填写采购价格", autocomplete="off", value=dutpd.dutPr)
+					h5.text-dark.total.mt-3
+						span 总价:&nbsp; 
+						if dutpd.dutPr && !isNaN(dutpd.dutPr)
+							-a;
+							span.text-info(id="tot-dutPr-"+dutpd._id) #{(dutpd.dutPr * dutpd.quant).toFixed(2)} €
+						else
+							- dutPrImp = '未完成报价';
+							span(id="span-dutPrTot-"+dutpd._id)  未报价
+							span &nbsp;€
+					if dut.status == Conf.status.init.num
+						-a;
+						.del.mt-5
+							button.btn.border-danger.text-danger.delObjpdBtn(id="delObjpdBtn-"+dutpd._id, type="button") 取消此商品
+							.delObjpd(id="delObjpd-"+dutpd._id, style="display:none")
+								a.mx-4.my-2.btn.btn-danger(href="/mgDutpdCel/"+dutpd._id) 确定
+								button.mx-4.my-2.delObjpdCancel.border.border-danger.text-danger.btn.btn-default(id="delObjpdCancel-"+dutpd._id, type="button") 取消
 .hideImp
 	input#ipt-quantTotal(type="hidden", value=quantTotal)
 	input#ipt-dutPrImp(type="hidden", value=dutPrImp)
+
+script(src="/js/user/mger/dutpd/soleup.js")

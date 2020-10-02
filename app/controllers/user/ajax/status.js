@@ -2,6 +2,7 @@ let Err = require('../../aaIndex/err');
 let Conf = require('../../../../conf');
 
 let Ordin = require('../../../models/firm/ord/ordin');
+let Ordut = require('../../../models/firm/ord/ordut');
 let Inquot = require('../../../models/firm/ord/inquot');
 let Compd = require('../../../models/firm/ord/compd');
 
@@ -92,15 +93,22 @@ exports.usInquotStatusAjax = (req, res) => {
 					info = null;
 					for(let i=0; i<compds.length; i++) {
 						if(compds[i].qntpdSts == Conf.status.done.num) {
-							let totpdPr = parseFloat(compds[i].qntPr)*parseInt(compds[i].quant);
-							if(isNaN(totpdPr)) {
-								info = '产品报价错误, 或数量填写错误, 请仔细查看';
-								break;
-							} else if(totpdPr <= 0) {
-								info = '产品报价错误, 或数量填写错误, 请仔细查看';
-								break;
-							}else if(compds[i].strmup == null) {
+							let qntPrTot = parseFloat(compds[i].qntPr)*parseInt(compds[i].quant);
+							let dutPrTot = parseFloat(compds[i].dutPr)*parseInt(compds[i].quant);
+							if(compds[i].strmup == null) {
 								info = '产品需要选择供应商, 请仔细查看';
+								break;
+							} else if(isNaN(qntPrTot)) {
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+								break;
+							} else if(qntPrTot <= 0) {
+								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+								break;
+							} else if(isNaN(dutPrTot)) {
+								info = '产品采购价错误, 或数量填写错误, 请仔细查看';
+								break;
+							} else if(dutPrTot <= 0) {
+								info = '产品采购价错误, 或数量填写错误, 请仔细查看';
 								break;
 							}
 						}
@@ -114,12 +122,12 @@ exports.usInquotStatusAjax = (req, res) => {
 					info = null;
 					for(let i=0; i<compds.length; i++) {
 						if(compds[i].qntpdSts == Conf.status.done.num) {
-							let totpdPr = parseFloat(compds[i].dinPr)*parseInt(compds[i].quant);
-							if(isNaN(totpdPr)) {
-								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+							let qntPrTot = parseFloat(compds[i].dinPr)*parseInt(compds[i].quant);
+							if(isNaN(qntPrTot)) {
+								info = '产品采购价错误, 或数量填写错误, 请仔细查看';
 								break;
-							} else if(totpdPr <= 0) {
-								info = '产品报价错误, 或数量填写错误, 请仔细查看';
+							} else if(qntPrTot <= 0) {
+								info = '产品采购价错误, 或数量填写错误, 请仔细查看';
 								break;
 							}else if(compds[i].strmup == null) {
 								info = '产品需要选择供应商, 请仔细查看';
@@ -250,7 +258,14 @@ exports.usOrdinStatusAjax = (req, res) => {
 					// 从完成返回 准备发货
 					info = null;
 					if(ordin.bills.length != 0) {
-						info = "请先删除, 已付款项"
+						info = "请先删除已付款项"
+					}
+					let i=0;
+					for(; i<compds.length; i++) {
+						if(compds[i].dinpdSts != Conf.status.waiting.num) break;
+					}
+					if(i != compds.length) {
+						info = "其中的商品已经在生产了, 不可返回"
 					}
 					if(!info) {
 						ordinCompdStatus(req, res, compds,  Conf.status.waiting.num, Conf.status.init.num, 0);
@@ -294,6 +309,145 @@ let ordinCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
 			})
 		} else {
 			ordinCompdStatus(req, res, compds, fromSts, newStatus, n+1);
+		}
+	}
+}
+
+
+
+exports.usOrdutStatusAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let oldStatus = req.query.oldStatus;
+	let newStatus = req.query.newStatus;
+	Ordut.findOne({_id: id})
+	.populate('bills')
+	.populate({
+		path: 'compds',
+	})
+	.exec((err, ordut) => {
+		if(err) {
+			console.log(err);
+			info = "user ChangeStatusAjax, findOne(), Error!";
+			Err.jsonErr(req, res, info);
+		} else if(!ordut) {
+			info = "没有找到数据!";
+			Err.jsonErr(req, res, info);
+		} else {
+			let compds = ordut.compds;
+
+			info = '错误操作, 请截图后, 联系管理员(usOrdutStatusAjax)';
+			if(oldStatus != ordut.status) {
+				info = '数据不符, 请截图后, 联系管理员';
+			} else {
+				if(oldStatus == Conf.status.init.num && newStatus == Conf.status.unpaid.num) {
+					// 确认采购, 进入开始付款状态
+					info = null;
+					let dutImp = 0;
+					for(let i=0; i<compds.length; i++) {
+						let dutPrTot = parseFloat(compds[i].dutPr)*parseInt(compds[i].quant);
+						dutImp += dutPrTot;
+						if(compds[i].strmup == null) {
+							info = '产品需要选择供应商, 请仔细查看';
+							break;
+						} else if(isNaN(dutPrTot)) {
+							info = '产品采购价错误, 或数量填写错误, 请仔细查看';
+							break;
+						} else if(dutPrTot <= 0) {
+							info = '产品采购价错误, 或数量填写错误, 请仔细查看';
+							break;
+						}
+					}
+					if(!info) {
+						ordut.dutImp = dutImp;
+						ordut.status = parseInt(newStatus);
+					}
+				}
+				else if(oldStatus == Conf.status.unpaid.num && newStatus == Conf.status.deposit.num) {
+					// 确认付首款后, 从未付款状态变为付款状态
+					info = null;
+					if(ordut.bills.length == 0) {
+						info = "请先付款"
+					}
+					if(!info) {
+						ordut.status = parseInt(newStatus);
+						info = null;
+					}
+				}
+				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.payoff.num) {
+					// 全部付款后, 状态变为付清
+					ordut.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
+					// 完成采购单, 可以开始运输
+					ordutCompdStatus(req, res, compds,  Conf.status.proding.num, Conf.status.tranpre.num, 0);
+					ordut.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.payoff.num) {
+					// 点错, 从完成返回到付清状态
+					ordutCompdStatus(req, res, compds,  Conf.status.tranpre.num, Conf.status.proding.num, 0);
+					ordut.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.deposit.num) {
+					// 点错, 返回到付首款状态
+					ordut.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.unpaid.num) {
+					// 从已付首款, 返回到未付状态
+					info = null;
+					if(ordut.bills.length != 0) {
+						info = "请先删除, 已付款项"
+					}
+					if(!info) {
+						ordut.status = parseInt(newStatus);
+						info = null;
+					}
+				}
+				else if(oldStatus == Conf.status.unpaid.num && newStatus == Conf.status.init.num) {
+					// 从未付状态, 返回到初始状态
+					ordut.status = parseInt(newStatus);
+					info = null;
+				}
+			}
+			if(info) {
+				Err.jsonErr(req, res, info);
+			} else {
+				usOrdutStatusSave(req, res, ordut);
+			}
+		}
+	})
+}
+
+let usOrdutStatusSave = (req, res, ordut) => {
+	ordut.save((err, objSave) => {
+		if(err) {
+			console.log(err);
+			info = "user ChangeStatusAjax, findOne(), Error!";
+			Err.jsonErr(req, res, info);
+		} else {
+			res.json({ status: 1, msg: '',
+				data: { ordut }
+			})
+		}
+	})
+}
+
+let ordutCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
+	if(n == compds.length) {
+		return;
+	} else {
+		if(compds[n].dinpdSts == fromSts) {
+			compds[n].dinpdSts = newStatus;
+			compds[n].save((err, compdSave) => {
+				if(err) console.log(err);
+				ordutCompdStatus(req, res, compds, fromSts, newStatus, n+1);
+			})
+		} else {
+			ordutCompdStatus(req, res, compds, fromSts, newStatus, n+1);
 		}
 	}
 }

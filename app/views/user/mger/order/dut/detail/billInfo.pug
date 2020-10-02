@@ -1,7 +1,7 @@
 .border.border-dark.mt-2.p-3
 	.row
 		.col-6
-			span 总价值:
+			span 总采购价:
 			if dut.dutImp
 				-a;
 				span &nbsp;#{(dut.dutImp).toFixed(2)}
@@ -9,7 +9,8 @@
 			span 已收款:
 			if dut.billPr
 				-a;
-				span &nbsp;#{(dut.billPr).toFixed(2)}
+				//- span &nbsp;#{(dut.billPr).toFixed(2)}
+				span &nbsp;#{(dut.billPr)}
 	.row
 		.col-6
 			h5.code 付款信息:
@@ -19,12 +20,12 @@
 	#billAddPage.border.border-dark(style="display:none")
 		form#billForm(method="post", action="/mgBillNew", enctype="multipart/form-data")
 			input(type="hidden", name="obj[ordut]", value=dut._id)
-			input(type="hidden", name="obj[genre]", value=1)
+			input(type="hidden", name="obj[genre]", value=-1)
 
 			.row.my-3
 				.col-md-2.mt-3.text-right 数量:
 				.col-md-2.mt-3
-					input.form-control#billPrIpt(type="text", name="obj[billPr]", autocomplete="off", placeholder="收到钱数")
+					input.form-control#billPrIpt(type="text", name="obj[billPr]", autocomplete="off", placeholder="付款钱数")
 			.row.my-3
 				.col-md-2.mt-3.text-right 备注:
 				.col-md-10.mt-3

@@ -1,4 +1,7 @@
 $(function() {
+	$("#span-quantTotal").text($("#ipt-quantTotal").val())
+	$("#span-dutPrImp").text($("#ipt-dutPrImp").val())
+
 	// 删除订单操作按钮
 	$(".delObjectBtn").click(function(e) {
 		$(".delObjectBtn").hide();

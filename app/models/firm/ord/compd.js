@@ -62,7 +62,6 @@ let dbSchema = new Schema({
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 	dutPr: Float,								// 采购价格
 	dutAt: Date,								// 提货日期
-	dutpdSts: Number,							// 商品状态 
 
 	/* ============================= 物流运输 ============================= */
 	transp: {type: ObjectId, ref: 'Transp'},

@@ -17,7 +17,7 @@ const moment = require('moment');
 const xl = require('excel4node');
 
 
-// 订单
+// 采购订单
 exports.mgDuts = (req, res) => {
 	let crUser = req.session.crUser;
 	Strmup.find({firm: crUser.firm})
@@ -106,13 +106,14 @@ exports.mgDut = (req, res) => {
 	.populate('bills')
 	.populate({
 		path: 'compds',
+		options: { sort: { 'ordin': 1, 'pdnum': 1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},
 			{path: 'pdsec'},
 			{path: 'pdthd'},
 
-			{path: 'strmup'},
+			{path: 'ordin'},
 		]
 	})
 	.exec((err, dut) => {
@@ -160,7 +161,7 @@ exports.mgDut = (req, res) => {
 							Err.usError(req, res, info);
 						} else {
 							res.render('./user/mger/order/dut/detail', {
-								title: '订单详情',
+								title: '采购单详情',
 								crUser,
 								dut,
 								dutpds: dut.compds,
@@ -188,10 +189,10 @@ exports.mgDutDel = (req, res) => {
 			info = "mger QunDel, Ordut.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!ordut) {
-			info = "这个订单已经被删除";
+			info = "这个采购单已经被删除";
 			Err.usError(req, res, info);
 		} else if(ordut.status == Conf.status.unpaid.num) {
-			info = "订单状态已经改变, 不可删除";
+			info = "采购状态已经改变, 不可删除";
 			Err.usError(req, res, info);
 		} else if(ordut.bills.length > 0) {
 			info = "此采购单已经付款, 不可删除";
@@ -261,7 +262,7 @@ exports.mgDutPlusPd = (req, res) => {
 				info = "mger DutPlusPd, Strmup.findOne, Error!"
 				Err.usError(req, res, info);
 			} else if(!ordut) {
-				info = '此订单已经被删除, 请刷新查看';
+				info = '此采购单已经被删除, 请刷新查看';
 				Err.usError(req, res, info);
 			} else {
 				// console.log(ordut)
@@ -326,7 +327,7 @@ exports.mgDutUpd = (req, res) => {
 			info = "mger QunUpd, Strmup.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!ordut) {
-			info = '此订单已经被删除, 请刷新查看';
+			info = '此采购单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
 			mgerDutStrmupSel(req, res, obj, ordut);
@@ -368,7 +369,7 @@ let mgerdutSave = (req, res, obj, ordut) => {
 	_ordut.save((err, objSave) => {
 		if(err) {
 			console.log(err);
-			info = "添加订单时 数据库保存错误, 请截图后, 联系管理员";
+			info = "添加采购单时 数据库保存错误, 请截图后, 联系管理员";
 			Err.usError(req, res, info);
 		} else {
 			res.redirect('/mgDut/'+objSave._id)

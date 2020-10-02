@@ -12,6 +12,7 @@ const Dinpd = require('../controllers/user/mger/dinpd');
 const Bill = require('../controllers/user/mger/bill');
 
 const Dut = require('../controllers/user/mger/dut');
+const Dutpd = require('../controllers/user/mger/dutpd');
 
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');
@@ -86,4 +87,7 @@ module.exports = function(app){
 	app.post('/mgDutPlusPd', MdRole.mgerIsLogin, postForm, Dut.mgDutPlusPd)
 
 	app.get('/mgDutExcel/:id', MdRole.slerIsLogin, Dut.mgDutExcel)
+	/* =================================== Dutpd 采购商品 =================================== */
+	app.post('/mgDutpdUpdAjax', MdRole.mgerIsLogin, postForm, Dutpd.mgDutpdUpdAjax)
+	app.get('/mgDutpdCel/:id', MdRole.mgerIsLogin, Dutpd.mgDutpdCel)
 };

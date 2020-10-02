@@ -73,6 +73,7 @@ let Conf = {
 
 		waiting: { num: 200, val: '等待生产'},
 		proding: { num: 400, val: '在产'},
+		tranpre: { num: 550, val: '待运'},
 		traning: { num: 600, val: '在途'},
 		stocking:{ num: 700, val: '在库'},
 
@@ -85,7 +86,7 @@ let Conf = {
  	qntpdSts: [ 'quoting', 'done', 'del' ],
  
 	dinSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 销售订单状态
- 	dinpdSts: [ 'init', 'waiting', 'proding', 'traning', 'stocking', 'done' ],
+ 	dinpdSts: [ 'init', 'waiting', 'proding', 'tranpre', 'traning', 'stocking', 'done' ],
 	dutSts: [ 'init', 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
 }
 

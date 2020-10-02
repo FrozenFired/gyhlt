@@ -42,6 +42,8 @@ dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.status) this.status = 10;
 		if(!this.step) this.step = 10;
+		if(!this.dutImp) this.dutImp = 0;
+		if(!this.billPr) this.billPr = 0;
 		this.crtAt = Date.now();
 	} else {
 
