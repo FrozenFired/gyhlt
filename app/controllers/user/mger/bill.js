@@ -7,6 +7,15 @@ const Bill = require('../../../models/firm/bill');
 const Ordin = require('../../../models/firm/ord/ordin');
 const Ordut = require('../../../models/firm/ord/ordut');
 
+// 采购订单
+exports.mgBills = (req, res) => {
+	let crUser = req.session.crUser;
+	res.render('./user/mger/bill/list', {
+		title: '采购订单',
+		crUser,
+	})
+}
+
 exports.mgBillNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;

@@ -12,7 +12,7 @@ let dbSchema = new Schema({
 	fner : {type: ObjectId, ref: 'User'},
 	crtAt: Date,								// 创建时间
 
-	genre: Number,
+	genre: Number,								// 类型
 	ordin: {type: ObjectId, ref: 'Ordin'},
 	cter: {type: ObjectId, ref: 'User'},
 
@@ -26,7 +26,7 @@ let dbSchema = new Schema({
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-
+		if(!this.crtAt) this.crtAt = Date.now();
 	} else {
 
 	}

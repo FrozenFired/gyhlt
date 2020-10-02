@@ -8,12 +8,14 @@ const colection = 'Transp';
 let dbSchema = new Schema({
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 	lger : {type: ObjectId, ref: 'User'},		// 物流人员
-	trpAt: Date,
+
+	trpAt: Date,						// 开船日期
 	trpDay: Number,						// 货运 xxx 天
 	arrivAt: Date,						// 到岗日期
 
 	/* ========== 基本信息 ========== */
 	code: String,								// 
+	vol: Number,								// 容量
 	note: String,								// 备注
 
 	/* ========== 商品信息 ========== */

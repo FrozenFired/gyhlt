@@ -6,7 +6,7 @@
 				-a;
 				span &nbsp;#{(dut.dutImp).toFixed(2)}
 		.col-6 
-			span 已收款:
+			span 已付款:
 			if dut.billPr
 				-a;
 				//- span &nbsp;#{(dut.billPr).toFixed(2)}
@@ -23,7 +23,7 @@
 			input(type="hidden", name="obj[genre]", value=-1)
 
 			.row.my-3
-				.col-md-2.mt-3.text-right 数量:
+				.col-md-2.mt-3.text-right 金额:
 				.col-md-2.mt-3
 					input.form-control#billPrIpt(type="text", name="obj[billPr]", autocomplete="off", placeholder="付款钱数")
 			.row.my-3

@@ -39,6 +39,7 @@ module.exports = function(app){
 	/* ===================== 获取询价报价单的结果 ===================== */
 	app.get('/usDinsAjax', MdRole.slerIsLogin, Order.usDinsAjax)
 	app.get('/usDutsAjax', MdRole.oderIsLogin, Order.usDutsAjax)
+	app.get('/usBillsAjax', MdRole.oderIsLogin, Order.usBillsAjax)
 
 	/* ===================== 状态更改 ===================== */
 	app.get('/usInquotQuterStAjax', MdRole.userIsLogin, Status.usInquotQuterStAjax)

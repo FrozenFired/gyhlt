@@ -1,7 +1,5 @@
 // 销售订单
 const Err = require('../../aaIndex/err');
-
-const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
 const Ordin = require('../../../models/firm/ord/ordin');
@@ -10,7 +8,6 @@ const Inquot = require('../../../models/firm/ord/inquot');
 const Compd = require('../../../models/firm/ord/compd');
 
 const Strmup = require('../../../models/firm/stream/strmup');
-const Strmdw = require('../../../models/firm/stream/strmdw');
 const User = require('../../../models/login/user');
 
 const _ = require('underscore');

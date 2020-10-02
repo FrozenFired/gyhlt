@@ -26,28 +26,29 @@ exports.mgDutpdCel = (req, res) => {
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "mger DutpdDel, Compd.findOne, Error!"
+			info = "mger DutpdCel, Compd.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			info = "mger DutpdDel, 此商品已经不存在, 请联系管理员!"
+			info = "mger DutpdCel, 此商品已经不存在, 请联系管理员!"
 			Err.usError(req, res, info);
 		} else if(compd.ordut.status != Conf.status.init.num) {
-			info = "mger DutpdDel, 采购单状态已经改变, 不可删除商品!"
+			info = "mger DutpdCel, 采购单状态已经改变, 不可删除商品!"
 			Err.usError(req, res, info);
 		} else {
 			let ordut = compd.ordut;
+			compd.ordut = null;
 			compd.dinpdSts = Conf.status.waiting.num;
 			compd.save((err, compdSave) => {
 				if(err) {
 					console.log(err);
-					info = "mger DutpdDel, Compd.save, Error!"
+					info = "mger DutpdCel, Compd.save, Error!"
 					Err.usError(req, res, info);
 				} else {
 					ordut.compds.remove(id);
 					ordut.save((err, ordutSave) => {
 						if(err) {
 							console.log(err);
-							info = "mger DutpdDel, ordut.save, Error!"
+							info = "mger DutpdCel, ordut.save, Error!"
 							Err.usError(req, res, info);
 						} else {
 							res.redirect('/mgDut/'+ordut._id)

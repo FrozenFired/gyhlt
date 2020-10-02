@@ -19,8 +19,7 @@ block content
 				- let stsBtn = "btn-default";
 				if sts == 'init'
 					- stsBtn = "btn-success";
-				button.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
-				span &nbsp; &nbsp; &nbsp;
+				button.mr-3.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
 		.add.mt-3
 			include ./add

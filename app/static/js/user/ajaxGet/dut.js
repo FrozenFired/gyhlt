@@ -2,11 +2,11 @@
 let urlQuery = dutParam = dutElemId = role = statusParam = '';
 var statusConb = Conf.status.init.num;
 var page = 0, count, isMore;
-var getDuts = (urlQuery, elemId, isReload, role) => {
+var getDuts = (urlQuery, elemId, isReload) => {
 	// console.log(urlQuery)
 	// console.log(elemId)
 	// console.log(isReload)
-	// console.log(role)
+
 	$.ajax({
 		type: "GET",
 		url: urlQuery,
@@ -23,7 +23,7 @@ var getDuts = (urlQuery, elemId, isReload, role) => {
 					isMore = results.data.isMore
 					count = results.data.count
 					$("#dutCount").text(count)
-					dutsRender(duts, elemId, isReload, role)
+					dutsRender(duts, elemId, isReload)
 				}
 			} else if(results.status === 0) {
 				alert(results.msg);
@@ -32,18 +32,18 @@ var getDuts = (urlQuery, elemId, isReload, role) => {
 	});
 }
 
-var dutsRender = (duts, elemId, isReload, role) => {
+var dutsRender = (duts, elemId, isReload) => {
 	let elem = '<div class="dutsElem">'
 		for(let i=0; i<duts.length; i++) {
 			let dut = duts[i];
-			elem += dutRender(dut, role);
+			elem += dutRender(dut);
 		}
 	elem += '</div>'
 	if(isReload == 1) $(".dutsElem").remove();
 	if(!elemId) elemId = "#dutsElem";
 	$(elemId).append(elem);
 }
-var dutRender = (dut, role) => {
+var dutRender = (dut) => {
 	let status = '';
 	for(sts in Conf.status) {
 		status = '';
@@ -110,7 +110,7 @@ $(function() {
 			statusParam = dutFilter.split('@')[3];
 		}
 		urlQuery = dutParam+statusParam;
-		getDuts(urlQuery, dutElemId, 1, role);
+		getDuts(urlQuery, dutElemId, 1);
 	}
 	dutsInit();
 
@@ -127,7 +127,7 @@ $(function() {
 
 		page = 0;
 		urlQuery = dutParam + statusParam;
-		getDuts(urlQuery, dutElemId, 1, role);
+		getDuts(urlQuery, dutElemId, 1);
 
 		$(".statusClick").removeClass("btn-success");
 		$(".statusClick").addClass("btn-default");
@@ -157,7 +157,7 @@ $(function() {
 		page = 0;
 		// statusParam = '&status='+statusCond
 		urlQuery = dutParam + keyword;
-		getDuts(urlQuery, dutElemId, 1, role);
+		getDuts(urlQuery, dutElemId, 1);
 	})
 
 	$(window).scroll(function(){
@@ -166,7 +166,7 @@ $(function() {
 		var windowHeight = $(this).height();
 		if(scrollTop + windowHeight + 58 > scrollHeight){
 			if(isMore == 1) {
-				getDuts(urlQuery+'&page='+(parseInt(page)+1), dutElemId, 0, role);
+				getDuts(urlQuery+'&page='+(parseInt(page)+1), dutElemId, 0);
 			}
 		}
 	});

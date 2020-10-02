@@ -90,4 +90,7 @@ module.exports = function(app){
 	/* =================================== Dutpd 采购商品 =================================== */
 	app.post('/mgDutpdUpdAjax', MdRole.mgerIsLogin, postForm, Dutpd.mgDutpdUpdAjax)
 	app.get('/mgDutpdCel/:id', MdRole.mgerIsLogin, Dutpd.mgDutpdCel)
+
+	/* =================================== Bill =================================== */
+	app.get('/mgBills', MdRole.mgerIsLogin, Bill.mgBills)
 };

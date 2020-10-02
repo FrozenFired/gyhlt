@@ -4,7 +4,7 @@
 		.col-6 已收款: #{(din.billPr).toFixed(2)}
 	.row
 		.col-6
-			h5.code 付款信息:
+			h5.code 收款信息:
 		.col-6.text-right
 			button.btn.btn-warning#billAddPageShow(type="button") + 收款账单
 	//- 添加产品
@@ -14,7 +14,7 @@
 			input(type="hidden", name="obj[genre]", value=1)
 
 			.row.my-3
-				.col-md-2.mt-3.text-right 数量:
+				.col-md-2.mt-3.text-right 金额:
 				.col-md-2.mt-3
 					input.form-control#billPrIpt(type="text", name="obj[billPr]", autocomplete="off", placeholder="收到钱数")
 			.row.my-3
