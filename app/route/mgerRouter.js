@@ -2,6 +2,7 @@ const Index = require('../controllers/aaIndex/index');
 
 const User = require('../controllers/user/mger/user');
 const Firm = require('../controllers/user/mger/firm');
+const Strmlg = require('../controllers/user/mger/strmlg');
 
 const Qutpd = require('../controllers/user/mger/qutpd');
 const Qut = require('../controllers/user/mger/qut');
@@ -10,6 +11,7 @@ const Din = require('../controllers/user/mger/din');
 const Dinpd = require('../controllers/user/mger/dinpd');
 
 const Bill = require('../controllers/user/mger/bill');
+const Tran = require('../controllers/user/mger/tran');
 
 const Dut = require('../controllers/user/mger/dut');
 const Dutpd = require('../controllers/user/mger/dutpd');
@@ -48,6 +50,15 @@ module.exports = function(app){
 	app.post('/mgFirmPostNew', MdRole.mgerIsLogin, postForm, MdPicture.pictureNew, Firm.mgFirmPostNew);
 	app.get('/mgFirmPostDel/:id', MdRole.mgerIsLogin, Firm.mgFirmPostDel);
 
+	/* ============================= Supplier Upstream ============================= */
+	app.get('/mgStrmlgs', MdRole.mgerIsLogin, Strmlg.mgStrmlgs)
+	app.get('/mgStrmlgAdd', MdRole.mgerIsLogin, Strmlg.mgStrmlgAdd)
+	app.get('/mgStrmlg/:id', MdRole.mgerIsLogin, Strmlg.mgStrmlg)
+	app.get('/mgStrmlgUp/:id', MdRole.mgerIsLogin, Strmlg.mgStrmlgUp)
+	app.get('/mgStrmlgDel/:id', MdRole.mgerIsLogin, Strmlg.mgStrmlgDel)
+
+	app.post('/mgStrmlgNew', MdRole.mgerIsLogin, postForm, Strmlg.mgStrmlgNew)
+	app.post('/mgStrmlgUpd', MdRole.mgerIsLogin, postForm, Strmlg.mgStrmlgUpd)
 
 	/* =================================== compd 报价商品 =================================== */
 	app.get('/mgQutpdDel/:id', MdRole.mgerIsLogin, Qutpd.mgQutpdDel)
@@ -93,4 +104,7 @@ module.exports = function(app){
 
 	/* =================================== Bill =================================== */
 	app.get('/mgBills', MdRole.mgerIsLogin, Bill.mgBills)
+
+	/* =================================== Tran =================================== */
+	app.get('/mgTrans', MdRole.mgerIsLogin, Tran.mgTrans)
 };

@@ -64,7 +64,7 @@ let dbSchema = new Schema({
 	dutAt: Date,								// 提货日期
 
 	/* ============================= 物流运输 ============================= */
-	transp: {type: ObjectId, ref: 'Transp'},
+	tran: {type: ObjectId, ref: 'Tran'},
 	trpAt:Date,
 });
 

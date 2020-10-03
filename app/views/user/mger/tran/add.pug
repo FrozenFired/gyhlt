@@ -1,0 +1,16 @@
+div.text-right
+	button.btn.btn-warning.objAddBtn(type="button") +新的运输单
+.objAddPage.border.p-3.pt-4.my-3.bg-light(style="display:none")
+	form#objForm(method="post", action="/mgDutNew", enctype="multipart/form-data")
+		.form-group.row.ctersel#cterNome
+			label.col-md-2.col-form-label(for="cterNomeIpt") 选择物流公司
+			.col-md-8
+				select.selectup.form-control#selStrmlg(name="obj[strmlg]", data-style="btn-info")
+					option(value='') 请选物流公司
+					each strmlg in strmlgs
+						-a;
+						option(value=strmlg._id) #{strmlg.nome}[#{strmlg.code}]
+			.col-md-2
+				input.btn.btn-success.btn-block(type="submit" value="下一步")
+.cancel.text-right
+	button.border.border-danger.mr-4.btn.btn-default.text-danger.objCancelBtn(type="button", style="display:none") 取消

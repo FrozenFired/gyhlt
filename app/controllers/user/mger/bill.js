@@ -7,11 +7,11 @@ const Bill = require('../../../models/firm/bill');
 const Ordin = require('../../../models/firm/ord/ordin');
 const Ordut = require('../../../models/firm/ord/ordut');
 
-// 采购订单
+// 财务账单
 exports.mgBills = (req, res) => {
 	let crUser = req.session.crUser;
 	res.render('./user/mger/bill/list', {
-		title: '采购订单',
+		title: '财务账单',
 		crUser,
 	})
 }
@@ -24,9 +24,9 @@ exports.mgBillNew = (req, res) => {
 
 	info = null;
 	if(!obj.billPr) {
-		info = "请填写收款钱数"
+		info = "请填写收款金额"
 	} else if(isNaN(obj.billPr)) {
-		info = "款项只能是数字";
+		info = "金额只能是数字";
 	}
 	if(info && info.length > 0) {
 		Err.usError(req, res, info);

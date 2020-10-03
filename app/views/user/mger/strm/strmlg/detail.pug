@@ -1,0 +1,26 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			.row
+				.col-12 
+					a(href="/mger") Home
+					span &nbsp; | &nbsp;
+					a(href="/mgStrmlgs") 物流公司列表
+					span &nbsp; | &nbsp;
+					span #{strmlg.code}
+			hr
+		.row
+			.col-10
+				h3.nome #{strmlg.nome}
+			.col-2
+				a.btn.btn-warning(href="/mgStrmlgUp/"+strmlg._id) 更新
+		.info.row.mt-3
+			.col-12
+				.note #{strmlg.note}
+				.resp #{strmlg.resp}
+				.tel #{strmlg.tel}
+				.email #{strmlg.email}
+				.addr #{strmlg.addr}
+				.country #{strmlg.country}

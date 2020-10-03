@@ -1,0 +1,30 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		.title
+			a(href="/bner") Home
+			span &nbsp; | &nbsp;
+			span 账单列表
+		hr
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#tranSearch(type="text", placeholder="运输单搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			each sts in Conf.tranSts
+				- let stsBtn = "btn-default";
+				if sts == 'init'
+					- stsBtn = "btn-success";
+				button.mr-3.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+		.add.mt-3
+			include ./add
+		.transList.mt-3
+			input#tranFilterAjax(type="hidden", value="/usTransAjax?@#transElem@mg@&status="+Conf.status.init.num)
+			//- input#tranFilterAjax(type="hidden", value="?key=xxx@#transElem")
+			#transElem.mt-5
+
+	script(src="/js/user/mger/tran/add.js")
+
+	script(src="/js/user/ajaxGet/tran.js")
