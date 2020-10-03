@@ -40,6 +40,7 @@ module.exports = function(app){
 	app.get('/usDinsAjax', MdRole.slerIsLogin, Order.usDinsAjax)
 	app.get('/usDutsAjax', MdRole.oderIsLogin, Order.usDutsAjax)
 	app.get('/usBillsAjax', MdRole.oderIsLogin, Order.usBillsAjax)
+	app.get('/usTransAjax', MdRole.mgerIsLogin, Order.usTransAjax)
 
 	/* ===================== 状态更改 ===================== */
 	app.get('/usInquotQuterStAjax', MdRole.userIsLogin, Status.usInquotQuterStAjax)

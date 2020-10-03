@@ -11,9 +11,9 @@ $(function() {
 	})
 
 	$("#objForm").submit(function(e) {
-		let selStrmup = $("#selStrmup").val();
-		if(!selStrmup || selStrmup.length < 20) {
-			alert("请选择供应商")
+		let selStrmlg = $("#selStrmlg").val();
+		if(!selStrmlg || selStrmlg.length < 20) {
+			alert("请选择物流公司")
 			e.preventDefault();
 		}
 	})

@@ -78,6 +78,7 @@ let Conf = {
 		stocking:{ num: 700, val: '在库'},
 
 		customin: {num: 580, val: '报关'},
+		shipping: {num: 620, val: '海运'},
 		customut: {num: 650, val: '清关'},
 
 		done: { num: 1000, val: '完成' , },
@@ -92,7 +93,7 @@ let Conf = {
  	dinpdSts: [ 'init', 'waiting', 'proding', 'tranpre', 'traning', 'stocking', 'done' ],
 	dutSts: [ 'init', 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
 
-	tranSts: [ 'init', 'customin', 'traning', 'customut', 'done'],	// 运输单状态
+	tranSts: [ 'init', 'customin', 'shipping', 'customut', 'done'],	// 运输单状态
 }
 
 module.exports = Conf

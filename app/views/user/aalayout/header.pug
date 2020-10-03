@@ -24,19 +24,19 @@
 					li.nav-item.active
 						a.nav-link(href="/slQuns") 询价
 					li.nav-item.active
-						a.nav-link(href="/slDins") 销售订单
+						a.nav-link(href="/slDins") 销售单
 				if crUser.role == Conf.roleUser.ordin.num
 					-a;
 					li.nav-item.active
-						a.nav-link(href="/odDuts") 采购订单
+						a.nav-link(href="/odDuts") 采购单
 				if Conf.roleAdmin.includes(crUser.role)
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/mgQuts") 报价管理
 					li.nav-item.active
-						a.nav-link(href="/mgDins") 销售订单
+						a.nav-link(href="/mgDins") 销售单
 					li.nav-item.active
-						a.nav-link(href="/mgDuts") 采购订单
+						a.nav-link(href="/mgDuts") 采购单
 					li.nav-item.active
 						a.nav-link(href="/mgTrans") 运输管理
 					li.nav-item.active

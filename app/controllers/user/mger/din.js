@@ -1,4 +1,4 @@
-// 销售订单
+// 销售单
 const Err = require('../../aaIndex/err');
 const Conf = require('../../../../conf');
 
@@ -126,7 +126,7 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 
 			compds[n].pdnum = n+1;
 			compds[n].ordin = ordin._id;
-			compds[n].dinpdSts = Conf.status.init.num;
+			compds[n].compdSts = Conf.status.init.num;
 			compds[n].save((err, compdSave) => {
 				if(err) {
 					console.log(err);
@@ -143,12 +143,12 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 }
 
 
-// 销售订单
+// 销售单
 exports.mgDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/mger/order/din/list', {
-		title: '销售订单',
+		title: '销售单',
 		crUser,
 	})
 }
@@ -225,7 +225,7 @@ exports.mgDin = (req, res) => {
 exports.mgDinDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-	Ordin.findOne({_id: id})
+	Ordin.findOne({_id: id, firm: crUser.firm})
 	.populate('inquot')
 	.exec((err, ordin) => {
 		if(err) {

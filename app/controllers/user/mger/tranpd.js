@@ -5,44 +5,44 @@ const Compd = require('../../../models/firm/ord/compd');
 
 const _ = require('underscore');
 
-exports.mgDutpdCel = (req, res) => {
+exports.mgTranpdCel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Compd.findOne({
 		_id: id,
 		firm: crUser.firm
 	})
-	.populate('ordut')
+	.populate('tran')
 	// .populate('ordin')
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "mger DutpdCel, Compd.findOne, Error!"
+			info = "mger TranpdCel, Compd.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			info = "mger DutpdCel, 此商品已经不存在, 请联系管理员!"
+			info = "mger TranpdCel, 此商品已经不存在, 请联系管理员!"
 			Err.usError(req, res, info);
-		} else if(compd.ordut.status != Conf.status.init.num) {
-			info = "mger DutpdCel, 采购单状态已经改变, 不可删除商品!"
+		} else if(compd.tran.status != Conf.status.init.num) {
+			info = "mger TranpdCel, 采购单状态已经改变, 不可删除商品!"
 			Err.usError(req, res, info);
 		} else {
-			let ordut = compd.ordut;
-			compd.ordut = null;
-			compd.compdSts = Conf.status.waiting.num;
+			let tran = compd.tran;
+			compd.tran = null;
+			compd.compdSts = Conf.status.tranpre.num;
 			compd.save((err, compdSave) => {
 				if(err) {
 					console.log(err);
-					info = "mger DutpdCel, Compd.save, Error!"
+					info = "mger TranpdCel, Compd.save, Error!"
 					Err.usError(req, res, info);
 				} else {
-					ordut.compds.remove(id);
-					ordut.save((err, ordutSave) => {
+					tran.compds.remove(id);
+					tran.save((err, tranSave) => {
 						if(err) {
 							console.log(err);
-							info = "mger DutpdCel, ordut.save, Error!"
+							info = "mger TranpdCel, tran.save, Error!"
 							Err.usError(req, res, info);
 						} else {
-							res.redirect('/mgDut/'+ordut._id)
+							res.redirect('/mgTran/'+tran._id)
 						}
 					})
 				}
@@ -50,7 +50,7 @@ exports.mgDutpdCel = (req, res) => {
 		}
 	})
 }
-exports.mgDutpdUpdAjax = (req, res) => {
+exports.mgTranpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 
@@ -58,24 +58,24 @@ exports.mgDutpdUpdAjax = (req, res) => {
 		firm: crUser.firm,
 		_id: obj._id
 	})
-	.populate('ordut')
+	.populate('tran')
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "mger DutpdUpd, Compd.findOne, Error!"
+			info = "mger TranpdUpd, Compd.findOne, Error!"
 			Err.jsonErr(req, res, info);
 		} else if(!compd) {
-			info = 'mger DutpdUpdAjax 此产品已经被删除, 请截图后, 联系管理员';
+			info = 'mger TranpdUpdAjax 此产品已经被删除, 请截图后, 联系管理员';
 			Err.jsonErr(req, res, info);
-		} else if(!compd.ordut) {
-			info = 'mger DutpdUpdAjax 此产品所属采购单已经被删除, 请截图后, 联系管理员';
+		} else if(!compd.tran) {
+			info = 'mger TranpdUpdAjax 此产品所属采购单已经被删除, 请截图后, 联系管理员';
 			Err.jsonErr(req, res, info);
-		} else if(compd.ordut.status != Conf.status.init.num) {
-			info = 'mger DutpdUpdAjax 此产品所属采购单状态已经改变, 价格不可更改';
+		} else if(compd.tran.status != Conf.status.init.num) {
+			info = 'mger TranpdUpdAjax 此产品所属采购单状态已经改变, 价格不可更改';
 			Err.jsonErr(req, res, info);
 		} else {
-			if(obj.dutPr) obj.dutPr = parseFloat(obj.dutPr);
-			if(isNaN(obj.dutPr)) {
+			if(obj.tranPr) obj.tranPr = parseFloat(obj.tranPr);
+			if(isNaN(obj.tranPr)) {
 				info = '采购价格输入有误, 请仔细查看, 请刷新查看';
 				Err.jsonErr(req, res, info);
 			} else {

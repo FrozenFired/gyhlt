@@ -1,0 +1,94 @@
+.border.border-dark.p-3
+	.row.text-center
+		.col-md-6
+			h5.code 运输单号: #{tran.code}
+			h5.nome 集装箱编号: #{tran.nome}
+			.trpAt.mt-2
+				span 出发时间: 
+				span #{moment(tran.trpAt).format('DD/MM/YYYY')}
+			.arrivAt.mt-2
+				span 到岗时间: 
+				span #{moment(tran.arrivAt).format('DD/MM/YYYY')}
+		.col-md-6
+			.tran
+				span 物流负责人:
+				if tran.lger
+					- lger = tran.lger;
+					span #{lger.nome} [ #{lger.code} ]
+				else
+					span 数据丢失
+			.strmlg.mt-2 物流公司:
+				if tran.strmlg
+					- strmlg = tran.strmlg;
+					span.text-info.objUpClick#strmlg-span #{strmlg.nome}[#{strmlg.code}]
+				else
+					span.text-info.objUpClick#strmlg-span 未分配
+				if tran.status == Conf.status.init.num
+					-a;
+					form#strmlg-form(method="post", action="/mgTranUpd", enctype="multipart/form-data", style="display:none")
+						input(type="hidden", name="obj[_id]", value=tran._id)
+						.form-group.row.px-5.text-center
+							.col-md-2
+							.col-8.col-md-8
+								select.objUpSel#tranNote-ipt.form-control(name="obj[strmlg]", data-style="btn-info")
+									each strmlg in strmlgs
+										-a;
+										if !tran.strmlg
+											-a;
+											option(value=strmlg._id) #{strmlg.nome}[#{strmlg.code}]
+										else if String(strmlg._id) == String(tran.strmlg._id)
+											-a;
+											option(value=strmlg._id, selected="selected") #{strmlg.nome}[#{strmlg.code}]
+										else
+											option(value=strmlg._id) #{strmlg.nome}[#{strmlg.code}]
+							.col-4.col-md-2
+								input.btn.btn-success(type="submit" value="提交")
+			.status
+				- let status = '';
+				each sts in Conf.status
+					- status = '';
+					if sts.num == tran.status
+						- status = sts.val;
+						- break;
+				span 状态: #{status}
+			.excel.text-right
+				a(href="/mgTranExcel/"+tran._id) Excel <span class="oi oi-data-transfer-download"></span>
+
+	.statusChange.mt-3.text-center.row
+		if tran.status == Conf.status.init.num
+			-a;
+			.col-6
+				button.btn.btn-danger.delObjectBtn(type="button") 删除此单
+				.delObject(style="display:none")
+					a.mx-4.my-2.btn.btn-danger(href="/mgTranDel/"+tran._id) 确定
+					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
+			.col-6
+				if tran.compds && tran.compds.length > 0
+					- a;
+					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+tran._id+"-customin", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.customin.num) 开始报关
+		else if tran.status == Conf.status.customin.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+tran._id+"-init", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.init.num) 返回初始状态
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+tran._id+"-shipping", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.shipping.num) 完成报关
+		else if tran.status == Conf.status.shipping.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+tran._id+"-customin", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.customin.num) 返回报关
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+tran._id+"-customut", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.customut.num) 开始清关
+		else if tran.status == Conf.status.customut.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+tran._id+"-shipping", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.shipping.num) 返回海运
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+tran._id+"-done", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.done.num) 运输完成
+		else if tran.status == Conf.status.done.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+tran._id+"-customut", type="button", data-url="/usTranStatusAjax", data-id=tran._id, data-stsf=tran.status, data-stst=Conf.status.customut.num) 返回清关
+			.col-6
+
+script(src="/js/user/mger/tran/detail/basicInfo.js")
+script(src="/js/user/ajaxChange/status.js")

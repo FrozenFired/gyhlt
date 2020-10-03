@@ -7,7 +7,7 @@ let Float = require('mongoose-float').loadType(mongoose, 2);
 const colection = 'Ordin';
 let dbSchema = new Schema({
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
-	/* ============ 销售订单 ============ */
+	/* ============ 销售单 ============ */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 	diner : {type: ObjectId, ref: 'User'},		// 销售员
 	cter: {type: ObjectId, ref: 'User'}, 		// 客户
@@ -26,7 +26,7 @@ let dbSchema = new Schema({
 	/* ========== 商品信息 ========== */
 	compds: [{type:ObjectId, ref:'Compd'}],
 	/* ========== 付款信息 ========== */
-	dinImp: Float,		// 销售订单货值
+	dinImp: Float,		// 销售单货值
 	billPr: Float,		// 已收
 	billAt: Date,		// 第一次付款时间
 	bills: [{type: ObjectId, ref: 'Bill'}],

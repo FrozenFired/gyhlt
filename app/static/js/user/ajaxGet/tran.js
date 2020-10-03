@@ -54,40 +54,56 @@ var tranRender = (tran) => {
 	}
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border tranCard">'
-		elem += '<div class="col-4">'
+		elem += '<div class="col-md-4">'
 			elem += '<a class="btn btn-info" href="/'+role+'Tran/'+tran._id+'">'
 				elem += '<div style="font-size: 23px;">'+tran.code+'</div>'
 			elem += '</a>'
+			let nome = "未填写"
+			if(tran.nome) nome = tran.nome;
+			elem += '<h5 class="mt-2">' + nome + '</h5>'
 		elem += '</div>'
 
-		elem += '<div class="col-4">'
+		elem += '<div class="col-md-4">'
 			elem += '<div>'
-				elem += '采购员:'
-				if(tran.traner) {
-					elem += tran.traner.nome + ' [' + tran.traner.code + ']'
+				elem += '出发时间: '
+				trpAt = Date.now();
+				if(tran.trpAt) {
+					trpAt = new Date(tran.trpAt)
+					elem += transformTime(trpAt, 0, 10)
+				} else {
+					elem += '未设置'
+				}
+			elem += '</div>'
+			elem += '<div class="mt-2">'
+				elem += '到港时间: '
+				arrivAt = Date.now();
+				if(tran.arrivAt) {
+					arrivAt = new Date(tran.arrivAt)
+					elem += transformTime(arrivAt, 0, 10)
+				} else {
+					elem += '未设置'
+				}
+			elem += '</div>'
+		elem += '</div>'
+
+		elem += '<div class="col-md-4">'
+			elem += '<div>'
+				elem += '物流负责人:'
+				if(tran.lger) {
+					elem += tran.lger.nome + ' [' + tran.lger.code + ']'
 				} else {
 					elem += '数据丢失';
 				}
 			elem += '</div>'
-			elem += '<div>'
-				elem += '下单时间: '
-				tranAt = Date.now();
-				if(tran.tranAt) tranAt = new Date(tran.tranAt)
-				elem += transformTime(tranAt, 0, 10)
-			elem += '</div>'
-		elem += '</div>'
 
-		elem += '<div class="col-4">'
 			elem += '<div>'
-				elem += '<span>供应商: </span>'
-				if(tran.strmup) {
+				elem += '<span>物流公司: </span>'
+				if(tran.strmlg) {
 					elem += '<span>'
-						let nome = '';
-						if(tran.strmup.nome) nome = tran.strmup.nome;
-						elem += nome
+						elem += tran.strmlg.nome+'['+tran.strmlg.code+']'
 					elem += '</span>'
 				} else {
-					elem += '<span>'+tran.strmupNome+'</span>'
+					elem += '<span>数据丢失</span>'
 				}
 			elem += '</div>'
 

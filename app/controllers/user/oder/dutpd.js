@@ -14,12 +14,12 @@ const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
-// 销售订单
+// 销售单
 exports.odDutpds = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/oder/ordin/dutpd/list', {
-		title: '销售订单',
+		title: '销售单',
 		crUser,
 	})
 }
@@ -40,12 +40,12 @@ exports.odDutpd = (req, res) => {
 			info = "oder Dutpd, Compd.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!dutpd) {
-			info = "这个销售订单已经被删除";
+			info = "这个销售单已经被删除";
 			Err.usError(req, res, info);
 		} else {
 			// console.log(dutpd)
 			res.render('./user/oder/ordin/dutpd/detail', {
-				title: '销售订单详情',
+				title: '销售单详情',
 				crUser,
 				dutpd
 			})
@@ -63,11 +63,11 @@ exports.odDutpdUp = (req, res) => {
 			info = "oder Dutpd, Compd.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!dutpd) {
-			info = "这个销售订单已经被删除";
+			info = "这个销售单已经被删除";
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/oder/ordin/dutpd/update', {
-				title: '销售订单修改',
+				title: '销售单修改',
 				crUser,
 				dutpd,
 			})
@@ -86,7 +86,7 @@ exports.odDutpdDel = (req, res) => {
 			info = "oder DutpdDel, Compd.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			info = "这个销售订单已经被删除";
+			info = "这个销售单已经被删除";
 			Err.usError(req, res, info);
 		} else {
 			let photoDel = compd.photo;
@@ -122,7 +122,7 @@ exports.odDutpdUpd = (req, res) => {
 			info = "oder DutpdUpd, Strmup.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			info = '此销售订单已经被删除, 请刷新查看';
+			info = '此销售单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
 			if(!obj.brand || obj.brand.length < 20) obj.brand = null;
@@ -141,7 +141,7 @@ exports.odDutpdUpd = (req, res) => {
 			let _compd = _.extend(compd, obj);
 			_compd.save((err, objSave) => {
 				if(err) {
-					info = "添加销售订单时 数据库保存错误, 请截图后, 联系管理员";
+					info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
 					MdPicture.deletePicture(photoDel, Conf.picPath.compd);

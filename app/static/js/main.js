@@ -196,19 +196,25 @@ let Conf = {
 
 		waiting: { num: 200, val: '等待生产'},
 		proding: { num: 400, val: '在产'},
+		tranpre: { num: 550, val: '待运'},
 		traning: { num: 600, val: '在途'},
 		stocking:{ num: 700, val: '在库'},
+
+		customin: {num: 580, val: '报关'},
+		shipping: {num: 620, val: '海运'},
+		customut: {num: 650, val: '清关'},
 
 		done: { num: 1000, val: '完成' , },
 		del : { num: 2000, val: '删除' , },
 	},
 
-	qunSts: [ 'init', 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord'],	// 询价单状态
 	qutSts: [ 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord' ],	// 报价单状态
+	qunSts: [ 'init', 'quoting', 'pricing', 'confirm', 'pending', 'ord', 'unord'],	// 询价单状态
  	qntpdSts: [ 'quoting', 'done', 'del' ],
  
- 	dinpdSts: [ 'init', 'proding', 'traning', 'stocking', 'done' ],
-
 	dinSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 销售订单状态
-	dutSts: [ 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
+ 	dinpdSts: [ 'init', 'waiting', 'proding', 'tranpre', 'traning', 'stocking', 'done' ],
+	dutSts: [ 'init', 'unpaid', 'deposit', 'payoff', 'done'],	// 采购订单状态
+
+	tranSts: [ 'init', 'customin', 'shipping', 'customut', 'done'],	// 运输单状态
 }

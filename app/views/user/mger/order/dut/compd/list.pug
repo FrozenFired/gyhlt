@@ -22,6 +22,11 @@ table.mt-3.table.table-bordered
 					.ordin.text-left
 						.text-dark 所属采购单:
 						a(href='/mgDin/'+dutpd.ordin._id, title=dutpd.ordin.compds.length) #{dutpd.ordin.code}
+					.ordin.text-left.mt-3
+						.text-dark 所属运输单:
+						if dutpd.tran
+							-a;
+							a(href='/mgTran/'+dutpd.tran._id, title=dutpd.tran.compds.length) #{dutpd.tran.code}
 					.pdnum.mt-3.text-left.text-dark [#{dutpd.pdnum}]
 					.brandnome.mt-4
 						if dutpd.brand
@@ -140,8 +145,8 @@ table.mt-3.table.table-bordered
 							-a;
 							span.text-info(id="tot-dutPr-"+dutpd._id) #{(dutpd.dutPr * dutpd.quant).toFixed(2)} €
 						else
-							- dutPrImp = '未完成报价';
-							span(id="span-dutPrTot-"+dutpd._id)  未报价
+							- dutPrImp = '未完成采购价';
+							span(id="span-dutPrTot-"+dutpd._id)  未设置采购价
 							span &nbsp;€
 					if dut.status == Conf.status.init.num
 						-a;

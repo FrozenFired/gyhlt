@@ -12,6 +12,7 @@ const Dinpd = require('../controllers/user/mger/dinpd');
 
 const Bill = require('../controllers/user/mger/bill');
 const Tran = require('../controllers/user/mger/tran');
+const Tranpd = require('../controllers/user/mger/tranpd');
 
 const Dut = require('../controllers/user/mger/dut');
 const Dutpd = require('../controllers/user/mger/dutpd');
@@ -107,4 +108,15 @@ module.exports = function(app){
 
 	/* =================================== Tran =================================== */
 	app.get('/mgTrans', MdRole.mgerIsLogin, Tran.mgTrans)
+	app.post('/mgTranNew', MdRole.mgerIsLogin, postForm, Tran.mgTranNew)
+	app.get('/mgTran/:id', MdRole.mgerIsLogin, Tran.mgTran)
+	app.get('/mgTranDel/:id', MdRole.mgerIsLogin, Tran.mgTranDel)
+
+	app.post('/mgTranUpd', MdRole.mgerIsLogin, postForm, Tran.mgTranUpd)
+
+	app.post('/mgTranPlusPd', MdRole.mgerIsLogin, postForm, Tran.mgTranPlusPd)
+
+	app.get('/mgTranExcel/:id', MdRole.slerIsLogin, Tran.mgTranExcel)
+	/* =================================== Tranpd 运输商品 =================================== */
+	app.get('/mgTranpdCel/:id', MdRole.mgerIsLogin, Tranpd.mgTranpdCel)
 };

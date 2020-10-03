@@ -7,7 +7,7 @@ let Float = require('mongoose-float').loadType(mongoose, 2);
 // 付款对应的订单
 const colection = 'Bill';
 let dbSchema = new Schema({
-	/* ============ 销售订单 ============ */
+	/* ============ 销售单 ============ */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 	fner : {type: ObjectId, ref: 'User'},
 	crtAt: Date,								// 创建时间

@@ -262,7 +262,7 @@ exports.usOrdinStatusAjax = (req, res) => {
 					}
 					let i=0;
 					for(; i<compds.length; i++) {
-						if(compds[i].dinpdSts != Conf.status.waiting.num) break;
+						if(compds[i].compdSts != Conf.status.waiting.num) break;
 					}
 					if(i != compds.length) {
 						info = "其中的商品已经在生产了, 不可返回"
@@ -301,8 +301,8 @@ let ordinCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
 	if(n == compds.length) {
 		return;
 	} else {
-		if(compds[n].dinpdSts == fromSts) {
-			compds[n].dinpdSts = newStatus;
+		if(compds[n].compdSts == fromSts) {
+			compds[n].compdSts = newStatus;
 			compds[n].save((err, compdSave) => {
 				if(err) console.log(err);
 				ordinCompdStatus(req, res, compds, fromSts, newStatus, n+1);
@@ -440,8 +440,8 @@ let ordutCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
 	if(n == compds.length) {
 		return;
 	} else {
-		if(compds[n].dinpdSts == fromSts) {
-			compds[n].dinpdSts = newStatus;
+		if(compds[n].compdSts == fromSts) {
+			compds[n].compdSts = newStatus;
 			compds[n].save((err, compdSave) => {
 				if(err) console.log(err);
 				ordutCompdStatus(req, res, compds, fromSts, newStatus, n+1);

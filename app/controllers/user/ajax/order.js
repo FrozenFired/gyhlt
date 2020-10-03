@@ -66,7 +66,6 @@ exports.usDinsAjax = (req, res) => {
 		status: {[statusSymb]: statusConb},
 
 		$or:[
-			{'dateCd': {[keySymb]: keyCond}},
 			{'code': {[keySymb]: keyCond}},
 		]
 	}
@@ -265,7 +264,8 @@ exports.usTransAjax = (req, res) => {
 		} else {
 			Tran.find(param)
 			.populate('firm')
-			.populate('duter')
+			.populate('lger')
+			.populate('strmlg')
 			.skip(skip).limit(pagesize)
 			.sort({'status': 1, 'weight': -1, 'upAt': -1})
 			.exec((err, trans) => {

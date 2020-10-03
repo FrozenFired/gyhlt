@@ -1,23 +1,19 @@
-// 采购订单
+// 采购单
 const Err = require('../../aaIndex/err');
-
-const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
 const Ordut = require('../../../models/firm/ord/ordut');
-const Ordin = require('../../../models/firm/ord/ordin');
 const Compd = require('../../../models/firm/ord/compd');
 
+const Ordin = require('../../../models/firm/ord/ordin');
 const Strmup = require('../../../models/firm/stream/strmup');
-const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
 const moment = require('moment');
 const xl = require('excel4node');
 
-
-// 采购订单
+// 采购单
 exports.mgDuts = (req, res) => {
 	let crUser = req.session.crUser;
 	Strmup.find({firm: crUser.firm})
@@ -27,7 +23,7 @@ exports.mgDuts = (req, res) => {
 			info = "mger Duts, Strmup.find, Error!"
 		} else {
 			res.render('./user/mger/order/dut/list', {
-				title: '采购订单',
+				title: '采购单',
 				crUser,
 				strmups
 			})
@@ -114,15 +110,16 @@ exports.mgDut = (req, res) => {
 			{path: 'pdthd'},
 
 			{path: 'ordin'},
+			{path: 'tran'},
 		]
 	})
 	.exec((err, dut) => {
 		if(err) {
 			console.log(err);
-			info = "mger Qun, Ordut.findOne, Error!";
+			info = "mger Dut, Ordut.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!dut) {
-			info = "这个询价单已经被删除, mgDutFilter";
+			info = "这个采购单已经被删除, mgDutFilter";
 			Err.usError(req, res, info);
 		} else {
 			// console.log(dut)
@@ -133,7 +130,7 @@ exports.mgDut = (req, res) => {
 			.exec((err, strmups) => {
 				if(err) {
 					console.log(err);
-					info = 'mger QutAdd, Strmup.find, Error!';
+					info = 'mger Dut, Strmup.find, Error!';
 					Err.usError(req, res, info);
 				} else {
 					Ordin.find({
@@ -143,7 +140,7 @@ exports.mgDut = (req, res) => {
 					.populate('diner')
 					.populate({
 						path: 'compds',
-						match: { 'dinpdSts': Conf.status.waiting.num, 'strmup': dut.strmup },
+						match: { 'compdSts': Conf.status.waiting.num, 'strmup': dut.strmup },
 						populate: [
 							{path: 'brand'},
 							{path: 'pdfir'},
@@ -157,7 +154,7 @@ exports.mgDut = (req, res) => {
 					.exec((err, dins) => {
 						if(err) {
 							console.log(err);
-							info = 'mger QutAdd, Ordin.find, Error!';
+							info = 'mger Dut, Ordin.find, Error!';
 							Err.usError(req, res, info);
 						} else {
 							res.render('./user/mger/order/dut/detail', {
@@ -181,18 +178,18 @@ exports.mgDut = (req, res) => {
 exports.mgDutDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-	Ordut.findOne({_id: id})
+	Ordut.findOne({_id: id, firm: crUser.firm})
 	.populate('bills')
 	.exec((err, ordut) => {
 		if(err) {
 			console.log(err);
-			info = "mger QunDel, Ordut.findOne, Error!";
+			info = "mger DutDel, Ordut.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!ordut) {
 			info = "这个采购单已经被删除";
 			Err.usError(req, res, info);
-		} else if(ordut.status == Conf.status.unpaid.num) {
-			info = "采购状态已经改变, 不可删除";
+		} else if(ordut.status != Conf.status.init.num) {
+			info = "采购单状态已经改变, 不可删除";
 			Err.usError(req, res, info);
 		} else if(ordut.bills.length > 0) {
 			info = "此采购单已经付款, 不可删除";
@@ -200,7 +197,7 @@ exports.mgDutDel = (req, res) => {
 		} else {
 			Compd.countDocuments({
 				_id: {"$in": ordut.compds},
-				dinpdSts: Conf.status.proding.num
+				compdSts: Conf.status.proding.num
 			})
 			.exec((err, count) => {
 				if(err) {
@@ -213,10 +210,10 @@ exports.mgDutDel = (req, res) => {
 				} else {
 					Compd.updateMany({
 						_id: {"$in": ordut.compds},
-						dinpdSts: Conf.status.proding.num
+						compdSts: Conf.status.proding.num
 					}, {
 						ordut: null,
-						dinpdSts: Conf.status.waiting.num
+						compdSts: Conf.status.waiting.num
 					},(err, pdfirs) => {
 						if(err) {
 							console.log(err);
@@ -268,17 +265,14 @@ exports.mgDutPlusPd = (req, res) => {
 				// console.log(ordut)
 				Compd.countDocuments({
 					_id: {"$in": compdsArr},
-					dinpdSts: Conf.status.waiting.num
+					compdSts: Conf.status.waiting.num
 				})
 				.exec((err, count) => {
 					if(err) {
 						console.log(err);
 						info = "mger DutPlusPd, Compd.find, Error!"
 						Err.usError(req, res, info);
-					} else if(count != compdsArr.length) {
-						console.log(count)
-						console.log(compdsArr)
-						console.log(id)
+					} else if(count != compdsArr.length) {	// 如果查看选中的商品中是否已经有改变状态的
 						info = '选择的商品中存在已经改变状态的商品, 请刷新重试';
 						Err.usError(req, res, info);
 					} else {
@@ -293,10 +287,10 @@ exports.mgDutPlusPd = (req, res) => {
 							} else {
 								Compd.updateMany({
 									_id: {"$in": compdsArr},
-									dinpdSts: Conf.status.waiting.num
+									compdSts: Conf.status.waiting.num
 								}, {
 									ordut: id,
-									dinpdSts: Conf.status.proding.num
+									compdSts: Conf.status.proding.num
 								},(err, pdfirs) => {
 									if(err) {
 										console.log(err);
@@ -324,7 +318,7 @@ exports.mgDutUpd = (req, res) => {
 	}, (err, ordut) => {
 		if(err) {
 			console.log(err);
-			info = "mger QunUpd, Strmup.findOne, Error!"
+			info = "mger DutUpd, Ordut.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!ordut) {
 			info = '此采购单已经被删除, 请刷新查看';
@@ -338,11 +332,9 @@ let mgerDutStrmupSel = (req, res, obj, ordut) => {
 	if(ordut && (String(ordut.strmup) == String(obj.strmup))) {
 		// 如果是更新， 则判断如果 strmup 没有变化, 则跳过此步骤
 		mgerdutSave(req, res, obj, ordut);
-	} else if(!obj.strmup) {
-		obj.strmup = ordut.strmup;
+	} else if(!obj.strmup || obj.strmup == '') {
 		mgerdutSave(req, res, obj, ordut);
 	} else {
-		if(obj.strmup == "null") obj.strmup = null;
 		Compd.updateMany({
 			_id: ordut.compds,
 			strmup: ordut.strmup
@@ -369,7 +361,7 @@ let mgerdutSave = (req, res, obj, ordut) => {
 	_ordut.save((err, objSave) => {
 		if(err) {
 			console.log(err);
-			info = "添加采购单时 数据库保存错误, 请截图后, 联系管理员";
+			info = "mgerdutSave 保存采购单时 数据库保存错误, 请截图后, 联系管理员";
 			Err.usError(req, res, info);
 		} else {
 			res.redirect('/mgDut/'+objSave._id)
@@ -407,7 +399,7 @@ exports.mgDutExcel = (req, res) => {
 	.exec((err, dut) => {
 		if(err) {
 			console.log(err);
-			info = "sler Qun, Ordut.findOne, Error!";
+			info = "sler Dut, Ordut.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!dut) {
 			info = "这个报价单已经被删除";
@@ -444,7 +436,7 @@ exports.mgDutExcel = (req, res) => {
 			ws.cell(1,6).string('material');
 			ws.cell(1,7).string('craft');
 			ws.cell(1,8).string('Note');
-			ws.cell(1,9).string('Qunant');
+			ws.cell(1,9).string('Dutant');
 			ws.cell(1,10).string('销售价格(€)');
 			ws.cell(1,11).string('Total Price(€)');
 

@@ -1,4 +1,4 @@
-extends ../../../aalayout/layout
+extends ../../aalayout/layout
 
 block content
 	.container.mt-3
@@ -7,18 +7,16 @@ block content
 				.col-9.text-muted.mt-2: h5
 					a(href="/") Home
 					span &nbsp; | &nbsp;
-					a(href="/mgDuts") 采购单列表
+					a(href="/mgTrans") 运输单列表
 					span &nbsp; | &nbsp;
-					span 采购单详情
+					span 运输单详情
 				.col-3.text-right
 			hr
 		.info.my-3
 			include ./detail/basicInfo
-			if dut.status == Conf.status.init.num
+			if tran.status == Conf.status.init.num
 				-a;
 				include ./compd/add
-			else
-				include ./detail/billInfo
 		hr
 		.compds.mt-3
 			include ./compd/list

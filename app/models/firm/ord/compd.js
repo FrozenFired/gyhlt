@@ -49,15 +49,14 @@ let dbSchema = new Schema({
 	qntpdSts: Number,							// 商品询报价状态
 	delNote: String, 							// 为什么是无效产品
 
-	/* ============================= 销售订单 ============================= */
+	/* ============================= 销售单 ============================= */
 	ordin: {type: ObjectId, ref: 'Ordin'},		// 所属订单
 	cter: {type: ObjectId, ref: 'User'}, 		// 客户
 	cterNome: String,							// 销售价格
 	dinPr: Float,								// 销售价格
 	dinAt: Date,								// 交货日期
-	dinpdSts: Number,							// 商品状态 
 
-	/* ============================= 采购订单 ============================= */
+	/* ============================= 采购单 ============================= */
 	ordut: {type: ObjectId, ref: 'Ordut'},
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 	dutPr: Float,								// 采购价格
@@ -66,6 +65,8 @@ let dbSchema = new Schema({
 	/* ============================= 物流运输 ============================= */
 	tran: {type: ObjectId, ref: 'Tran'},
 	trpAt:Date,
+
+	compdSts: Number,							// 商品状态 
 });
 
 dbSchema.pre('save', function(next) {

@@ -114,7 +114,7 @@ exports.slerIsLogin = function(req, res, next) {
 	} else if(crUser.role == Conf.roleUser.seller.num) {
 		next();
 	} else if(crUser.role == Conf.roleUser.ordin.num) {
-		//  订单部可以看到销售订单
+		//  订单部可以看到销售单
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();

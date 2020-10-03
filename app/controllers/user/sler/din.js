@@ -1,4 +1,4 @@
-// 销售订单
+// 销售单
 const Err = require('../../aaIndex/err');
 
 const MdPicture = require('../../../middle/middlePicture');
@@ -24,7 +24,7 @@ exports.slDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/sler/ordin/din/list', {
-		title: '销售订单',
+		title: '销售单',
 		crUser,
 	})
 }

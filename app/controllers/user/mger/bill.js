@@ -41,7 +41,7 @@ exports.mgBillNew = (req, res) => {
 					info = "mger BillNew, Ordin.findOne, Error!";
 					Err.usError(req, res, info);
 				} else if(!ordin) {
-					info = "mger BillNew, 采购订单已不存在, 请联系管理员";
+					info = "mger BillNew, 采购单已不存在, 请联系管理员";
 					Err.usError(req, res, info);
 				} else {
 					obj.cter = ordin.cter;
@@ -84,7 +84,7 @@ exports.mgBillNew = (req, res) => {
 					info = "mger BillNew, Ordut.findOne, Error!";
 					Err.usError(req, res, info);
 				} else if(!ordut) {
-					info = "mger BillNew, 采购订单已不存在, 请联系管理员";
+					info = "mger BillNew, 采购单已不存在, 请联系管理员";
 					Err.usError(req, res, info);
 				} else {
 					obj.cter = ordut.cter;
@@ -187,7 +187,7 @@ exports.mgBillDel = (req, res) => {
 					}
 				})
 			} else {
-				info = "mger BillDel, 没有找到采购订单, 也没有找到销售订单";
+				info = "mger BillDel, 没有找到采购单, 也没有找到销售单";
 				Err.usError(req, res, info);
 			}
 		}
