@@ -67,7 +67,9 @@ exports.mgDinGen = (req, res) => {
 					}
 					let daySpan = parseInt(today) - parseInt(lastDate);
 					// console.log(codeNum)
-					codeNum = String(parseInt(codeNum) + daySpan * r1 + r2);
+					let dinNum = parseInt(codeNum) + daySpan * r1 + r2;
+
+					codeNum = String(dinNum);
 					// console.log(daySpan)
 					// console.log(r1)
 					// console.log(r2)
@@ -89,18 +91,18 @@ exports.mgDinGen = (req, res) => {
 					ordinObj.dinImp = 0;
 					ordinObj.billPr = 0;
 					_ordin = new Ordin(ordinObj)
-					mgerOrdinSave(req, res, _ordin, inquot, compds, 0);
+					mgerOrdinSave(req, res, _ordin, inquot, dinNum, compds, 0);
 				}
 			})
 		}
 	})
 }
-let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
+let mgerOrdinSave = (req, res, ordin, inquot, dinNum, compds, n) => {
 	if(n == compds.length) {
 		ordin.save((err, ordSave) => {
 			if(err) {
 				console.log(err);
-				info = 'mgerOrdinSave, ordin.save, Error, 请截图后, 联系管理员!'
+				info = 'mger OrdinSave, ordin.save, Error, 请截图后, 联系管理员!'
 				Err.usError(req, res, info);
 			} else {
 				inquot.status = Conf.status.ord.num;
@@ -108,7 +110,7 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 				inquot.save((err, inquotSave) => {
 					if(err) {
 						console.log(err);
-						info = 'mgerOrdinSave, inquot.save, Error, 请截图后, 联系管理员!'
+						info = 'mger OrdinSave, inquot.save, Error, 请截图后, 联系管理员!'
 						Err.usError(req, res, info);
 					} else {
 						res.redirect('/mgDin/'+ordSave._id)
@@ -124,20 +126,20 @@ let mgerOrdinSave = (req, res, ordin, inquot, compds, n) => {
 				ordin.dinImp += compds[n].dinPr * compds[n].quant;
 			}
 
-			compds[n].pdnum = n+1;
+			compds[n].pdnum = 'S'+dinNum+'-N'+parseInt(n+1);
 			compds[n].ordin = ordin._id;
 			compds[n].compdSts = Conf.status.init.num;
 			compds[n].save((err, compdSave) => {
 				if(err) {
 					console.log(err);
-					info = 'mgerOrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
+					info = 'mger OrdinSave, Error, compds[n].save, 请截图后, 联系管理员!'
 					Err.usError(req, res, info);
 				} else {
-					mgerOrdinSave(req, res, ordin, inquot, compds, n+1);
+					mgerOrdinSave(req, res, ordin, inquot, dinNum, compds, n+1);
 				}
 			})
 		} else {
-			mgerOrdinSave(req, res, ordin, inquot, compds, n+1);
+			mgerOrdinSave(req, res, ordin, inquot, dinNum, compds, n+1);
 		}
 	}
 }

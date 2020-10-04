@@ -1,5 +1,13 @@
-- let quantTotal = 0;
-- let qntPrImp = 0;
+- let quantTotal = len = qntPrImp = 0;
+.row.mt-3
+	.col-sm-6
+		.quantTotal
+			span 总条目: 
+			span #{qutpds.length}
+	.col-sm-6.text-right
+		.quantTotal
+			span 总数量: 
+			span#span-quantTotal
 table.mt-3.table.table-bordered
 	thead.thead-light
 		th 品牌
@@ -10,14 +18,17 @@ table.mt-3.table.table-bordered
 		th(style="width:18%") 数量 | 价格(欧元)
 	thead
 		each qutpd in qutpds
-			-a;
+			- len++;
 			tr.text-info(id="compdTr-"+qutpd._id)
 				td
-					if qutpd.brand
-						- brand = qutpd.brand;
-						.brandnome [#{brand.nome}]
-					else
-						.brandnome #{qutpd.brandNome}
+					.number
+						span.text-dark.border.p-1 N. #{len}
+					.brandnome.mt-3
+						if qutpd.brand
+							- brand = qutpd.brand;
+							span [#{brand.nome}]
+						else
+							span #{qutpd.brandNome}
 
 					if qutpd.area
 						-a;

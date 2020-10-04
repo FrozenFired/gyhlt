@@ -9,7 +9,7 @@ let dbSchema = new Schema({
 	/* ==================================== 默认继承 询价单 ==================================== */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
 
-	pdnum: Number,								// 产品编号
+	pdnum: String,								// 产品编号
 	area: String,								// 所属区域
 
 	brand: {type: ObjectId, ref: 'Brand'},		// 品牌

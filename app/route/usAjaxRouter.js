@@ -46,7 +46,8 @@ module.exports = function(app){
 	app.get('/usInquotQuterStAjax', MdRole.userIsLogin, Status.usInquotQuterStAjax)
 	app.get('/usInquotStatusAjax', MdRole.userIsLogin, Status.usInquotStatusAjax)
 	app.get('/usOrdinStatusAjax', MdRole.userIsLogin, Status.usOrdinStatusAjax)
-	app.get('/usOrdutStatusAjax', MdRole.userIsLogin, Status.usOrdutStatusAjax)
+	app.get('/usOrdutStatusAjax', MdRole.mgerIsLogin, Status.usOrdutStatusAjax)
+	app.get('/usTranStatusAjax', MdRole.mgerIsLogin, Status.usTranStatusAjax)
 
 	/* =================================== Datafile =================================== */
 	app.get('/usAlbumsAjax', Datafile.usAlbumsAjax);

@@ -1,5 +1,14 @@
-- let quantTotal = 0;
+- let quantTotal = len = 0;
 - let qntPrImp = dinPrImp = 0;
+.row.mt-3
+	.col-sm-6
+		.quantTotal
+			span 总条目: 
+			span #{qutpds.length}
+	.col-sm-6.text-right
+		.quantTotal
+			span 总数量: 
+			span#span-quantTotal
 table.mt-3.table.table-bordered
 	thead.thead-light
 		th 品牌
@@ -20,10 +29,12 @@ table.mt-3.table.table-bordered
 					span#span-dinPrImp
 					span &nbsp;€
 		each qutpd in qutpds
-			-a;
+			- len++;
 			tr.text-info(id="tr-compdid-"+qutpd._id)
 				td
-					.brandnome.mt-5
+					.number
+						span.text-dark.border.p-1 N. #{len}
+					.brandnome.mt-4
 						if qutpd.brand
 							- brand = qutpd.brand;
 							span [#{brand.nome}]

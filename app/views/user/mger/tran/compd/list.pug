@@ -14,7 +14,7 @@ table.mt-3.table.table-bordered
 					.ordut.text-left
 						.text-dark 所属采购单:
 						a(href='/mgDut/'+tranpd.ordut._id, title=tranpd.ordut.compds.length) #{tranpd.ordut.code}
-					.pdnum.mt-3.text-left.text-dark [#{tranpd.pdnum}]
+					.pdnum.mt-3.text-left.text-dark 商品编号: [#{tranpd.pdnum}]
 					.brandnome.mt-4
 						if tranpd.brand
 							- brand = tranpd.brand;

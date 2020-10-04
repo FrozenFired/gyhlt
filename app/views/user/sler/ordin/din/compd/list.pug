@@ -1,3 +1,6 @@
+.row
+	.col-12
+		button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>
 table.mt-3.table.table-bordered
 	thead.thead-light
 		th 品牌
@@ -11,7 +14,7 @@ table.mt-3.table.table-bordered
 			-a;
 			tr.text-info(id="tr-compdid-"+dinpd._id)
 				td
-					.pdnum.text-left.text-dark [#{dinpd.pdnum}]
+					.pdnum.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
 					.brandnome.mt-5
 						if dinpd.brand
 							- brand = dinpd.brand;

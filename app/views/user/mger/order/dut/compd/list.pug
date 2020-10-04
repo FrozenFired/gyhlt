@@ -22,12 +22,12 @@ table.mt-3.table.table-bordered
 					.ordin.text-left
 						.text-dark 所属采购单:
 						a(href='/mgDin/'+dutpd.ordin._id, title=dutpd.ordin.compds.length) #{dutpd.ordin.code}
-					.ordin.text-left.mt-3
-						.text-dark 所属运输单:
-						if dutpd.tran
-							-a;
+					if dutpd.tran
+						-a;
+						.ordin.text-left.mt-3
+							.text-dark 所属运输单:
 							a(href='/mgTran/'+dutpd.tran._id, title=dutpd.tran.compds.length) #{dutpd.tran.code}
-					.pdnum.mt-3.text-left.text-dark [#{dutpd.pdnum}]
+					.pdnum.mt-3.text-left.text-dark 商品编号: [#{dutpd.pdnum}]
 					.brandnome.mt-4
 						if dutpd.brand
 							- brand = dutpd.brand;

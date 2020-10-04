@@ -21,9 +21,6 @@
 					span #{quter.nome} [ #{quter.code} ]
 				else
 					span.text-warning 未分配
-			.quantTotal
-				span 总数量: 
-				span#span-quantTotal
 			.status.mt-3
 				- var status = '';
 				each sts in Conf.status
@@ -51,6 +48,6 @@
 				.col-3
 					span.p-2.border.border-success 已经完成
 				.col-3
-					button.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-done", type="button", data-url="/usInquotQuterStAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.init.num, style="display:none") 尚未完成
+					button.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-done", type="button", data-url="/usInquotQuterStAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.init.num, style="display:none") 返回未完成
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/user/qter/qut/detail/basicUp.js")

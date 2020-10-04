@@ -3,6 +3,7 @@ let Conf = require('../../../../conf');
 
 let Ordin = require('../../../models/firm/ord/ordin');
 let Ordut = require('../../../models/firm/ord/ordut');
+let Tran = require('../../../models/firm/ord/tran');
 let Inquot = require('../../../models/firm/ord/inquot');
 let Compd = require('../../../models/firm/ord/compd');
 
@@ -222,11 +223,9 @@ exports.usOrdinStatusAjax = (req, res) => {
 			} else {
 				if(oldStatus == Conf.status.unpaid.num && newStatus == Conf.status.deposit.num) {
 					// 确认收到首款后, 从未付款状态变为付款状态
-					info = null;
 					if(ordin.bills.length == 0) {
 						info = "请先收款"
-					}
-					if(!info) {
+					} else {
 						ordinCompdStatus(req, res, compds, Conf.status.init.num, Conf.status.waiting.num, 0);
 						ordin.status = parseInt(newStatus);
 						info = null;
@@ -238,10 +237,18 @@ exports.usOrdinStatusAjax = (req, res) => {
 					info = null;
 				}
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
-					// 完成付款, 开始处理订单
-					ordinCompdStatus(req, res, compds, Conf.status.stocking.num, Conf.status.done.num, 0);
-					ordin.status = parseInt(newStatus);
-					info = null;
+					// 完成付款, 完成订单
+					let i=0;
+					for(; i<compds.length; i++) {
+						if(compds[i].compdSts != Conf.status.stocking.num) break;
+					}
+					if(i != compds.length) {
+						info = "其中的商品不在仓库, 不可完成"
+					} else {
+						ordinCompdStatus(req, res, compds, Conf.status.stocking.num, Conf.status.done.num, 0);
+						ordin.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.payoff.num) {
 					// 点错, 从完成返回到付清状态
@@ -270,7 +277,6 @@ exports.usOrdinStatusAjax = (req, res) => {
 					if(!info) {
 						ordinCompdStatus(req, res, compds,  Conf.status.waiting.num, Conf.status.init.num, 0);
 						ordin.status = parseInt(newStatus);
-						info = null;
 					}
 				}
 			}
@@ -365,11 +371,9 @@ exports.usOrdutStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.unpaid.num && newStatus == Conf.status.deposit.num) {
 					// 确认付首款后, 从未付款状态变为付款状态
-					info = null;
 					if(ordut.bills.length == 0) {
 						info = "请先付款"
-					}
-					if(!info) {
+					} else {
 						ordut.status = parseInt(newStatus);
 						info = null;
 					}
@@ -387,9 +391,17 @@ exports.usOrdutStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.payoff.num) {
 					// 点错, 从完成返回到付清状态
-					ordutCompdStatus(req, res, compds,  Conf.status.tranpre.num, Conf.status.proding.num, 0);
-					ordut.status = parseInt(newStatus);
-					info = null;
+					let i=0;
+					for(; i<compds.length; i++) {
+						if(compds[i].compdSts != Conf.status.tranpre.num) break;
+					}
+					if(i != compds.length) {
+						info = "其中的商品已经在运输, 不可返回"
+					} else {
+						ordutCompdStatus(req, res, compds,  Conf.status.tranpre.num, Conf.status.proding.num, 0);
+						ordut.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.deposit.num) {
 					// 点错, 返回到付首款状态
@@ -398,11 +410,9 @@ exports.usOrdutStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.unpaid.num) {
 					// 从已付首款, 返回到未付状态
-					info = null;
 					if(ordut.bills.length != 0) {
 						info = "请先删除, 已付款项"
-					}
-					if(!info) {
+					} else {
 						ordut.status = parseInt(newStatus);
 						info = null;
 					}
@@ -448,6 +458,130 @@ let ordutCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
 			})
 		} else {
 			ordutCompdStatus(req, res, compds, fromSts, newStatus, n+1);
+		}
+	}
+}
+
+
+
+exports.usTranStatusAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let id = req.query.id;
+	let oldStatus = req.query.oldStatus;
+	let newStatus = req.query.newStatus;
+	Tran.findOne({_id: id})
+	.populate('bills')
+	.populate({
+		path: 'compds',
+	})
+	.exec((err, tran) => {
+		if(err) {
+			console.log(err);
+			info = "user ChangeStatusAjax, findOne(), Error!";
+			Err.jsonErr(req, res, info);
+		} else if(!tran) {
+			info = "没有找到数据!";
+			Err.jsonErr(req, res, info);
+		} else {
+			let compds = tran.compds;
+			info = '错误操作, 请截图后, 联系管理员(usTranStatusAjax)';
+			if(oldStatus != tran.status) {
+				info = '数据不符, 请截图后, 联系管理员';
+			} else {
+				if(oldStatus == Conf.status.init.num && newStatus == Conf.status.customin.num) {
+					// 确认运输, 进入报关状态
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.customin.num && newStatus == Conf.status.shipping.num) {
+					// 完成报关, 开始海运
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.shipping.num && newStatus == Conf.status.customut.num) {
+					// 点击开始清关
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.customut.num && newStatus == Conf.status.done.num) {
+					// 完成清关, 此运输完成, 商品进入仓库
+					let i=0;
+					for(; i<compds.length; i++) {
+						if(compds[i].compdSts != Conf.status.traning.num) break;
+					}
+					if(i != compds.length) {
+						info = "其中的商品状态有问题, 不可完成"
+					} else {
+						tranCompdStatus(req, res, compds,  Conf.status.traning.num, Conf.status.stocking.num, 0);
+						tran.status = parseInt(newStatus);
+						info = null;
+					}
+				}
+				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.customut.num) {
+					// 点错, 从完成返回到清关状态, 商品返回到在途状态
+					let i=0;
+					for(; i<compds.length; i++) {
+						if(compds[i].compdSts != Conf.status.stocking.num) break;
+					}
+					if(i != compds.length) {
+						info = "其中的商品已经完成, 不可返回"
+					} else {
+						tranCompdStatus(req, res, compds,  Conf.status.stocking.num, Conf.status.traning.num, 0);
+						tran.status = parseInt(newStatus);
+						info = null;
+					}
+				}
+				else if(oldStatus == Conf.status.customut.num && newStatus == Conf.status.shipping.num) {
+					// 点错, 返回到海运状态
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.shipping.num && newStatus == Conf.status.customin.num) {
+					// 返回到报关状态
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+				else if(oldStatus == Conf.status.customin.num && newStatus == Conf.status.init.num) {
+					// 从报关状态, 返回到初始状态
+					tran.status = parseInt(newStatus);
+					info = null;
+				}
+			}
+			if(info) {
+				Err.jsonErr(req, res, info);
+			} else {
+				usTranStatusSave(req, res, tran);
+			}
+		}
+	})
+}
+
+let usTranStatusSave = (req, res, tran) => {
+	tran.save((err, objSave) => {
+		if(err) {
+			console.log(err);
+			info = "user ChangeStatusAjax, findOne(), Error!";
+			Err.jsonErr(req, res, info);
+		} else {
+			res.json({ status: 1, msg: '',
+				data: { tran }
+			})
+		}
+	})
+}
+
+let tranCompdStatus = (req, res, compds, fromSts, newStatus, n) => {
+	if(n == compds.length) {
+		return;
+	} else {
+		if(compds[n].compdSts == fromSts) {
+			compds[n].compdSts = newStatus;
+			compds[n].save((err, compdSave) => {
+				if(err) console.log(err);
+				tranCompdStatus(req, res, compds, fromSts, newStatus, n+1);
+			})
+		} else {
+			tranCompdStatus(req, res, compds, fromSts, newStatus, n+1);
 		}
 	}
 }

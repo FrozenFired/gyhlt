@@ -27,4 +27,9 @@ $(function() {
 		$(".delObject").hide();
 		$(".textinfo").show();
 	})
+
+	// 查看报价按钮
+	$(".qntPrTdBtn").click(function(e) {
+		$(".qntPrTd").toggle();
+	})
 })
