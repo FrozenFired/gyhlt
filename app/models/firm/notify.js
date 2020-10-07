@@ -3,28 +3,22 @@ let Schema = mongoose.Schema;
 
 let ObjectId = Schema.Types.ObjectId;
 
-const colection = 'Comment';
+const colection = 'Notify';
 let dbSchema = new Schema({
+	level: Number,
+	read: Number,	// 判断是否已经阅读
 
-	inquot : { type: ObjectId, ref: 'Inquot' },
+	compd : { type: ObjectId, ref: 'Compd' },
+	inquot : { type: ObjectId, ref: 'Inquot'},
 	ordin : { type: ObjectId, ref: 'Ordin' },
 
 	mark: Number,
 	from: { type: ObjectId, ref: 'User' },
-	replys: [{
-		mark: Number,
-		from: { type: ObjectId, ref: 'User' },
-		to: { type: ObjectId, ref: 'User' },
-		content: String,
-		crtAt: {
-			type: Date,
-			default: Date.now()
-		}
-	}],
+	to: { type: ObjectId, ref: 'User' },
+	replys: [{ type: ObjectId, ref: 'Notify'}],		// 一级留言包含的所有二级留言
+	reply: { type: ObjectId, ref: 'Notify'},		// 对二级留言的回复
 	content: String,
-
-	status: Number,					// 重点 
-	weight: {type: Number, default: 0},	// 权重 置顶 排序用的
+	photo: String,
 
 	crtAt: Date,
 	updAt: Date,
@@ -32,8 +26,8 @@ let dbSchema = new Schema({
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		if(!this.weight) this.weight = 0;
-		if(!this.status) this.status = 0;
+		if(!this.read) this.read = -1;
+		if(!this.level) this.level = 1;
 		this.updAt = this.crtAt = Date.now();
 	} else {
 		this.updAt = Date.now();

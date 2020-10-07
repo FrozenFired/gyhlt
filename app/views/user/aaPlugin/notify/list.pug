@@ -1,0 +1,40 @@
+- let object = new Object();
+- let point = null;
+if qun
+	- object = qun, point = "inquot";
+else if qut
+	- object = qut, point = "inquot";
+else if din
+	- object = din, point = "ordin";
+else if dut
+	- object = dut, point = "ordin";
+//- input#point(type="hidden", value=point)
+if point
+	-a;
+	div(style="height:50px")
+
+	h3 留言区
+	input#crUserId(type="hidden", value=crUser._id)
+	#notifyNew
+		form#notifyForm(method="POST", action="/usNotifyNewAjax")
+			input#reUserId(type="hidden", name="obj[to]", value=toUser._id)
+			input(type="hidden", name="obj[" + point + "]", value=object._id)
+			if crUser
+				-a;
+				input(type="hidden", name="obj[from]", value=crUser._id)
+			.form-group.row
+				.col-12
+					textarea.form-control#contentIpt(name="obj[content]",rows="5", placeholder="发表留言或者提出问题")
+			.form-group.row
+				.col-12.text-right
+					button.btn.btn-primary#notifySubmitBtn(type='button') 发表
+	hr
+	#notifys
+		input#notifyFilterAjax(type="hidden", value="/usNotifysAjax?"+point+"="+object._id+"@#notifysElem@us")
+		#notifysElem.mt-4
+
+	script(src="/js/user/notify/list.js")
+	script(src="/js/user/notify/add.js")
+	script(src="/js/user/notify/option.js")
+else
+	h3 评论区出现错误, 请联系技术人员

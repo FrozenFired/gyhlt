@@ -1,26 +1,26 @@
 $( function() {
 	/* ======== 一级评论回复框 ======== */
-	$(commentElemId).on('click', '.replyButton', function(e) {
+	$(notifyElemId).on('click', '.replyButton', function(e) {
 		var target = $(this)
 		var id = target.data('id')
 
 		$('#replyButton-'+id).hide()
 		$('#cancelButton-'+id).show()
-		$('#commentForm-' + id).show()
+		$('#notifyForm-' + id).show()
 	})
 
 	/* ======== 取消一级评论回复框 ======== */
-	$(commentElemId).on('click', '.cancelButton', function(e) {
+	$(notifyElemId).on('click', '.cancelButton', function(e) {
 		var target = $(this)
 		var id = target.data('id')
 
 		$('#replyButton-'+id).show()
 		$('#cancelButton-'+id).hide()
-		$('#commentForm-' + id).hide()
+		$('#notifyForm-' + id).hide()
 	})
 
 	/* ============= 显示隐藏 一级评论的回复展示 ================ */
-	$(commentElemId).on('click', '.showReply', function(e) {
+	$(notifyElemId).on('click', '.showReply', function(e) {
 		var target = $(this)
 		var id = target.data('id')
 
@@ -28,7 +28,7 @@ $( function() {
 		$('#reply-' + id).find($('.showReply')).hide()
 		$('#allReply-' + id).show()
 	})
-	$(commentElemId).on('click', '.hideReply', function(e) {
+	$(notifyElemId).on('click', '.hideReply', function(e) {
 		var target = $(this)
 		var id = target.data('id')
 
@@ -38,20 +38,39 @@ $( function() {
 	})
 
 	/* ============= 显示隐藏 二级评论的回复框 ================ */
-	$(commentElemId).on('click', '.replyButton2', function(e) {
+	$(notifyElemId).on('click', '.replyButton2', function(e) {
 		var target = $(this)
 		var pos = target.data('pos')
 
-		$('#commentForm2-' + pos).show()
+		$('#notifyForm2-' + pos).show()
 	})
-	$(commentElemId).on('click', '.cancelButton2', function(e) {
+	$(notifyElemId).on('click', '.cancelButton2', function(e) {
 		var target = $(this)
 		var pos = target.data('pos')
 
-		$('#commentForm2-' + pos).hide()
+		$('#notifyForm2-' + pos).hide()
+	})
+
+	/* ============= 惦记按钮 标识已经收到信息 ================ */
+	$(notifyElemId).on('click', '.readBtn', function(e) {
+		var target = $(this)
+		var id = target.data('id')
+
+			$.ajax({
+				type: 'get',
+				url: '/usNotifyReadAjax/' + id
+			})
+			.done(function(results) {
+				if(results.status === 1) {
+					$("#readBtn-"+id).hide();
+				} else {
+					alert(0)
+				}
+			})
 	})
 
 
+	/* ============= 点赞功能 暂时不用 ================ */
 	$('.supportC').click(function(e) {
 		var target = $(this)
 		var cid = target.data('cid')
@@ -61,7 +80,7 @@ $( function() {
 		if(user){
 			$.ajax({
 				type: 'get',
-				url: '/commentSupport?control=' + ctrl + '&cid=' + cid
+				url: '/notifySupport?control=' + ctrl + '&cid=' + cid
 			})
 			.done(function(results) {
 				if(results.status === 1) {

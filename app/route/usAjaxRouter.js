@@ -6,7 +6,7 @@ const Inquot = require('../controllers/user/ajax/inquot');
 const Order = require('../controllers/user/ajax/order');
 const Status = require('../controllers/user/ajax/status');
 const Comment = require('../controllers/user/ajax/comment');
-
+const Notify = require('../controllers/user/ajax/notify');
 
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');
@@ -56,4 +56,10 @@ module.exports = function(app){
 	app.get('/usCommentsAjax', MdRole.userIsLogin, Comment.usCommentsAjax);
 	app.post('/usCommentNewAjax', MdRole.userIsLogin, postForm, Comment.usCommentNewAjax);
 	app.post('/usCommentReplyAjax', MdRole.userIsLogin, postForm, Comment.usCommentReplyAjax);
+
+	/* =================================== Notify =================================== */
+	app.get('/usNotifysAjax', MdRole.userIsLogin, Notify.usNotifysAjax);
+	app.post('/usNotifyNewAjax', MdRole.userIsLogin, postForm, Notify.usNotifyNewAjax);
+	app.post('/usNotifyReplyAjax', MdRole.userIsLogin, postForm, Notify.usNotifyReplyAjax);
+	app.get('/usNotifyReadAjax/:id', MdRole.userIsLogin, postForm, Notify.usNotifyReadAjax);
 };
