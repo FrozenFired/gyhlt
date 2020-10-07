@@ -36,7 +36,7 @@ exports.usGetdataAjax = (req, res) => {
 			info = "bser getdataAjax, Pdfir.countDocuments(), Error!";
 			Err.jsonErr(req, res, info);
 		} else {
-			Pdfir.find(param).sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			Pdfir.find(param).sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.limit(5).exec((err, pdfirs) => {
 				if(err) console.log(err);
 				let firIsMore = 1;
@@ -47,7 +47,7 @@ exports.usGetdataAjax = (req, res) => {
 						info = "bser getdataAjax, Pdsec.countDocuments(), Error!";
 						Err.jsonErr(req, res, info);
 					} else {
-						Pdsec.find(param).sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+						Pdsec.find(param).sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 						.limit(5).populate('pdfir').exec((err, pdsecs) => {
 							if(err) console.log(err);
 

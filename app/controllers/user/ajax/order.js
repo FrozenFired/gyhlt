@@ -174,7 +174,7 @@ exports.usDutsAjax = (req, res) => {
 			.populate('duter')
 			.populate('strmup')
 			.skip(skip).limit(pagesize)
-			.sort({'status': 1, 'weight': -1, 'upAt': -1})
+			.sort({'status': 1, 'weight': -1, 'updAt': -1})
 			.exec((err, orduts) => {
 				if(err) {
 					info = "cter OrdutsAjax, Ordut.find(), Error!";
@@ -267,7 +267,7 @@ exports.usTransAjax = (req, res) => {
 			.populate('lger')
 			.populate('strmlg')
 			.skip(skip).limit(pagesize)
-			.sort({'status': 1, 'weight': -1, 'upAt': -1})
+			.sort({'status': 1, 'weight': -1, 'updAt': -1})
 			.exec((err, trans) => {
 				if(err) {
 					console.log(err);

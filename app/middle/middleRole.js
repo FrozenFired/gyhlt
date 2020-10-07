@@ -26,8 +26,8 @@ exports.singleUsLogin = function(req, res, next){
 			info = "此帐号已经被删除!";
 			Err.usError(req, res, info);
 		} else {
-			let crLog = (new Date(crUser.lgAt)).getTime();
-			let atLog = (new Date(user.lgAt)).getTime();
+			let crLog = (new Date(crUser.logAt)).getTime();
+			let atLog = (new Date(user.logAt)).getTime();
 			if(crLog == atLog){
 				next();
 			}else{

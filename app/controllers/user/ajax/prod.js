@@ -60,7 +60,7 @@ exports.usBrandsAjax = (req, res) => {
 		} else {
 			Brand.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.exec((err, brands) => {
 				if(err) {
 					info = "cter Brands, Brand.find(), Error!";
@@ -156,7 +156,7 @@ exports.usPdfirsAjax = (req, res) => {
 			Pdfir.find(param)
 			.populate('brand')
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.exec((err, pdfirs) => {
 				if(err) {
 					info = "cter PdfirsAjax, Pdfir.find(), Error!";
@@ -253,7 +253,7 @@ exports.usPdsecsAjax = (req, res) => {
 			Pdsec.find(param)
 			.populate({path: 'pdfir', populate: {path: 'brand'}})
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.exec((err, pdsecs) => {
 				if(err) {
 					info = "cter PdsecsAjax, Pdsec.find(), Error!";
@@ -357,7 +357,7 @@ exports.usPdthdsAjax = (req, res) => {
 		} else {
 			Pdthd.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.exec((err, pdthds) => {
 				if(err) {
 					info = "cter PdthdsAjax, Pdthd.find(), Error!";

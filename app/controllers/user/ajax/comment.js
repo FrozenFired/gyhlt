@@ -37,7 +37,7 @@ exports.usCommentsAjax = (req, res) => {
 			.populate('from')
 			.populate('replys.from')
 			.populate('replys.to')
-			.sort({'weight': -1, 'upAt': -1})
+			.sort({'weight': -1, 'updAt': -1})
 			.limit(limit).exec((err, comments) => {
 				if(err) console.log(err);
 				let isMore = 1;
@@ -122,7 +122,7 @@ exports.usCommentReplyAjax = (req, res) => {
 				from: crUser._id,
 				to: obj.to,
 				content: obj.content,
-				ctAt: Date.now()
+				crtAt: Date.now()
 			}
 			comment.replys.unshift(reply)
 			comment.save((err, comment) => {

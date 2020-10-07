@@ -23,17 +23,17 @@ let dbSchema = new Schema({
 
 	shelf: Number,	// 如果shelf为下架, 则此人上传的数据默认为下架
 
-	lgAt: Date,	// 上次登录时间
+	logAt: Date,	// 上次登录时间
 
 	creater: {type: ObjectId, ref: 'User'},
-	ctAt: Date,
-	upAt: Date,
+	crtAt: Date,
+	updAt: Date,
 });
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		this.upAt = this.ctAt = this.lgAt = Date.now();
+		this.updAt = this.crtAt = this.logAt = Date.now();
 	} else {
-		this.upAt = Date.now();
+		this.updAt = Date.now();
 	}
 	next();
 });

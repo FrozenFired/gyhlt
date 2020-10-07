@@ -17,7 +17,7 @@ let dbSchema = new Schema({
 		from: { type: ObjectId, ref: 'User' },
 		to: { type: ObjectId, ref: 'User' },
 		content: String,
-		ctAt: {
+		crtAt: {
 			type: Date,
 			default: Date.now()
 		}
@@ -27,17 +27,17 @@ let dbSchema = new Schema({
 	status: Number,					// 重点 
 	weight: {type: Number, default: 0},	// 权重 置顶 排序用的
 
-	ctAt: Date,
-	upAt: Date,
+	crtAt: Date,
+	updAt: Date,
 });
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
 		if(!this.weight) this.weight = 0;
 		if(!this.status) this.status = 0;
-		this.upAt = this.ctAt = Date.now();
+		this.updAt = this.crtAt = Date.now();
 	} else {
-		this.upAt = Date.now();
+		this.updAt = Date.now();
 	}
 	next();
 })

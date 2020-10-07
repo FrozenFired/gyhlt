@@ -60,7 +60,7 @@ exports.usAlbumsAjax = (req, res) => {
 			Album.find(param)
 			.populate('brand')
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.exec((err, albums) => {
 				if(err) {
 					info = "cter Albums, Album.find(), Error!";

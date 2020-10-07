@@ -34,7 +34,7 @@ var commentRender = (comment, role) => {
 	// 	elem += '<h3 class="text-center">'+(comment.mark+1)+':</h3>' 
 	// elem += '</div>'
 	elem += '<div class="media-right media-body pl-2">'
-		ts = timeSpan(Date.parse(comment.ctAt));
+		ts = timeSpan(Date.parse(comment.crtAt));
 		elem += '<h5>'+comment.from.code+' <small class="text-secondary">('+ts+')</small></h5>'
 		elem += '<h6>'+comment.content+'</h6>' 
 		elem += '<div id="replyform-'+comment._id+'">'
@@ -81,7 +81,7 @@ var commentRender = (comment, role) => {
 var replyRender = (comment, reply, role) => {
 	let elem = '';
 	elem += '<div>'
-		ts = timeSpan(Date.parse(reply.ctAt));
+		ts = timeSpan(Date.parse(reply.crtAt));
 		elem += '<span>' + reply.from.code+': <small class="text-secondary">('+ts+')</small></span>'
 	elem += '<button class="btn btn-link replyButton2" data-pos="'+comment._id
 	elem += reply.mark+'" type="button"> 回复 </button>'

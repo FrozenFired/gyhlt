@@ -35,14 +35,14 @@ let dbSchema = new Schema({
 		weight: Number
 	}],
 
-	ctAt: Date,
-	upAt: Date,
+	crtAt: Date,
+	updAt: Date,
 });
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		this.upAt = this.ctAt = Date.now();
+		this.updAt = this.crtAt = Date.now();
 	} else {
-		this.upAt = Date.now();
+		this.updAt = Date.now();
 	}
 	next();
 });

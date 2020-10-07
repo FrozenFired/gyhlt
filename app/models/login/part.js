@@ -9,11 +9,11 @@ let dbSchema = new Schema({
 	},
 	nome: String,
 
-	ctAt: Date,
+	crtAt: Date,
 });
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		this.ctAt = Date.now();
+		this.crtAt = Date.now();
 	}
 	next();
 });

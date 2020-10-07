@@ -33,8 +33,8 @@ let dbSchema = new Schema({
 	weight: {type: Number, default: 0},	// 权重 排序用的
 	status: Number,						// 供应商状态 
 
-	ctAt: Date,
-	upAt: Date,
+	crtAt: Date,
+	updAt: Date,
 });
 
 dbSchema.pre('save', function(next) {
@@ -43,9 +43,9 @@ dbSchema.pre('save', function(next) {
 		if(!this.shelf) this.shelf = 0;
 		if(!this.weight) this.weight = 0;
 		if(!this.status) this.status = 0;
-		this.upAt = this.ctAt = Date.now();
+		this.updAt = this.crtAt = Date.now();
 	} else {
-		this.upAt = Date.now();
+		this.updAt = Date.now();
 	}
 	next();
 })

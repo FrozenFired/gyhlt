@@ -13,7 +13,7 @@ exports.index = (req, res) => {
 			shelf: {'$gt': 0},
 		})
 		.limit(4)
-		.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+		.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 		.exec((err, brands) => {
 			if(err) {
 				info = "index, Brand.find(), Error!";
@@ -24,7 +24,7 @@ exports.index = (req, res) => {
 					categ: Conf.article.notice.num,
 					// shelf: {'$gt': 0},
 				}).limit(2)
-				.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+				.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 				.exec((err, articles) => {
 					if(err) {
 						info = "index, Brand.find(), Error!";
@@ -110,7 +110,7 @@ let loginUserf = (req, res, firmId, code, pwd) => {
 			bcrypt.compare(pwd, user.pwd, (err, isMatch) => {
 				if(err) console.log(err);
 				if(isMatch) {
-					user.lgAt = Date.now();
+					user.logAt = Date.now();
 					// console.log(user)
 					user.save((err, objSave) => {
 						if(err) console.log(err)

@@ -54,7 +54,7 @@ exports.usStrmupsAjax = (req, res) => {
 		} else {
 			Strmup.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.populate('firmUp')
 			.exec((err, strmups) => {
 				if(err) console.log(err);
@@ -124,7 +124,7 @@ exports.usBuysAjax = (req, res) => {
 		} else {
 			Buy.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.populate('strmup')
 			.populate('brand')
 			.exec((err, buys) => {
@@ -196,7 +196,7 @@ exports.usStrmdwsAjax = (req, res) => {
 		} else {
 			Strmdw.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.populate('firmUp')
 			.exec((err, strmdws) => {
 				if(err) console.log(err);
@@ -266,7 +266,7 @@ exports.usSellsAjax = (req, res) => {
 		} else {
 			Sell.find(param)
 			.skip(skip).limit(pagesize)
-			.sort({'shelf': -1, 'weight': -1, 'upAt': -1})
+			.sort({'shelf': -1, 'weight': -1, 'updAt': -1})
 			.populate('strmdw')
 			.populate('brand')
 			.exec((err, sells) => {
