@@ -34,16 +34,16 @@ var notifyRender = (notify, role) => {
 		ts = timeSpan(Date.parse(notify.crtAt));
 		/* --------------------------------  一级留言title及内容 -------------------------------- */
 		elem += '<h5>'
-			elem += '<span class="bg-dark text-white px-2 mr-4">'+notify.mark+'</span>'
+			elem += '<span class="bg-secondary text-white px-2 mr-4">'+notify.mark+'</span>'
 			elem += '<span class="mr-2">'+notify.from.code+'</span>'
 			// elem += '<span class="mr-2 text-secondary">@'+notify.to.code+'</span>'
 			elem += '<small class="text-secondary mr-5">('+ts+')</small>'
 			if(notify.read == -1) {
 				if(notify.to._id == crUserId) {
-					elem += '<button id="readBtn-'+notify._id+'" class="btn border-warning readBtn text-warning" data-id='
+					elem += '<button id="readBtn-'+notify._id+'" class="btn border-danger readBtn text-danger" data-id='
 					elem += notify._id+'><span class="oi oi-bookmark"></span></button>'
 				} else {
-					elem += '<span class="text-warning"><span class="oi oi-bookmark"></span></span>'
+					elem += '<span class="text-danger"><span class="oi oi-bookmark"></span></span>'
 				}
 			}
 		elem += '</h5>'
@@ -55,6 +55,7 @@ var notifyRender = (notify, role) => {
 
 			elem += '<form id="notifyForm-'+notify._id+'" method="POST" action="/usNotifyReplyAjax" style="display:none">'
 				elem += '<input type="hidden" name="obj[to]" value="'+notify.from._id+'" />'
+				elem += '<input type="hidden", name="obj[' + point +']", value='+objectId+'>'
 				elem += '<input type="hidden" name="notify" value="'+notify._id+'"/>'
 				elem += '<div class="form-group row">'
 					elem += '<textarea class="form-control" id="contentIpt-'+notify._id+'" name="obj[content]" row="3" '
@@ -95,15 +96,15 @@ var notifyRender = (notify, role) => {
 var replyRender = (notify, reply, role) => {
 	let elem = '';
 	bgClor = "";
-	if(reply.from._id == crUserId) bgClor = "bg-success";
+	if(reply.from._id == crUserId) bgClor = "";
 	elem += '<div class="'+bgClor+'">'
 		ts = timeSpan(Date.parse(reply.crtAt));
 		/* =============================  二级留言title ============================= */
-		elem += '<span class="bg-secondary text-white px-2 mr-3">'+reply.mark+'</span>'
+		elem += '<span class="bg-info text-white px-2 mr-3">'+reply.mark+'</span>'
 		elem += '<span class="mr-2">' + reply.from.code+'</span>'	// 回复的哪条信息
 		if(reply.reply) {
-			elem += '<span class="bg-secondary px-2" title="'+reply.reply.content+'">'
-				elem += '<a class="text-white mr-2">@ '+reply.reply.mark+':</a>'
+			elem += '<span class="border border-dark px-2" title="'+reply.reply.content+'">'
+				elem += '<a class="text-info mr-2">@ '+reply.reply.mark+':</a>'
 				let content = reply.reply.content
 				if(content.length > 20) content = content.slice(0, 20) + '...'
 				elem += '<span>'+ content +'</span>'
@@ -112,10 +113,10 @@ var replyRender = (notify, reply, role) => {
 		elem += ': <small class="text-secondary mr-5">('+ts+')</small>'
 		if(reply.read == -1) {
 			if(reply.to._id == crUserId) {
-				elem += '<button id="readBtn-'+reply._id+'" class="btn border-warning readBtn text-warning" data-id='
+				elem += '<button id="readBtn-'+reply._id+'" class="btn border-danger readBtn text-danger" data-id='
 				elem += reply._id+' ><span class="oi oi-bookmark"></span></button>'
 			} else {
-				elem += '<span class="text-warning"><span class="oi oi-bookmark"></span></span>'
+				elem += '<span class="text-danger"><span class="oi oi-bookmark"></span></span>'
 			}
 		}
 		if(crUserId != reply.from._id) {
@@ -133,7 +134,7 @@ var replyRender = (notify, reply, role) => {
 	/* =============================  对二级留言的回复框 ============================= */
 	elem += '<form id="notifyForm2-'+notify._id+reply.mark+'" method="POST" '
 	elem += 'action="/usNotifyReplyAjax", style="display:none">'
-		// input(type="hidden", name="obj[" + point + "]", value=object._id)
+		elem += '<input type="hidden", name="obj[' + point +']", value='+objectId+'>'
 		// input(type="hidden", name="obj[cid]", value=notify._id)
 		elem += '<input type="hidden" name="notify" value="'+notify._id+'"/>'
 		elem += '<input type="hidden", name="obj[to]", value="'+reply.from._id+'">'
@@ -156,6 +157,8 @@ var replyRender = (notify, reply, role) => {
 }
 
 /* ====== 初始加载 =====*/
+let point = '';
+let objectId = '';
 let crUserId = '';
 let reUserId = '';
 let notifyParam = '';
@@ -165,6 +168,9 @@ $(function() {
 	notifysInit = () => {
 		crUserId = $("#crUserId").val();
 		reUserId = $("#reUserId").val();
+
+		point = $("#point").val();
+		objectId = $("#objectId").val();
 
 		let notifyFilter = $("#notifyFilterAjax").val();
 		if(notifyFilter) {

@@ -16,6 +16,7 @@ let dbSchema = new Schema({
 	from: { type: ObjectId, ref: 'User' },
 	to: { type: ObjectId, ref: 'User' },
 	replys: [{ type: ObjectId, ref: 'Notify'}],		// 一级留言包含的所有二级留言
+	belong: { type: ObjectId, ref: 'Notify'},		// 所属一级留言
 	reply: { type: ObjectId, ref: 'Notify'},		// 对二级留言的回复
 	content: String,
 	photo: String,

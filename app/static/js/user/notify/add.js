@@ -23,6 +23,7 @@ $(function() {
 						if(!elemId) elemId = "#notifysElem"
 						$(elemId).prepend(elem);
 						$("#contentIpt").val('');
+						getNotifysHeader(); 	// 留言通知
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}
@@ -78,6 +79,7 @@ $(function() {
 						$("#reply-"+id).show();
 						$("#replysNum-"+id).text(notify.replys.length)
 						contentIpt.val('')
+						getNotifysHeader(); 	// 留言通知
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}

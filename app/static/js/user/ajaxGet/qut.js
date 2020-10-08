@@ -52,7 +52,6 @@ var qutRender = (qut, role) => {
 			break;
 		}
 	}
-	let crUserRole = $("#crUserRole").val();
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border qutCard">'
 

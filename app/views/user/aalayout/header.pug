@@ -45,6 +45,14 @@
 						a.nav-link(href="/mgDuts") 成员
 					li.nav-item.active
 						a.nav-link(href="/mgDuts") 公司
+				li.nav-item.active
+					.notifyHeaderBtn.btn-group(role="group" aria-label="Button group with nested dropdown")
+						.btn-group(role="group")
+							button(id="whereNotify" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+								span#notifyHeader.badge.badge-light.text-danger
+							.dropdown-menu#whereNotifys(aria-labelledby="whereNotify")
+					input#crUserId(type="hidden", value=crUser._id)
+					input#crUserRole(type="hidden", value=crUser.role)
 			ul.navbar-nav
 				li
 					a(href="/usFirm")
@@ -57,4 +65,4 @@
 							else
 								strong #{crUser.code}
 				li
-					a.btn.btn-danger(href="/logout") <span class="oi oi-account-logout"></span>
+					a.ml-4.btn.btn-danger(href="/logout") <span class="oi oi-account-logout"></span>

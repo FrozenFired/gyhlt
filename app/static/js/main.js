@@ -121,6 +121,10 @@ function timeSpan(time = +new Date()) {
 	return seconds + '秒前'
 }
 
+
+
+
+
 let Conf = {
 	firmId: '5eea52c7e61fa97e3ff44fdb',
 	codeLenFirm: 3,
@@ -134,17 +138,17 @@ let Conf = {
 	roleAdmin: [1, 3],
 	// roles: [1, 3, 5, 10, 20, 25, 30, 35, 40, 60, 90],
 	roleUser: {
-		boss: {num: 1, val: 'BOSS', index: '/bser'},
-		manager: {num: 3, val: 'Manager', index: '/mger'},
-		staff: {num: 5, val: 'Staff', index: '/sfer'},
-		finance: {num: 10, val: 'Finance', index: '/fner'},
-		brander: {num: 20, val: 'Brander', index: '/bner'},
-		promotion: {num: 25, val: 'Promotion', index: '/pmer'},
-		quotation: {num: 30, val: 'Quotation', index: '/qter'},
-		ordin: {num: 35, val: 'Ordin', index: '/oder'},
-		logistic: {num: 40, val: 'Logistic', index: '/lger'},
-		seller: {num: 60, val: 'Seller', index: '/sler'},
-		customer: {num: 90, val: 'Customer', index: '/cter'},
+		boss:     {num: 1, index: '/bser', code: 'bs', val: 'BOSS', },
+		manager:  {num: 3, index: '/mger', code: 'mg', val: 'Manager', },
+		staff:    {num: 5, index: '/sfer', code: 'sf', val: 'Staff', },
+		finance:  {num:10, index: '/fner', code: 'fn', val: 'Finance', },
+		brander:  {num:20, index: '/bner', code: 'bn', val: 'Brander', },
+		promotion:{num:25, index: '/pmer', code: 'pm', val: 'Promotion', },
+		quotation:{num:30, index: '/qter', code: 'qt', val: 'Quotation', },
+		ordin:    {num:35, index: '/oder', code: 'od', val: 'Ordin', },
+		logistic: {num:40, index: '/lger', code: 'lg', val: 'Logistic', },
+		seller:   {num:60, index: '/sler', code: 'sl', val: 'Seller', },
+		customer: {num:90, index: '/cter', code: 'ct', val: 'Customer', },
 	},
 
 	userLang: {

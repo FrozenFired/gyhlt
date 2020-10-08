@@ -51,22 +51,23 @@ $( function() {
 		$('#notifyForm2-' + pos).hide()
 	})
 
-	/* ============= 惦记按钮 标识已经收到信息 ================ */
+	/* ============= 点击按钮 标识已经收到信息 ================ */
 	$(notifyElemId).on('click', '.readBtn', function(e) {
 		var target = $(this)
 		var id = target.data('id')
 
-			$.ajax({
-				type: 'get',
-				url: '/usNotifyReadAjax/' + id
-			})
-			.done(function(results) {
-				if(results.status === 1) {
-					$("#readBtn-"+id).hide();
-				} else {
-					alert(0)
-				}
-			})
+		$.ajax({
+			type: 'get',
+			url: '/usNotifyReadAjax/' + id
+		})
+		.done(function(results) {
+			if(results.status === 1) {
+				$("#readBtn-"+id).hide();
+				getNotifysHeader(); 	// 留言通知
+			} else {
+				alert(0)
+			}
+		})
 	})
 
 

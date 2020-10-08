@@ -18,15 +18,40 @@ exports.usNotifysAjax = (req, res) => {
 		ordinConb = req.query.ordin;
 	}
 
-	let statusSymb = '$ne';
-	let statusConb = -1;
+	let toSymb = fromSymb = '$ne';
+	let toConb = fromConb = '5ef5060950e7861420fe75c9';
+	if(req.query.to) {
+		toSymb = '$eq'
+		toConb = req.query.to;
+	}
+	if(req.query.from) {
+		fromSymb = '$eq'
+		fromConb = req.query.from;
+	}
+
+	let readSymb = '$ne';
+	let readConb = -100;
+	if(req.query.read) {
+		readSymb = '$eq'
+		readConb = parseInt(req.query.read);
+	}
+
+	let levelSymb = '$eq';
+	let levelConb = 1;
+	if(req.query.level) {
+		levelSymb = '$ne'
+		levelConb = -100;
+	}
 
 	let param = {
 		inquot: {[inquotSymb]: inquotConb},
 		ordin: {[ordinSymb]: ordinConb},
 
-		status: {[statusSymb]: statusConb},
-		level: 1,
+		to: {[toSymb]: toConb},
+		from: {[fromSymb]: fromConb},
+
+		read: {[readSymb]: readConb},
+		level: {[levelSymb]: levelConb},
 	}
 	Notify.countDocuments(param, (err, count) => {
 		if(err) {
@@ -35,8 +60,9 @@ exports.usNotifysAjax = (req, res) => {
 			Err.jsonErr(req, res, info);
 		} else {
 			Notify.find(param)
-			.populate('from')
-			.populate('to')
+			.populate('from').populate('to')
+			.populate('inquot').populate('ordin')
+			.populate('belong')
 			.populate({path:'replys', populate: [{path: 'from'}, {path: 'to'}, {path: 'reply'}]})
 			.sort({'weight': -1, 'updAt': -1})
 			.limit(limit).exec((err, notifys) => {
@@ -110,6 +136,7 @@ exports.usNotifyNewAjax = (req, res) => {
 exports.usNotifyReplyAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
+	// console.log(obj)
 	let notify = req.body.notify;
 	Notify.findOne({_id: notify}, (err, notify) => {
 		if(err) {
@@ -117,10 +144,11 @@ exports.usNotifyReplyAjax = (req, res) => {
 			info = "user NotifyReplyAjax, Notify.findOne, Error!";
 			Err.jsonErr(req, res, info);
 		} else {
-			// 如果是回复 一级留言 而且一级留言人是本人 则标记为已读
+			// 如果是 回复给一级留言 而且一级留言人是本人 则标记为已读
 			if(notify.from == crUser._id && !obj.reply) {
 				obj.read = 1;
 			}
+			obj.belong = notify._id;
 			obj.from = crUser._id;
 			obj.mark = notify.replys.length+1;
 			obj.level = 2;

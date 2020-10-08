@@ -8,13 +8,13 @@ else if din
 	- object = din, point = "ordin";
 else if dut
 	- object = dut, point = "ordin";
-//- input#point(type="hidden", value=point)
+input#point(type="hidden", value=point)
+input#objectId(type="hidden", value=object._id)
 if point
 	-a;
 	div(style="height:50px")
 
 	h3 留言区
-	input#crUserId(type="hidden", value=crUser._id)
 	#notifyNew
 		form#notifyForm(method="POST", action="/usNotifyNewAjax")
 			input#reUserId(type="hidden", name="obj[to]", value=toUser._id)
