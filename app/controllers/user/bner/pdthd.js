@@ -14,7 +14,7 @@ exports.bnPdthd = (req, res) => {
 	let id = req.params.id;
 
 	Pdthd.findOne({_id: id})
-	.populate('pdsec')
+	.populate({path: 'pdsec', populate: {path: 'pdfir', populate: {path: 'brand'}}})
 	.exec((err, pdthd) => {
 		if(err) {
 			console.log(err);

@@ -2,13 +2,12 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			a(href="/") Home
-			span &nbsp; | &nbsp;
-			a(href="/mgQut/"+qutpd.inquot._id) 报价单
-			span &nbsp; | &nbsp;
-			span 报价产品
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/mgQuts") 报价单列表
+				li.breadcrumb-item: a(href="/mgQut/"+qutpd.inquot._id) 报价单
+				li.breadcrumb-item.active(aria-current="page") 报价产品
 		.info
 			- let stsBg = 'bg-default';
 			if qutpd.qntpdSts == Conf.status.done.num

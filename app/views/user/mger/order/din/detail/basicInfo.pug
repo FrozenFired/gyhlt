@@ -1,6 +1,6 @@
 .border.border-dark.p-3
 	.row.text-center
-		.col-md-6
+		.col-md-5
 			h5.code 订单号:#{din.code}
 			.time.mt-2
 				span 下单时间: 
@@ -12,7 +12,7 @@
 					span #{diner.nome} [ #{diner.code} ]
 				else
 					span 数据丢失
-		.col-md-6
+		.col-md-5
 			.cterNome 客户姓名 #{din.cterNome}
 			.cter 客户:
 				if din.cter
@@ -53,17 +53,24 @@
 						- status = sts.val;
 						- break;
 				span 状态: #{status}
-			.excel.text-right
+		.col-md-2
+			.qrCode-img.text-left
+				div 订单二追踪维码:
+				#qrCodeObjDiv
+				input#qrCodeObjStr(type="hidden", value=din._id)
+			.excel.mt-4
 				a(href="/slDinExcel/"+din._id) Excel <span class="oi oi-data-transfer-download"></span>
 
 	.statusChange.mt-3.text-center.row
 		if din.status == Conf.status.unpaid.num
 			-a;
 			.col-6
-				button.btn.btn-danger.delObjectBtn(type="button") 重新处理
-				.delObject(style="display:none")
-					a.mx-4.my-2.btn.btn-danger(href="/mgDinDel/"+din._id) 确定
-					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
+				if !din.bills || din.bills.length == 0
+					-a;
+					button.btn.btn-danger.delObjectBtn(type="button") 重新处理
+					.delObject(style="display:none")
+						a.mx-4.my-2.btn.btn-danger(href="/mgDinDel/"+din._id) 确定
+						button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
 			.col-6
 				if din.bills && din.bills.length > 0
 					- a;

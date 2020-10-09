@@ -2,8 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmSell/"+sell._id) 详情
+				li.breadcrumb-item.active(aria-current="page") 客户折扣更新
 		form#sellUpdForm(method="post", action="/pmSellUpd", enctype="multipart/form-data")
 			input(type="hidden", name="obj[_id]", value=sell._id)
 			.form-group.row

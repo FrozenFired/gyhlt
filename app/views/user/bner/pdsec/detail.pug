@@ -2,21 +2,16 @@ extends ../../aalayout/layout
 
 block content
 	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrand/"+pdsec.pdfir.brand._id) #{pdsec.pdfir.brand.nome}
+				li.breadcrumb-item: a(href="/bnPdfir/"+pdsec.pdfir._id) #{pdsec.pdfir.code}
+				li.breadcrumb-item.active(aria-current="page") #{pdsec.code}
+
 		- let photo = pdsec.photo;
 		if !photo
 			- photo = Conf.picDefault.pdsec;
-
-		.title
-			.row
-				.col-12 
-					a(href="/bner") Home
-					span &nbsp; | &nbsp;
-					a(href="/bnPdsecs") Product List
-					span &nbsp; | &nbsp;
-					a(href="/bnPdfir/"+pdsec.pdfir._id) #{pdsec.pdfir.code}
-					span &nbsp; | &nbsp;
-					span #{pdsec.code}
-			hr
 		.info
 			include ./detail/info
 			hr

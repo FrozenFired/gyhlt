@@ -2,17 +2,16 @@ extends ../../aalayout/layout
 
 block content
 	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrands") 列表
+				li.breadcrumb-item.active(aria-current="page") 品牌: [#{brand.nome}]
+
 		input#brandId(type="hidden", value=brand._id)
 		- let logo = brand.logo;
 		if !logo
 			- logo = Conf.picDefault.brand;
-		.title
-			a(href="/bner") Home
-			span &nbsp; | &nbsp;
-			a(href="/bnBrands") Brand List
-			span &nbsp; | &nbsp;
-			span 品牌: [#{brand.nome}]
-			hr
 		include ./detail/info
 
 		.row.mt-5

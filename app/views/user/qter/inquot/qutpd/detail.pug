@@ -2,6 +2,11 @@ extends ../../../aalayout/layout
 
 block content
 	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/qtQut/"+qutpd.inquot._id) 所属报价单
+				li.breadcrumb-item.active(aria-current="page") 报价商品
 		.title
 			.row
 				.col-9 

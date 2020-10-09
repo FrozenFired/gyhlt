@@ -2,16 +2,11 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			.row
-				.col-9.text-muted.mt-2: h5
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/mgDuts") 采购单列表
-					span &nbsp; | &nbsp;
-					span 采购单详情
-				.col-3.text-right
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/mgDuts") 列表
+				li.breadcrumb-item.active(aria-current="page") 采购单
 		.info.my-3
 			include ./detail/basicInfo
 			if dut.status == Conf.status.init.num

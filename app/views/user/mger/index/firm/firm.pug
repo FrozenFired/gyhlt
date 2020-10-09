@@ -2,6 +2,10 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 公司信息
 		if crUser && crUser.role <= Conf.roleUser.manager.num
 			-a;
 			include ./postUpd

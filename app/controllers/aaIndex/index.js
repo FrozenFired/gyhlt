@@ -1,8 +1,9 @@
 const Conf = require('../../../conf.js');
 const Err = require('./err');
 
-let Brand = require('../../models/firm/brand');
-let Article = require('../../models/firm/article');
+const Brand = require('../../models/firm/brand');
+const Article = require('../../models/firm/article');
+
 exports.index = (req, res) => {
 	let crUser = req.session.crUser;
 	if(!crUser || crUser.role == Conf.roleUser.customer.num) {

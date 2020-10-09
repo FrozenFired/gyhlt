@@ -2,8 +2,12 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBuys") 列表
+				li.breadcrumb-item: a(href="/bnBuy/"+buy._id) 折扣信息
+				li.breadcrumb-item.active(aria-current="page") 折扣更新
 		form#buyUpdForm(method="post", action="/bnBuyUpd", enctype="multipart/form-data")
 			input(type="hidden", name="obj[_id]", value=buy._id)
 			.form-group.row

@@ -2,15 +2,11 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			.row
-				.col-12 
-					a(href="/mger") Home
-					span &nbsp; | &nbsp;
-					a(href="/mgStrmlgs") 物流公司列表
-					span &nbsp; | &nbsp;
-					span #{strmlg.code}
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/mgStrmlgs") 列表
+				li.breadcrumb-item.active(aria-current="page") 运输公司: #{strmlg.code}
 		.row
 			.col-10
 				h3.nome #{strmlg.nome}

@@ -243,6 +243,9 @@ exports.mgDinDel = (req, res) => {
 		} else if(!ordin.inquot) {
 			info = "此销售单的询价单, 已经不存在, 请联系管理员";
 			Err.usError(req, res, info);
+		} else if(ordin.bills && ordin.bills.length > 0) {
+			info = "此销售单已经有收款, 不可删除";
+			Err.usError(req, res, info);
 		} else {
 			let inquot = ordin.inquot;
 			Ordin.deleteOne({_id: id}, (err, objRm) => {

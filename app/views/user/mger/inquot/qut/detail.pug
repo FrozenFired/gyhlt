@@ -2,15 +2,11 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			.row
-				.col-12 
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/mgQuts") Quote List
-					span &nbsp; | &nbsp;
-					span Quote Detail
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/mgQuts") 列表
+				li.breadcrumb-item.active(aria-current="page") 报价单
 		.info.my-3
 			include ./detail/info
 		.compds

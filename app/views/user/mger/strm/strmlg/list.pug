@@ -2,15 +2,13 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			.row
-				.col-9.text-muted.mt-2: h5
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					span 物流公司列表
-				.col-3.text-right
-					a.btn.btn-warning(href="/mgStrmlgAdd") +添加物流公司
-		.row.mt-5.text-center
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 物流公司列表
+		.add.text-right
+			a.btn.btn-warning(href="/mgStrmlgAdd") +添加物流公司
+		.row.mt-3.text-center
 			each strmlg in strmlgs
 				-a;
 				.col-md-3.card.p-3.mt-3

@@ -2,10 +2,10 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title.text-muted.mt-2: h5
-			a(href="/") 主页
-			span &nbsp; | &nbsp;
-			span 询价单列表
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 询价单列表
 		#searchElem.bg-white.input-group.my-3
 			input.form-control#qunSearch(type="text", placeholder="询价单名称搜索")
 			.input-group-append

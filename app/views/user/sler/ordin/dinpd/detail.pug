@@ -2,13 +2,11 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			a(href="/") Home
-			span &nbsp; | &nbsp;
-			a(href="/slDin/"+dinpd.inquot._id) 订单
-			span &nbsp; | &nbsp;
-			span 产品详情
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/slDin/"+dinpd.inquot._id) 所属订单
+				li.breadcrumb-item.active(aria-current="page") 销售产品详情
 		.info
 			- let din = dinpd.inquot;
 			- let nomeBg = 'bg-default';

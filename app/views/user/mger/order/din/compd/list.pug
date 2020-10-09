@@ -38,11 +38,10 @@ table.mt-3.table.table-bordered
 						else
 							span 品牌数据丢失
 
-					if dinpd.area
-						-a;
-						.pdarea.mt-3
-							span.text-dark 区域: 
-							span #{dinpd.area}
+					.mt-3.qrCode-img.text-left
+						div 商品二追踪维码:
+						.qrCodeCompdDiv(id="qrCodeCompdDiv-"+dinpd._id)
+						input.qrCodeCompdStr(id="qrCodeCompdStr-"+dinpd._id, type="hidden", value="http://furnituretoplife.com/mgDinPd/"+dinpd._id)
 				td
 					.pdnome
 						span.text-dark 品类: 

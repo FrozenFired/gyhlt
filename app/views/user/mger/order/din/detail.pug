@@ -2,18 +2,15 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			.row
-				.col-12 
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/mgDins") 列表
-					span &nbsp; | &nbsp;
-					span 销售单
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/mgDins") 列表
+				li.breadcrumb-item.active(aria-current="page") 销售单
 		.info.my-3
 			include ./detail/basicInfo
 			include ./detail/billInfo
+
 		.dinpd.text-right
 			if din.status == Conf.status.init.num
 				-a;
@@ -21,3 +18,6 @@ block content
 			include ./compd/list
 
 		include ../../../aaPlugin/comment/list
+
+	script(src="/qrcodejs/qrcode.min.js")
+	script(src="/js/user/qrcode.js")

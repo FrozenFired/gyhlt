@@ -2,6 +2,10 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 成员列表
 		.row.my-3
 			.col-12.text-right
 				a.btn.btn-info(href="/userAdd") +

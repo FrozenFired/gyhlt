@@ -2,8 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 #{title}
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrands") 列表
+				li.breadcrumb-item.active(aria-current="page") 新增品牌
 		form#brandForm(method="post", action="/bnBrandNew", enctype="multipart/form-data")
 			input(type="hidden", name="picDir", value=Conf.picPath.brand)
 			input#picName(type="hidden", name="picName")

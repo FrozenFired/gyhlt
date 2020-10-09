@@ -2,11 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			a(href="/bner") Home
-			span &nbsp; | &nbsp;
-			span Serie List
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 系列
 		.row.mt-3
 			.col-12.col-md-4.col-lg-3.py-4.bg-light.mt-3
 				.count

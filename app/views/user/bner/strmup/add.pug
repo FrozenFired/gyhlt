@@ -2,9 +2,12 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
-		form#strmupAddForm(method="post", action="/bnStrmupNew", enctype="multipart/form-data")
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnStrmups") 列表
+				li.breadcrumb-item.active(aria-current="page") 新增供应商
+		form.mt-5#strmupAddForm(method="post", action="/bnStrmupNew", enctype="multipart/form-data")
 			.form-group.row
 				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 名称
 				.col-8.col-sm-10

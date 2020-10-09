@@ -36,7 +36,7 @@ exports.bnPdsec = (req, res) => {
 	let id = req.params.id;
 
 	Pdsec.findOne({_id: id})
-	.populate('pdfir')
+	.populate({path: 'pdfir', populate: {path: 'brand'}})
 	.exec((err, pdsec) => {
 		if(err) {
 			console.log(err);

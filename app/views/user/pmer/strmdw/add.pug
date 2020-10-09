@@ -2,8 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmStrmdws") 列表
+				li.breadcrumb-item.active(aria-current="page") 添加下游公司
 		form#strmdwAddForm(method="post", action="/pmStrmdwNew", enctype="multipart/form-data")
 			.form-group.row
 				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 名称

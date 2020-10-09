@@ -2,10 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title.text-muted.mt-2: h5
-			a(href="/cter") Home
-			span &nbsp; | &nbsp;
-			span #{title}
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 项目列表
 		.info.mt-5
 			include ../list
 

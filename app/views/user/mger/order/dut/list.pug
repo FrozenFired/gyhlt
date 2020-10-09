@@ -2,14 +2,10 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			.row
-				.col-9.text-muted.mt-2: h5
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					span 采购单列表
-				.col-3.text-right
-					//- a.btn.btn-warning(href="/mgDutAdd") +新的采购单
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 采购单列表
 		.filter
 			.bg-white.input-group.py-3.my-3#searchElem
 				input.form-control#dutSearch(type="text", placeholder="采购单搜索")

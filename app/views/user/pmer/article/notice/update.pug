@@ -2,14 +2,12 @@ extends ../../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			.row
-				.col-9.text-muted.mt-2: h5
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					span #{title}
-				.col-3.text-right
-					a.btn.btn-secondary(href="/pmNotices") 取消
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmNotices") 列表
+				li.breadcrumb-item: a(href="/pmArticle/"+article._id) 新闻详情
+				li.breadcrumb-item.active(aria-current="page") 新闻更新
 		.info
 			- var photo = article.photo;
 			if !photo

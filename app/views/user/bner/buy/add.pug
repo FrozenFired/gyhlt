@@ -2,8 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
+		ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBuys") 列表
+				li.breadcrumb-item.active(aria-current="page") 新的供应商折扣
 		form#buyAddForm(method="post", action="/bnBuyNew", enctype="multipart/form-data")
 			.form-group.row
 				label.col-4.col-sm-2.col-form-label(for="strmupIpt") 供应商

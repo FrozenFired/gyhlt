@@ -2,21 +2,16 @@ extends ../../aalayout/layout
 
 block content
 	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnPdfirs") 列表
+				li.breadcrumb-item: a(href="/bnBrand/"+pdfir.brand._id) 所属品牌: #{pdfir.brand.nome}
+				li.breadcrumb-item.active(aria-current="page") #{pdfir.code}
+
 		- let photo = pdfir.photo;
 		if !photo
 			- photo = Conf.picDefault.pdfir;
-
-		.title
-			.row
-				.col-12 
-					a(href="/bner") Home
-					span &nbsp; | &nbsp;
-					a(href="/bnPdfirs") Serie List
-					span &nbsp; | &nbsp;
-					a(href="/bnBrand/"+pdfir.brand._id) #{pdfir.brand.nome}
-					span &nbsp; | &nbsp;
-					span #{pdfir.code}
-			hr
 		.info
 			include ./detail/info
 			hr

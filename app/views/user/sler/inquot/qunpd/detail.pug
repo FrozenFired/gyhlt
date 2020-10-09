@@ -2,17 +2,13 @@ extends ../../../aalayout/layout
 
 block content
 	.container
-		.title
-			.row
-				.col-9 
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/slQun/"+qunpd.inquot._id) 询价单
-					span &nbsp; | &nbsp;
-					span 询价产品
-				.col-3.text-right
-					a.btn.btn-warning(href="/slQunpdUp/"+qunpd._id) 更新
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/slQun/"+qunpd.qun._id) 所属询价单
+				li.breadcrumb-item.active(aria-current="page") 询价产品
+		.update.text-right
+			a.btn.btn-warning(href="/slQunpdUp/"+qunpd._id) 更新
 		.info
 			- let qun = qunpd.inquot;
 			- let nomeBg = 'bg-default';

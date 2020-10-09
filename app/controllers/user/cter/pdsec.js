@@ -25,7 +25,7 @@ exports.ctPdsec = (req, res) => {
 	let firm = req.session.firm;
 	let id = req.params.id;
 	Pdsec.findOne({_id: id, firm: firm._id})
-	.populate('pdfir')
+	.populate({path: 'pdfir', populate: {path: 'brand'}})
 	.exec((err, pdsec) => {
 		if(err) {
 			info = "cter Pdsecs, Pdsec.find(), Error!";

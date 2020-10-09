@@ -1,22 +1,16 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/ctBrand/"+pdsec.pdfir.brand._id) #{pdsec.pdfir.brand.nome}
+				li.breadcrumb-item: a(href="/ctPdfir/"+pdsec.pdfir._id) #{pdsec.pdfir.code}
+				li.breadcrumb-item.active(aria-current="page") 产品详情
 		- var photo = pdsec.photo;
 		if !photo
 			- photo = Conf.picDefault.pdsec;
-
-		.title
-			.row
-				.col-12 
-					a(href="/cter") Home
-					span &nbsp; | &nbsp;
-					a(href="/ctPdsecs") Product List
-					span &nbsp; | &nbsp;
-					a(href="/ctPdfir/"+pdsec.pdfir._id) #{pdsec.pdfir.code}
-					span &nbsp; | &nbsp;
-					span #{pdsec.code}
-			hr
 		.info
 			include ./detail/info
 			hr

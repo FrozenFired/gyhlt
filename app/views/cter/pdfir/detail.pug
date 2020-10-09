@@ -1,20 +1,15 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/ctBrand/"+pdfir.brand._id) #{pdfir.brand.nome}
+				li.breadcrumb-item.active(aria-current="page") 系列详情
 		- var photo = pdfir.photo;
 		if !photo
 			- photo = Conf.picDefault.pdfir;
-
-		.title
-			a.text-dark(href="/cter") Home
-			span &nbsp; | &nbsp;
-			a.text-dark.breadPdfir(href="/ctPdfirs") Serie List
-			span &nbsp; | &nbsp;
-			a.text-dark(href="/ctBrand/"+pdfir.brand._id) #{pdfir.brand.nome}
-			span &nbsp; | &nbsp;
-			span #{pdfir.code}
-			hr
 		.info
 			include ./detail/info
 			hr

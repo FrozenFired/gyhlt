@@ -2,11 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			a(href="/") Home
-			span &nbsp; | &nbsp;
-			span 客户折扣
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 客户折扣列表
 
 		.addButton.text-right
 			a.btn.btn-warning(href="/pmSellAdd") +

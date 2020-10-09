@@ -2,7 +2,15 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/bnBrand/"+pdthd.pdsec.pdfir.brand._id) #{pdthd.pdsec.pdfir.brand.nome}
+				li.breadcrumb-item: a(href="/bnPdfir/"+pdthd.pdsec.pdfir._id) #{pdthd.pdsec.pdfir.code}
+				li.breadcrumb-item: a(href="/bnPdsec/"+pdthd.pdsec._id) #{pdthd.pdsec.code}
+				li.breadcrumb-item.active(aria-current="page") #{pdthd.code}
+
+		//- .title
 			.row
 				.col-12 
 					a(href="/bner") Home

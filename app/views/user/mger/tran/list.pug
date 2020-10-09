@@ -2,11 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container.mt-3
-		.title
-			a(href="/") Home
-			span &nbsp; | &nbsp;
-			span 运输单列表
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 运输单列表
 		.filter
 			.bg-white.input-group.py-3.my-3#searchElem
 				input.form-control#tranSearch(type="text", placeholder="运输单搜索")

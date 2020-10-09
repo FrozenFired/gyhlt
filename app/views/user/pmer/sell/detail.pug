@@ -2,15 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title
-			.row
-				.col-12 
-					a(href="/") Home
-					span &nbsp; | &nbsp;
-					a(href="/pmSells") 客户折扣
-					span &nbsp; | &nbsp;
-					span #{sell.nome}
-			hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmSells") 列表
+				li.breadcrumb-item.active(aria-current="page") 客户折扣详情 #{sell.nome}
 		.update.text-right
 			a.btn.btn-warning(href="/pmSellUp/"+sell._id) 更新
 		.discount.border.p-2.mt-3.row.text-center

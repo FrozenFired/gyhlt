@@ -2,8 +2,12 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.title #{title}
-		hr
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/pmStrmdws") 列表
+				li.breadcrumb-item: a(href="/pmStrmdw/"+strmdw._id) 详情
+				li.breadcrumb-item.active(aria-current="page") 下游公司更新
 		form#strmdwAddForm(method="post", action="/pmStrmdwUpd", enctype="multipart/form-data")
 			input(type="hidden", name="obj[_id]", value=strmdw._id)
 
