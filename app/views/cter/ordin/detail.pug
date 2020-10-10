@@ -1,0 +1,183 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item.active(aria-current="page") 订单号: #{din.code}
+		.info.my-3
+			.border.border-dark.p-3
+				.row.text-center
+					.col-md-5
+						h5.code
+							span 订单号: 
+							span.text-danger #{din.code}
+						.time.mt-2
+							span 下单时间: 
+							span #{moment(din.crtAt).format('DD/MM/YYYY')}
+						.dinAt.mt-2
+							span 交货时间: 
+							if din.dinAt
+								-a;
+								span #{moment(din.dinAt).format('DD/MM/YYYY')}
+					.col-md-5
+						.cter 采购者:
+							if din.cter
+								- cter = din.cter;
+								span #{cter.nome} [#{cter.code}]
+							else
+								span #{din.cterNome}
+						.din.mt-2
+							span 销售员:
+							if din.diner
+								- diner = din.diner;
+								span #{diner.nome} [ #{diner.code} ]
+							else
+								span 数据丢失
+						.quantTotal.mt-2
+							.row
+								.col-6
+									span 种类: #{din.compds.length}
+								.col-6
+									span 件数: 
+									span#span-quantTotal
+					.col-md-2
+						.dinPr
+							span 合同价格:
+							h5.text-info #{din.dinImp} €
+						.status.mt-3
+							- let status = '';
+							each sts in Conf.status
+								- status = '';
+								if sts.num == din.status
+									- status = sts.val;
+									- break;
+							span 订单状态:
+							h5.text-info #{status}
+		.dinpd
+			- var quantTotal = dinPrImp = 0;
+			table.mt-3.table.table-bordered
+				thead.thead-light
+					th 品牌
+					th 系列
+					th 产品规格
+					th 工艺面料
+					th(style="width:18%") 数量 | 价格 | 状态
+				thead
+					each dinpd in dinpds
+						- quantTotal += dinpd.quant;
+						- dinPrImp += dinpd.quant * dinpd.dinPr;
+						tr.text-info(id="tr-compdid-"+dinpd._id)
+							td
+								.pdnum.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
+								.brandnome.mt-4
+									if dinpd.brand
+										- brand = dinpd.brand;
+										span [#{brand.nome}]
+									else
+										span #{dinpd.brandNome}
+
+								if dinpd.area
+									-a;
+									.pdarea.mt-3
+										span.text-dark 区域: 
+										span #{dinpd.area}
+							td
+								if dinpd.pdNome
+									-a;
+									.pdnome
+										span.text-dark 品类: 
+										span #{dinpd.pdNome}
+								if dinpd.pdfir
+									- pdfir = dinpd.pdfir;
+									.pdfircode.mt-3
+										span.text-dark 系列名: 
+										span [#{pdfir.code}]
+								else
+									- let firNome = '产品系列名称';
+									if dinpd.firNome
+										- firNome = dinpd.firNome;
+									.firnome.mt-3
+										span.text-dark 系列名: 
+										span #{firNome}
+								.photo.mt-3
+									if dinpd.photo
+										- photo = dinpd.photo;
+										img(src=photo, width="120px")
+										.picLink
+											a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+									else if dinpd.pdfir
+										- photo = dinpd.pdfir.photo;
+										img(src=photo, width="120px")
+										.picLink
+											a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+							td
+								if dinpd.pdsec
+									- pdsec = dinpd.pdsec;
+									.pdsecspec
+										span.text-dark 产品尺寸: 
+										span [#{pdsec.spec}]
+								else
+									.pdsecspec
+										span.text-dark 产品尺寸: 
+										span #{dinpd.specf}
+
+								.sketch.mt-3
+									if dinpd.sketch
+										- sketch = dinpd.sketch;
+										img#sketchCrt(src=sketch, width="120px")
+										.picLink
+											a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+									else if dinpd.pdsec
+										-a;
+										- sketch = dinpd.pdsec.photo;
+										img#sketchCrt(src=sketch, width="120px")
+										.picLink
+											a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+							td
+								.pdmater #{dinpd.mater}
+								.pdcraft.mt-3 #{dinpd.craft}
+								.images
+									- let subsp = -1;
+									each image in dinpd.images
+										- subsp++;
+										if image && image.length > 5
+											-a;
+											img.mt-2(src=image, width="120px")
+											.picLink
+												a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+							td
+								.quant
+									span.text-dark 数量: 
+									span #{dinpd.quant}
+
+
+								.dinPr.mt-3
+									span.text-dark 单价: 
+									if dinpd.dinPr
+										-a;
+										span #{dinpd.dinPr}
+									else
+										span 售价错误
+								.total
+									strong
+										span.text-dark 总价: 
+										span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr}
+
+								.compdSts.mt-3
+									- let status = '';
+									each sts in Conf.status
+										- status = '';
+										if sts.num == dinpd.compdSts
+											- status = sts.val;
+											- break;
+									span.text-dark 商品状态: 
+									if din.status > Conf.status.init.num
+										-a;
+										span.text-danger #{status}
+									else
+										span.text-danger 创建中
+				.hideImp
+					input#ipt-quantTotal(type="hidden", value=quantTotal)
+					input#ipt-dinPrImp(type="hidden", value=dinPrImp)
+	script(src="/js/user/cter/ordin/detail.js")

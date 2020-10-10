@@ -19,7 +19,7 @@
 				input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly",)
 				input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名")
 			.col-md-3.mt-3#brandweb
-		input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@sl")
+		input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@sl")
 		.ajax#brandsElem
 
 		.row.my-3
@@ -29,7 +29,7 @@
 			.col-md-3.mt-3
 				input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly")
 				input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称")
-		input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
+		input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?shelf=1&shelf=2@#pdfirsElem@sl")
 		.ajax#pdfirsElem
 		.row.my-3
 			.col-md-2.mt-3.text-right 产品图片:
@@ -47,7 +47,7 @@
 				input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号")
 			.col-md-3.mt-3
 				input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高")
-		input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
+		input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?shelf=1&shelf=2@#pdsecsElem@sl")
 		.ajax#pdsecsElem
 		.row.my-3
 			.col-md-2.mt-3.text-right 线稿图:
@@ -66,7 +66,7 @@
 				input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质")
 			.col-md-3.mt-3
 				input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色")
-		input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
+		input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?shelf=1&shelf=2@#pdthdsElem@qt")
 		.ajax#pdthdsElem
 		.row.my-3
 			.col-md-2.mt-3.pt-5.text-right 材质图片:

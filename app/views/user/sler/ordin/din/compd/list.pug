@@ -15,7 +15,7 @@ table.mt-3.table.table-bordered
 			tr.text-info(id="tr-compdid-"+dinpd._id)
 				td
 					.pdnum.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
-					.brandnome.mt-5
+					.brandnome.mt-4
 						if dinpd.brand
 							- brand = dinpd.brand;
 							span [#{brand.nome}]
@@ -27,6 +27,10 @@ table.mt-3.table.table-bordered
 						.pdarea.mt-3
 							span.text-dark 区域: 
 							span #{dinpd.area}
+					.mt-3.qrCode-img.text-left
+						div 商品二追踪维码:
+						.qrCodeCompdDiv(id="qrCodeCompdDiv-"+dinpd._id)
+						input.qrCodeCompdStr(id="qrCodeCompdStr-"+dinpd._id, type="hidden", value="http://furnituretoplife.com/mgDinPd/"+dinpd._id)
 				td
 					.pdnome
 						span.text-dark 品类: 

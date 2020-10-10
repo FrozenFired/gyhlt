@@ -41,7 +41,7 @@ block content
 							- website = 'http://'+website;
 						.brandweb
 							a(href=website target="_blank") #{brand.nome}官网
-			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?@#brandsElem@sl")
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@sl")
 			.ajax#brandsElem
 
 			- let pdfir = new Object();
@@ -54,7 +54,7 @@ block content
 				.col-md-3.mt-3
 					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=pdfir._id)
 					input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=qunpd.firNome)
-			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?shelf=1&shelf=2@#pdfirsElem@sl")
 			.ajax#pdfirsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 产品图片:
@@ -82,7 +82,7 @@ block content
 					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号", value=qunpd.secNome)
 				.col-md-3.mt-3
 					input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=qunpd.specf)
-			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?shelf=1&shelf=2@#pdsecsElem@sl")
 			.ajax#pdsecsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 线稿图:
@@ -112,7 +112,7 @@ block content
 					input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质", value=qunpd.mater)
 				.col-md-3.mt-3
 					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色", value=qunpd.craft)
-			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?shelf=1&shelf=2@#pdthdsElem@qt")
 			.ajax#pdthdsElem
 			.row.my-3
 				.col-md-2.mt-3.pt-5.text-right 材质图片:

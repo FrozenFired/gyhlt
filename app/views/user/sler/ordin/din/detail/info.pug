@@ -1,6 +1,6 @@
 .border.border-dark.p-3
 	.row.text-center
-		.col-md-6
+		.col-md-5
 			h5.code
 				span 订单号: 
 				span.text-danger #{din.code}
@@ -14,7 +14,7 @@
 					span #{diner.nome} [ #{diner.code} ]
 				else
 					span 数据丢失
-		.col-md-6
+		.col-md-5
 			.cter 客户:
 				if din.cter
 					- cter = din.cter;
@@ -30,5 +30,11 @@
 						- break;
 				span 状态: #{status}
 
-			.excel.text-right
+		.col-md-2
+			.qrCode-img.text-left
+				div 订单二追踪维码:
+				#qrCodeObjDiv
+				- let qrCodeObjUrl = 'http://furnituretoplife.com/ordin/'+din._id;
+				input#qrCodeObjStr(type="hidden", value=qrCodeObjUrl)
+			.excel.mt-4
 				a(href="/slDinExcel/"+din._id) Excel <span class="oi oi-data-transfer-download"></span>

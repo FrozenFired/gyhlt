@@ -1,7 +1,5 @@
 // 销售单
 const Err = require('../../aaIndex/err');
-
-const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
 const Ordin = require('../../../models/firm/ord/ordin');

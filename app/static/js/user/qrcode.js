@@ -16,8 +16,8 @@ $(function() {
 		let qrCodeCompdStr = $(this).val();
 		let qrcodeCompd = new QRCode(qrCodeCompdDiv, {
 			text: qrCodeCompdStr,
-			width: 128,
-			height: 128,
+			width: 98,
+			height: 98,
 			colorDark : "#000000",
 			colorLight : "#ffffff",
 			correctLevel : QRCode.CorrectLevel.H

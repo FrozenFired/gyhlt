@@ -1,7 +1,7 @@
 extends ../../../aalayout/layout
 
 block content
-	.container
+	.container.mt-3
 		nav(aria-label="breadcrumb")
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/") Home
@@ -15,3 +15,6 @@ block content
 		include ../../../aaPlugin/comment/list
 
 	script(src="/js/user/sler/din/detail/detail.js")
+
+	script(src="/qrcodejs/qrcode.min.js")
+	script(src="/js/user/qrcode.js")
