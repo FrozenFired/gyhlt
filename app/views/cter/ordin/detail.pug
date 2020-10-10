@@ -12,14 +12,17 @@ block content
 						h5.code
 							span 订单号: 
 							span.text-danger #{din.code}
-						.time.mt-2
+						.crtAt.mt-2
 							span 下单时间: 
-							span #{moment(din.crtAt).format('DD/MM/YYYY')}
+							span #{moment(din.crtAt).format('YYYY-MM-DD')}
+						.billAt.mt-2
+							span 付款时间: 
+							span #{moment(din.billAt).format('YYYY-MM-DD')}
 						.dinAt.mt-2
 							span 交货时间: 
 							if din.dinAt
 								-a;
-								span #{moment(din.dinAt).format('DD/MM/YYYY')}
+								span #{moment(din.dinAt).format('YYYY-MM-DD')}
 					.col-md-5
 						.cter 采购者:
 							if din.cter

@@ -4,7 +4,30 @@
 			h5.code 订单号:#{din.code}
 			.time.mt-2
 				span 下单时间: 
-				span #{moment(din.dinAt).format('DD/MM/YYYY')}
+				span #{moment(din.dinAt).format('YYYY-MM-DD')}
+			.dinDay.mt-2
+				- let dinDay = Conf.dinDay;
+				if din.dinDay
+					- dinDay = din.dinDay;
+				span.mr-1 货期: (付款后)
+				span.text-warning.objUpClick#span-dinDay #{dinDay}
+				span.ml-1 天
+			input#org-dinDay.form-control(type="hidden", value=din.dinDay)
+			form#form-dinDay(method="post", action="/mgDinUpdAjax", style="display:none")
+				input(type="hidden", name="obj[_id]", value=din._id)
+				.form-group.row
+					.col-4
+					.col-4
+						input#ipt-dinDay.form-control(type="number", name="obj[dinDay]", value=din.dinDay)
+			if din.bills && din.bills.length > 0
+				-a;
+				.billAt.mt-2
+					span 付款日期: 
+					span #{moment(din.billAt).format('YYYY-MM-DD')}
+				if din.dinAt
+					-a;
+					span 截止日期: 
+					span#span-dinAt #{moment(din.dinAt).format('YYYY-MM-DD')}
 			.din.mt-2
 				span 销售员:
 				if din.diner
@@ -17,13 +40,13 @@
 			.cter 客户:
 				if din.cter
 					- cter = din.cter;
-					span.text-warning.objUpClick#cter-span #{cter.nome} [#{cter.code}]
+					span.text-warning.objUpClick#span-cter #{cter.nome} [#{cter.code}]
 				else
-					span.text-warning.objUpClick#cter-span 未分配
-				form#cter-form(method="post", action="/mgDinUpd", enctype="multipart/form-data", style="display:none")
+					span.text-warning.objUpClick#span-cter 未分配
+				form#form-cter(method="post", action="/mgDinUpd", enctype="multipart/form-data", style="display:none")
 					input(type="hidden", name="obj[_id]", value=din._id)
 					.form-group.row.px-5.text-center
-						.col-12
+						.col-8
 							select.inquotUpSel#dinNote-ipt.form-control(name="obj[cter]", data-style="btn-info")
 								option(value='null') 请选择客户
 								each cter in cters
@@ -36,10 +59,7 @@
 										option(value=cter._id, selected="selected") #{cter.nome}[#{cter.code}]
 									else
 										option(value=cter._id) #{cter.nome}[#{cter.code}]
-					.form-group.row
-						.col-6
-							button.inquotCancelClick#cter-cancel.btn.btn-secondary(type="button") 取消
-						.col-6
+						.col-4
 							input.btn.btn-success(type="submit" value="提交")
 			.quantTotal
 				span 总数量: 

@@ -84,6 +84,7 @@ module.exports = function(app){
 	app.get('/mgDinDel/:id', MdRole.mgerIsLogin, Din.mgDinDel)
 
 	app.post('/mgDinUpd', MdRole.mgerIsLogin, postForm, Din.mgDinUpd)
+	app.post('/mgDinUpdAjax', MdRole.mgerIsLogin, postForm, Din.mgDinUpdAjax)
 
 	/* =================================== Dinpd 销售商品 =================================== */
 	app.post('/mgDinpdUpdAjax', MdRole.mgerIsLogin, postForm, Dinpd.mgDinpdUpdAjax)

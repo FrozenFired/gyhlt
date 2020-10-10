@@ -1,6 +1,8 @@
 let Conf = {
 	firmId: '5eea52c7e61fa97e3ff44fdb',
 	codeLenFirm: 3,
+	dinDay: 200,
+
 	categFirm: {
 		factory: {num: 0, val: '工厂'},
 		proxy: {num: 1, val: '代理'},

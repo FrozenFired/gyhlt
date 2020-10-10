@@ -13,8 +13,8 @@ block content
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 			span.mr-5 查看报价单:
 			button.mr-5.btn.statusClick.btn-success(type="button", data-status=Conf.status.quoting.num) #{Conf.status.quoting.val}
-			button.mr-5.btn.statusClick(class=stsBtn, data-status='qter', type="button") 完成
-			button.btn.statusClick#statusAll(class=stsBtn, type="button") 所有
+			button.mr-5.btn.statusClick(data-status='qter', type="button") 完成
+			button.btn.statusClick#statusAll(type="button") 所有
 		.qutsList.mt-3
 			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#qutsElem@qt@&status="+Conf.status.quoting.num)
 			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#qutsElem")

@@ -336,3 +336,58 @@ let mgerdinSave = (req, res, obj, ordin) => {
 		}
 	})
 }
+
+
+exports.mgDinUpdAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+	Ordin.findOne({
+		firm: crUser.firm,
+		_id: obj._id
+	}, (err, ordin) => {
+		if(err) {
+			console.log(err);
+			info = "mger DinUpdAjax, Strmup.findOne, Error!"
+			Err.jsonErr(req, res, info);
+		} else if(!ordin) {
+			info = 'mger DinUpdAjax, 此销售单已经被删除, 请刷新查看';
+			Err.jsonErr(req, res, info);
+		} else {
+			info = null;
+			if(obj.cterNome) {
+				obj.cterNome = obj.cterNome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			} else if(obj.dinDay) {
+				obj.dinDay = parseInt(obj.dinDay);
+				if(isNaN(obj.dinDay)) {
+					info = "mger DinUpdAjax, 货期的天数 只能是数字"
+				} else if(ordin.billAt){
+					obj.dinAt = (ordin.billAt).getTime() + obj.dinDay*24*60*60*1000
+				} else {
+					obj.dinAt = null;
+				}
+			} else if(obj.billAt) {
+				info = "mger DinUpdAjax, 请通知管理员做修改付款日期的功能"
+			}
+			if(info) {
+				Err.jsonErr(req, res, info);
+			} else {
+				let _ordin = _.extend(ordin, obj)
+				_ordin.save((err, objSave) => {
+					if(err) {
+						console.log(err);
+						info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+						Err.jsonErr(req, res, info);
+					} else {
+						res.json({
+							status: 1,
+							msg: '',
+							data: {
+								ordin: objSave
+							}
+						});
+					}
+				})
+			}
+		}
+	})
+}

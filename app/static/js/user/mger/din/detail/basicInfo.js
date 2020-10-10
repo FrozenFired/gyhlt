@@ -14,17 +14,18 @@ $(function() {
 		$(".delObjectBtn").show();
 	})
 
-
+	// 点击单独改变数据库值
 	$(".objUpClick").click(function(e) {
-		let htmlId = $(this).attr("id").split('-')[0]
-		$("#"+htmlId+"-form").toggle();
+		let htmlId = $(this).attr("id").split('-')[1]
+		$("#form-"+htmlId).toggle();
 	})
-	$(".objUpIpt").blur(function(e) {
-		let htmlId = $(this).attr("id").split('-')[0]
-		let org = $("#"+htmlId+"-org").val();
-		let now = $(this).val();
-		if(org != now) {
-			let form =$("#"+htmlId+"-form");
+	// 改变货期
+	$("#ipt-dinDay").blur(function(e) {
+		let htmlId = $(this).attr("id").split('-')[1]
+		let now = parseInt($(this).val());
+		let org = parseInt($("#org-"+htmlId).val());
+		if(!isNaN(now) && now != org) {
+			let form =$("#form-"+htmlId);
 			let data = form.serialize();
 			let url = form.attr('action');
 			$.ajax({
@@ -33,18 +34,19 @@ $(function() {
 				data: data,
 				success: function(results) {
 					if(results.status === 1) {
-						$("#"+htmlId+"-span").text("备注: " + now);
-						$("#"+htmlId+"-org").val(now);
-						$("#"+htmlId+"-form").hide();
-						$("#"+htmlId+"-span").show();
+						let ordin = results.data.ordin;
+						$("#span-"+htmlId).text(now);
+						$("#org-"+htmlId).val(now);
+						let dinAt = transformTime(ordin.dinAt, 0, 10)
+						$("#span-dinAt").text(dinAt)
+						$("#form-"+htmlId).hide();
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}
 				}
 			});
 		} else {
-			$("#"+htmlId+"-form").hide();
-			$("#"+htmlId+"-span").show();
+			$("#form-"+htmlId).hide();
 		}
 	})
 })
