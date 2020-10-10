@@ -1,0 +1,74 @@
+each dinpd in dinpds
+	-a;
+	.row.border.border-dark.mt-3
+		.col-6.py-2.border-right.border-dark
+			a.pdnum(href="/compd/"+dinpd._id) 商品编号: [#{dinpd.pdnum}]
+			.brandnome.mt-2
+				span 品牌名: 
+				if dinpd.brand
+					- brand = dinpd.brand;
+					span [#{brand.nome}]
+				else
+					span #{dinpd.brandNome}
+			if dinpd.area
+				-a;
+				.pdarea.mt-3
+					span.text-dark 区域: 
+					span #{dinpd.area}
+			if dinpd.pdNome
+				-a;
+				.pdnome
+					span.text-dark 品类: 
+					span #{dinpd.pdNome}
+			if dinpd.pdfir
+				- pdfir = dinpd.pdfir;
+				.pdfircode.mt-3
+					span.text-dark 系列名: 
+					span [#{pdfir.code}]
+			else
+				- let firNome = '产品系列名称';
+				if dinpd.firNome
+					- firNome = dinpd.firNome;
+				.firnome.mt-3
+					span.text-dark 系列名: 
+					span #{firNome}
+			if dinpd.pdsec
+				- pdsec = dinpd.pdsec;
+				.pdsecspec
+					span.text-dark 产品尺寸: 
+					span [#{pdsec.spec}]
+			else
+				.pdsecspec
+					span.text-dark 产品尺寸: 
+					span #{dinpd.specf}
+		.col-6.py-2
+			.quant
+				span.text-dark 数量: 
+				span #{dinpd.quant}
+
+
+			.dinPr.mt-3
+				span.text-dark 单价: 
+				if dinpd.dinPr
+					-a;
+					span #{dinpd.dinPr}
+				else
+					span 售价错误
+			.total
+				strong
+					span.text-dark 总价: 
+					span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr}
+
+			.compdSts.mt-3
+				- let status = '';
+				each sts in Conf.status
+					- status = '';
+					if sts.num == dinpd.compdSts
+						- status = sts.val;
+						- break;
+				span.text-dark 商品状态: 
+				if din.status > Conf.status.init.num
+					-a;
+					span.text-danger #{status}
+				else
+					span.text-danger 创建中

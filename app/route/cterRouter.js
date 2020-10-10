@@ -64,4 +64,6 @@ module.exports = function(app){
 	/* =================================== Ordin =================================== */
 	app.get('/ctOrdins', MdRole.cterIsLogin, Ordin.ctOrdins)
 	app.get('/ordin/:id', Ordin.ordin)
+
+	app.get('/compd/:id', Ordin.compd)
 };
