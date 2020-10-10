@@ -75,7 +75,7 @@ exports.compd = (req, res) => {
 		} else {
 			// console.log(din)
 			res.render('./cter/ordin/compd/detail', {
-				title: '订单详情',
+				title: '商品详情',
 				crUser,
 				compd,
 			})
