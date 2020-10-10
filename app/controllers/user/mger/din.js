@@ -86,7 +86,7 @@ exports.mgDinGen = (req, res) => {
 					ordinObj.cter = inquot.cter;
 					ordinObj.cterNome = inquot.cterNome;
 					ordinObj.firm = crUser.firm;
-					ordinObj.diner = crUser._id;
+					ordinObj.diner = inquot.quner;
 					ordinObj.code = code;
 					ordinObj.dinImp = 0;
 					ordinObj.billPr = 0;
