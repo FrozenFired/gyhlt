@@ -1,4 +1,6 @@
 $(function() {
+	$(".datepicker").datepicker();
+
 	// 初始化数量和总金额
 	$("#span-quantTotal").text($("#ipt-quantTotal").val())
 	$("#span-qntPrImp").text($("#ipt-qntPrImp").val())
@@ -48,5 +50,60 @@ $(function() {
 		} else {
 			$("#form-"+htmlId).hide();
 		}
+	})
+
+	// 双击单独改变数据库值
+	$(".objUpDblclick").dblclick(function(e) {
+		let htmlId = $(this).attr("id").split('-')[1]
+		$("#form-"+htmlId).toggle();
+	})
+
+	$("#ipt-crtAt").change(function(e) {
+		let htmlId = $(this).attr("id").split('-')[1]
+		let form =$("#form-"+htmlId);
+		let data = form.serialize();
+		let url = form.attr('action');
+		let now = $(this).val();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: data,
+			success: function(results) {
+				if(results.status === 1) {
+					let ordin = results.data.ordin;
+					let crtAt = transformTime(ordin.crtAt, 0, 10)
+					$("#span-"+htmlId).text(crtAt)
+					$("#ipt-"+htmlId).val("")
+					$("#form-"+htmlId).hide();
+				} else if(results.status === 0) {
+					alert(results.msg)
+				}
+			}
+		});
+	})
+	$("#ipt-billAt").change(function(e) {
+		let htmlId = $(this).attr("id").split('-')[1]
+		let form =$("#form-"+htmlId);
+		let data = form.serialize();
+		let url = form.attr('action');
+		let now = $(this).val();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: data,
+			success: function(results) {
+				if(results.status === 1) {
+					let ordin = results.data.ordin;
+					let billAt = transformTime(ordin.billAt, 0, 10)
+					$("#span-"+htmlId).text(billAt)
+					let dinAt = transformTime(ordin.dinAt, 0, 10)
+					$("#span-dinAt").text(dinAt)
+					$("#ipt-"+htmlId).val("")
+					$("#form-"+htmlId).hide();
+				} else if(results.status === 0) {
+					alert(results.msg)
+				}
+			}
+		});
 	})
 })

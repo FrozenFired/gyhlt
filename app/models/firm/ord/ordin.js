@@ -32,8 +32,9 @@ let dbSchema = new Schema({
 	bills: [{type: ObjectId, ref: 'Bill'}],
 
 	dinDay: Number,						// 货期 xxx 天
-	dinAt: Date,						// 交货日期
+	dinAt: Date,						// 截止交货日期
 
+	fnhAt: Date,						// 交货日期
 	status: Number,						// 系列状态 
 	step: {type: Number, default: 0},		// 处理步骤 
 });

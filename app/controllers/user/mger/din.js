@@ -366,7 +366,14 @@ exports.mgDinUpdAjax = (req, res) => {
 					obj.dinAt = null;
 				}
 			} else if(obj.billAt) {
-				info = "mger DinUpdAjax, 请通知管理员做修改付款日期的功能"
+				obj.billAt = new Date(obj.billAt).setHours(8,0,0,0);
+				if(ordin.dinDay) {
+					obj.dinAt = obj.billAt + ordin.dinDay*24*60*60*1000
+				} else {
+					obj.dinAt = null;
+				}
+			} else if(obj.crtAt) {
+				obj.crtAt = new Date(obj.crtAt).setHours(8,0,0,0);
 			}
 			if(info) {
 				Err.jsonErr(req, res, info);

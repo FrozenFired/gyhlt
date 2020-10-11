@@ -119,11 +119,19 @@ table.mt-3.table.table-bordered
 					.strmup.mt-4.text-left
 						span.text-dark 供应商:
 						br
-						if dinpd.strmup
+						if dinpd.ordut
 							-a;
-							span.text-warning #{dinpd.strmup.nome}
+							if dinpd.strmup
+								-a;
+								span #{dinpd.strmup.nome}
+							else
+								span 数据丢失
 						else
-							span.text-warning 数据丢失
+							if dinpd.strmup
+								-a;
+								span.text-warning #{dinpd.strmup.nome}
+							else
+								span.text-warning 数据丢失
 					if dinpd.dutPr && !isNaN(dinpd.dutPr)
 						-a;
 						.dutPr.mt-2.text-left

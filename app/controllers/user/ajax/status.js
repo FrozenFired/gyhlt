@@ -233,8 +233,12 @@ exports.usOrdinStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.payoff.num) {
 					// 全部付款后, 状态变为付清
-					ordin.status = parseInt(newStatus);
-					info = null;
+					if(ordin.dinImp - ordin.billPr > (ordin.dinImp)* 2/100) {
+						info = "还未付清"
+					} else {
+						ordin.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
 					// 完成付款, 完成订单
@@ -380,8 +384,12 @@ exports.usOrdutStatusAjax = (req, res) => {
 				}
 				else if(oldStatus == Conf.status.deposit.num && newStatus == Conf.status.payoff.num) {
 					// 全部付款后, 状态变为付清
-					ordut.status = parseInt(newStatus);
-					info = null;
+					if(ordut.dutImp - ordut.billPr > (ordut.dutImp)* 2/100) {
+						info = "还未付清"
+					} else {
+						ordut.status = parseInt(newStatus);
+						info = null;
+					}
 				}
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
 					// 完成采购单, 可以开始运输

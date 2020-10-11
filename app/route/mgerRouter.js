@@ -114,6 +114,7 @@ module.exports = function(app){
 	app.get('/mgTranDel/:id', MdRole.mgerIsLogin, Tran.mgTranDel)
 
 	app.post('/mgTranUpd', MdRole.mgerIsLogin, postForm, Tran.mgTranUpd)
+	app.post('/mgTranUpdAjax', MdRole.mgerIsLogin, postForm, Tran.mgTranUpdAjax)
 
 	app.post('/mgTranPlusPd', MdRole.mgerIsLogin, postForm, Tran.mgTranPlusPd)
 

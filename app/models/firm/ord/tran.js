@@ -16,6 +16,7 @@ let dbSchema = new Schema({
 
 	/* ========== 基本信息 ========== */
 	code: String,								// 我们公司的编号
+	crtAt: Date,								// 创建日期
 	nome: String,								// 集装箱编号
 	vol: Number,								// 容量
 	note: String,								// 备注

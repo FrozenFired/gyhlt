@@ -345,8 +345,66 @@ let mgertranSave = (req, res, obj, tran) => {
 }
 
 
-
-
+exports.mgTranUpdAjax = (req, res) => {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+	Tran.findOne({
+		firm: crUser.firm,
+		_id: obj._id
+	}, (err, tran) => {
+		if(err) {
+			console.log(err);
+			info = "mger TranUpd, Tran.findOne, Error!"
+			Err.jsonErr(req, res, info);
+		} else if(!tran) {
+			info = '此运输单已经被删除, 请刷新查看';
+			Err.usError(req, res, info);
+		} else {
+			info = null;
+			if(obj.nome) {
+				obj.nome = obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			} else if(obj.trpDay) {
+				obj.trpDay = parseInt(obj.trpDay);
+				if(isNaN(obj.trpDay)) {
+					info = "mger DinUpdAjax, 货期的天数 只能是数字"
+				} else if(tran.trpAt){
+					obj.arrivAt = (tran.trpAt).getTime() + obj.trpDay*24*60*60*1000
+				} else {
+					obj.arrivAt = null;
+				}
+			} else if(obj.trpAt) {
+				obj.trpAt = new Date(obj.trpAt).setHours(8,0,0,0);
+				if(tran.trpDay) {
+					obj.arrivAt = obj.trpAt + tran.trpDay*24*60*60*1000
+				} else {
+					obj.arrivAt = null;
+				}
+			} else if(obj.crtAt) {
+				obj.crtAt = new Date(obj.crtAt).setHours(8,0,0,0);
+			}
+			if(info) {
+				Err.jsonErr(req, res, info);
+			} else {
+				let _tran = _.extend(tran, obj)
+				_tran.save((err, objSave) => {
+					if(err) {
+						console.log(err);
+						info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+						Err.jsonErr(req, res, info);
+					} else {
+						res.json({
+							status: 1,
+							msg: '',
+							data: {
+								tran: objSave
+							}
+						});
+					}
+				})
+			}
+		}
+	})
+}
 
 
 
