@@ -1,0 +1,25 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 采购单列表
+		.filter
+			.bg-white.input-group.py-3.my-3#searchElem
+				input.form-control#dutSearch(type="text", placeholder="采购单搜索")
+				.input-group-append
+					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			each sts in Conf.dutSts
+				- let stsBtn = "btn-default";
+				if sts == 'init'
+					- stsBtn = "btn-success";
+				button.mr-3.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
+			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+		.dutsList.mt-3
+			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@fn@&status="+Conf.status.init.num)
+			//- input#dutFilterAjax(type="hidden", value="?key=xxx@#dutsElem")
+			#dutsElem.mt-5
+
+	script(src="/js/user/ajaxGet/dut.js")

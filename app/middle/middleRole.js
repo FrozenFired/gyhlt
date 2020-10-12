@@ -62,6 +62,19 @@ exports.mgerIsLogin = function(req, res, next) {
 	}
 };
 
+exports.fnerIsLogin = function(req, res, next) {
+	let crUser = req.session.crUser;
+	if(!crUser) {
+		res.redirect('/usLogin');
+	} else if(crUser.role == Conf.roleUser.finance.num) {
+		next();
+	} else if(Conf.roleAdmin.includes(crUser.role)) {
+		next();
+	} else {
+		res.redirect('/usLogin');
+	}
+};
+
 exports.sferIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
@@ -84,6 +97,9 @@ exports.bnerIsLogin = function(req, res, next) {
 	} else if(crUser.role == Conf.roleUser.quotation.num) {
 		//  因为报价部 在报价的时候可以添加产品
 		next();
+	} else if(crUser.role == Conf.roleUser.order.num) {
+		//  因为报价部 在报价的时候可以添加产品
+		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
@@ -97,7 +113,7 @@ exports.qterIsLogin = function(req, res, next) {
 		res.redirect('/usLogin');
 	} else if(crUser.role == Conf.roleUser.quotation.num) {
 		next();
-	} else if(crUser.role == Conf.roleUser.ordin.num) {
+	} else if(crUser.role == Conf.roleUser.order.num) {
 		//  订单部可以看到报价部报价 为了对应订单
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
@@ -113,9 +129,6 @@ exports.slerIsLogin = function(req, res, next) {
 		res.redirect('/usLogin');
 	} else if(crUser.role == Conf.roleUser.seller.num) {
 		next();
-	} else if(crUser.role == Conf.roleUser.ordin.num) {
-		//  订单部可以看到销售单
-		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
@@ -127,7 +140,20 @@ exports.oderIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
 		res.redirect('/usLogin');
-	} else if(crUser.role == Conf.roleUser.ordin.num) {
+	} else if(crUser.role == Conf.roleUser.order.num) {
+		next();
+	} else if(Conf.roleAdmin.includes(crUser.role)) {
+		next();
+	} else {
+		res.redirect('/usLogin');
+	}
+};
+
+exports.lgerIsLogin = function(req, res, next) {
+	let crUser = req.session.crUser;
+	if(!crUser) {
+		res.redirect('/usLogin');
+	} else if(crUser.role == Conf.roleUser.logistic.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();

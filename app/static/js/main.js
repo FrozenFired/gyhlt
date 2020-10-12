@@ -147,7 +147,7 @@ let Conf = {
 		brander:  {num:20, index: '/bner', code: 'bn', val: 'Brander', },
 		promotion:{num:25, index: '/pmer', code: 'pm', val: 'Promotion', },
 		quotation:{num:30, index: '/qter', code: 'qt', val: 'Quotation', },
-		ordin:    {num:35, index: '/oder', code: 'od', val: 'Ordin', },
+		order:    {num:35, index: '/oder', code: 'od', val: 'Order', },
 		logistic: {num:40, index: '/lger', code: 'lg', val: 'Logistic', },
 		seller:   {num:60, index: '/sler', code: 'sl', val: 'Seller', },
 		customer: {num:90, index: '/cter', code: 'ct', val: 'Customer', },

@@ -1,0 +1,43 @@
+.border.border-dark.p-3
+	.row.text-center
+		.col-md-6
+			h5.code 订单号:#{din.code}
+			.crtAt.mt-2
+				span 下单时间: 
+				span #{moment(din.crtAt).format('YYYY-MM-DD')}
+			.dinDay.mt-2
+				- let dinDay = Conf.dinDay;
+				if din.dinDay
+					- dinDay = din.dinDay;
+				span.mr-1 货期: (收款后)
+				span #{dinDay}
+				span.ml-1 天
+			if din.bills && din.bills.length > 0
+				-a;
+				.billAt.mt-2
+					span 收款日期: 
+					span #{moment(din.billAt).format('YYYY-MM-DD')}
+				if din.dinAt
+					-a;
+					span 截止日期: 
+					span #{moment(din.dinAt).format('YYYY-MM-DD')}
+		.col-md-6
+			.din.mt-2
+				span 销售员:
+				if din.diner
+					- diner = din.diner;
+					span #{diner.nome} [ #{diner.code} ]
+				else
+					span 数据丢失
+			.quantTotal
+				span 总数量: 
+				span#span-quantTotal
+			h5.imp.text-info 合同价: #{(din.dinImp).toFixed(2)} €
+			.status.mt-3
+				- let status = '';
+				each sts in Conf.status
+					- status = '';
+					if sts.num == din.status
+						- status = sts.val;
+						- break;
+				span 状态: #{status}

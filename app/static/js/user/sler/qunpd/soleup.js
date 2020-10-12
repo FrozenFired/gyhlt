@@ -1,9 +1,4 @@
 $(function() {
-	// 初始化数据
-	$("#span-quantTotal").text($("#ipt-quantTotal").val())
-	$("#span-qntPrImp").text($("#ipt-qntPrImp").val())
-	$("#span-dinPrImp").text($("#ipt-dinPrImp").val())
-
 	$(".quantClickup").click(function(e) {
 		let strids = $(this).attr("id").split("-")
 		let field = strids[1];

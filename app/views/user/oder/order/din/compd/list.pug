@@ -1,0 +1,183 @@
+- let quantTotal = 0;
+- let qntPrImp = dinPrImp = 0;
+table.mt-3.table.table-bordered
+	thead.thead-light
+		th 品牌
+		th 系列
+		th 产品规格
+		th 工艺面料
+		th(style="width:10%") 平台报价
+		th(style="width:18%") 客户成交价
+	thead
+		tr
+			td.text-right(colspan=4) 总价值:
+			td
+				h5.text-info
+					span#span-qntPrImp
+					span &nbsp;€
+			td
+				h5.text-info
+					span#span-dinPrImp
+					span &nbsp;€
+		each dinpd in dinpds
+			- quantTotal += dinpd.quant;
+			- dinPrImp += dinpd.quant * dinpd.dinPr;
+			- qntPrImp += dinpd.quant * dinpd.qntPr;
+			tr.text-info(id="tr-compdid-"+dinpd._id)
+				td
+					if dinpd.ordut
+						-a;
+						.ordut.text-left
+							.text-dark 所属采购单:
+							a(href='/odDut/'+dinpd.ordut._id, title=dinpd.ordut.compds.length) #{dinpd.ordut.code}
+					.pdnum.mt-3.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
+					.brandnome.mt-4
+						if dinpd.brand
+							- brand = dinpd.brand;
+							span [#{brand.nome}]
+						else
+							span 品牌数据丢失
+				td
+					.pdnome
+						span.text-dark 品类: 
+						span #{dinpd.pdNome}
+					if dinpd.pdfir
+						- pdfir = dinpd.pdfir;
+						.pdfircode.mt-3
+							span.text-dark 系列名: 
+							span [#{pdfir.code}]
+					else
+						- let firNome = '产品系列名称';
+						if dinpd.firNome
+							- firNome = dinpd.firNome;
+						.firnome.mt-3
+							span.text-dark 系列名: 
+							span #{firNome}
+					.photo.mt-3
+						- let photo = "/imgs/createPicture.jpg";
+						if dinpd.photo
+							- photo = dinpd.photo;
+							img(src=photo, width="120px")
+							.picLink
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+						else if dinpd.pdfir
+							- photo = dinpd.pdfir.photo;
+							img(src=photo, width="120px")
+							.picLink
+								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+						else
+							img(src=photo, width="120px")
+				td
+					if dinpd.pdsec
+						- pdsec = dinpd.pdsec;
+						.pdseccode
+							span.text-dark 产品编码: 
+							span [#{pdsec.code}]
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span [#{pdsec.spec}]
+					else
+						.pdseccode
+							span.text-dark 产品编码: 
+							span #{dinpd.secNome}
+						.pdsecspec.mt-3
+							span.text-dark 产品尺寸: 
+							span #{dinpd.specf}
+
+					.sketch.mt-3
+						- let sketch = "/imgs/createPicture.jpg";
+						if dinpd.sketch
+							- sketch = dinpd.sketch;
+							img#sketchCrt(src=sketch, width="120px")
+							.picLink
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+						else if dinpd.pdsec
+							-a;
+							- sketch = dinpd.pdsec.photo;
+							img#sketchCrt(src=sketch, width="120px")
+							.picLink
+								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+						else
+							img#sketchCrt(src=sketch, width="120px")
+				td
+					- let pdthdcode = '查找数据库';
+					if dinpd.pdthd
+						- pdthdcode = '['+dinpd.pdthd.code+']';
+					.pdthdcode #{pdthdcode}
+					.pdmater.mt-3 #{dinpd.mater}
+					.pdcraft.mt-3 #{dinpd.craft}
+					.images
+						- let subsp = -1;
+						each image in dinpd.images
+							- subsp++;
+							if image && image.length > 5
+								-a;
+								img.mt-2(src=image, width="120px")
+								.picLink
+									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+				td
+					.strmup.mt-4.text-left
+						span.text-dark 供应商:
+						br
+						if dinpd.ordut
+							-a;
+							if dinpd.strmup
+								-a;
+								span #{dinpd.strmup.nome}
+							else
+								span 数据丢失
+						else
+							if dinpd.strmup
+								-a;
+								span.text-warning #{dinpd.strmup.nome}
+							else
+								span.text-warning 数据丢失
+					if dinpd.dutPr && !isNaN(dinpd.dutPr)
+						-a;
+						.dutPr.mt-2.text-left
+							span.text-dark 采购单价:
+							br
+							span #{(dinpd.dutPr).toFixed(2)} €
+					.qntPr.mt-3
+						.qntPr
+							span.text-dark 报价单价:
+							br
+							span #{(dinpd.qntPr).toFixed(2)} €
+						.qntPrTot
+							span.text-dark 报价总价:
+							br
+							span #{(dinpd.qntPr * dinpd.quant).toFixed(2)} €
+				td
+					.quant
+						span.text-dark 数量: 
+						span #{dinpd.quant}
+
+					.dinPr.mt-3
+						span.text-dark 单价: 
+						if dinpd.dinPr
+							-a;
+							span.clickup(id="span-dinPr-"+dinpd._id) #{(dinpd.dinPr).toFixed(2)} €
+						else
+							span 价格错误
+					.dinPrTot
+						strong
+							span.text-dark 总价: 
+							span(id="tot-dinPr-"+dinpd._id) #{dinpd.quant * dinpd.dinPr} €
+
+					.compdSts.mt-3
+						- let status = '';
+						each sts in Conf.status
+							- status = '';
+							if sts.num == dinpd.compdSts
+								- status = sts.val;
+								- break;
+						span.text-dark 商品状态: 
+						if din.status > Conf.status.init.num
+							-a;
+							span.text-danger #{status}
+						else
+							span.text-danger 创建中
+.hideImp
+	input#ipt-quantTotal(type="hidden", value=quantTotal)
+	input#ipt-qntPrImp(type="hidden", value=qntPrImp)
+	input#ipt-dinPrImp(type="hidden", value=dinPrImp)

@@ -10,7 +10,7 @@ let Conf = {
 		store: {num: 3, val: '门店'},
 	},
 
-	roleAdmin: [1, 3],
+	roleAdmin: [1, 3, 10],
 	// roles: [1, 3, 5, 10, 20, 25, 30, 35, 40, 60, 90],
 	roleUser: {
 		boss:     {num: 1, index: '/bser', code: 'bs', val: 'BOSS', },
@@ -20,7 +20,7 @@ let Conf = {
 		brander:  {num:20, index: '/bner', code: 'bn', val: 'Brander', },
 		promotion:{num:25, index: '/pmer', code: 'pm', val: 'Promotion', },
 		quotation:{num:30, index: '/qter', code: 'qt', val: 'Quotation', },
-		ordin:    {num:35, index: '/oder', code: 'od', val: 'Ordin', },
+		order:    {num:35, index: '/oder', code: 'od', val: 'Order', },
 		logistic: {num:40, index: '/lger', code: 'lg', val: 'Logistic', },
 		seller:   {num:60, index: '/sler', code: 'sl', val: 'Seller', },
 		customer: {num:90, index: '/cter', code: 'ct', val: 'Customer', },

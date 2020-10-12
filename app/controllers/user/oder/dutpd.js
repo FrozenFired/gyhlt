@@ -1,154 +1,99 @@
 const Err = require('../../aaIndex/err');
-
-const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
-const Ordin = require('../../../models/firm/ord/ordin');
-
-const Inquot = require('../../../models/firm/ord/inquot');
 const Compd = require('../../../models/firm/ord/compd');
-
-const Strmup = require('../../../models/firm/stream/strmup');
-const Strmdw = require('../../../models/firm/stream/strmdw');
-const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
-// 销售单
-exports.odDutpds = (req, res) => {
-	let crUser = req.session.crUser;
-
-	res.render('./user/oder/ordin/dutpd/list', {
-		title: '销售单',
-		crUser,
-	})
-}
-
-exports.odDutpd = (req, res) => {
+exports.odDutpdCel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
-
-	Compd.findOne({_id: id})
-	.populate('ordin')
-	.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-	.populate('duter')
-	.populate('cter')
-	.populate('qutFirm').populate('strmup')
-	.exec((err, dutpd) => {
-		if(err) {
-			console.log(err);
-			info = "oder Dutpd, Compd.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!dutpd) {
-			info = "这个销售单已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			// console.log(dutpd)
-			res.render('./user/oder/ordin/dutpd/detail', {
-				title: '销售单详情',
-				crUser,
-				dutpd
-			})
-		}
+	Compd.findOne({
+		_id: id,
+		firm: crUser.firm
 	})
-}
-exports.odDutpdUp = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-
-	Compd.findOne({_id: id})
-	.exec((err, dutpd) => {
-		if(err) {
-			console.log(err);
-			info = "oder Dutpd, Compd.findOne, Error!";
-			Err.usError(req, res, info);
-		} else if(!dutpd) {
-			info = "这个销售单已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			res.render('./user/oder/ordin/dutpd/update', {
-				title: '销售单修改',
-				crUser,
-				dutpd,
-			})
-		}
-	})
-}
-
-exports.odDutpdDel = (req, res) => {
-	let crUser = req.session.crUser;
-	let id = req.params.id;
-
-	Compd.findOne({_id: id})
+	.populate('ordut')
+	// .populate('ordin')
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "oder DutpdDel, Compd.findOne, Error!";
+			info = "oder DutpdCel, Compd.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
-			info = "这个销售单已经被删除";
+			info = "oder DutpdCel, 此商品已经不存在, 请联系管理员!"
+			Err.usError(req, res, info);
+		} else if(compd.ordut.status != Conf.status.init.num) {
+			info = "oder DutpdCel, 采购单状态已经改变, 不可删除商品!"
 			Err.usError(req, res, info);
 		} else {
-			let photoDel = compd.photo;
-			let sketchDel = compd.sketch;
-			let dutId = compd.ordin;
-			Compd.deleteOne({_id: id}, (err, objRm) => {
+			let ordut = compd.ordut;
+			compd.ordut = null;
+			compd.compdSts = Conf.status.waiting.num;
+			compd.save((err, compdSave) => {
 				if(err) {
-					info = "user CompdDel, Compd.deleteOne, Error!";
+					console.log(err);
+					info = "oder DutpdCel, Compd.save, Error!"
 					Err.usError(req, res, info);
 				} else {
-					MdPicture.deletePicture(photoDel, Conf.picPath.compd);
-					MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
-					res.redirect("/odDut/"+dutId);
+					ordut.compds.remove(id);
+					ordut.save((err, ordutSave) => {
+						if(err) {
+							console.log(err);
+							info = "oder DutpdCel, ordut.save, Error!"
+							Err.usError(req, res, info);
+						} else {
+							res.redirect('/odDut/'+ordut._id)
+						}
+					})
 				}
 			})
 		}
 	})
 }
-
-
-
-
-
-exports.odDutpdUpd = (req, res) => {
+exports.odDutpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
+
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id
-	}, (err, compd) => {
+	})
+	.populate('ordut')
+	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "oder DutpdUpd, Strmup.findOne, Error!"
-			Err.usError(req, res, info);
+			info = "oder DutpdUpd, Compd.findOne, Error!"
+			Err.jsonErr(req, res, info);
 		} else if(!compd) {
-			info = '此销售单已经被删除, 请刷新查看';
-			Err.usError(req, res, info);
+			info = 'oder DutpdUpdAjax 此产品已经被删除, 请截图后, 联系管理员';
+			Err.jsonErr(req, res, info);
+		} else if(!compd.ordut) {
+			info = 'oder DutpdUpdAjax 此产品所属采购单已经被删除, 请截图后, 联系管理员';
+			Err.jsonErr(req, res, info);
+		} else if(compd.ordut.status != Conf.status.init.num) {
+			info = 'oder DutpdUpdAjax 此产品所属采购单状态已经改变, 价格不可更改';
+			Err.jsonErr(req, res, info);
 		} else {
-			if(!obj.brand || obj.brand.length < 20) obj.brand = null;
-			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
-			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
-			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			let photoDel = sketchDel = null;
-			if(obj.pdfir || (obj.firNome != compd.firNome)) {
-				obj.photo = '';
-				photoDel = compd.photo;
+			if(obj.dutPr) obj.dutPr = parseFloat(obj.dutPr);
+			if(isNaN(obj.dutPr)) {
+				info = '采购价格输入有误, 请仔细查看, 请刷新查看';
+				Err.jsonErr(req, res, info);
+			} else {
+				let _compd = _.extend(compd, obj);
+				_compd.save((err, objSave) => {
+					if(err) {
+						info = "添加采购单时 数据库保存错误, 请截图后, 联系管理员";
+						Err.jsonErr(req, res, info);
+					} else {
+						res.json({
+							status: 1,
+							msg: '',
+							data: {
+							}
+						});
+					}
+				})
 			}
-			if(obj.pdsec || (obj.secNome != compd.secNome)) {
-				obj.sketch = '';
-				sketchDel = compd.sketch;
-			}
-			let _compd = _.extend(compd, obj);
-			_compd.save((err, objSave) => {
-				if(err) {
-					info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
-					Err.usError(req, res, info);
-				} else {
-					MdPicture.deletePicture(photoDel, Conf.picPath.compd);
-					MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
-					res.redirect('/odDutpd/'+objSave._id)
-				}
-			})
 		}
 	})
 }

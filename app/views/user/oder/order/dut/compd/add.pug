@@ -1,0 +1,137 @@
+#objpdsPage.mt-4
+	.row
+		.col-12.col-sm-9
+		.col-12.col-sm-3
+			button.btn.btn-warning.btn-block#objpdAddPageShow(type="button") + 选择采购商品
+#objpdAddPage.mt-4(style="display:none")
+	form#objectForm(method="post", action="/odDutPlusPd", enctype="multipart/form-data")
+		input(type="hidden", name="id", value=dut._id)
+		each din in dins
+			-a;
+			if din.compds.length > 0
+				-a;
+				.border.border-dark.mt-4
+					.row.p-2
+						.col-md-3: h5 #{din.code}
+						.col-md-3 #{moment(din.crtAt).format("YYYY-MM-DD")}
+						.col-md-2 #{din.cterNome}
+						.col-md-2 #{din.diner.nome}[#{din.diner.code}]
+						.col-md-1.compdTableShow(id="compdTableShow-"+din._id) <span class="oi oi-chevron-bottom"></span> [#{din.compds.length}]
+						.col-md-1.text-right
+							input.compdSelAll(type="checkbox" id="compdSelAll-"+din._id)
+							label(for="compdSelAll-"+din._id) 全选
+					table.table.table-bordered(id="compdTable-"+din._id, style="display:none")
+						thead.thead-light
+							th 品牌
+							th 系列
+							th 产品规格
+							th 工艺面料
+							th(style="width:10%") 采购价格
+							th.text-center
+								//- button.btn.btn-sm.border-warning.text-warning.compdReverse(type="checkbox" id="compdReverse-"+din._id) 反选
+						thead
+							each dinpd in din.compds
+								- a;
+								tr.text-info(id="tr-compdid-"+dinpd._id)
+									td
+										.pdnum.text-left.text-dark 商品编号: [#{dinpd.pdnum}]
+										.brandnome.mt-4
+											if dinpd.brand
+												- brand = dinpd.brand;
+												span [#{brand.nome}]
+											else
+												span 品牌数据丢失
+
+										if dinpd.area
+											-a;
+											.pdarea.mt-3
+												span.text-dark 区域: 
+												span #{dinpd.area}
+									td
+										.pdnome
+											span.text-dark 品类: 
+											span #{dinpd.pdNome}
+										if dinpd.pdfir
+											- pdfir = dinpd.pdfir;
+											.pdfircode.mt-3
+												span.text-dark 系列名: 
+												span [#{pdfir.code}]
+										else
+											- let firNome = '产品系列名称';
+											if dinpd.firNome
+												- firNome = dinpd.firNome;
+											.firnome.mt-3
+												span.text-dark 系列名: 
+												span #{firNome}
+										.photo.mt-3
+											if dinpd.photo
+												- photo = dinpd.photo;
+												.picLink
+													a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+											else if dinpd.pdfir
+												- photo = dinpd.pdfir.photo;
+												.picLink
+													a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										if dinpd.pdsec
+											- pdsec = dinpd.pdsec;
+											.pdseccode
+												span.text-dark 产品编码: 
+												span [#{pdsec.code}]
+											.pdsecspec.mt-3
+												span.text-dark 产品尺寸: 
+												span [#{pdsec.spec}]
+										else
+											.pdseccode
+												span.text-dark 产品编码: 
+												span #{dinpd.secNome}
+											.pdsecspec.mt-3
+												span.text-dark 产品尺寸: 
+												span #{dinpd.specf}
+
+										.sketch.mt-3
+											if dinpd.sketch
+												- sketch = dinpd.sketch;
+												.picLink
+													a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+											else if dinpd.pdsec
+												-a;
+												- sketch = dinpd.pdsec.photo;
+												.picLink
+													a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										- let pdthdcode = '查找数据库';
+										if dinpd.pdthd
+											- pdthdcode = '['+dinpd.pdthd.code+']';
+										.pdthdcode #{pdthdcode}
+										.pdmater.mt-3 #{dinpd.mater}
+										.pdcraft.mt-3 #{dinpd.craft}
+										.images
+											- let subsp = -1;
+											each image in dinpd.images
+												- subsp++;
+												if image && image.length > 5
+													-a;
+													img.mt-2(src=image, width="120px")
+													.picLink
+														a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										.quant
+											span.text-dark 数量: 
+											span #{dinpd.quant}
+
+										if dinpd.dutPr && !isNaN(dinpd.dutPr)
+											-a;
+											.dutPr.mt-2.text-left
+												span.text-dark 采购单价:
+												br
+												span.text-warning #{(dinpd.dutPr).toFixed(2)} €
+									td.text-center
+										input.compdSel(type="checkbox" class="compdSel-"+din._id, id="compdSel-"+dinpd._id name="compds" value=dinpd._id)
+										//- label(for="vehicle2") #{dinpd._id}
+		.form-group.row.mt-3
+			.col-12.text-right
+				button.border.border-danger.mr-4.btn.btn-default.text-danger#objpdsPageShow(type="button") 取消
+				input.btn.btn-success(type="submit", value="确认添加")
+
+script(src="/js/user/oder/dut/addCompd.js")

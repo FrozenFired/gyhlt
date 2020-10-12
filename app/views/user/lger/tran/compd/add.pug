@@ -1,0 +1,137 @@
+#objpdsPage.mt-4
+	.row
+		.col-12.col-sm-9
+		.col-12.col-sm-3
+			button.btn.btn-warning.btn-block#objpdAddPageShow(type="button") + 选择运输商品
+#objpdAddPage.mt-4(style="display:none")
+	form#objectForm(method="post", action="/lgTranPlusPd", enctype="multipart/form-data")
+		input(type="hidden", name="id", value=tran._id)
+		each dut in duts
+			-a;
+			if dut.compds.length > 0
+				-a;
+				.border.border-dark.mt-4
+					.row.p-2
+						.col-md-3: h5 #{dut.code}
+						.col-md-3 #{moment(dut.crtAt).format("YYYY-MM-DD")}
+						.col-md-2 #{dut.strmup.nome}
+						.col-md-2 总体积(待做)
+						.col-md-1.compdTableShow(id="compdTableShow-"+dut._id) <span class="oi oi-chevron-bottom"></span> [#{dut.compds.length}]
+						.col-md-1.text-right
+							input.compdSelAll(type="checkbox" id="compdSelAll-"+dut._id)
+							label(for="compdSelAll-"+dut._id) 全选
+					table.table.table-bordered(id="compdTable-"+dut._id, style="display:none")
+						thead.thead-light
+							th 品牌
+							th 系列
+							th 产品规格
+							th 工艺面料
+							th(style="width:10%") 采购价格
+							th.text-center
+								//- button.btn.btn-sm.border-warning.text-warning.compdReverse(type="checkbox" id="compdReverse-"+dut._id) 反选
+						thead
+							each dutpd in dut.compds
+								- a;
+								tr.text-info(id="tr-compdid-"+dutpd._id)
+									td
+										.pdnum.text-left.text-dark 商品编号: [#{dutpd.pdnum}]
+										.brandnome.mt-4
+											if dutpd.brand
+												- brand = dutpd.brand;
+												span [#{brand.nome}]
+											else
+												span 品牌数据丢失
+
+										if dutpd.area
+											-a;
+											.pdarea.mt-3
+												span.text-dark 区域: 
+												span #{dutpd.area}
+									td
+										.pdnome
+											span.text-dark 品类: 
+											span #{dutpd.pdNome}
+										if dutpd.pdfir
+											- pdfir = dutpd.pdfir;
+											.pdfircode.mt-3
+												span.text-dark 系列名: 
+												span [#{pdfir.code}]
+										else
+											- let firNome = '产品系列名称';
+											if dutpd.firNome
+												- firNome = dutpd.firNome;
+											.firnome.mt-3
+												span.text-dark 系列名: 
+												span #{firNome}
+										.photo.mt-3
+											if dutpd.photo
+												- photo = dutpd.photo;
+												.picLink
+													a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+											else if dutpd.pdfir
+												- photo = dutpd.pdfir.photo;
+												.picLink
+													a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										if dutpd.pdsec
+											- pdsec = dutpd.pdsec;
+											.pdseccode
+												span.text-dark 产品编码: 
+												span [#{pdsec.code}]
+											.pdsecspec.mt-3
+												span.text-dark 产品尺寸: 
+												span [#{pdsec.spec}]
+										else
+											.pdseccode
+												span.text-dark 产品编码: 
+												span #{dutpd.secNome}
+											.pdsecspec.mt-3
+												span.text-dark 产品尺寸: 
+												span #{dutpd.specf}
+
+										.sketch.mt-3
+											if dutpd.sketch
+												- sketch = dutpd.sketch;
+												.picLink
+													a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+											else if dutpd.pdsec
+												-a;
+												- sketch = dutpd.pdsec.photo;
+												.picLink
+													a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										- let pdthdcode = '查找数据库';
+										if dutpd.pdthd
+											- pdthdcode = '['+dutpd.pdthd.code+']';
+										.pdthdcode #{pdthdcode}
+										.pdmater.mt-3 #{dutpd.mater}
+										.pdcraft.mt-3 #{dutpd.craft}
+										.images
+											- let subsp = -1;
+											each image in dutpd.images
+												- subsp++;
+												if image && image.length > 5
+													-a;
+													img.mt-2(src=image, width="120px")
+													.picLink
+														a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+									td
+										.quant
+											span.text-dark 数量: 
+											span #{dutpd.quant}
+
+										if dutpd.tranPr && !isNaN(dutpd.tranPr)
+											-a;
+											.tranPr.mt-2.text-left
+												span.text-dark 采购单价:
+												br
+												span.text-warning #{(dutpd.tranPr).toFixed(2)} €
+									td.text-center
+										input.compdSel(type="checkbox" class="compdSel-"+dut._id, id="compdSel-"+dutpd._id name="compds" value=dutpd._id)
+										//- label(for="vehicle2") #{dutpd._id}
+		.form-group.row.mt-3
+			.col-12.text-right
+				button.border.border-danger.mr-4.btn.btn-default.text-danger#objpdsPageShow(type="button") 取消
+				input.btn.btn-success(type="submit", value="确认添加")
+
+script(src="/js/user/lger/tran/detail/addCompd.js")

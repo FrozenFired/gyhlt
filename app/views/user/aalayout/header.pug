@@ -7,7 +7,7 @@
 
 		.collapse.navbar-collapse#navbarTogglerDemo02
 			ul.navbar-nav.mr-auto.mt-2.mt-xl-0
-				if crUser.role == Conf.roleUser.brander.num || crUser.role == Conf.roleUser.quotation.num
+				if crUser.role == Conf.roleUser.brander.num
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/bnBrands") 品牌
@@ -25,11 +25,13 @@
 						a.nav-link(href="/slQuns") 询价
 					li.nav-item.active
 						a.nav-link(href="/slDins") 销售单
-				if crUser.role == Conf.roleUser.ordin.num
+				if crUser.role == Conf.roleUser.order.num
 					-a;
 					li.nav-item.active
+						a.nav-link(href="/odDins") 销售单
+					li.nav-item.active
 						a.nav-link(href="/odDuts") 采购单
-				if Conf.roleAdmin.includes(crUser.role)
+				if crUser.role == Conf.roleUser.manager.num || crUser.role == Conf.roleUser.boss.num
 					-a;
 					li.nav-item.active
 						a.nav-link(href="/mgQuts") 报价管理

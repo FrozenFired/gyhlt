@@ -11,11 +11,12 @@ const Din = require('../controllers/user/mger/din');
 const Dinpd = require('../controllers/user/mger/dinpd');
 
 const Bill = require('../controllers/user/mger/bill');
-const Tran = require('../controllers/user/mger/tran');
-const Tranpd = require('../controllers/user/mger/tranpd');
 
 const Dut = require('../controllers/user/mger/dut');
 const Dutpd = require('../controllers/user/mger/dutpd');
+
+const Tran = require('../controllers/user/mger/tran');
+const Tranpd = require('../controllers/user/mger/tranpd');
 
 const MdBcrypt = require('../middle/middleBcrypt');
 const MdRole = require('../middle/middleRole');

@@ -1,5 +1,10 @@
 const Index = require('../controllers/aaIndex/index');
 
+const Din = require('../controllers/user/oder/din');
+const Dinpd = require('../controllers/user/oder/dinpd');
+
+// const Bill = require('../controllers/user/oder/bill');
+
 const Dut = require('../controllers/user/oder/dut');
 const Dutpd = require('../controllers/user/oder/dutpd');
 
@@ -22,20 +27,30 @@ module.exports = function(app){
 		})
 	});
 
+	/* =================================== Din =================================== */
+	app.get('/odDinGen/:inquotId', MdRole.oderIsLogin, Din.odDinGen)
+	app.get('/odDins', MdRole.oderIsLogin, Din.odDins)
+	app.get('/odDin/:id', MdRole.oderIsLogin, Din.odDin)
+	app.get('/odDinDel/:id', MdRole.oderIsLogin, Din.odDinDel)
+
+	app.post('/odDinUpd', MdRole.oderIsLogin, postForm, Din.odDinUpd)
+	app.post('/odDinUpdAjax', MdRole.oderIsLogin, postForm, Din.odDinUpdAjax)
+
+	/* =================================== Dinpd 销售商品 =================================== */
+	app.post('/odDinpdUpdAjax', MdRole.oderIsLogin, postForm, Dinpd.odDinpdUpdAjax)
+
 	/* =================================== Dut =================================== */
 	app.get('/odDuts', MdRole.oderIsLogin, Dut.odDuts)
-	app.get('/odDut/:id', MdRole.oderIsLogin, Dut.odDutFilter, Dut.odDut)
-	app.get('/odDutExcel/:id', MdRole.oderIsLogin, Dut.odDutExcel)
-	app.get('/odDutUp/:id', MdRole.oderIsLogin, Dut.odDutUp)
+	app.post('/odDutNew', MdRole.oderIsLogin, postForm, Dut.odDutNew)
+	app.get('/odDut/:id', MdRole.oderIsLogin, Dut.odDut)
 	app.get('/odDutDel/:id', MdRole.oderIsLogin, Dut.odDutDel)
 
 	app.post('/odDutUpd', MdRole.oderIsLogin, postForm, Dut.odDutUpd)
 
-	/* =================================== Dutpd 销售商品 =================================== */
-	app.get('/odDutpds', MdRole.oderIsLogin, Dutpd.odDutpds)
-	app.get('/odDutpd/:id', MdRole.oderIsLogin, Dutpd.odDutpd)
-	app.get('/odDutpdUp/:id', MdRole.oderIsLogin, Dutpd.odDutpdUp)
-	app.get('/odDutpdDel/:id', MdRole.oderIsLogin, Dutpd.odDutpdDel)
+	app.post('/odDutPlusPd', MdRole.oderIsLogin, postForm, Dut.odDutPlusPd)
 
-	app.post('/odDutpdUpd', MdRole.oderIsLogin, postForm, Dutpd.odDutpdUpd)
+	app.get('/odDutExcel/:id', MdRole.slerIsLogin, Dut.odDutExcel)
+	/* =================================== Dutpd 采购商品 =================================== */
+	app.post('/odDutpdUpdAjax', MdRole.oderIsLogin, postForm, Dutpd.odDutpdUpdAjax)
+	app.get('/odDutpdCel/:id', MdRole.oderIsLogin, Dutpd.odDutpdCel)
 };

@@ -37,17 +37,17 @@ module.exports = function(app){
 	app.get('/usQutsAjax', MdRole.qterIsLogin, Inquot.usQutsAjax)
 
 	/* ===================== 获取询价报价单的结果 ===================== */
-	app.get('/usDinsAjax', MdRole.slerIsLogin, Order.usDinsAjax)
+	app.get('/usDinsAjax', MdRole.userIsLogin, Order.usDinsAjax)
 	app.get('/usDutsAjax', MdRole.oderIsLogin, Order.usDutsAjax)
-	app.get('/usBillsAjax', MdRole.oderIsLogin, Order.usBillsAjax)
-	app.get('/usTransAjax', MdRole.mgerIsLogin, Order.usTransAjax)
+	app.get('/usBillsAjax', MdRole.fnerIsLogin, Order.usBillsAjax)
+	app.get('/usTransAjax', MdRole.lgerIsLogin, Order.usTransAjax)
 
 	/* ===================== 状态更改 ===================== */
 	app.get('/usInquotQuterStAjax', MdRole.userIsLogin, Status.usInquotQuterStAjax)
 	app.get('/usInquotStatusAjax', MdRole.userIsLogin, Status.usInquotStatusAjax)
 	app.get('/usOrdinStatusAjax', MdRole.userIsLogin, Status.usOrdinStatusAjax)
-	app.get('/usOrdutStatusAjax', MdRole.mgerIsLogin, Status.usOrdutStatusAjax)
-	app.get('/usTranStatusAjax', MdRole.mgerIsLogin, Status.usTranStatusAjax)
+	app.get('/usOrdutStatusAjax', MdRole.oderIsLogin, Status.usOrdutStatusAjax)
+	app.get('/usTranStatusAjax', MdRole.lgerIsLogin, Status.usTranStatusAjax)
 
 	/* =================================== Datafile =================================== */
 	app.get('/usAlbumsAjax', Datafile.usAlbumsAjax);
