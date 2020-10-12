@@ -10,7 +10,7 @@
 				span 查询条目数:
 				span#pdsecCount
 		.col-6.col-sm-3
-			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 添加产品
+			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 添加产品尺寸
 	input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?pdfirId="+pdfir._id+"@#pdsecsElem@bn")
 	#pdsecsElem.mt-5
 
@@ -36,7 +36,7 @@
 			.col-8
 				input#picUpload.btn.btn-info.btn-block(type="file", name="picUpload")
 		.form-group.row
-			label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品展示图
+			label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品线稿图
 			.col-8.col-sm-10
 				input#photoIpt.form-control(type="text", name="obj[photo]")
 		hr
@@ -45,9 +45,9 @@
 			.col-8.col-sm-10
 				input#codeIpt.form-control(type="text", name="obj[code]")
 		.form-group.row
-			label.col-4.col-sm-2.col-form-label(for="nomeIpt") 产品名
+			label.col-4.col-sm-2.col-form-label(for="specIpt") 产品规格
 			.col-8.col-sm-10
-				input#nomeIpt.form-control(type="text", name="obj[nome]")
+				input#specIpt.form-control(type="text", name="obj[spec]")
 		.form-group.row
 			label.col-4.col-sm-2.col-form-label(for="despIpt") 产品描述
 			.col-8.col-sm-10

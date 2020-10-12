@@ -25,6 +25,7 @@ $(function() {
 		let firmCode = $("#firmCode").val();
 		let code = $("#codeIpt").val();
 		let pdfir = $("#pdfirIpt").val();
+		let specIpt = $("#specIpt").val();
 
 		if(!firmCode || firmCode.length != Conf.codeLenFirm) {
 			alert('请刷新查看');
@@ -33,7 +34,10 @@ $(function() {
 			alert("请输入产品编号")
 			e.preventDefault();
 		} else if(!pdfir || pdfir.length < 20) {
-			alert("请选择产品的品牌")
+			alert("产品所属系列错误, 请联系管理员")
+			e.preventDefault();
+		} else if(!specIpt || specIpt.length < 2) {
+			alert("请填写产品规格")
 			e.preventDefault();
 		}
 	})

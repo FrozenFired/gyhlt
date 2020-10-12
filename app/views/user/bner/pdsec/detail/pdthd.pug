@@ -2,7 +2,7 @@
 	.row
 		.col-12.col-md-9
 		.col-6.col-md-3
-			button.btn.btn-info.btn-block#pdthdAddPageShow(type="button") + 添加价格单
+			button.btn.btn-info.btn-block#pdthdAddPageShow(type="button") + 添加产品信息(原始价格)
 	input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?pdsecId="+pdsec._id+"@#pdthdsElem@bn")
 	#pdthdsElem.mt-5
 
@@ -29,10 +29,6 @@
 			.col-4.col-md-2
 			.col-8.col-md-10.text-danger#priceOpt
 		.form-group.row
-			label.col-4.col-md-2.col-form-label(for="noteIpt") 备注
-			.col-8.col-md-10
-				textarea#noteIpt.form-control(type="text", rows="3", name="obj[note]", placeholder="备注")
-		.form-group.row
 			label.col-md-2.col-form-label 材质
 			- j = 0;
 			each i in [0, 1, 2, 3, 4, 5]
@@ -52,6 +48,10 @@
 				- j++;
 				.col-md-5
 					input.form-control(type="text", name="obj[crafts]["+i+"]")
+		.form-group.row
+			label.col-4.col-md-2.col-form-label(for="noteIpt") 备注
+			.col-8.col-md-10
+				textarea#noteIpt.form-control(type="text", rows="3", name="obj[note]", placeholder="备注")
 		hr
 		.form-group.row
 			.col-12.text-right
