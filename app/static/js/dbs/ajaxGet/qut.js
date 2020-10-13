@@ -85,6 +85,7 @@ var qutRender = (qut, role) => {
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
+			elem += '<div class="text-info">客户姓名: ' + qut.cterNome +'</div>'
 			elem += '<div>'
 				elem += '报价人:'
 				if(qut.quter) {

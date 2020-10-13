@@ -1,18 +1,15 @@
 #pdsecsPage
 	.row
-		.col-12.col-sm-6.input-group
-			input.form-control#pdsecSearch(type="text", placeholder="搜索产品")
-			.input-group-append
-				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
-		.col-6.col-sm-3
+		.col-6.col-sm-9
 			//- button.btn.btn-warning.btn-block(type="button") + 同步产品#
 			.count
-				span 查询条目数:
+				span 产品信息数量: 
 				span#pdsecCount
 		.col-6.col-sm-3
-			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 添加产品尺寸
+			button.btn.btn-info.btn-block#pdsecAddPageShow(type="button") + 增加产品信息
+	.text-info.mt-4 可点击图片进入完善材质面料与对应价格
 	input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?pdfirId="+pdfir._id+"@#pdsecsElem@bn")
-	#pdsecsElem.mt-5
+	#pdsecsElem.mt-2
 
 //- 添加产品
 #pdsecAddPage(style="display:none")

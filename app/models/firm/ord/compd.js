@@ -71,7 +71,7 @@ let dbSchema = new Schema({
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		this.inAt = Date.now();
+		this.qntcrtAt = Date.now();
 		if(!this.qntPr) this.qntPr = 0;
 		if(!this.dinPr) this.dinPr = 0;
 		if(!this.dutAt) this.dutAt = 0;

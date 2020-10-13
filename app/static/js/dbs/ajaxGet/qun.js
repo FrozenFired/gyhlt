@@ -85,7 +85,7 @@ var qunRender = (qun, role) => {
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
-			elem += '<div>客户姓名: ' + qun.cterNome +'</div>'
+			elem += '<div class="text-info">客户姓名: ' + qun.cterNome +'</div>'
 
 			elem += '<div class="mt-2">'
 				elem += '状态: ' + status

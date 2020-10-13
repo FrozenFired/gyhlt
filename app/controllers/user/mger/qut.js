@@ -36,7 +36,7 @@ exports.mgQut = (req, res) => {
 	.populate('strmup')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'qntpdSts': 1 } },
+		options: { sort: { 'qntcrtAt': 1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},

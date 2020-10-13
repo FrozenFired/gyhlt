@@ -37,11 +37,16 @@ table.mt-3.table.table-bordered
 							span #{qutpd.area}
 
 					if qut.status == Conf.status.quoting.num
+						-a;
 						if qutpd.qntpdSts == Conf.status.quoting.num
-							a-;
-							a.btn.border-success.text-success.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
-						else
-							a.btn.border-warning.text-warning.mt-5(href="/qtQutpdUp/"+qutpd._id) 更新报价
+							-a;
+							a.btn.btn-info.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
+						else if qutpd.qntpdSts == Conf.status.done.num
+							-a;
+							a.btn.btn-success.mt-5(href="/qtQutpdUp/"+qutpd._id) 修改报价
+						else if qutpd.qntpdSts == Conf.status.del.num
+							-a;
+							a.btn.btn-danger.mt-5(href="/qtQutpdUp/"+qutpd._id) 重新报价
 				td
 					.pdnome
 						span.text-dark 品类: 

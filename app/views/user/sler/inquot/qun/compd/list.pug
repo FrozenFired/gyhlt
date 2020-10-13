@@ -37,8 +37,13 @@ table.mt-2.table.table-bordered
 							span #{qunpd.area}
 
 					if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
-							a-;
-							a.btn.border-warning.text-warning.mt-5(href="/slQunpdUp/"+qunpd._id) 更改商品
+						a-;
+						if qunpd.qntpdSts == Conf.status.quoting.num
+							-a;
+							a.btn.btn-info.mt-5(href="/slQunpdUp/"+qunpd._id) 更改商品
+						else if qunpd.qntpdSts == Conf.status.del.num
+							-a;
+							a.btn.btn-danger.mt-5(href="/slQunpdUp/"+qunpd._id) 更改商品
 				td
 					.pdnome
 						span.text-dark 品类: 
