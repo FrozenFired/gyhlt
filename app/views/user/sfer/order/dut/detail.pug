@@ -1,0 +1,19 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/sfDuts") 列表
+				li.breadcrumb-item.active(aria-current="page") 采购单
+		.info.my-3
+			include ./detail/basicInfo
+			if dut.status == Conf.status.init.num
+				-a;
+				include ./compd/add
+			else
+				include ./detail/billInfo
+		hr
+		.compds.mt-3
+			include ./compd/list

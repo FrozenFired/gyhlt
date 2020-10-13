@@ -69,6 +69,9 @@ exports.usInquotStatusAjax = (req, res) => {
 			} else {
 				if(oldStatus == Conf.status.init.num && newStatus == Conf.status.quoting.num) {
 					// 询价员提交订单时
+					if(inquot.quner == "5f85925f94ac0c50a98606a2") {
+						inquot.quter = "5eea52dce61fa97e3ff44fdc";
+					}
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}

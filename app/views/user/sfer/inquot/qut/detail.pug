@@ -1,0 +1,26 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item: a(href="/sfQuts") 列表
+				li.breadcrumb-item.active(aria-current="page") 报价单
+		.info.my-3
+			include ./detail/info
+		.compds
+			if qut.status == Conf.status.quoting.num
+				-a;
+				include ./compd/listQuoting
+			else if qut.status >= Conf.status.confirm.num
+				-a;
+				include ./compd/listConfirm
+			else
+				include ./compd/list
+
+		//- include ../../../aaPlugin/comment/list
+		if qut.quter
+			-a;
+			- let toUser = qut.quner;
+			include ../../../aaPlugin/notify/list

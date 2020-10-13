@@ -9,6 +9,7 @@ module.exports = function(app){
 	require('./qterRouter')(app);
 	require('./cterRouter')(app);
 	require('./slerRouter')(app);
+	require('./sferRouter')(app);
 	require('./lgerRouter')(app);
 	require('./oderRouter')(app);
 	require('./pmerRouter')(app);

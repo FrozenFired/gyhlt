@@ -127,6 +127,11 @@ exports.usQutsAjax = (req, res) => {
 			quterConb = req.query.quter;
 		}
 	}
+	if(crUser.role == Conf.roleUser.staff.num) {
+		quterSymb = '$eq';
+		quterConb = crUser._id;
+	}
+
 	if(crUser.role == Conf.roleUser.quotation.num) {
 		quterSymb = '$eq';
 		quterConb = crUser._id;

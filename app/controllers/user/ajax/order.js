@@ -27,6 +27,10 @@ exports.usDinsAjax = (req, res) => {
 		dinerSymb = '$eq';
 		dinerConb = req.query.diner;
 	}
+	if(crUser._id == "5eea52dce61fa97e3ff44fdc") {
+		dinerSymb = '$eq';
+		dinerConb = "5f85925f94ac0c50a98606a2";
+	}
 	if(crUser.role == Conf.roleUser.seller.num) {
 		dinerSymb = '$eq';
 		dinerConb = crUser._id;
@@ -137,6 +141,17 @@ exports.usDutsAjax = (req, res) => {
 		dutCond = req.query.dutId;
 	}
 
+	let duterSymb = '$ne';
+	let duterConb = '5f1dff1063781676b6a5f6ff';
+	if(req.query.duter) {
+		duterSymb = '$eq';
+		duterConb = req.query.duter;
+	}
+	if(crUser.role == Conf.roleUser.staff.num) {
+		duterSymb = '$eq';
+		duterConb = crUser._id;
+	}
+
 	let keySymb = '$ne';
 	let keyCond = 'rander[a`a。=]';
 	if(req.query.keyword) {
@@ -158,6 +173,7 @@ exports.usDutsAjax = (req, res) => {
 		firm: crUser.firm,
 		_id: {[dutSymb]: dutCond},
 		status: {[statusSymb]: statusConb},
+		duter: {[duterSymb]: duterConb},
 
 		$or:[
 			{'code': {[keySymb]: keyCond}},

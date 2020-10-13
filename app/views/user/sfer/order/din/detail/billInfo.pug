@@ -1,0 +1,13 @@
+.border.border-dark.mt-2.p-3
+	.row
+		.col-6 总价值: #{(din.dinImp).toFixed(2)}
+		.col-6 已收款: #{(din.billPr).toFixed(2)}
+	.row
+		.col-6
+			h5.code 收款信息:
+	each bill in din.bills
+		-a;
+		.row.mt-3
+			.col-4 收款时间 #{moment(bill.crtAt).format("YYYY年MM月DD日")}
+			.col-4 收款金额 #{(bill.billPr).toFixed(2)}
+			.col-4 #{bill.note}

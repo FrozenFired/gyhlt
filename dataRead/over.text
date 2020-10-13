@@ -1,0 +1,26 @@
+1 sfer要做特殊处理: 刘梁所有的单子都给renato:
+
+	1) controllers/user/ajax/inquot.js
+	查找inquot的时候 如果是staff 则只能看到自己的
+	if(crUser.role == Conf.roleUser.staff.num) {
+		quterSymb = '$eq';
+		quterConb = crUser._id;
+	}
+
+	2) controllers/user/ajax/status.js
+	当刘梁提交询价单时, 报价负责人自动变为Renato
+	if(inquot.quner == "5f85925f94ac0c50a98606a2") {
+		inquot.quter = "5eea52dce61fa97e3ff44fdc";
+	}
+
+	3) controllers/user/ajax/order.js
+	当renato查看销售单时 只能查看销售员为刘梁的订单
+	if(crUser._id == "5eea52dce61fa97e3ff44fdc") {
+		dinSymb = '$eq';
+		dinerConb = "5f85925f94ac0c50a98606a2";
+	}
+	当renato查看采购单时 只能查看采购员为自己的采购单
+	if(crUser.role == Conf.roleUser.staff.num) {
+		duterSymb = '$eq';
+		duterConb = crUser._id;
+	}

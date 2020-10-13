@@ -1,0 +1,171 @@
+extends ../../../aalayout/layout
+
+block content
+	.container
+		.title
+			a(href="/") Home
+			span &nbsp; | &nbsp;
+			a(href="/sfQut/"+qutpd.inquot._id) 报价单
+			span &nbsp; | &nbsp;
+			span 更新报价商品
+		hr
+
+		form#objectForm(method="post", action="/sfQutpdUpd", enctype="multipart/form-data")
+			input#inquotIpt(type="hidden", name="obj[_id]", value=qutpd._id)
+
+			input(type="hidden", name="picDir", value=Conf.picPath.compd)
+			input#picName(type="hidden", name="picName", value=crUser.firm.code)
+
+			- let brand = new Object();
+			if qutpd.brand
+				- brand = qutpd.brand;
+			.row.my-3
+				.col-md-2.mt-3.text-right 品牌信息:
+				.col-md-3.mt-3
+					input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...", value=qutpd.area)
+				.col-md-3.mt-3
+					input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly", value=brand._id)
+					input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名", value=qutpd.brandNome)
+				.col-md-3.mt-3#brandweb
+					if brand.website
+						- let website = brand.website;
+						if website && website.slice(0,4) != 'http'
+							- website = 'http://'+website;
+						.brandweb
+							a(href=website target="_blank") #{brand.nome}官网
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@sf")
+			.ajax#brandsElem
+
+			- let pdfir = new Object();
+			if qutpd.pdfir
+				- pdfir = qutpd.pdfir;
+			.row.my-3
+				.col-md-2.mt-3.text-right 系列信息:
+				.col-md-3.mt-3
+					input.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...", value=qutpd.pdNome)
+				.col-md-3.mt-3
+					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=pdfir._id)
+					input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=qutpd.firNome)
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sf")
+			.ajax#pdfirsElem
+			.row.my-3
+				.col-md-2.mt-3.text-right 产品图片:
+				.col-md-3.mt-4#firImg(align="center")
+					if pdfir.photo && pdfir.photo.length > 0
+						-a;
+						.firImg.text-right
+							img(src=pdfir.photo, width="120px")
+							a(href=pdfir.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
+				.col-md-3.mt-3(align="center")
+					div 自定义:
+					- let photo = "/imgs/createPicture.jpg";
+					if qutpd.photo
+						- photo = qutpd.photo;
+					img.picImg#img-photo(src=photo, width="120px")
+					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
+
+			- let pdsec = new Object();
+			if qutpd.pdsec
+				- pdsec = qutpd.pdsec;
+			.row.my-3
+				.col-md-2.mt-3.text-right 产品信息:
+				.col-md-3.mt-3
+					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=pdsec._id)
+					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号", value=qutpd.secNome)
+				.col-md-3.mt-3
+					input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=qutpd.specf)
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sf")
+			.ajax#pdsecsElem
+			.row.my-3
+				.col-md-2.mt-3.text-right 线稿图:
+				.col-md-3.mt-4#secImg(align="center")
+					if pdsec.photo && pdsec.photo.length > 0
+						-a;
+						.firImg.text-right
+							img(src=pdsec.photo, width="120px")
+							a(href=pdsec.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
+				.col-md-3.mt-3(align="center")
+					div 自定义:
+					- let sketch = "/imgs/createPicture.jpg";
+					if qutpd.sketch
+						- sketch = qutpd.sketch;
+					img.picImg#img-sketch(src=sketch, width="120px")
+					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
+
+			- let pdthd = new Object();
+			if qutpd.pdthd
+				- pdthd = qutpd.pdthd;
+			.row.my-3
+				.col-md-2.mt-3.text-right 材质工艺:
+				.col-md-3.mt-3
+					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthd._id)
+					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="编号(帮助选择)", value=qutpd.thdNome)
+				.col-md-3.mt-3
+					input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质", value=qutpd.mater)
+				.col-md-3.mt-3
+					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色", value=qutpd.craft)
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@sf")
+			.ajax#pdthdsElem
+			.row.my-3
+				.col-md-2.mt-3.pt-5.text-right 材质图片:
+				- let images = new Array();
+				if qutpd.images
+					- images = qutpd.images;
+				.col-md-2.mt-3(align="center")
+					- let images0 = "/imgs/createPicture.jpg";
+					if images.length > 0 && images[0]
+						- images0 = images[0];
+					img.picImg#img-images0(src=images0, width="120px")
+					input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
+				.col-md-2.mt-3(align="center")
+					- let images1 = "/imgs/createPicture.jpg";
+					if images.length > 1 && images[1]
+						- images1 = images[1];
+					img.picImg#img-images1(src=images1, width="120px")
+					input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
+				.col-md-2.mt-3(align="center")
+					- let images2 = "/imgs/createPicture.jpg";
+					if images.length > 2 && images[2]
+						- images2 = images[2];
+					img.picImg#img-images2(src=images2, width="120px")
+					input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
+				.col-md-2.mt-3(align="center")
+					- let images3 = "/imgs/createPicture.jpg";
+					if images.length > 3 && images[3]
+						- images3 = images[3];
+					img.picImg#img-images3(src=images3, width="120px")
+					input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
+
+			.row.my-3
+				.col-md-2.mt-3.text-right 备注:
+				.col-md-8.mt-3
+					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=qutpd.note)
+			//- .row.my-3
+			//- 	.col-md-2.mt-3.text-right 数量:
+			//- 	.col-md-2.mt-3
+			//- 		input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量", value=qutpd.quant)
+			//- .row.my-3
+			//- 	.col-md-2.mt-3.text-right 预估单价:
+			//- 	.col-md-2.mt-3
+			//- 		input.form-control#estimateIpt(type="text", name="obj[estimate]", autocomplete="off", placeholder="可不填", value=qutpd.estimate)
+			.row.my-3
+				.col-md-2.mt-3.text-right 状态
+				each sts in Conf.qntpdSts
+					- checked = false;
+					if Conf.status[sts].num == qutpd.qntpdSts
+						- checked = true;
+					.col-md-2.mt-3
+						.form-check.form-check-inline
+							input.form-check-input(type="radio", name="obj[qntpdSts]", value=Conf.status[sts].num, checked=checked)
+							label.form-check-label(for="ctercterNome") #{Conf.status[sts].val}
+			.row.my-3.delNoteRow(style="display:none")
+				.col-md-2.mt-3.text-right 删除备注
+				.col-md-8.mt-3
+					input.form-control#delNoteIpt(type="text", name="obj[delNote]", autocomplete="off", placeholder="必填, 删除原因", value=qutpd.delNote)
+			.form-group.row
+				.col-12.text-right
+					a.border.border-danger.mr-4.btn.btn-default.text-danger#qutpdsPageShow(href="/sfQut/"+qutpd.inquot._id) 取消
+					input.btn.btn-success(type="submit", value="确认更新")
+
+	script(src="/js/user/qter/qutpd/edit.js")
+	script(src="/js/dbs/compd/comGetPd.js")

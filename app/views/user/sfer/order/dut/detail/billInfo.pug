@@ -1,0 +1,22 @@
+.border.border-dark.mt-2.p-3
+	.row
+		.col-6
+			span 总采购价:
+			if dut.dutImp
+				-a;
+				span &nbsp;#{(dut.dutImp).toFixed(2)}
+		.col-6 
+			span 已付款:
+			if dut.billPr
+				-a;
+				//- span &nbsp;#{(dut.billPr).toFixed(2)}
+				span &nbsp;#{(dut.billPr)}
+	.row
+		.col-6
+			h5.code 付款信息:
+	each bill in dut.bills
+		-a;
+		.row.mt-3
+			.col-4 付款时间 #{moment(bill.crtAt).format("YYYY年MM月DD日")}
+			.col-4 付款金额 #{(bill.billPr).toFixed(2)}
+			.col-4 #{bill.note}

@@ -15,7 +15,6 @@ $(function() {
 		$(".quotingBtn").show();
 	}
 
-
 	$(".inquotUpClick").click(function(e) {
 		let htmlId = $(this).attr("id").split('-')[0]
 		$("#"+htmlId+"-form").show();

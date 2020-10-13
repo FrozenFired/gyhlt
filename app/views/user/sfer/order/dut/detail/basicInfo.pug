@@ -1,0 +1,95 @@
+.border.border-dark.p-3
+	.row.text-center
+		.col-md-6
+			h5.code 订单号: #{dut.code}
+			.time.mt-2
+				span 下单时间: 
+				span #{moment(dut.dutAt).format('DD/MM/YYYY')}
+			.dut.mt-2
+				span 采购员:
+				if dut.duter
+					- duter = dut.duter;
+					span #{duter.nome} [ #{duter.code} ]
+				else
+					span 数据丢失
+		.col-md-6
+			.strmup 供应商:
+				if dut.strmup
+					- strmup = dut.strmup;
+					span.text-warning.objUpClick#strmup-span #{strmup.nome}
+				else
+					span.text-warning.objUpClick#strmup-span 未分配
+				if dut.status == Conf.status.init.num
+					-a;
+					form#strmup-form(method="post", action="/sfDutUpd", enctype="multipart/form-data", style="display:none")
+						input(type="hidden", name="obj[_id]", value=dut._id)
+						.form-group.row.px-5.text-center
+							.col-md-2
+							.col-8.col-md-8
+								select.objUpSel#dutNote-ipt.form-control(name="obj[strmup]", data-style="btn-info")
+									each strmup in strmups
+										-a;
+										if !dut.strmup
+											-a;
+											option(value=strmup._id) #{strmup.nome}
+										else if String(strmup._id) == String(dut.strmup._id)
+											-a;
+											option(value=strmup._id, selected="selected") #{strmup.nome}
+										else
+											option(value=strmup._id) #{strmup.nome}
+							.col-4.col-md-2
+								input.btn.btn-success(type="submit" value="提交")
+			.status
+				- let status = '';
+				each sts in Conf.status
+					- status = '';
+					if sts.num == dut.status
+						- status = sts.val;
+						- break;
+				span 状态: #{status}
+			.excel.text-right
+				a(href="/sfDutExcel/"+dut._id) Excel <span class="oi oi-data-transfer-download"></span>
+
+	.statusChange.mt-3.text-center.row
+		if dut.status == Conf.status.init.num
+			-a;
+			.col-6
+				button.btn.btn-danger.delObjectBtn(type="button") 删除此单
+				.delObject(style="display:none")
+					a.mx-4.my-2.btn.btn-danger(href="/sfDutDel/"+dut._id) 确定
+					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
+			.col-6
+				if dut.compds && dut.compds.length > 0
+					- a;
+					button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+dut._id+"-unpaid", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.unpaid.num) 确认采购
+		else if dut.status == Conf.status.unpaid.num
+			-a;
+			.col-6
+				if dut.bills.length == 0
+					-a;
+					button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+dut._id+"-init", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.init.num) 返回初始状态
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+dut._id+"-deposit", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.deposit.num) 付首款确认
+		else if dut.status == Conf.status.deposit.num
+			-a;
+			.col-6
+				if dut.bills.length == 0
+					-a;
+					button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+dut._id+"-unpaid", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.unpaid.num) 返回未付款
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+dut._id+"-payoff", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.payoff.num) 付全款确认
+		else if dut.status == Conf.status.payoff.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+dut._id+"-deposit", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.deposit.num) 返回未付清
+			.col-6
+				button.btn.btn-warning.changeStsAjax(id="changeStsAjax-"+dut._id+"-done", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.done.num) 订单完成
+		else if dut.status == Conf.status.done.num
+			-a;
+			.col-6
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+dut._id+"-payoff", type="button", data-url="/usOrdutStatusAjax", data-id=dut._id, data-stsf=dut.status, data-stst=Conf.status.payoff.num) 返回
+			.col-6
+
+script(src="/js/dbs/compd/total.js")
+script(src="/js/user/sfer/dut/detail.js")
+script(src="/js/user/ajaxChange/status.js")

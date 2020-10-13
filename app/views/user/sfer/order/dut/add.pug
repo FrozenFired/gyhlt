@@ -1,0 +1,16 @@
+div.text-right
+	button.btn.btn-warning.dutAddBtn(type="button") +新的采购单
+.dutAddPage.border.p-3.pt-4.my-3.bg-light(style="display:none")
+	form#dutForm(method="post", action="/sfDutNew", enctype="multipart/form-data")
+		.form-group.row.ctersel#cterNome
+			label.col-md-2.col-form-label(for="cterNomeIpt") 选择供应商
+			.col-md-8
+				select.selectup.form-control#selStrmup(name="obj[strmup]", data-style="btn-info")
+					option(value='') 请选供应商
+					each strmup in strmups
+						-a;
+						option(value=strmup._id) #{strmup.nome}
+			.col-md-2
+				input.btn.btn-success.btn-block(type="submit" value="下一步")
+.cancel.text-right
+	button.border.border-danger.mr-4.btn.btn-default.text-danger.dutCancelBtn(type="button", style="display:none") 取消

@@ -10,7 +10,7 @@ let Conf = {
 		store: {num: 3, val: '门店'},
 	},
 
-	roleAdmin: [1, 3, 10],
+	roleAdmin: [1, 3, 5, 10],
 	// roles: [1, 3, 5, 10, 20, 25, 30, 35, 40, 60, 90],
 	roleUser: {
 		boss:     {num: 1, index: '/bser', code: 'bs', val: 'BOSS', },
