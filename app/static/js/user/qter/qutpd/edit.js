@@ -62,7 +62,7 @@ $(() => {
 			}
 		} else if(qntpdSts == Conf.status.del.num) {
 			let delNoteIpt = $("#delNoteIpt").val();
-			if(!delNoteIpt || delNoteIpt.length < 3) {
+			if(!delNoteIpt || delNoteIpt.length < 1) {
 				alert("请说明删除原因")
 				e.preventDefault();
 			}
