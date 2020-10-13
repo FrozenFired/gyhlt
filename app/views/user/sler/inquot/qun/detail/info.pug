@@ -45,7 +45,7 @@
 			.col-6
 				if qunpds && qunpds.length > 0
 					- a;
-					button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num) 提交
+					button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num) 提交询价单
 		else if qun.status == Conf.status.quoting.num
 				- a;
 				.col-6

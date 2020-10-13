@@ -14,10 +14,10 @@
 		.row.my-3
 			.col-md-2.mt-3.text-right 品牌信息:
 			.col-md-3.mt-3
-				input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...")
-			.col-md-3.mt-3
 				input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly",)
-				input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名")
+				input.border-danger.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名")
+			.col-md-3.mt-3
+				input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...")
 			.col-md-3.mt-3#brandweb
 		input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@sl")
 		.ajax#brandsElem
@@ -25,10 +25,10 @@
 		.row.my-3
 			.col-md-2.mt-3.text-right 系列信息:
 			.col-md-3.mt-3
-				input.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...")
+				input.border-danger.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="* 品类: 桌子/椅子/床...")
 			.col-md-3.mt-3
 				input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly")
-				input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称")
+				input.border-danger.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称")
 		input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
 		.ajax#pdfirsElem
 		.row.my-3
@@ -41,12 +41,12 @@
 
 
 		.row.my-3
-			.col-md-2.mt-3.text-right 产品信息:
+			.col-md-2.mt-3.text-right 产品规格:
+			.col-md-3.mt-3
+				input.border-danger.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 尺寸: 长*宽*高")
 			.col-md-3.mt-3
 				input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly")
-				input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号")
-			.col-md-3.mt-3
-				input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高")
+				input.border-info.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号(如有)")
 		input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
 		.ajax#pdsecsElem
 		.row.my-3
@@ -60,12 +60,12 @@
 		.row.my-3
 			.col-md-2.mt-3.text-right 材质工艺:
 			.col-md-3.mt-3
+				input.border-danger.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 填写/材质")
+			.col-md-3.mt-3
+				input.border-danger.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="* 填写/工艺,面料,颜色")
+			.col-md-3.mt-3
 				input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly")
-				input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="编号(帮助选择)")
-			.col-md-3.mt-3
-				input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质")
-			.col-md-3.mt-3
-				input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色")
+				input.border-info.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="平台工艺搭配(帮助选项)")
 		input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
 		.ajax#pdthdsElem
 		.row.my-3
@@ -96,7 +96,7 @@
 		.form-group.row
 			.col-12.text-right
 				button.border.border-danger.mr-4.btn.btn-default.text-danger#qunpdsPageShow(type="button") 取消
-				input.btn.btn-success(type="submit", value="确认添加")
+				input.btn.btn-success(type="submit", value="确认保存")
 
 script(src="/js/user/sler/qunpd/edit.js")
 script(src="/js/dbs/compd/comGetPd.js")

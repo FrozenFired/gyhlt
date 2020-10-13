@@ -30,10 +30,10 @@ block content
 			.row.my-3
 				.col-md-2.mt-3.text-right 品牌信息:
 				.col-md-3.mt-3
-					input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...", value=qunpd.area)
-				.col-md-3.mt-3
 					input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly", value=brand._id)
-					input.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名", value=qunpd.brandNome)
+					input.border-danger.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名", value=qunpd.brandNome)
+				.col-md-3.mt-3
+					input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...", value=qunpd.area)
 				.col-md-3.mt-3#brandweb
 					if brand.website
 						- let website = brand.website;
@@ -50,10 +50,10 @@ block content
 			.row.my-3
 				.col-md-2.mt-3.text-right 系列信息:
 				.col-md-3.mt-3
-					input.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...", value=qunpd.pdNome)
+					input.border-danger.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...", value=qunpd.pdNome)
 				.col-md-3.mt-3
 					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=pdfir._id)
-					input.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=qunpd.firNome)
+					input.border-danger.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=qunpd.firNome)
 			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sl")
 			.ajax#pdfirsElem
 			.row.my-3
@@ -76,12 +76,12 @@ block content
 			if qunpd.pdsec
 				- pdsec = qunpd.pdsec;
 			.row.my-3
-				.col-md-2.mt-3.text-right 产品信息:
+				.col-md-2.mt-3.text-right 产品规格:
+				.col-md-3.mt-3
+					input.border-danger.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 尺寸: 长*宽*高", value=qunpd.specf)
 				.col-md-3.mt-3
 					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=pdsec._id)
-					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号", value=qunpd.secNome)
-				.col-md-3.mt-3
-					input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=qunpd.specf)
+					input.border-info.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号(如有)", value=qunpd.secNome)
 			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sl")
 			.ajax#pdsecsElem
 			.row.my-3
@@ -106,12 +106,12 @@ block content
 			.row.my-3
 				.col-md-2.mt-3.text-right 材质工艺:
 				.col-md-3.mt-3
+					input.border-danger.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 填写/材质", value=qunpd.mater)
+				.col-md-3.mt-3
+					input.border-danger.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="* 填写/工艺,面料,颜色", value=qunpd.craft)
+				.col-md-3.mt-3
 					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthd._id)
-					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="编号(帮助选择)", value=qunpd.thdNome)
-				.col-md-3.mt-3
-					input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质", value=qunpd.mater)
-				.col-md-3.mt-3
-					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色", value=qunpd.craft)
+					input.border-info.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="平台工艺搭配(帮助选项)", value=qunpd.thdNome)
 			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
 			.ajax#pdthdsElem
 			.row.my-3
