@@ -63,8 +63,8 @@ var dutRender = (dut) => {
 		elem += '<div class="col-4">'
 			elem += '<div>'
 				elem += '采购员:'
-				if(dut.duter) {
-					elem += dut.duter.nome + ' [' + dut.duter.code + ']'
+				if(dut.order) {
+					elem += dut.order.nome + ' [' + dut.order.code + ']'
 				} else {
 					elem += '数据丢失';
 				}

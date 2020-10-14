@@ -76,7 +76,7 @@ exports.sfDutNew = (req, res) => {
 			}
 			let code = codePre + 'GYIP' + codeNum;
 			obj.firm = crUser.firm;
-			obj.duter = crUser._id;
+			obj.order = crUser._id;
 			obj.code = code;
 			_ordut = new Ordut(obj)
 			_ordut.save((err, ordutSave) => {
@@ -97,7 +97,7 @@ exports.sfDut = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Ordut.findOne({_id: id})
-	.populate('duter')
+	.populate('order')
 	.populate('strmup')
 	.populate('bills')
 	.populate({
@@ -137,7 +137,7 @@ exports.sfDut = (req, res) => {
 						firm: crUser.firm,
 						status: {'$in': [Conf.status.deposit.num, Conf.status.payoff.num]},
 					})
-					.populate('diner')
+					.populate('seller')
 					.populate({
 						path: 'compds',
 						match: { 'compdSts': Conf.status.waiting.num, 'strmup': dut.strmup },

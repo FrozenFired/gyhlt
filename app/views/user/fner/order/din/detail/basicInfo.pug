@@ -24,9 +24,9 @@
 		.col-md-6
 			.din.mt-2
 				span 销售员:
-				if din.diner
-					- diner = din.diner;
-					span #{diner.nome} [ #{diner.code} ]
+				if din.seller
+					- seller = din.seller;
+					span #{seller.nome} [ #{seller.code} ]
 				else
 					span 数据丢失
 			.quantTotal

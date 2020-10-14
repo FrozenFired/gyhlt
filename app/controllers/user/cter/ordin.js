@@ -19,7 +19,7 @@ exports.ordin = (req, res) => {
 	let id = req.params.id;
 
 	Ordin.findOne({_id: id})
-	.populate('diner')
+	.populate('seller')
 	.populate('cter')
 	.populate({
 		path: 'compds',
@@ -29,7 +29,7 @@ exports.ordin = (req, res) => {
 			{path: 'pdfir'},
 			{path: 'pdsec'},
 			{path: 'pdthd'},
-			{path: 'diner'},
+			{path: 'seller'},
 			{path: 'cter'},
 		]
 	})

@@ -147,7 +147,11 @@ exports.slQunNew = (req, res) => {
 					len = "0"+len;
 				}
 			}
-			obj.code = year+crUser.code+len;
+			let code = crUser.code;
+			if(code.length > 4) {
+				code = code.slice(0,4)
+			}
+			obj.code = year+code+len;
 			if(obj.cterNome) obj.cterNome = obj.cterNome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 			let _inquot = new Inquot(obj)
 

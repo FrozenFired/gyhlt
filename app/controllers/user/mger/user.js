@@ -171,14 +171,17 @@ exports.userNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	obj.firm = crUser.firm;
-	let info;
+	info = null;
 	if(obj.code) {
 		obj.code = obj.code.replace(/^\s*/g,"").toUpperCase();
-		if(obj.code.length < 2) {
-			info = "用户帐号必须大于2个字符";
+		var re =  /^[a-zA-Z]*$/;
+		if(!re.test(obj.code)) {
+			info = "账号只能由字母组成"
+		} else if(obj.code.length < 3 || obj.code.length > 6) {
+			info = "用户帐号长度至少是3个字符 最多是6个字符";
 		}
 	} else {
-		info = "用户帐号必须大于2个字符";
+		info = "请您输入账号";
 	}
 	if(info && info.length > 0) {
 		Err.usError(req, res, info);

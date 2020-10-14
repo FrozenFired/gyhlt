@@ -86,7 +86,8 @@ exports.mgDinGen = (req, res) => {
 					ordinObj.cter = inquot.cter;
 					ordinObj.cterNome = inquot.cterNome;
 					ordinObj.firm = crUser.firm;
-					ordinObj.diner = inquot.quner;
+					ordinObj.seller = inquot.quner;
+					ordinObj.order = crUser._id;
 					ordinObj.code = code;
 					ordinObj.dinImp = 0;
 					ordinObj.billPr = 0;
@@ -160,7 +161,7 @@ exports.mgDin = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Ordin.findOne({_id: id})
-	.populate('diner')
+	.populate('seller')
 	.populate('cter')
 	.populate('bills')
 	.populate({

@@ -71,24 +71,37 @@ exports.adUser = (req, res) => {
 
 exports.adUserUpd = (req, res) => {
 	let obj = req.body.obj
+	info = null;
 	if(obj.code) {
-		obj.code = obj.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-	}
-	User.findOne({_id: obj._id, firm: obj.firm}, (err, object) => {
-		if(err) {
-			info = "更新用户，用户数据库查找时错误, 请截图后, 联系管理员";
-			Err.usError(req, res, info);
-		} else if(!object) {
-			info = "此用户名已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			if(obj.code && obj.code != object.code) {
-				adUser_changeCode(req, res, obj, object);
-			} else {
-				adSaveUser(req, res, obj, object);
-			}
+		obj.code = obj.code.replace(/^\s*/g,"").toUpperCase();
+		var re =  /^[a-zA-Z]*$/;
+		if(!re.test(obj.code)) {
+			info = "账号只能由字母组成"
+		} else if(obj.code.length < 3 || obj.code.length > 6) {
+			info = "用户帐号长度至少是3个字符 最多是6个字符";
 		}
-	})
+	} else {
+		info = "请您输入账号";
+	}
+	if(info && info.length > 0) {
+		Err.usError(req, res, info);
+	} else {
+		User.findOne({_id: obj._id, firm: obj.firm}, (err, object) => {
+			if(err) {
+				info = "更新用户，用户数据库查找时错误, 请截图后, 联系管理员";
+				Err.usError(req, res, info);
+			} else if(!object) {
+				info = "此用户名已经被删除";
+				Err.usError(req, res, info);
+			} else {
+				if(obj.code && obj.code != object.code) {
+					adUser_changeCode(req, res, obj, object);
+				} else {
+					adSaveUser(req, res, obj, object);
+				}
+			}
+		})
+	}
 }
 let adUser_changeCode = (req, res, obj, object) => {
 	User.findOne({code: obj.code, firm: obj.firm})
@@ -142,14 +155,17 @@ exports.adUserAdd =(req, res) => {
 
 exports.adUserNew = (req, res) => {
 	let obj = req.body.obj;
-	let info;
+	info = null;
 	if(obj.code) {
 		obj.code = obj.code.replace(/^\s*/g,"").toUpperCase();
-		if(obj.code.length < 2) {
-			info = "用户帐号必须大于2个字符";
+		var re =  /^[a-zA-Z]*$/;
+		if(!re.test(obj.code)) {
+			info = "账号只能由字母组成"
+		} else if(obj.code.length < 3 || obj.code.length > 6) {
+			info = "用户帐号长度至少是3个字符 最多是6个字符";
 		}
 	} else {
-		info = "用户帐号必须大于2个字符";
+		info = "请您输入账号";
 	}
 	if(!obj.firm || obj.firm.length < 20){
 		info = "请为员工选择公司";

@@ -7,9 +7,9 @@
 				span #{moment(dut.dutAt).format('DD/MM/YYYY')}
 			.dut.mt-2
 				span 采购员:
-				if dut.duter
-					- duter = dut.duter;
-					span #{duter.nome} [ #{duter.code} ]
+				if dut.order
+					- order = dut.order;
+					span #{order.nome} [ #{order.code} ]
 				else
 					span 数据丢失
 		.col-md-6

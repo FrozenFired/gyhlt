@@ -30,7 +30,7 @@ exports.fnDin = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Ordin.findOne({_id: id})
-	.populate('diner')
+	.populate('seller')
 	.populate('cter')
 	.populate('bills')
 	.populate({

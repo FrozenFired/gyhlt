@@ -31,73 +31,12 @@ exports.fnDuts = (req, res) => {
 	})
 }
 
-exports.fnDutNew = (req, res) => {
-	let crUser = req.session.crUser;
-	let obj = req.body.obj;
-	
-	let maxNum = 3
-	let minNum = 1
-	let r1 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
-	let r2 = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
-
-	let symAtFm = "$gte";
-	var monthStart = new Date(); //本月
-	let today = monthStart.getDate();
-	let codePre = moment(monthStart).format("YYMM");
-	monthStart.setDate(1);
-	monthStart.setHours(0);
-	monthStart.setSeconds(0);
-	monthStart.setMinutes(0);
-
-	Ordut.findOne({
-		'firm': crUser.firm,
-		'crtAt': {[symAtFm]: monthStart}
-	})
-	.sort({'crtAt': -1})
-	.exec((err, lastOrdut) => {
-		if(err) {
-			console.log(err);
-			info = "fner DutNew, Ordut.findOne, Error!";
-			Err.usError(req, res, info);
-		} else {
-			let lastDate = monthStart.getDate();
-			let codeNum = 0;
-			if(lastOrdut) {
-				lastDate = lastOrdut.crtAt.getDate();
-				codeNum = (lastOrdut.code).split('GYIP')[1];
-			}
-			let daySpan = parseInt(today) - parseInt(lastDate);
-			codeNum = String(parseInt(codeNum) + daySpan * r1 + r2);
-
-			if(codeNum.length < 4) {
-				for(let i=codeNum.length; i < 4; i++) { // 序列号补0
-					codeNum = "0"+codeNum;
-				}
-			}
-			let code = codePre + 'GYIP' + codeNum;
-			obj.firm = crUser.firm;
-			obj.duter = crUser._id;
-			obj.code = code;
-			_ordut = new Ordut(obj)
-			_ordut.save((err, ordutSave) => {
-				if(err) {
-					console.log(err);
-					info = "fner DutNew, _ordut.save, Error!";
-					Err.usError(req, res, info);
-				} else {
-					res.redirect('/fnDut/'+ordutSave._id);
-				}
-			})
-		}
-	})
-}
-
 
 exports.fnDut = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 	Ordut.findOne({_id: id})
-	.populate('duter')
+	.populate('order')
 	.populate('strmup')
 	.populate('bills')
 	.populate({
@@ -137,7 +76,7 @@ exports.fnDut = (req, res) => {
 						firm: crUser.firm,
 						status: {'$in': [Conf.status.deposit.num, Conf.status.payoff.num]},
 					})
-					.populate('diner')
+					.populate('seller')
 					.populate({
 						path: 'compds',
 						match: { 'compdSts': Conf.status.waiting.num, 'strmup': dut.strmup },

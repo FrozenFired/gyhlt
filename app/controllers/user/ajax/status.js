@@ -244,7 +244,7 @@ exports.usOrdinStatusAjax = (req, res) => {
 					}
 				}
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
-					// 完成付款, 完成订单
+					// 从付清状态, 变为完成状态
 					let i=0;
 					for(; i<compds.length; i++) {
 						if(compds[i].compdSts != Conf.status.stocking.num) break;
@@ -253,6 +253,7 @@ exports.usOrdinStatusAjax = (req, res) => {
 						info = "其中的商品不在仓库, 不可完成"
 					} else {
 						ordinCompdStatus(req, res, compds, Conf.status.stocking.num, Conf.status.done.num, 0);
+						ordin.fnhAt = Date.now();
 						ordin.status = parseInt(newStatus);
 						info = null;
 					}
@@ -260,6 +261,7 @@ exports.usOrdinStatusAjax = (req, res) => {
 				else if(oldStatus == Conf.status.done.num && newStatus == Conf.status.payoff.num) {
 					// 点错, 从完成返回到付清状态
 					ordinCompdStatus(req, res, compds, Conf.status.done.num, Conf.status.stocking.num, 0);
+					ordin.fnhAt = null;
 					ordin.status = parseInt(newStatus);
 					info = null;
 				}
@@ -397,6 +399,7 @@ exports.usOrdutStatusAjax = (req, res) => {
 				else if(oldStatus == Conf.status.payoff.num && newStatus == Conf.status.done.num) {
 					// 完成采购单, 可以开始运输
 					ordutCompdStatus(req, res, compds,  Conf.status.proding.num, Conf.status.tranpre.num, 0);
+					ordut.fnhAt = Date.now();
 					ordut.status = parseInt(newStatus);
 					info = null;
 				}
@@ -410,6 +413,7 @@ exports.usOrdutStatusAjax = (req, res) => {
 						info = "其中的商品已经在运输, 不可返回"
 					} else {
 						ordutCompdStatus(req, res, compds,  Conf.status.tranpre.num, Conf.status.proding.num, 0);
+						ordut.fnhAt = null;
 						ordut.status = parseInt(newStatus);
 						info = null;
 					}

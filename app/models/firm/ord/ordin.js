@@ -9,7 +9,8 @@ let dbSchema = new Schema({
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
 	/* ============ 销售单 ============ */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
-	diner : {type: ObjectId, ref: 'User'},		// 销售员
+	seller : {type: ObjectId, ref: 'User'},		// 销售员
+	order : {type: ObjectId, ref: 'User'},		// 订单员
 	cter: {type: ObjectId, ref: 'User'}, 		// 客户
 	cterNome: String,
 	crtAt: Date,								// 开单时间
@@ -34,7 +35,7 @@ let dbSchema = new Schema({
 	dinDay: Number,						// 货期 xxx 天
 	dinAt: Date,						// 截止交货日期
 
-	fnhAt: Date,						// 交货日期
+	fnhAt: Date,						// 真实的交货日期
 	status: Number,						// 系列状态 
 	step: {type: Number, default: 0},		// 处理步骤 
 });

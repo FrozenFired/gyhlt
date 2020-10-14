@@ -21,19 +21,19 @@ exports.usDinsAjax = (req, res) => {
 	}
 	let skip = (page-1)*pagesize;
 
-	let dinerSymb = '$ne';
-	let dinerConb = '5f1dff1063781676b6a5f6ff';
-	if(req.query.diner) {
-		dinerSymb = '$eq';
-		dinerConb = req.query.diner;
+	let sellerSymb = '$ne';
+	let sellerConb = '5f1dff1063781676b6a5f6ff';
+	if(req.query.seller) {
+		sellerSymb = '$eq';
+		sellerConb = req.query.seller;
 	}
 	if(crUser._id == "5eea52dce61fa97e3ff44fdc") {
-		dinerSymb = '$eq';
-		dinerConb = "5f85925f94ac0c50a98606a2";
+		sellerSymb = '$eq';
+		sellerConb = "5f85925f94ac0c50a98606a2";
 	}
 	if(crUser.role == Conf.roleUser.seller.num) {
-		dinerSymb = '$eq';
-		dinerConb = crUser._id;
+		sellerSymb = '$eq';
+		sellerConb = crUser._id;
 	}
 	/* 销售公司筛选, 如果是查询销售单, 则销售公司一定是本公司*/
 	// dinSymb = '$eq';
@@ -66,7 +66,7 @@ exports.usDinsAjax = (req, res) => {
 
 	let param = {
 		firm: crUser.firm,
-		diner: {[dinerSymb]: dinerConb},
+		seller: {[sellerSymb]: sellerConb},
 		status: {[statusSymb]: statusConb},
 
 		$or:[
@@ -81,7 +81,7 @@ exports.usDinsAjax = (req, res) => {
 			Err.jsonErr(req, res, info);
 		} else {
 			Ordin.find(param)
-			.populate('diner')
+			.populate('seller')
 			.populate('cter')
 			.populate('strmup')
 			.skip(skip).limit(pagesize)
@@ -141,15 +141,15 @@ exports.usDutsAjax = (req, res) => {
 		dutCond = req.query.dutId;
 	}
 
-	let duterSymb = '$ne';
-	let duterConb = '5f1dff1063781676b6a5f6ff';
-	if(req.query.duter) {
-		duterSymb = '$eq';
-		duterConb = req.query.duter;
+	let orderSymb = '$ne';
+	let orderConb = '5f1dff1063781676b6a5f6ff';
+	if(req.query.order) {
+		orderSymb = '$eq';
+		orderConb = req.query.order;
 	}
 	if(crUser.role == Conf.roleUser.staff.num) {
-		duterSymb = '$eq';
-		duterConb = crUser._id;
+		orderSymb = '$eq';
+		orderConb = crUser._id;
 	}
 
 	let keySymb = '$ne';
@@ -173,7 +173,7 @@ exports.usDutsAjax = (req, res) => {
 		firm: crUser.firm,
 		_id: {[dutSymb]: dutCond},
 		status: {[statusSymb]: statusConb},
-		duter: {[duterSymb]: duterConb},
+		order: {[orderSymb]: orderConb},
 
 		$or:[
 			{'code': {[keySymb]: keyCond}},
@@ -187,7 +187,7 @@ exports.usDutsAjax = (req, res) => {
 		} else {
 			Ordut.find(param)
 			.populate('firm')
-			.populate('duter')
+			.populate('order')
 			.populate('strmup')
 			.skip(skip).limit(pagesize)
 			.sort({'status': 1, 'weight': -1, 'updAt': -1})

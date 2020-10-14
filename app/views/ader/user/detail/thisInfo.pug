@@ -1,9 +1,10 @@
 table.mt-3.table.table-hover
-	if user.firm
-		- firm = user.firm;
-		tr
-			td: strong Firm:
-			td #{firm.code}
+	tr
+		td: strong Code:
+		td #{user.code}
+	tr
+		td: strong name:
+		td #{user.nome}
 	tr
 		td: strong role:
 		td
@@ -24,12 +25,11 @@ table.mt-3.table.table-hover
 					- lang = userLang.val;
 					- break;
 			span #{lang}
-	tr
-		td: strong Code:
-		td #{user.code}
-	tr
-		td: strong name:
-		td #{user.nome}
+	if user.firm
+		- firm = user.firm;
+		tr
+			td: strong Firm:
+			td #{firm.code}
 	tr
 		td: strong 上次登录时间:
 		td #{moment(user.logAt).format('DD/MM/YYYY HH:mm:ss')}

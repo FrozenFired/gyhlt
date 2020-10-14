@@ -63,8 +63,8 @@ var dinRender = (din, role) => {
 		elem += '<div class="col-4">'
 			elem += '<div>'
 				elem += '销售员:'
-				if(din.diner) {
-					elem += din.diner.nome + ' [' + din.diner.code + ']'
+				if(din.seller) {
+					elem += din.seller.nome + ' [' + din.seller.code + ']'
 				} else {
 					elem += '数据丢失';
 				}

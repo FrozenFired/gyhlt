@@ -9,7 +9,7 @@ let dbSchema = new Schema({
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
 	/* ============ 采购订单 ============ */
 	firm: {type: ObjectId, ref: 'Firm'},		// 所属公司
-	duter : {type: ObjectId, ref: 'User'},		// 订单员
+	order : {type: ObjectId, ref: 'User'},		// 订单员
 	strmup: {type: ObjectId, ref: 'Strmup'}, 	// 供应商
 
 	crtAt: Date,								// 开单时间
@@ -34,7 +34,7 @@ let dbSchema = new Schema({
 	dutDay: Number,						// 货期 xxx 天
 	dutAt: Date,						// 最迟提货日期
 
-	fnhAt: Date, 						// 真正的提货日期
+	fnhAt: Date, 						// 真实的提货日期
 	status: Number,						// 系列状态 
 	step: {type: Number, default: 0},		// 处理步骤 
 });

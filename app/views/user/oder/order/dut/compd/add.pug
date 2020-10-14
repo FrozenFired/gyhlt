@@ -15,7 +15,7 @@
 						.col-md-3: h5 #{din.code}
 						.col-md-3 #{moment(din.crtAt).format("YYYY-MM-DD")}
 						.col-md-2 #{din.cterNome}
-						.col-md-2 #{din.diner.nome}[#{din.diner.code}]
+						.col-md-2 #{din.seller.nome}[#{din.seller.code}]
 						.col-md-1.compdTableShow(id="compdTableShow-"+din._id) <span class="oi oi-chevron-bottom"></span> [#{din.compds.length}]
 						.col-md-1.text-right
 							input.compdSelAll(type="checkbox" id="compdSelAll-"+din._id)

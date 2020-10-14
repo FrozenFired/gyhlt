@@ -9,9 +9,14 @@ a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span cl
 					input(type="hidden", name="obj[firm]", value=user.firm._id)
 					input(type="hidden", name="obj[_id]", value=user._id)
 					.form-group.row
-						label.col-3.col-form-label(for="iptNome") Name
+						label.col-3.col-form-label(for="codeIpt") Name
 						.col-9
-							input#iptNome.form-control(type="text", name="obj[nome]" value=user.nome)
+							input#codeIpt.form-control(type="text", name="obj[code]" value=user.code)
+						.offset-3.col-9.col-form-label.text-danger
+					.form-group.row
+						label.col-3.col-form-label(for="nomeIpt") Name
+						.col-9
+							input#nomeIpt.form-control(type="text", name="obj[nome]" value=user.nome)
 						.offset-3.col-9.col-form-label.text-danger
 					.form-group.row
 						label.col-3.col-form-label(for="iptRl") role
