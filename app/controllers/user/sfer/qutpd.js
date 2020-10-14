@@ -210,3 +210,48 @@ exports.sfQutpdDel = (req, res) => {
 		}
 	})
 }
+
+exports.sfQutpdDelPic = (req, res) => {
+	let crUser = req.session.crUser;
+	let compdId = req.body.compdId;
+	let picField = req.body.picField;
+	let subsp = req.body.subsp;
+	Compd.findOne({
+		_id: compdId,
+		firm: crUser.firm
+	})
+	.exec((err, compd) => {
+		if(err) {
+			console.log(err);
+			info = "sfer QutpdDelPic, Compd.findOne, Error!"
+			Err.usError(req, res, info);
+		} else if(!compd) {
+			info = '此询价单已经被删除, 请刷新查看';
+			Err.usError(req, res, info);
+		} else if(!picField) {
+			info = '操作错误, 请截图 联系管理员 sfer QutpdDelPic';
+			Err.usError(req, res, info);
+		} else {
+			let picDel = compd[picField];
+			if(subsp) {
+				picDel = compd[picField][subsp];
+				// compd[picField][subsp] = '';
+				compd.images.remove(picDel)
+			} else {
+				picDel = compd[picField];
+				compd[picField] = '';
+			}
+			// return;
+			compd.save((err, compdSave) => {
+				if(err) {
+					console.log(err);
+					info = "sfer QutpdDelPic, Compd.save, Error!"
+					Err.usError(req, res, info);
+				} else {
+					MdPicture.deletePicture(picDel, Conf.picPath.compd);
+					res.redirect('/sfQut/'+compdSave.inquot)
+				}
+			})
+		}
+	})
+}

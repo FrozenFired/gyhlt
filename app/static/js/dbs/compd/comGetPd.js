@@ -59,6 +59,8 @@ $(function() {
 			$("#pdfirIpt").val('')
 			$("#firNomeIpt").val('')
 			$(".firImg").remove();
+			$(".firImgs").remove();
+			$("#firphotoIpt").val('');
 		}
 
 		let pdsecIpt = $("#pdsecIpt").val();
@@ -145,6 +147,8 @@ $(function() {
 		if(pdfirIpt && pdfirIpt.length > 20) {
 			$("#pdfirIpt").val('')
 			$(".firImg").remove();
+			$(".firImgs").remove();
+			$("#firphotoIpt").val('');
 		}
 
 		let pdsecIpt = $("#pdsecIpt").val();
@@ -203,10 +207,46 @@ $(function() {
 		$("#pdfirIpt").val(pdfirId)
 		$("#firNomeIpt").val(pdfir.code)
 		let elem = '<div class="firImg text-right">'
-			elem += '<img src="'+pdfir.photo+'", width="120px">'
-			elem += '<a href="'+pdfir.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+			let firphoto = pdfir.photo;
+			elem += '<img src="'+firphoto+'", width="120px">'
+			elem += '<a href="'+firphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
 		elem += '</div>'
 		$("#firImg").append(elem)
+		$("#firphotoIpt").val(firphoto)
+
+		elem = '<div class="firImgs row text-right">'
+			for(let i=0; i<pdfir.photos.length; i++) {
+				let selphoto = pdfir.photos[i];
+				if(selphoto && selphoto.length > 4) {
+					elem += '<div class="col-6 mt-2">'
+						elem += '<img class="photoSel" id="photoSel-hlt-'+i+'-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
+						elem += '<a href="'+selphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+					elem += '</div>'
+				}
+			}
+		elem += '</div>'
+		$("#firImgs").show();
+		$("#firImgs").append(elem)
+	})
+	/* ======================== 系列的图片选择 ======================== */
+	$("#firImgs").on('click', '.photoSel', function(e) {
+		let firphoto = $(this).attr('id').split('-hlt-')[2];
+		$(".firImg").remove();
+		let elem = '<div class="firImg text-right">'
+			elem += '<img src="'+firphoto+'", width="120px">'
+			elem += '<a href="'+firphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+		elem += '</div>'
+		$("#firImg").append(elem)
+		$("#firphotoIpt").val(firphoto)
+
+		$("#firImgs").hide();
+		$("#selPhotos").show();
+	})
+
+	$("#selPhotos").click(function(e) {
+		$("#firImgs").show();
+		$("#selPhotos").hide();
+
 	})
 
 	/* ======================== 产品选择 ======================== */

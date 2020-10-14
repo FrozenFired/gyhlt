@@ -58,12 +58,6 @@ block content
 			.ajax#pdfirsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 产品图片:
-				.col-md-3.mt-4#firImg(align="center")
-					if pdfir.photo && pdfir.photo.length > 0
-						-a;
-						.firImg.text-right
-							a(href=pdfir.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
-							img(src=pdfir.photo, width="120px")
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let photo = "/imgs/createPicture.jpg";
@@ -72,7 +66,25 @@ block content
 						a(href=photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-photo(src=photo, width="120px")
 					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
-
+				.col-md-3.mt-4#firImg(align="center")
+					if qunpd.firphoto
+						-a;
+						.firImg.text-right
+							a(href=qunpd.firphoto, target="_blank") <span class="oi oi-magnifying-glass"></span>
+							img(src=qunpd.firphoto, width="120px")
+				.col-md-4.text-center
+					input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly")
+					button#selPhotos.btn.btn-link(type="button") 选择其他图片
+					#firImgs(style="display:none")
+						.firImgs.row.text-right
+							- let i = -1;
+							each selphoto in pdfir.photos
+								- i++;
+								if selphoto && selphoto.length > 4
+									-a;
+									.col-6.mt-2
+										img.photoSel(id="photoSel-hlt-"+i+"-hlt-"+selphoto, src=selphoto, width="120px")
+										a(href=selphoto, target="_blank") <span class="oi oi-magnifying-glass"></span>
 			- let pdsec = new Object();
 			if qunpd.pdsec
 				- pdsec = qunpd.pdsec;
@@ -87,12 +99,6 @@ block content
 			.ajax#pdsecsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 线稿图:
-				.col-md-3.mt-4#secImg(align="center")
-					if pdsec.photo && pdsec.photo.length > 0
-						-a;
-						.firImg.text-right
-							a(href=pdsec.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
-							img(src=pdsec.photo, width="120px")
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let sketch = "/imgs/createPicture.jpg";
@@ -101,6 +107,12 @@ block content
 						a(href=sketch, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-sketch(src=sketch, width="120px")
 					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
+				.col-md-3.mt-4#secImg(align="center")
+					if pdsec.photo && pdsec.photo.length > 0
+						-a;
+						.firImg.text-right
+							a(href=pdsec.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
+							img(src=pdsec.photo, width="120px")
 
 			- let pdthd = new Object();
 			if qunpd.pdthd

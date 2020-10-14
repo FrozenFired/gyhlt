@@ -64,7 +64,7 @@ let MiddlePicture = {
 				fs.writeFile(picture, data, (err) => {
 					if(err) console.log(err);
 					obj.photo = '/upload'+picDir+picNome;
-					// console.log(obj.photo);
+					// console.log('photo: '+ obj.photo);
 					next();
 				});
 			});
@@ -92,7 +92,7 @@ let MiddlePicture = {
 				fs.writeFile(picture, data, (err) => {
 					if(err) console.log(err);
 					obj.sketch = '/upload'+picDir+picNome;
-					// console.log(obj.sketch);
+					// console.log('sketch: '+obj.sketch);
 					next();
 				});
 			});
@@ -108,7 +108,7 @@ let MiddlePicture = {
 
 	imgsCallback : (req, res, next, imgsDatas, n) => {
 		if(n == imgsDatas.length) {
-			// console.log("------------------------");
+			// console.log("------------------------\n\n");
 			next()
 		}else{
 			let obj = req.body.obj;
@@ -130,8 +130,7 @@ let MiddlePicture = {
 						if(err) console.log(err);
 						if(!obj.images) obj.images = new Array();
 						obj.images[n] = '/upload'+picDir+picNome;
-						// console.log(n);
-						// console.log(obj.images[n]);
+						// console.log('images['+n+']'+obj.images[n]);
 						MiddlePicture.imgsCallback(req, res, next, imgsDatas, n+1);
 					});
 				});

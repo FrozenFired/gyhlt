@@ -315,7 +315,9 @@ exports.slQunpdNew = (req, res) => {
 			// if(obj.pdthd) obj.qntpdSts = Conf.status.done.num;
 			let _compd = new Compd(obj)
 			// console.log(_compd)
-			inquot.compds.unshift(_compd._id);
+			if(!inquot.compds.includes(_compd._id)) {
+				inquot.compds.unshift(_compd._id);
+			}
 			inquot.save((err, inquotSave) => {
 				if(err) {
 					console.log(err);

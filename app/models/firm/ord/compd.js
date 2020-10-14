@@ -16,6 +16,7 @@ let dbSchema = new Schema({
 	brandNome: String, 
 
 	pdfir: {type: ObjectId, ref: 'Pdfir'},		// 系列
+	firphoto: String,							// 从数据库中选的照片
 	firNome: String,							// 系列名
 	pdNome: String,								// 品类
 	photo: String,								// 照片

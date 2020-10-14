@@ -71,10 +71,10 @@ table.mt-3.table.table-bordered
 							img(src=photo, width="120px")
 							.picLink
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
-						else if qunpd.pdfir
-							- photo = qunpd.pdfir.photo;
+						else if qunpd.firphoto
+							- photo = qunpd.firphoto;
 							img(src=photo, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")

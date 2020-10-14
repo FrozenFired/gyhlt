@@ -29,6 +29,8 @@ module.exports = function(app){
 	});
 
 	/* =================================== compd 报价商品 =================================== */
+	app.post('/sfQutpdDelPic', MdRole.sferIsLogin, postForm, Qutpd.sfQutpdDelPic)
+
 	app.get('/sfQutpdUp/:id', MdRole.sferIsLogin, Qutpd.sfQutpdUp)
 	app.get('/sfQutpdDel/:id', MdRole.sferIsLogin, Qutpd.sfQutpdDel)
 	app.post('/sfQutpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qutpd.sfQutpdUpd)

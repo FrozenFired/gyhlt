@@ -33,12 +33,15 @@
 		.ajax#pdfirsElem
 		.row.my-3
 			.col-md-2.mt-3.text-right 产品图片:
-			.col-md-3.mt-4#firImg(align="center")
 			.col-md-3.mt-3(align="center")
 				div 上传指定图片:
 				img.picImg#img-photo(src="/imgs/createPicture.jpg", width="120px")
 				input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
-
+			.col-md-3.mt-4#firImg(align="center")
+			.col-md-4.text-center
+				input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly")
+				button#selPhotos.btn.btn-link(type="button" style="display:none") 选择其他图片
+				#firImgs
 
 		.row.my-3
 			.col-md-2.mt-3.text-right 产品规格:
@@ -51,11 +54,11 @@
 		.ajax#pdsecsElem
 		.row.my-3
 			.col-md-2.mt-3.text-right 线稿图:
-			.col-md-3.mt-4#secImg(align="center")
 			.col-md-3.mt-3(align="center")
 				div 上传指定图片:
 				img.picImg#img-sketch(src="/imgs/createPicture.jpg", width="120px")
 				input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
+			.col-md-3.mt-4#secImg(align="center")
 
 		.row.my-3
 			.col-md-2.mt-3.text-right 材质工艺:
