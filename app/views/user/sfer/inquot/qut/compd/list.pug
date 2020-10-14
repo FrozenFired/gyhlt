@@ -60,12 +60,12 @@ table.mt-3.table.table-bordered
 						if qutpd.photo
 							- photo = qutpd.photo;
 							img(src=photo, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.pdfir
 							- photo = qutpd.pdfir.photo;
 							img(src=photo, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")
@@ -91,13 +91,13 @@ table.mt-3.table.table-bordered
 						if qutpd.sketch
 							- sketch = qutpd.sketch;
 							img#sketchCrt(src=sketch, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.pdsec
 							-a;
 							- sketch = qutpd.pdsec.photo;
 							img#sketchCrt(src=sketch, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img#sketchCrt(src=sketch, width="120px")
@@ -107,17 +107,18 @@ table.mt-3.table.table-bordered
 						- pdthdcode = '['+qutpd.pdthd.code+']';
 						.pdthdPrice.text-dark [原价: #{qutpd.pdthd.price} €]
 					.pdthdcode #{pdthdcode}
-					.pdmater.mt-3 #{qutpd.mater}
-					.pdcraft.mt-3 #{qutpd.craft}
-					.images
+					.pdmater.mt-2 #{qutpd.mater}
+					.pdcraft #{qutpd.craft}
+					.images.row
 						- let subsp = -1;
 						each image in qutpd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
-								img.mt-2(src=image, width="120px")
-								.picLink
-									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+								.col-6
+									img.mt-2(src=image, width="120px")
+									.picLink.text-right
+										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
 					span #{qutpd.note}
 

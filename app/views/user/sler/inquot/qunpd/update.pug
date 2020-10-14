@@ -62,13 +62,14 @@ block content
 					if pdfir.photo && pdfir.photo.length > 0
 						-a;
 						.firImg.text-right
-							img(src=pdfir.photo, width="120px")
 							a(href=pdfir.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
+							img(src=pdfir.photo, width="120px")
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let photo = "/imgs/createPicture.jpg";
 					if qunpd.photo
 						- photo = qunpd.photo;
+						a(href=photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-photo(src=photo, width="120px")
 					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
 
@@ -90,13 +91,14 @@ block content
 					if pdsec.photo && pdsec.photo.length > 0
 						-a;
 						.firImg.text-right
-							img(src=pdsec.photo, width="120px")
 							a(href=pdsec.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
+							img(src=pdsec.photo, width="120px")
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let sketch = "/imgs/createPicture.jpg";
 					if qunpd.sketch
 						- sketch = qunpd.sketch;
+						a(href=sketch, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-sketch(src=sketch, width="120px")
 					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
 
@@ -123,24 +125,28 @@ block content
 					- let images0 = "/imgs/createPicture.jpg";
 					if images.length > 0 && images[0]
 						- images0 = images[0];
+						a(href=images0, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-images0(src=images0, width="120px")
 					input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images1 = "/imgs/createPicture.jpg";
 					if images.length > 1 && images[1]
 						- images1 = images[1];
+						a(href=images1, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-images1(src=images1, width="120px")
 					input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images2 = "/imgs/createPicture.jpg";
 					if images.length > 2 && images[2]
 						- images2 = images[2];
+						a(href=images2, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-images2(src=images2, width="120px")
 					input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images3 = "/imgs/createPicture.jpg";
 					if images.length > 3 && images[3]
 						- images3 = images[3];
+						a(href=images3, target="_blank") <span class="oi oi-magnifying-glass"></span>
 					img.picImg#img-images3(src=images3, width="120px")
 					input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
 

@@ -39,13 +39,26 @@ table.mt-3.table.table-bordered
 					if qut.status == Conf.status.quoting.num
 						if qutpd.qntpdSts == Conf.status.quoting.num
 							-a;
-							a.btn.btn-info.mt-5(href="/qtQutpdUp/"+qutpd._id) 开始报价
+							a.btn.btn-info.mt-5(href="/sfQutpdUp/"+qutpd._id) 开始报价
 						else if qutpd.qntpdSts == Conf.status.done.num
 							-a;
-							a.btn.btn-success.mt-5(href="/qtQutpdUp/"+qutpd._id) 修改报价
+							a.btn.btn-success.mt-5(href="/sfQutpdUp/"+qutpd._id) 修改报价
 						else if qutpd.qntpdSts == Conf.status.del.num
 							-a;
-							a.btn.btn-danger.mt-5(href="/qtQutpdUp/"+qutpd._id) 重新报价
+							a.btn.btn-danger.mt-5(href="/sfQutpdUp/"+qutpd._id) 重新报价
+					.qutpdSts.mt-4
+						- let status = '';
+						each sts in Conf.status
+							- status = '';
+							if sts.num == qutpd.qntpdSts
+								- status = sts.val;
+								- break;
+						//- span.text-dark 商品状态: 
+						if qut.status > Conf.status.init.num
+							-a;
+							span.text-danger #{status}
+						else
+							span.text-danger 创建中
 				td
 					.pdnome
 						span.text-dark 品类: 
@@ -70,12 +83,15 @@ table.mt-3.table.table-bordered
 							form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
 								input(type="hidden", name="compdId", value=qutpd._id)
 								input(type="hidden", name="picField", value="photo")
-								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+								.form-group.row
+									.col-6
+										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+									.col-6
+										a.btn(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.pdfir
 							- photo = qutpd.pdfir.photo;
 							img(src=photo, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")
@@ -104,13 +120,16 @@ table.mt-3.table.table-bordered
 							form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
 								input(type="hidden", name="compdId", value=qutpd._id)
 								input(type="hidden", name="picField", value="sketch")
-								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+								.form-group.row
+									.col-6
+										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+									.col-6
+										a.btn(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.pdsec
 							-a;
 							- sketch = qutpd.pdsec.photo;
 							img#sketchCrt(src=sketch, width="120px")
-							.picLink
+							.picLink.text-right
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img#sketchCrt(src=sketch, width="120px")
@@ -120,21 +139,25 @@ table.mt-3.table.table-bordered
 						- pdthdcode = '['+qutpd.pdthd.code+']';
 						.pdthdPrice.text-dark [原价: #{qutpd.pdthd.price} €]
 					.pdthdcode #{pdthdcode}
-					.pdmater.mt-3 #{qutpd.mater}
-					.pdcraft.mt-3 #{qutpd.craft}
-					.images
+					.pdmater.mt-2 #{qutpd.mater}
+					.pdcraft #{qutpd.craft}
+					.images.row
 						- let subsp = -1;
 						each image in qutpd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
-								img.mt-2(src=image, width="120px")
-								form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
-									input(type="hidden", name="compdId", value=qutpd._id)
-									input(type="hidden", name="picField", value="images")
-									input(type="hidden", name="subsp", value=subsp)
-									button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+								.col-6
+									img.mt-2(src=image, width="120px")
+									form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
+										input(type="hidden", name="compdId", value=qutpd._id)
+										input(type="hidden", name="picField", value="images")
+										input(type="hidden", name="subsp", value=subsp)
+										.form-group.row
+											.col-6
+												button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+											.col-6
+												a.btn(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
 					span #{qutpd.note}
 				td
@@ -164,19 +187,6 @@ table.mt-3.table.table-bordered
 						.del.text-danger
 							div.text-center 删除原因:
 							.delNote.mt-2 #{qutpd.delNote}
-					.qutpdSts.mt-5
-						- let status = '';
-						each sts in Conf.status
-							- status = '';
-							if sts.num == qutpd.qntpdSts
-								- status = sts.val;
-								- break;
-						span.text-dark 商品状态: 
-						if qut.status > Conf.status.init.num
-							-a;
-							span.text-danger #{status}
-						else
-							span.text-danger 创建中
 .row
 	.col-12.text-right
 		input#ipt-quantTotal(type="hidden", value=quantTotal)

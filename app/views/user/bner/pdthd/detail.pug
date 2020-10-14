@@ -9,18 +9,6 @@ block content
 				li.breadcrumb-item: a(href="/bnPdfir/"+pdthd.pdsec.pdfir._id) #{pdthd.pdsec.pdfir.code}
 				li.breadcrumb-item: a(href="/bnPdsec/"+pdthd.pdsec._id) #{pdthd.pdsec.code}
 				li.breadcrumb-item.active(aria-current="page") #{pdthd.code}
-
-		//- .title
-			.row
-				.col-12 
-					a(href="/bner") Home
-					span &nbsp; | &nbsp;
-					a(href="/bnPdsecs") Product List
-					span &nbsp; | &nbsp;
-					a(href="/bnPdsec/"+pdthd.pdsec._id) #{pdthd.pdsec.code}
-					span &nbsp; | &nbsp;
-					span #{pdthd.code}
-			hr
 		.info
 			.row
 				.col-4.text-right 编号:
@@ -29,17 +17,11 @@ block content
 				.col-8.text-info #{pdthd.price} €
 				.col-4.text-right 备注:
 				.col-8 #{pdthd.note}
-				.col-4.text-right 材质:
-				.col-8
-					each mater in pdthd.maters
-						if mater && mater.length > 0
-							-a;
-							span.mr-2 [#{mater}] 
-				.col-4.text-right 工艺面料:
-				.col-8
-					each craft in pdthd.crafts
-						if craft && craft.length > 0
-							-a;
-							span.mr-2 [#{craft}]  
-				.col-12.text-right
-					a.btn.btn-warning(href="/bnPdthdUp/"+pdthd._id) 更新
+			.row.mt-3
+				.col-4.text-right 材质
+				.col-8 工艺面料
+			.row.text-info
+				for i in [0, 1, 2, 3, 4, 5]
+					-a;
+					.col-4.text-right #{pdthd.maters[i]}
+					.col-8 #{pdthd.crafts[i]}

@@ -50,24 +50,25 @@ var pdthdRender = (pdthd, role) => {
 			elem += '<a class="btn btn-info" href="/'+role+'Pdthd/'+pdthd._id+'">'+pdthd.code+'</a>'
 			elem += '<div class="text-info">'+pdthd.price+' €</div>'
 		}
-		elem += '<div class="row">'
-			elem += '<div class="col-6">'
-				for(let i=0; i<pdthd.maters.length; i++) {
-					if(i>2) break;
-					let mater = pdthd.maters[i]
-					elem += '<div class="text-dark mt-2">'+mater+'</div>'
-				}
-				elem += '<div class="text-dark">'+pdthd.note+'</div>'
+		for(let i=0; i<pdthd.maters.length; i++) {
+			if(i>2) break;
+			let mater = pdthd.maters[i]
+			let craft = pdthd.crafts[i]
+			if(!mater && !craft) continue;
+			elem += '<div class="row">'
+				elem += '<div class="col-4 border-top">'
+					if(mater) {
+						elem += '<div class="text-dark mt-2">'+mater+': </div>'
+					}
+				elem += '</div>'
+				elem += '<div class="col-8 border-top">'
+					if(craft) {
+						elem += '<div class="text-dark mt-2">'+craft+'</div>'
+					}
+				elem += '</div>'
 			elem += '</div>'
-			elem += '<div class="col-6">'
-				for(let i=0; i<pdthd.crafts.length; i++) {
-					if(i>2) break;
-					let craft = pdthd.crafts[i]
-					elem += '<div class="text-dark mt-2">'+craft+'</div>'
-				}
-				elem += '<div class="text-dark">'+pdthd.note+'</div>'
-			elem += '</div>'
-		elem += '</div>'
+		}
+		elem += '<div class="text-dark">'+pdthd.note+'</div>'
 	elem += '</div>'
 	return elem;
 }

@@ -109,15 +109,16 @@ table.mt-3.table.table-bordered
 					.pdthdcode #{pdthdcode}
 					.pdmater.mt-3 #{qutpd.mater}
 					.pdcraft.mt-3 #{qutpd.craft}
-					.images
+					.images.row
 						- let subsp = -1;
 						each image in qutpd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
-								img.mt-2(src=image, width="120px")
-								.picLink
-									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+								.col-6
+									img.mt-2(src=image, width="120px")
+									.picLink
+										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
 					span #{qutpd.note}
 

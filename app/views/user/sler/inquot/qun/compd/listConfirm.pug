@@ -115,17 +115,18 @@ table.mt-3.table.table-bordered
 					if qunpd.pdthd
 						- pdthdcode = '['+qunpd.pdthd.code+']';
 					.pdthdcode #{pdthdcode}
-					.pdmater.mt-3 #{qunpd.mater}
-					.pdcraft.mt-3 #{qunpd.craft}
-					.images
+					.pdmater.mt-2 #{qunpd.mater}
+					.pdcraft #{qunpd.craft}
+					.images.row
 						- let subsp = -1;
 						each image in qunpd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
-								img.mt-2(src=image, width="120px")
-								.picLink
-									a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+								.col-6
+									img.mt-2(src=image, width="120px")
+									.picLink
+										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td.qntPrTd.bg-dark(style="display:")
 					if qunpd.qntpdSts != Conf.status.del.num
 						- let qntPrtot = qunpd.quant * qunpd.qntPr;
