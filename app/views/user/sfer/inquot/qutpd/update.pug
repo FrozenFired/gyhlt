@@ -104,7 +104,7 @@ block content
 					input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质", value=qutpd.mater)
 				.col-md-3.mt-3
 					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色", value=qutpd.craft)
-			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@sf")
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@priceShow")
 			.ajax#pdthdsElem
 			.row.my-3
 				.col-md-2.mt-3.pt-5.text-right 材质图片:
@@ -140,14 +140,6 @@ block content
 				.col-md-2.mt-3.text-right 备注:
 				.col-md-8.mt-3
 					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=qutpd.note)
-			//- .row.my-3
-			//- 	.col-md-2.mt-3.text-right 数量:
-			//- 	.col-md-2.mt-3
-			//- 		input.form-control#quantIpt(type="number", name="obj[quant]", autocomplete="off", placeholder="采购数量", value=qutpd.quant)
-			//- .row.my-3
-			//- 	.col-md-2.mt-3.text-right 预估单价:
-			//- 	.col-md-2.mt-3
-			//- 		input.form-control#estimateIpt(type="text", name="obj[estimate]", autocomplete="off", placeholder="可不填", value=qutpd.estimate)
 			.row.my-3
 				.col-md-2.mt-3.text-right 状态
 				each sts in Conf.qntpdSts

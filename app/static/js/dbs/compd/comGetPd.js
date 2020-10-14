@@ -3,6 +3,7 @@ let brands;
 let pdfirs;
 let pdsecs;
 let pdthds;
+let priceShow = "";
 $(function() {
 	/*   数据初始化  */
 	funcInit = () => {
@@ -28,6 +29,7 @@ $(function() {
 		if(pdthdFilter) {
 			pdthdParam = pdthdFilter.split('@')[0];
 			pdthdElemId = pdthdFilter.split('@')[1];
+			priceShow = pdthdFilter.split('@')[2];
 		}
 	}
 	funcInit();
@@ -468,15 +470,27 @@ var pdthdRender = (pdthd) => {
 	let photo = pdthd.photo;
 	if(!photo) photo = '/upload/pdthd/1.jpg';
 	let elem = '';
-	elem += '<div class="col-3 col-md-2 mt-2 p-3 border pdthdCard" id="pdthdCard-'+pdthd._id+'">'
-		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.pdfir.brand.nome+']</div>'
-		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.pdfir.nome+']</div>'
-		// elem += '<div class="text-dark text-center">['+pdthd.pdsec.code+']</div>'
+	elem += '<div class="col-6 col-md-3 mt-2 p-3 border pdthdCard" id="pdthdCard-'+pdthd._id+'">'
 		elem += '<div class="text-info text-center">'+pdthd.code+'</div>'
-		for(let i=0; i<pdthd.maters.length; i++) {
-			let mater = pdthd.maters[i]
-			elem += '<div class="text-dark mt-2">'+mater+'</div>'
+		if(priceShow == "priceShow") {
+			elem += '<div class="text-info text-center">'+pdthd.price+' €</div>'
 		}
+		elem += '<div class="row">'
+			elem += '<div class="col-6">'
+				for(let i=0; i<pdthd.maters.length; i++) {
+					let mater = pdthd.maters[i]
+					elem += '<div class="text-dark mt-2">'+mater+'</div>'
+				}
+			elem += '</div>'
+			elem += '<div class="col-6">'
+				for(let i=0; i<pdthd.crafts.length; i++) {
+					if(i>2) break;
+					let craft = pdthd.crafts[i]
+					elem += '<div class="text-dark mt-2">'+craft+'</div>'
+				}
+				elem += '<div class="text-dark">'+pdthd.note+'</div>'
+			elem += '</div>'
+		elem += '</div>'
 	elem += '</div>'
 	return elem;
 }

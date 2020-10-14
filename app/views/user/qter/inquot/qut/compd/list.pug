@@ -119,7 +119,7 @@ table.mt-3.table.table-bordered
 					- let pdthdcode = '查找数据库';
 					if qutpd.pdthd
 						- pdthdcode = '['+qutpd.pdthd.code+']';
-						.pdthdPrice.text-dark [原价: #{qutpd.pdthd.price}]
+						.pdthdPrice.text-dark [原价: #{qutpd.pdthd.price} €]
 					.pdthdcode #{pdthdcode}
 					.pdmater.mt-3 #{qutpd.mater}
 					.pdcraft.mt-3 #{qutpd.craft}
@@ -162,7 +162,9 @@ table.mt-3.table.table-bordered
 										.col-12
 											input.blurup.form-control(id="ipt-estimate-"+qutpd._id, type="text", name="obj[estimate]", placeholder="预估单价可以是范围", autocomplete="off", value=qutpd.estimate)
 					else 
-						.delNote.text-danger #{qutpd.delNote}
+						.del.text-danger
+							div.text-center 删除原因:
+							.delNote.mt-2 #{qutpd.delNote}
 					.qutpdSts.mt-5
 						- let status = '';
 						each sts in Conf.status

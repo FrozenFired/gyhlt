@@ -34,6 +34,7 @@ exports.bnBrandNew = (req, res) => {
 
 	// obj.code = obj.code.replace(/^\s*/g,"").toUpperCase();
 	obj.nome = obj.nome.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	if(obj.website) obj.website = obj.website.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	obj.firm = crUser.firm;
 
 	let picNew = obj.picture;
@@ -173,6 +174,8 @@ exports.bnBrandUpd = (req, res) => {
 	let picNew = obj.picture;
 	if(obj.picture) obj.post = obj.picture;
 	if(!obj.post) obj.post = Conf.picDefault.brand;
+
+	if(obj.website) obj.website = obj.website.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 
 	Brand.findOne({_id: obj._id, firm: crUser.firm})
 	.exec((err, brand) => {

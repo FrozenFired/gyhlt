@@ -185,8 +185,8 @@ table.mt-3.table.table-bordered
 								span(id="span-dinPrtot-"+qunpd._id) #{qunpd.quant * qunpd.dinPr}
 					else
 						.del.text-danger
-							div 无效商品
-							.delNote.mt-3 #{qunpd.delNote}
+							div.text-center 删除原因:
+							.delNote.mt-2 #{qunpd.delNote}
 .hideImp
 	input#ipt-quantTotal(type="hidden", value=quantTotal)
 	input#ipt-qntPrImp(type="hidden", value=qntPrImp)

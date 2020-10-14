@@ -16,8 +16,6 @@ let dbSchema = new Schema({
 	nome: String,
 	spec: String, 		// 产品规格 尺寸
 
-	desp: String, 		// 描述
-
 	shelf: {type: Number, default: 0},	// 上架 下架
 	status: Number,						// 品牌状态 
 	weight: {type: Number, default: 0},	// 权重 排序用的

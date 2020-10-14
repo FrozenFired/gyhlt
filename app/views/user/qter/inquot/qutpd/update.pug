@@ -71,7 +71,7 @@ block content
 				.col-md-2.mt-3.text-right 产品信息:
 				.col-md-3.mt-3
 					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=pdsec._id)
-					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="产品编号", value=qutpd.secNome)
+					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="* 产品编号", value=qutpd.secNome)
 				.col-md-3.mt-3
 					input.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=qutpd.specf)
 			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@qt")
@@ -99,12 +99,12 @@ block content
 				.col-md-2.mt-3.text-right 材质工艺:
 				.col-md-3.mt-3
 					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthd._id)
-					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="编号(帮助选择)", value=qutpd.thdNome)
+					input.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="* 平台工艺搭配", value=qutpd.thdNome)
 				.col-md-3.mt-3
 					input.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 或填写/材质", value=qutpd.mater)
 				.col-md-3.mt-3
-					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="或填写/工艺,面料,颜色", value=qutpd.craft)
-			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@qt")
+					input.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="* 填写/工艺,面料,颜色", value=qutpd.craft)
+			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@priceShow")
 			.ajax#pdthdsElem
 			.row.my-3
 				.col-md-2.mt-3.pt-5.text-right 材质图片:

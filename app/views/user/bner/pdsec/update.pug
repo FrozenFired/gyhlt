@@ -28,19 +28,15 @@ block content
 				label.col-4.col-sm-2.col-form-label(for="photoIpt") 产品线稿图
 				.col-8.col-sm-10
 					input#photoIpt.form-control(type="text", name="obj[photo]", value=pdsec.photo)
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="specIpt") 产品尺寸
+				.col-8.col-sm-10
+					input#specIpt.form-control(type="text", name="obj[spec]", value=pdsec.spec, placeholder="长*宽*高")
 			hr
 			.form-group.row
 				label.col-4.col-sm-2.col-form-label(for="codeIpt") 产品编号
 				.col-8.col-sm-10
 					input#codeIpt.form-control(type="text", name="obj[code]", value=pdsec.code)
-			.form-group.row
-				label.col-4.col-sm-2.col-form-label(for="specIpt") 产品规格尺寸
-				.col-8.col-sm-10
-					input#specIpt.form-control(type="text", name="obj[spec]", value=pdsec.spec)
-			.form-group.row
-				label.col-4.col-sm-2.col-form-label(for="despIpt") 产品描述
-				.col-8.col-sm-10
-					textarea#despIpt.form-control(type="text", rows="3", name="obj[desp]", placeholder="产品描述")
 			hr
 			.form-group.row
 				.col-12.text-right

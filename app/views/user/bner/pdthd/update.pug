@@ -20,26 +20,19 @@ block content
 				label.col-4.col-md-2.col-form-label(for="priceIpt") 价格
 				.col-8.col-md-10
 					input#priceIpt.form-control(type="text", name="obj[price]", value=pdthd.price)
-			.form-group.row
-				label.col-md-2.col-form-label 材质
-				- j = 0;
-				each i in [0, 1, 2, 3, 4, 5]
-					if j == 2 || j == 4
-						- a;
-						.col-md-2
-					- j++;
-					.col-md-5
-						input.form-control(type="text", name="obj[maters]["+i+"]", value=pdthd.maters[i])
-			.form-group.row
-				label.col-md-2.col-form-label 工艺面料
-				- j = 0;
-				each i in [0, 1, 2, 3, 4, 5]
-					if j == 2 || j == 4
-						- a;
-						.col-md-2
-					- j++;
-					.col-md-5
-						input.form-control(type="text", name="obj[crafts]["+i+"]", value=pdthd.crafts[i])
+			.form-group.row.text-center
+				label.col-md-2.col-form-label
+				label.col-md-4.col-form-label 材质
+				label.col-md-1.col-form-label
+				label.col-md-5.col-form-label 工艺面料
+				each k in [0, 1, 2, 3, 4, 5]
+					-a;
+					.col-md-2.mt-2
+					.col-md-4.mt-2
+						input.form-control(type="text", name="obj[maters]["+k+"]", value=pdthd.maters[k])
+					.col-md-1.mt-2
+					.col-md-5.mt-2
+						input.form-control(type="text", name="obj[crafts]["+k+"]", value=pdthd.crafts[k])
 			.form-group.row
 				label.col-4.col-md-2.col-form-label(for="noteIpt") 备注
 				input#noteData.form-control(type="hidden", value=pdthd.note)

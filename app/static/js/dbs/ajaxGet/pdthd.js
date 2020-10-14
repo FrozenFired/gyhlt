@@ -43,23 +43,62 @@ var pdthdsRender = (pdthds, elemId, isReload, role) => {
 }
 var pdthdRender = (pdthd, role) => {
 	let elem = '';
-	elem += '<div class="col-6 col-md-3 col-lg-2 mt-2 text-center border-bottom border-left pdthdCard">'
-
+	elem += '<div class="col-6 col-md-4 col-lg-3 mt-2 text-center border-bottom border-left pdthdCard">'
 		if(role == 'ct') {
 			elem += '<div>'+pdthd.code+'</div>'
 		} else {
-			elem += '<a href="/'+role+'Pdthd/'+pdthd._id+'">'
-				elem += '<span>'+pdthd.code+'</span>'
-			elem += '</a>'
+			elem += '<a class="btn btn-info" href="/'+role+'Pdthd/'+pdthd._id+'">'+pdthd.code+'</a>'
 			elem += '<div class="text-info">'+pdthd.price+' €</div>'
 		}
-		elem += '<div class="text-dark">'+pdthd.note+'</div>'
-		for(let i=0; i<pdthd.maters.length; i++) {
-			if(i>2) break;
-			let mater = pdthd.maters[i]
-			elem += '<div class="text-dark mt-2">'+mater+'</div>'
-		}
-
+		elem += '<div class="row">'
+			elem += '<div class="col-6">'
+				for(let i=0; i<pdthd.maters.length; i++) {
+					if(i>2) break;
+					let mater = pdthd.maters[i]
+					elem += '<div class="text-dark mt-2">'+mater+'</div>'
+				}
+				elem += '<div class="text-dark">'+pdthd.note+'</div>'
+			elem += '</div>'
+			elem += '<div class="col-6">'
+				for(let i=0; i<pdthd.crafts.length; i++) {
+					if(i>2) break;
+					let craft = pdthd.crafts[i]
+					elem += '<div class="text-dark mt-2">'+craft+'</div>'
+				}
+				elem += '<div class="text-dark">'+pdthd.note+'</div>'
+			elem += '</div>'
+		elem += '</div>'
 	elem += '</div>'
 	return elem;
 }
+
+$(function() {
+	/* ====== 初始加载 =====*/
+	let urlQuery = '';
+	let pdthdParam = '';
+	let pdthdElemId = '';
+	let role = '';
+	pdthdsInit = () => {
+		let pdthdFilter = $("#pdthdFilterAjax").val();
+		if(pdthdFilter) {
+			pdthdParam = pdthdFilter.split('@')[0];
+			pdthdElemId = pdthdFilter.split('@')[1];
+			role = pdthdFilter.split('@')[2];
+		}
+		urlQuery = pdthdParam;
+		getPdthds(urlQuery, pdthdElemId, 1, role);
+	}
+	pdthdsInit();
+
+
+	$(window).scroll(function(){
+		var scrollTop = $(this).scrollTop();
+		var scrollHeight = $(document).height();
+		var windowHeight = $(this).height();
+		if(scrollTop + windowHeight + 58 > scrollHeight){
+			if(isMore == 1) {
+				getPdthds(urlQuery+'&page='+(parseInt(page)+1), pdthdElemId, 0, role);
+			}
+		}
+	});
+})

@@ -28,6 +28,7 @@ $(() => {
 		let firNomeIpt = $("#firNomeIpt").val();
 		let specfIpt = $("#specfIpt").val();
 		let materIpt = $("#materIpt").val();
+		let craftIpt = $("#craftIpt").val();
 		if(!brandNomeIpt) {
 			alert("请输入品牌")
 			e.preventDefault();
@@ -40,7 +41,10 @@ $(() => {
 		} else if(!materIpt) {
 			alert("请输入材质")
 			e.preventDefault();
-		}
+		} else if(!craftIpt) {
+			alert("请输入工艺/面料")
+			e.preventDefault();
+		} 
 
 		let qntpdSts = $("input[name='obj[qntpdSts]']:checked").val();
 		if(qntpdSts == Conf.status.done.num) {
