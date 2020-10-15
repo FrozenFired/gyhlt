@@ -242,7 +242,6 @@ $(function() {
 		$("#firImgs").hide();
 		$("#selPhotos").show();
 	})
-
 	$("#selPhotos").click(function(e) {
 		$("#firImgs").show();
 		$("#selPhotos").hide();
