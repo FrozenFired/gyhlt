@@ -131,17 +131,23 @@ exports.slQunNew = (req, res) => {
 	let year = now.getFullYear();
 	let initYear = year+"-01-01 00:00:00";
 	let initDate = new Date(initYear);
-	Inquot.find({
+	Inquot.findOne({
 		firm: crUser.firm,
 		quner: crUser._id,
 		qntcrtAt: {"$gte": initDate},
-	}, (err, inquots) => {
+	})
+	.sort({'qntcrtAt': -1})
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "sler QunNew Inquot.find, Error!";
 			Err.usError(req, res, info);
 		} else {
-			let len = String(inquots.length+1);
+			let len = '0001'
+			if(inquot) {
+				let lastNum = parseInt(inquot.code.slice(-4));
+				len = String(lastNum+1);
+			}
 			if(len.length < 4) {
 				for(let i=len.length; i < 4; i++) { // 序列号补0
 					len = "0"+len;

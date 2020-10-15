@@ -11,17 +11,16 @@ block content
 			include ./detail/info
 		div(style="height:40px")
 
-		.compdAdd
-			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
-				-a;
-				include ./compd/add
-
-		.compds
+		.compds.mt-3
 			if qun.status >= Conf.status.confirm.num
 				-a;
 				include ./compd/listConfirm
 			else
 				include ./compd/list
+		.compdAdd.mt-5
+			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
+				-a;
+				include ./compd/add
 
 		//- include ../../../aaPlugin/comment/list
 		if qun.quter

@@ -175,6 +175,12 @@ exports.usInquotStatusAjax = (req, res) => {
 					inquot.status = parseInt(newStatus);
 					info = null;
 				}
+				else if(oldStatus == Conf.status.quoting.num && newStatus == Conf.status.init.num) {
+					// 返回初始状态
+					inquot.quter = null;
+					inquot.status = parseInt(newStatus);
+					info = null;
+				}
 			}
 			if(info) {
 				Err.jsonErr(req, res, info);
