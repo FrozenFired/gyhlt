@@ -69,9 +69,8 @@ block content
 					button#selPhotos.btn.btn-link(type="button") 选择其他图片
 					#firImgs(style="display:none")
 						.firImgs.row.text-right
-							- let i = -1;
 							if pdfir.photos && pdfir.photos.length > 0
-								-a;
+								- let i = -1;
 								each selphoto in pdfir.photos
 									- i++;
 									if selphoto && selphoto.length > 4
