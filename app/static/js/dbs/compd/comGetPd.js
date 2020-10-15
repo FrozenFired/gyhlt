@@ -215,8 +215,16 @@ $(function() {
 		$("#firphotoIpt").val(firphoto)
 
 		elem = '<div class="firImgs row text-right">'
+			let selphoto = pdfir.photo;
+			if(selphoto && selphoto.length > 4) {
+				elem += '<div class="col-6 mt-2">'
+					elem += '<img class="photoSel" id="photoSel-hlt-i-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
+					elem += '<a href="'+selphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+				elem += '</div>'
+			}
+			// console.log(selphoto)
 			for(let i=0; i<pdfir.photos.length; i++) {
-				let selphoto = pdfir.photos[i];
+				selphoto = pdfir.photos[i];
 				if(selphoto && selphoto.length > 4) {
 					elem += '<div class="col-6 mt-2">'
 						elem += '<img class="photoSel" id="photoSel-hlt-'+i+'-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'

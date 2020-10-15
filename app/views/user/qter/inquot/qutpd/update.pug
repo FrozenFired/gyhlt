@@ -69,6 +69,12 @@ block content
 					button#selPhotos.btn.btn-link(type="button") 选择其他图片
 					#firImgs(style="display:none")
 						.firImgs.row.text-right
+							- let selphoto = pdfir.photo;
+							if selphoto && selphoto.length > 4
+								- a;
+								.col-6.mt-2
+									img.photoSel(id="photoSel-hlt-i-hlt-"+selphoto src=selphoto, width="120px")
+									a(href=selphoto target="_blank") <span class="oi oi-magnifying-glass"></span>
 							if pdfir.photos && pdfir.photos.length > 0
 								- let i = -1;
 								each selphoto in pdfir.photos
