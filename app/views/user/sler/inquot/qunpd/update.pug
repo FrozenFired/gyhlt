@@ -60,38 +60,37 @@ block content
 				.col-md-2.mt-3.text-right 产品图片:
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
-					- let photo = "/imgs/createPicture.jpg";
+					- let photo = "";
 					if qunpd.photo
 						- photo = qunpd.photo;
-						a(href=photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-photo(src=photo, width="120px")
+					img.thumbnailImg#img-photo(src=photo, width="120px")
+					.changeImg#imgEdit-photo.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
 				.col-md-3.mt-4#firImg(align="center")
 					if qunpd.firphoto
 						-a;
 						.firImg.text-right
-							a(href=qunpd.firphoto, target="_blank") <span class="oi oi-magnifying-glass"></span>
-							img(src=qunpd.firphoto, width="120px")
+							img.thumbnailImg(src=qunpd.firphoto, width="120px")
 				.col-md-4.text-center.border-left
-					input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly")
+					input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly", value=qunpd.firphoto)
 					button#selPhotos.btn.btn-link(type="button") 选择其他图片
 					#firImgs(style="display:none")
 						.firImgs.row.text-right
 							- let selphoto = pdfir.photo;
 							if selphoto && selphoto.length > 4
 								- a;
-								.col-6.mt-2
-									img.photoSel(id="photoSel-hlt-i-hlt-"+selphoto src=selphoto, width="120px")
-									a(href=selphoto target="_blank") <span class="oi oi-magnifying-glass"></span>
+								.col-6.mt-2.text-center
+									img.thumbnailImg(id="thumbnailImg-hlt-i-hlt-"+selphoto src=selphoto, width="120px")
+									.photoSel.text-info(id="photoSel-hlt-i-hlt-"+selphoto) <span class="oi oi-check"></span>
 							if pdfir.photos && pdfir.photos.length > 0
 								- let i = -1;
 								each selphoto in pdfir.photos
 									- i++;
 									if selphoto && selphoto.length > 4
 										-a;
-										.col-6.mt-2
-											img.photoSel(id="photoSel-hlt-"+i+"-hlt-"+selphoto, src=selphoto, width="120px")
-											a(href=selphoto, target="_blank") <span class="oi oi-magnifying-glass"></span>
+										.col-6.mt-2.text-center
+											img.thumbnailImg(id="thumbnailImg-hlt-i-hlt-"+selphoto src=selphoto, width="120px")
+											.photoSel.text-info(id="photoSel-hlt-i-hlt-"+selphoto) <span class="oi oi-check"></span>
 			- let pdsec = new Object();
 			if qunpd.pdsec
 				- pdsec = qunpd.pdsec;
@@ -108,18 +107,17 @@ block content
 				.col-md-2.mt-3.text-right 线稿图:
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
-					- let sketch = "/imgs/createPicture.jpg";
+					- let sketch = "";
 					if qunpd.sketch
 						- sketch = qunpd.sketch;
-						a(href=sketch, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-sketch(src=sketch, width="120px")
+					img.thumbnailImg#img-sketch(src=sketch, width="120px")
+					.changeImg#imgEdit-sketch.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
 				.col-md-3.mt-4#secImg(align="center")
 					if pdsec.photo && pdsec.photo.length > 0
 						-a;
-						.firImg.text-right
-							a(href=pdsec.photo, target="_blank") <span class="oi oi-magnifying-glass"></span>
-							img(src=pdsec.photo, width="120px")
+						.secImg.text-right
+							img.thumbnailImg(src=pdsec.photo, width="120px")
 
 			- let pdthd = new Object();
 			if qunpd.pdthd
@@ -141,32 +139,32 @@ block content
 				if qunpd.images
 					- images = qunpd.images;
 				.col-md-2.mt-3(align="center")
-					- let images0 = "/imgs/createPicture.jpg";
+					- let images0 = "";
 					if images.length > 0 && images[0]
 						- images0 = images[0];
-						a(href=images0, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-images0(src=images0, width="120px")
+					img.thumbnailImg#img-images0(src=images0, width="120px")
+					.changeImg#imgEdit-images0.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
 				.col-md-2.mt-3(align="center")
-					- let images1 = "/imgs/createPicture.jpg";
+					- let images1 = "";
 					if images.length > 1 && images[1]
 						- images1 = images[1];
-						a(href=images1, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-images1(src=images1, width="120px")
+					img.thumbnailImg#img-images1(src=images1, width="120px")
+					.changeImg#imgEdit-images1.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
 				.col-md-2.mt-3(align="center")
-					- let images2 = "/imgs/createPicture.jpg";
+					- let images2 = "";
 					if images.length > 2 && images[2]
 						- images2 = images[2];
-						a(href=images2, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-images2(src=images2, width="120px")
+					img.thumbnailImg#img-images2(src=images2, width="120px")
+					.changeImg#imgEdit-images2.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
 				.col-md-2.mt-3(align="center")
-					- let images3 = "/imgs/createPicture.jpg";
+					- let images3 = "";
 					if images.length > 3 && images[3]
 						- images3 = images[3];
-						a(href=images3, target="_blank") <span class="oi oi-magnifying-glass"></span>
-					img.picImg#img-images3(src=images3, width="120px")
+					img.thumbnailImg#img-images3(src=images3, width="120px")
+					.changeImg#imgEdit-images3.text-info <span class="oi oi-pencil"></span>
 					input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
 
 			.row.my-3

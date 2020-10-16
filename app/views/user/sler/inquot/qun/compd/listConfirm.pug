@@ -68,12 +68,12 @@ table.mt-3.table.table-bordered
 						- let photo = "/imgs/createPicture.jpg";
 						if qunpd.photo
 							- photo = qunpd.photo;
-							img(src=photo, width="120px")
+							img.thumbnailImg(src=photo, width="120px")
 							.picLink
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.firphoto
 							- photo = qunpd.firphoto;
-							img(src=photo, width="120px")
+							img.thumbnailImg(src=photo, width="120px")
 							.picLink.text-right
 								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
@@ -99,17 +99,17 @@ table.mt-3.table.table-bordered
 						- let sketch = "/imgs/createPicture.jpg";
 						if qunpd.sketch
 							- sketch = qunpd.sketch;
-							img#sketchCrt(src=sketch, width="120px")
+							img.thumbnailImg(src=sketch, width="120px")
 							.picLink
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.pdsec
 							-a;
 							- sketch = qunpd.pdsec.photo;
-							img#sketchCrt(src=sketch, width="120px")
+							img.thumbnailImg(src=sketch, width="120px")
 							.picLink
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
-							img#sketchCrt(src=sketch, width="120px")
+							img(src=sketch, width="120px")
 				td
 					- let pdthdcode = '查找数据库';
 					if qunpd.pdthd
@@ -124,7 +124,7 @@ table.mt-3.table.table-bordered
 							if image && image.length > 5
 								-a;
 								.col-6
-									img.mt-2(src=image, width="120px")
+									img.thumbnailImg.mt-2(src=image, width="120px")
 									.picLink
 										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td.qntPrTd.bg-dark(style="display:")

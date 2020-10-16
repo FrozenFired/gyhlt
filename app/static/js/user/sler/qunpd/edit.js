@@ -53,7 +53,7 @@ $(() => {
 		}
 	})
 
-	$(".picImg").click(function(e) {
+	$(".changeImg").click(function(e) {
 		let id = $(this).attr("id").split('-')[1];
 		$("#ipt-"+id).click();
 	})

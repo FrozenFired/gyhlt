@@ -59,14 +59,10 @@ table.mt-3.table.table-bordered
 						- let photo = "/imgs/createPicture.jpg";
 						if qutpd.photo
 							- photo = qutpd.photo;
-							img(src=photo, width="120px")
-							.picLink
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+							img.thumbnailImg(src=photo, width="120px")
 						else if qutpd.firphoto
 							- photo = qutpd.firphoto;
-							img(src=photo, width="120px")
-							.picLink
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+							img.thumbnailImg(src=photo, width="120px")
 						else
 							img(src=photo, width="120px")
 				td
@@ -90,17 +86,13 @@ table.mt-3.table.table-bordered
 						- let sketch = "/imgs/createPicture.jpg";
 						if qutpd.sketch
 							- sketch = qutpd.sketch;
-							img#sketchCrt(src=sketch, width="120px")
-							.picLink
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+							img.thumbnailImg(src=sketch, width="120px")
 						else if qutpd.pdsec
 							-a;
 							- sketch = qutpd.pdsec.photo;
-							img#sketchCrt(src=sketch, width="120px")
-							.picLink
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+							img.thumbnailImg(src=sketch, width="120px")
 						else
-							img#sketchCrt(src=sketch, width="120px")
+							img(src=sketch, width="120px")
 				td
 					- let pdthdcode = '查找数据库';
 					if qutpd.pdthd
@@ -116,9 +108,7 @@ table.mt-3.table.table-bordered
 							if image && image.length > 5
 								-a;
 								.col-6
-									img.mt-2(src=image, width="120px")
-									.picLink
-										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+									img.thumbnailImg.mt-2(src=image, width="120px")
 				td
 					span #{qutpd.note}
 

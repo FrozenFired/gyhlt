@@ -63,13 +63,13 @@ block content
 			.sketch.mt-3
 				if compd.sketch
 					- sketch = compd.sketch;
-					img#sketchCrt(src=sketch, width="240px")
+					img(src=sketch, width="240px")
 					.picLink
 						a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 				else if compd.pdsec
 					-a;
 					- sketch = compd.pdsec.photo;
-					img#sketchCrt(src=sketch, width="240px")
+					img(src=sketch, width="240px")
 					.picLink
 						a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 

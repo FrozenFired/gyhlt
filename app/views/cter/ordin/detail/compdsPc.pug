@@ -68,13 +68,13 @@ table.mt-3.table.table-bordered
 					.sketch.mt-3
 						if dinpd.sketch
 							- sketch = dinpd.sketch;
-							img#sketchCrt(src=sketch, width="120px")
+							img(src=sketch, width="120px")
 							.picLink
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if dinpd.pdsec
 							-a;
 							- sketch = dinpd.pdsec.photo;
-							img#sketchCrt(src=sketch, width="120px")
+							img(src=sketch, width="120px")
 							.picLink
 								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 				td

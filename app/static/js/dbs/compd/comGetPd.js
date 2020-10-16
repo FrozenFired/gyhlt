@@ -40,10 +40,24 @@ $(function() {
 		brandNomeIptFunc(keyword)
 	})
 	$("#brandNomeIpt").blur(function(e) {
-		let brandIpt = $("#brandIpt").val();
-		if(brandIpt && brandIpt.length > 20) {
-			$(".brandsElem").remove();
-		}
+		let brandNomePre = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		setTimeout(function(){
+			let brandNome = $("#brandNomeIpt").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			if(brandNome == brandNomePre) {
+				let brand = null;
+				for(let i=0; i<brands.length; i++) {
+					if(String(brands[i].nome) == brandNome) {
+						brand = brands[i];
+						break;
+					}
+				}
+				if(brand) {
+					brandElemFunc(brand)
+				}
+			} else {
+				$(".brandweb").remove();
+			}
+		}, 300);
 	})
 	$("#objectForm").on('input', '#brandNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -115,7 +129,11 @@ $(function() {
 				break;
 			}
 		}
-		$("#brandIpt").val(brandId)
+		brandElemFunc(brand)
+	})
+	var brandElemFunc = function(brand) {
+		$(".brandCard").hide();
+		$("#brandIpt").val(brand._id)
 		$("#brandNomeIpt").val(brand.nome)
 		if(brand.website) {
 			let website = brand.website;
@@ -125,9 +143,10 @@ $(function() {
 			let elem = '<div class="brandweb">'
 				elem += '<a href="'+website+'" target="_blank">'+brand.nome+'官网</a>'
 			elem += '</div>';
+			$(".brandweb").remove();
 			$("#brandweb").append(elem)
 		}
-	})
+	}
 
 	/* ======================== 系列选择 ======================== */
 	$("#firNomeIpt").focus(function(e) {
@@ -135,10 +154,24 @@ $(function() {
 		firNomeIptFunc(keyword)
 	})
 	$("#firNomeIpt").blur(function(e) {
-		let pdfirIpt = $("#pdfirIpt").val();
-		if(pdfirIpt && pdfirIpt.length > 20) {
-			$(".pdfirsElem").remove();
-		}
+		let firCodePre = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		setTimeout(function(){
+			let firCode = $("#firNomeIpt").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			if(firCode == firCodePre) {
+				let pdfir = null;
+				for(let i=0; i<pdfirs.length; i++) {
+					if(String(pdfirs[i].code) == firCode) {
+						pdfir = pdfirs[i];
+						break;
+					}
+				}
+				if(pdfir) {
+					pdfirElemFunc(pdfir)
+				}
+			} else {
+				$(".firImgs").remove();
+			}
+		}, 300)
 	})
 	$("#objectForm").on('input', '#firNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -204,45 +237,48 @@ $(function() {
 				break;
 			}
 		}
-		$("#pdfirIpt").val(pdfirId)
+		pdfirElemFunc(pdfir)
+	})
+	var pdfirElemFunc = function(pdfir) {
+		$(".pdfirCard").hide();
+		$("#pdfirIpt").val(pdfir._id)
 		$("#firNomeIpt").val(pdfir.code)
 		let elem = '<div class="firImg text-right">'
 			let firphoto = pdfir.photo;
-			elem += '<img src="'+firphoto+'", width="120px">'
-			elem += '<a href="'+firphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+			elem += '<img class="thumbnailImg"  src="'+firphoto+'", width="120px">'
 		elem += '</div>'
+		$(".firImg").remove()
 		$("#firImg").append(elem)
 		$("#firphotoIpt").val(firphoto)
 
 		elem = '<div class="firImgs row text-right">'
 			let selphoto = pdfir.photo;
 			if(selphoto && selphoto.length > 4) {
-				elem += '<div class="col-6 mt-2">'
-					elem += '<img class="photoSel" id="photoSel-hlt-i-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
-					elem += '<a href="'+selphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+				elem += '<div class="col-6 text-center mt-2">'
+					elem += '<img class="thumbnailImg" id="thumbnailImg-hlt-i-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
+					elem += '<div class="photoSel text-info" id="photoSel-hlt-i-hlt-'+selphoto+'"><span class="oi oi-check"></span></div>'
 				elem += '</div>'
 			}
-			// console.log(selphoto)
 			for(let i=0; i<pdfir.photos.length; i++) {
 				selphoto = pdfir.photos[i];
 				if(selphoto && selphoto.length > 4) {
-					elem += '<div class="col-6 mt-2">'
-						elem += '<img class="photoSel" id="photoSel-hlt-'+i+'-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
-						elem += '<a href="'+selphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+					elem += '<div class="col-6 text-center mt-2">'
+						elem += '<img class="thumbnailImg" id="thumbnailImg-hlt-i-hlt-'+selphoto+'" src="'+selphoto+'", width="120px">'
+						elem += '<div class="photoSel text-info" id="photoSel-hlt-'+i+'-hlt-'+selphoto+'"><span class="oi oi-check"></span></div>'
 					elem += '</div>'
 				}
 			}
 		elem += '</div>'
 		$("#firImgs").show();
+		$(".firImgs").remove();
 		$("#firImgs").append(elem)
-	})
+	}
 	/* ======================== 系列的图片选择 ======================== */
 	$("#firImgs").on('click', '.photoSel', function(e) {
 		let firphoto = $(this).attr('id').split('-hlt-')[2];
 		$(".firImg").remove();
 		let elem = '<div class="firImg text-right">'
-			elem += '<img src="'+firphoto+'", width="120px">'
-			elem += '<a href="'+firphoto+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+			elem += '<img class="thumbnailImg" src="'+firphoto+'", width="120px">'
 		elem += '</div>'
 		$("#firImg").append(elem)
 		$("#firphotoIpt").val(firphoto)
@@ -262,10 +298,22 @@ $(function() {
 		secNomeIptFunc(keyword)
 	})
 	$("#secNomeIpt").blur(function(e) {
-		let pdsecIpt = $("#pdsecIpt").val();
-		if(pdsecIpt && pdsecIpt.length > 20) {
-			$(".pdsecsElem").remove();
-		}
+		let secCodePre = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		setTimeout(function(){
+			let secCode = $("#secNomeIpt").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			if(secCode == secCodePre) {
+				let pdsec = null;
+				for(let i=0; i<pdsecs.length; i++) {
+					if(String(pdsecs[i].code) == secCodePre) {
+						pdsec = pdsecs[i];
+						break;
+					}
+				}
+				if(pdsec) {
+					pdsecElemFunc(pdsec)
+				}
+			}
+		}, 300);
 	})
 	$("#objectForm").on('input', '#secNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -329,15 +377,19 @@ $(function() {
 				break;
 			}
 		}
-		$("#pdsecIpt").val(pdsecId)
+		pdsecElemFunc(pdsec)
+	})
+	var pdsecElemFunc = function(pdsec) {
+		$(".pdsecCard").hide()
+		$("#pdsecIpt").val(pdsec._id)
 		$("#specfIpt").val(pdsec.spec)
 		$("#secNomeIpt").val(pdsec.code)
 		let elem = '<div class="secImg text-right">'
-			elem += '<img src="'+pdsec.photo+'", width="120px">'
-			elem += '<a href="'+pdsec.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
+			elem += '<img class="thumbnailImg" src="'+pdsec.photo+'", width="120px">'
 		elem += '</div>'
+		$(".secImg").remove();
 		$("#secImg").append(elem)
-	})
+	}
 
 	/* ======================== 具体商品选择 ======================== */
 	$("#thdNomeIpt").focus(function(e) {
@@ -345,10 +397,22 @@ $(function() {
 		thdNomeIptFunc(keyword)
 	})
 	$("#thdNomeIpt").blur(function(e) {
-		let pdthdIpt = $("#pdthdIpt").val();
-		if(pdthdIpt && pdthdIpt.length > 20) {
-			$(".pdthdsElem").remove();
-		}
+		let thdCodePre = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		setTimeout(function(){
+			let thdCode = $("#thdNomeIpt").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			if(thdCode == thdCodePre) {
+				let pdthd = null;
+				for(let i=0; i<pdthds.length; i++) {
+					if(String(pdthds[i].code) == thdCode) {
+						pdthd = pdthds[i];
+						break;
+					}
+				}
+				if(pdthd) {
+					pdthdElemFunc(pdthd)
+				}
+			}
+		}, 300);
 	})
 	$("#objectForm").on('input', '#thdNomeIpt', function(e) {
 		let keyword = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
@@ -409,7 +473,11 @@ $(function() {
 				break;
 			}
 		}
-		$("#pdthdIpt").val(pdthdId)
+		pdthdElemFunc(pdthd)
+	})
+	var pdthdElemFunc = function(pdthd) {
+		$(".pdthdCard").hide();
+		$("#pdthdIpt").val(pdthd._id)
 		$("#thdNomeIpt").val(pdthd.code)
 		let mater = '';
 		for(let i=0; i<pdthd.maters.length; i++) {
@@ -425,8 +493,7 @@ $(function() {
 			}
 		}
 		$("#craftIpt").val(craft)
-	})
-
+	}
 })
 
 var brandsRender = (brandsOption, elemId) => {
