@@ -48,7 +48,19 @@ $(function() {
 	})
 	$("#headerSearch").click(function(e) {
 	})
-
+	// 如果input中的值为0 则隐藏
+	$("input").focus(function(e) {
+		let thisVal = $(this).val();
+		console.log(thisVal)
+		if(!thisVal || thisVal == 0) {
+			$(this).val('')
+		}
+	})
+	// ajaxForm 不提交 交给js中的ajax处理
+	$(".ajaxForm").submit(function(e) {
+		e.preventDefault();
+	})
+	// 图片放大
 	$("body").on('click', '.thumbnailImg', function(){
 		var _this = $(this);//将当前的thumbnailImg元素作为_this传入函数
 		imgShow("#outerdiv", "#innerdiv", "#zoomImg", _this);

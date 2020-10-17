@@ -22,7 +22,7 @@
 				span 船期: 
 				span.text-warning.objUpClick#span-trpDay #{trpDay}
 				input#org-trpDay.form-control(type="hidden", value=tran.trpDay)
-				form#form-trpDay(method="post", action="/mgTranUpdAjax", style="display:none")
+				form.ajaxForm#form-trpDay(method="post", action="/mgTranUpdAjax", style="display:none")
 					input(type="hidden", name="obj[_id]", value=tran._id)
 					.form-group.row
 						.col-4
@@ -43,7 +43,7 @@
 					- nome = tran.nome;
 				span.text-warning.objUpClick#span-nome #{nome}
 				input#org-nome.form-control(type="hidden", value=tran.nome)
-				form#form-nome(method="post", action="/mgTranUpdAjax", style="display:none")
+				form.ajaxForm#form-nome(method="post", action="/mgTranUpdAjax", style="display:none")
 					input(type="hidden", name="obj[_id]", value=tran._id)
 					.form-group.row
 						.col-2

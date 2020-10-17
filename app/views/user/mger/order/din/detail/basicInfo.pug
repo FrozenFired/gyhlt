@@ -19,7 +19,7 @@
 				span.text-warning.objUpClick#span-dinDay #{dinDay}
 				span.ml-1 天
 				input#org-dinDay.form-control(type="hidden", value=din.dinDay)
-				form#form-dinDay(method="post", action="/mgDinUpdAjax", style="display:none")
+				form.ajaxForm#form-dinDay(method="post", action="/mgDinUpdAjax", style="display:none")
 					input(type="hidden", name="obj[_id]", value=din._id)
 					.form-group.row
 						.col-4

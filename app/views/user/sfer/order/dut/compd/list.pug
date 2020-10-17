@@ -124,7 +124,7 @@ table.mt-3.table.table-bordered
 							-a;
 							input(id="org-quant-"+dutpd._id, type="hidden", value=dutpd.quant)
 							input(id="org-dutPr-"+dutpd._id, type="hidden", value=dutpd.dutPr)
-							form(id="form-dutPr-"+dutpd._id, action="/sfQutpdUpdAjax", style="display:none")
+							form.ajaxForm(id="form-dutPr-"+dutpd._id, action="/sfQutpdUpdAjax", style="display:none")
 								input(type="hidden", name="obj[_id]", value=dutpd._id)
 								.form-group.row
 									.col-12

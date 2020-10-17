@@ -178,7 +178,7 @@ table.mt-3.table.table-bordered
 							if qut.status == Conf.status.quoting.num
 								-a;
 								input(id="org-estimate-"+qutpd._id, type="hidden", value=qutpd.estimate)
-								form(id="form-estimate-"+qutpd._id, action="/sfQutpdUpdAjax", style="display:none")
+								form.ajaxForm(id="form-estimate-"+qutpd._id, action="/sfQutpdUpdAjax", style="display:none")
 									input(type="hidden", name="obj[_id]", value=qutpd._id)
 									.form-group.row
 										.col-12

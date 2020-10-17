@@ -156,7 +156,7 @@ table.mt-3.table.table-bordered
 							input(id="org-quant-"+qunpd._id, type="hidden", value=qunpd.quant)
 							if qun.status == Conf.status.confirm.num
 								-a;
-								form(id="form-quant-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
+								form.ajaxForm(id="form-quant-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
 									input(type="hidden", name="obj[_id]", value=qunpd._id)
 									.form-group.row
 										.col-12
@@ -174,7 +174,7 @@ table.mt-3.table.table-bordered
 							input(id="org-dinPr-"+qunpd._id, type="hidden", value=qunpd.dinPr)
 							if qun.status == Conf.status.confirm.num
 								-a;
-								form(id="form-dinPr-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
+								form.ajaxForm(id="form-dinPr-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
 									input(type="hidden", name="obj[_id]", value=qunpd._id)
 									.form-group.row
 										.col-12

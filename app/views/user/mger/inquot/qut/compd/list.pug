@@ -165,7 +165,7 @@ table.mt-3.table.table-bordered
 							if qut.status == Conf.status.pricing.num
 								-a;
 								input(id="org-dutPr-"+qutpd._id, type="hidden", value=qutpd.dutPr)
-								form(id="form-dutPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+								form.ajaxForm(id="form-dutPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
 									input(type="hidden", name="obj[_id]", value=qutpd._id)
 									.form-group.row
 										.col-12
@@ -183,7 +183,7 @@ table.mt-3.table.table-bordered
 							if qut.status == Conf.status.pricing.num
 								-a;
 								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
-								form(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+								form.ajaxForm(id="form-qntPr-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
 									input(type="hidden", name="obj[_id]", value=qutpd._id)
 									.form-group.row
 										.col-12

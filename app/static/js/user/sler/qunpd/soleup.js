@@ -44,9 +44,6 @@ $(function() {
 						let orgQntPr = parseFloat($("#org-qntPr-"+id).val());
 						let orgQntImp = parseFloat($("#ipt-qntPrImp").val());
 						let newQntImp = orgQntImp + (newVal-orgVal)*orgQntPr;
-						console.log(orgQntPr)
-						console.log(orgQntImp)
-						console.log(newQntImp)
 						$("#ipt-qntPrImp").val(newQntImp)
 						$("#span-qntPrImp").text(newQntImp)
 

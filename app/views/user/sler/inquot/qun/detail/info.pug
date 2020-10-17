@@ -17,7 +17,7 @@
 			.cterNome
 				span 客户姓名: 
 				span.text-warning.inquotUpClick#cterNome-span #{qun.cterNome}
-				form#cterNome-form(action="/slQunUpdAjax", style="display:none")
+				form.ajaxForm#cterNome-form(action="/slQunUpdAjax", style="display:none")
 					input#cterNome-org(type="hidden", value=qun.cterNome)
 					input(type="hidden", name="obj[_id]", value=qun._id)
 					.form-group.row

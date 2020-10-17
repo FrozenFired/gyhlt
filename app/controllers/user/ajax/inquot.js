@@ -69,7 +69,7 @@ exports.usQunsAjax = (req, res) => {
 			.populate('quner')
 			.populate('quter')
 			.skip(skip).limit(pagesize)
-			.sort({'status': 1, 'weight': -1, 'updAt': -1})
+			.sort({'status': 1, 'weight': -1, 'qntcrtAt': -1})
 			.exec((err, inquots) => {
 				if(err) {
 					info = "cter InquotsAjax, Inquot.find(), Error!";
@@ -183,7 +183,7 @@ exports.usQutsAjax = (req, res) => {
 			.populate('quner')
 			.populate('quter')
 			.skip(skip).limit(pagesize)
-			.sort({'status': 1, 'weight': -1, 'updAt': -1})
+			.sort({'status': 1, 'weight': -1, 'qntcrtAt': -1})
 			.exec((err, inquots) => {
 				if(err) {
 					info = "cter InquotsAjax, Inquot.find(), Error!";
