@@ -51,28 +51,20 @@ var pdsecRender = (pdsec, role) => {
 
 	let elem = '';
 	elem += '<div class="col-6 col-md-3 col-lg-2 mt-2 text-center border-bottom border-left pdsecCard">'
-		elem += '<a href="/'+role+'Pdsec/'+pdsec._id+'">'
-			elem += '<img src="'+pdsec.photo+'" '
-				elem += 'width="100%" height="120px" '
-				elem += 'style="object-fit: scale-down;"'
-			elem += '/>'
-		elem += '</a>'
-		elem += '<div class="text-info text-info">'
+		elem += '<img class="thumbnailImg" src="'+pdsec.photo+'" '
+			elem += 'width="100%" height="120px" '
+			elem += 'style="object-fit: scale-down;"'
+		elem += '/>'
+
+		elem += '<div>'
 			if(pdsec.spec) {
 				elem += pdsec.spec
 			}
 		elem += '&nbsp;</div>'
-		elem += '<div class="row">'
-			elem += '<div class="col-2 text-right">'
-			elem += '</div>'
-			elem += '<div class="col-12">'
-				elem += '<div class="text-info text-muted '+codeBg+'">'+pdsec.code+'</div>'
-			elem += '</div>'
-			// elem += '<div class="col-2 text-right">'
-			// 	elem += '<a href="'+pdsec.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
-			// elem += '</div>'
 
-		elem += '</div>'
+		elem += '<a href="/'+role+'Pdsec/'+pdsec._id+'">'
+			elem += '<div class="'+codeBg+'">'+pdsec.code+'</div>'
+		elem += '</a>'
 	elem += '</div>'
 	return elem;
 }

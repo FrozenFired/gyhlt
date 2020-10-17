@@ -51,24 +51,13 @@ var pdfirRender = (pdfir, role) => {
 
 	let elem = '';
 	elem += '<div class="col-6 col-lg-4 mt-2 text-center border-bottom border-left pdfirCard">'
-
+		elem += '<img class="thumbnailImg" src="'+pdfir.photo+'" '
+			elem += 'width="100%" height="120px" '
+			elem += 'style="object-fit: scale-down;"'
+		elem += '/>'
 		elem += '<a href="/'+role+'Pdfir/'+pdfir._id+'">'
-			elem += '<img src="'+pdfir.photo+'" '
-				elem += 'width="100%" height="120px" '
-				elem += 'style="object-fit: scale-down;"'
-			elem += '/>'
+			elem += '<h5 class="'+codeBg+'">'+pdfir.code+'</h5>'
 		elem += '</a>'
-		elem += '<div class="row">'
-			elem += '<div class="col-2 text-right">'
-			elem += '</div>'
-			elem += '<div class="col-12">'
-				elem += '<div class="text-info text-muted '+codeBg+'">'+pdfir.code+'</div>'
-			elem += '</div>'
-			// elem += '<div class="col-2 text-right">'
-			// 	elem += '<a href="'+pdfir.photo+'" target="_blank"><span class="oi oi-magnifying-glass"></span></a>'
-			// elem += '</div>'
-
-		elem += '</div>'
 	elem += '</div>'
 	return elem;
 }

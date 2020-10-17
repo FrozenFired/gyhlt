@@ -58,7 +58,6 @@ $(function() {
 let imgShow = function(outerdiv, innerdiv, zoomImg, _this){
 	var src = _this.attr("src");//获取当前点击的thumbnailImg元素中的src属性
 	$(zoomImg).attr("src", src);//设置#zoomImg元素的src属性
-
 	/*获取当前点击图片的真实大小，并显示弹出层及大图*/
 	$("<img/>").attr("src", src).on('load', function(){
 		var windowW = $(window).width();//获取当前窗口宽度
@@ -76,6 +75,16 @@ let imgShow = function(outerdiv, innerdiv, zoomImg, _this){
 		} else if(realWidth>windowW*scale) { //如图片高度合适，判断图片宽度
 			imgWidth = windowW*scale;//如大于窗口宽度，图片宽度进行缩放
 			imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+		} else if(realWidth<windowW*scale/2) { //如图片高度合适，判断图片宽度
+			imgWidth = realWidth*2;//如大于窗口宽度，图片宽度进行缩放
+			if(imgWidth<windowW*scale/2) {
+				imgWidth *= 2;
+			}
+			imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+			if(imgHeight>windowH*scale) { //如高度大于窗口高度
+				imgWidth /= 2;
+				imgHeight = imgWidth/realWidth*realHeight;//等比例缩放高度
+			}
 		} else { //如果图片真实高度和宽度都符合要求，高宽不变
 			imgWidth = realWidth;
 			imgHeight = realHeight;
