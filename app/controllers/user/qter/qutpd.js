@@ -150,7 +150,7 @@ exports.qtQutpdUpd = (req, res) => {
 					info = "添加询价单时 qter QutpdUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/qtQut/'+objSave.inquot._id)
+					res.redirect('/qtQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
 				}
 			})
 		}

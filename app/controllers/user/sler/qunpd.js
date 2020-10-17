@@ -153,7 +153,7 @@ exports.slQunpdUpd = (req, res) => {
 					info = "添加询价单时 sler QunpdUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/slQun/'+objSave.inquot._id)
+					res.redirect('/slQun/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
 				}
 			})
 		}
@@ -351,7 +351,7 @@ exports.slQunpdNew = (req, res) => {
 							info = "添加询价单商品时 数据库保存错误 _compd.save, 请截图后, 联系管理员!";
 							Err.usError(req, res, info);
 						} else {
-							res.redirect('/slQun/'+obj.inquot)
+							res.redirect('/slQun/'+obj.inquot+'/#tr-compdid-'+objSave._id)
 						}
 					})
 				}

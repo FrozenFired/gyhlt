@@ -84,28 +84,26 @@ exports.qtQut = (req, res) => {
 let qterQutRender = (req, res, qut, qutpds) => {
 	let crUser = req.session.crUser;
 
-	User.find({
-		firm: crUser.firm,
-		$or:[
-			{'role': {"$in": Conf.roleAdmin}},
-			{'role': {"$eq": Conf.roleUser.quotation.num}},
-		]
-	})
-	.sort({'role': -1})
-	.exec((err, quters) => {
-		if(err) {
-			console.log(err);
-			info = 'mger QutAdd, User.find, Error!';
-			Err.usError(req, res, info);
-		} else {
-			res.render('./user/qter/inquot/qut/detail', {
-				title: '报价单详情',
-				crUser,
-				qut,
-				qutpds,
-				quters
-			})
+	let brands = new Array();
+	for(let i=0; i<qutpds.length; i++) {
+		let qutpd = qutpds[i];
+		let k=0;
+		for(; k<brands.length; k++) {
+			if(brands[k].brandNome == qutpd.brandNome) break;
 		}
+		if(k == brands.length) {
+			let brand = new Object();
+			brand.num = k+1;
+			brand.brandNome = qutpd.brandNome;
+			brands.push(brand)
+		}
+	}
+	res.render('./user/qter/inquot/qut/detail', {
+		title: '报价单详情',
+		crUser,
+		qut,
+		qutpds,
+		brands
 	})
 }
 exports.qtQutDel = (req, res) => {

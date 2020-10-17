@@ -1,4 +1,4 @@
-- let quantTotal = len = 0;
+- let quantTotal = 0;
 - let qntPrImp = dinPrImp = 0;
 .row
 	.col-sm-3
@@ -31,11 +31,18 @@ table.mt-3.table.table-bordered
 					span#span-dinPrImp
 					span &nbsp;€
 		each qunpd in qunpds
-			- len++;
-			tr.text-info(id="tr-compdid-"+qunpd._id)
+			- let brandnum = '';
+			each brand in brands
+				if brand.brandNome == qunpd.brandNome
+					- brandnum = brand.num;
+			tr.text-info.pdTr(pdbrand=brandnum, pdSts=qunpd.qntpdSts, id="tr-compdid-"+qunpd._id)
 				td
-					.number
-						span.text-dark.border.p-1 N. #{len}
+					span.border.p-1
+						span.text-dark N. 
+						- let qntnum = '-'
+						if qunpd.qntnum
+							- qntnum = qunpd.qntnum;
+						span.text-warning.qntnumClickup(id="span-qntnum-"+qunpd._id) #{qntnum}
 					.brandnome.mt-4
 						if qunpd.brand
 							- brand = qunpd.brand;

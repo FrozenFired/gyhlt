@@ -59,53 +59,38 @@ exports.sfQut = (req, res) => {
 		} else {
 			// console.log(qut)
 			let qutpds = qut.compds;
-			User.find({
+			Strmup.find({
 				firm: crUser.firm,
-				$or:[
-					{'role': {"$in": Conf.roleAdmin}},
-					{'role': {"$eq": Conf.roleUser.quotation.num}},
-				]
 			})
 			.sort({'role': -1})
-			.exec((err, quters) => {
+			.exec((err, strmups) => {
 				if(err) {
 					console.log(err);
-					info = 'sfer QutAdd, User.find, Error!';
+					info = 'sfer QutAdd, Strmup.find, Error!';
 					Err.usError(req, res, info);
 				} else {
-					Strmup.find({
-						firm: crUser.firm,
-					})
-					.sort({'role': -1})
-					.exec((err, strmups) => {
-						if(err) {
-							console.log(err);
-							info = 'sfer QutAdd, Strmup.find, Error!';
-							Err.usError(req, res, info);
-						} else {
-							User.find({
-								firm: crUser.firm,
-								role: Conf.roleUser.customer.num
-							})
-							.exec((err, cters) => {
-								if(err) {
-									console.log(err);
-									info = 'sfer QutAdd, Strmup.find, Error!';
-									Err.usError(req, res, info);
-								} else {
-									res.render('./user/sfer/inquot/qut/detail', {
-										title: '报价单详情',
-										crUser,
-
-										qut,
-										qutpds,
-										quters,
-										strmups,
-										cters
-									})
-								}
-							})
+					let brands = new Array();
+					for(let i=0; i<qutpds.length; i++) {
+						let qutpd = qutpds[i];
+						let k=0;
+						for(; k<brands.length; k++) {
+							if(brands[k].brandNome == qutpd.brandNome) break;
 						}
+						if(k == brands.length) {
+							let brand = new Object();
+							brand.num = k+1;
+							brand.brandNome = qutpd.brandNome;
+							brands.push(brand)
+						}
+					}
+					res.render('./user/sfer/inquot/qut/detail', {
+						title: '报价单详情',
+						crUser,
+
+						qut,
+						qutpds,
+						strmups,
+						brands
 					})
 				}
 			})

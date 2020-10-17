@@ -9,6 +9,9 @@ block content
 				li.breadcrumb-item.active(aria-current="page") 报价单
 		.info.my-3
 			include ./detail/info
+		.filter
+			include ./detail/filter
+
 		.compds
 			if qut.status == Conf.status.quoting.num
 				-a;

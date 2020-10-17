@@ -65,6 +65,7 @@ exports.slQun = (req, res) => {
 					brands.push(brand)
 				}
 			}
+
 			res.render('./user/sler/inquot/qun/detail', {
 				title: '询价单详情',
 				crUser,

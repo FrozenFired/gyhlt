@@ -158,7 +158,7 @@ exports.sfQutpdUpd = (req, res) => {
 					info = "添加询价单时 sfer QutpdUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/sfQut/'+objSave.inquot._id)
+					res.redirect('/sfQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
 				}
 			})
 		}

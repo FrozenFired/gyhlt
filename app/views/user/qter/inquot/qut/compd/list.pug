@@ -16,13 +16,20 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th(style="width:18%") 数量 | 价格(欧元)
 	thead
-		- let quantTotal = len = 0;
+		- let quantTotal = 0;
 		each qutpd in qutpds
-			- len++;
-			tr.text-info
+			- let brandnum = '';
+			each brand in brands
+				if brand.brandNome == qutpd.brandNome
+					- brandnum = brand.num;
+			tr.text-info.pdTr(pdbrand=brandnum, pdSts=qutpd.qntpdSts, id="tr-compdid-"+qutpd._id)
 				td
-					.number
-						span.text-dark.border.p-2 N. #{len}
+					span.border.p-1
+						span.text-dark N. 
+						- let qntnum = '-'
+						if qutpd.qntnum
+							- qntnum = qutpd.qntnum;
+						span(id="span-qntnum-"+qutpd._id) #{qntnum}
 					.brandnome.mt-3
 						if qutpd.brand
 							- brand = qutpd.brand;

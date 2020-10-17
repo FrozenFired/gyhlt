@@ -17,41 +17,12 @@
 				span 客户: #{qut.cterNome}
 		.col-md-6
 			.quter
-				div 报价人:
-				if qut.status == Conf.status.quoting.num
-					-a;
-					if qut.quter
-						- quter = qut.quter;
-						button.btn.btn-default.text-info.inquotUpClick#quter-span #{quter.nome} [ #{quter.code} ]
-					else
-						button.btn.btn-default.text-info.inquotUpClick#quter-span 未分配
-					form#quter-form(method="post", action="/sfQutUpd", enctype="multipart/form-data", style="display:none")
-						input(type="hidden", name="obj[_id]", value=qut._id)
-						.form-group.row.px-5.text-center
-							.col-12
-								select.inquotUpSel#quter-ipt.form-control(name="obj[quter]", data-style="btn-info")
-									option(value='null') 请选择报价员
-									each quter in quters
-										-a;
-										if !qut.quter
-											-a;
-											option(value=quter._id) #{quter.nome}[#{quter.code}]
-										else if String(quter._id) == String(qut.quter._id)
-											-a;
-											option(value=quter._id, selected="selected") #{quter.nome}[#{quter.code}]
-										else
-											option(value=quter._id) #{quter.nome}[#{quter.code}]
-						.form-group.row
-							.col-6
-								button.inquotCancelClick#quter-cancel.btn.btn-secondary(type="button") 取消
-							.col-6
-								input.btn.btn-success(type="submit" value="提交")
+				span 报价人: 
+				if qut.quter
+					- quter = qut.quter;
+					span #{quter.nome} [ #{quter.code} ]
 				else
-					if qut.quter
-						- quter = qut.quter;
-						div #{quter.nome} [ #{quter.code} ]
-					else
-						div.text-warning 未分配
+					span.text-warning 未分配
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status

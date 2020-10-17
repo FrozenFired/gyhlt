@@ -93,6 +93,20 @@ exports.mgQut = (req, res) => {
 									info = 'mger QutAdd, Strmup.find, Error!';
 									Err.usError(req, res, info);
 								} else {
+									let brands = new Array();
+									for(let i=0; i<qutpds.length; i++) {
+										let qutpd = qutpds[i];
+										let k=0;
+										for(; k<brands.length; k++) {
+											if(brands[k].brandNome == qutpd.brandNome) break;
+										}
+										if(k == brands.length) {
+											let brand = new Object();
+											brand.num = k+1;
+											brand.brandNome = qutpd.brandNome;
+											brands.push(brand)
+										}
+									}
 									res.render('./user/mger/inquot/qut/detail', {
 										title: '报价单详情',
 										crUser,
@@ -101,7 +115,8 @@ exports.mgQut = (req, res) => {
 										qutpds,
 										quters,
 										strmups,
-										cters
+										cters,
+										brands
 									})
 								}
 							})
