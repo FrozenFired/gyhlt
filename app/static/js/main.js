@@ -51,7 +51,6 @@ $(function() {
 	// 如果input中的值为0 则隐藏
 	$("input").focus(function(e) {
 		let thisVal = $(this).val();
-		console.log(thisVal)
 		if(!thisVal || thisVal == 0) {
 			$(this).val('')
 		}

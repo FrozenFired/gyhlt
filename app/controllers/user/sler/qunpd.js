@@ -166,7 +166,12 @@ exports.slQunpdUpdAjax = (req, res) => {
 	let obj = req.body.obj;
 
 	info = null;
-	if(obj.quant) {
+	if(obj.qntnum) {
+		obj.qntnum = parseInt(obj.qntnum);
+		if(isNaN(obj.qntnum)) {
+			info = '序号只能是整数';
+		}
+	} else if(obj.quant) {
 		obj.quant = parseInt(obj.quant);
 		if(isNaN(obj.quant)) {
 			info = '数量只能是整数';
@@ -210,7 +215,9 @@ exports.slQunpdUpdAjax = (req, res) => {
 				Err.jsonErr(req, res, info);
 			} else {
 				let inquot = compd.inquot;
-				if(obj.quant) {
+				if(obj.qntnum) {
+					compd.qntnum = obj.qntnum;
+				} else if(obj.quant) {
 					compd.quant = obj.quant;
 				} else if(obj.dinPr) {
 					compd.dinPr = obj.dinPr;
@@ -292,7 +299,9 @@ exports.slQunpdNew = (req, res) => {
 	Inquot.findOne({
 		firm: crUser.firm,
 		_id: obj.inquot
-	}, (err, inquot) => {
+	})
+	.populate('compds')
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "sler QunpdNew, Strmup.findOne, Error!"
@@ -304,6 +313,11 @@ exports.slQunpdNew = (req, res) => {
 			info = "状态已经改变, 不可操作!"
 			Err.usError(req, res, info);
 		} else {
+			obj.qntnum = 1;
+			if(inquot.compds && inquot.compds.length > 0) {
+				obj.qntnum = inquot.compds[0].qntnum + 1
+			}
+			// return;
 			obj.firm = inquot.firm
 			obj.quner = inquot.quner
 			obj.quter = inquot.quter
@@ -315,8 +329,15 @@ exports.slQunpdNew = (req, res) => {
 			// if(obj.pdthd) obj.qntpdSts = Conf.status.done.num;
 			let _compd = new Compd(obj)
 			// console.log(_compd)
-			if(!inquot.compds.includes(_compd._id)) {
-				inquot.compds.unshift(_compd._id);
+			// if(!inquot.compds.includes(_compd._id)) {
+			// 	inquot.compds.unshift(_compd._id);
+			// }
+			i=0
+			for(; i<inquot.compds.length; i++) {
+				if(inquot.compds[i]._id == _compd._id) break;
+			}
+			if(i==inquot.compds.length) {
+				inquot.compds.unshift(_compd)
 			}
 			inquot.save((err, inquotSave) => {
 				if(err) {

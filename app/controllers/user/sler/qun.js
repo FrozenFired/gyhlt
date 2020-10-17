@@ -30,7 +30,7 @@ exports.slQun = (req, res) => {
 	.populate('quner')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'qntcrtAt': 1} },
+		options: { sort: { 'qntnum': 1} },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},
@@ -50,11 +50,28 @@ exports.slQun = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			// console.log(qun)
+			let qunpds = qun.compds;
+			let brands = new Array();
+			for(let i=0; i<qunpds.length; i++) {
+				let qunpd = qunpds[i];
+				let k=0;
+				for(; k<brands.length; k++) {
+					if(brands[k].brandNome == qunpd.brandNome) break;
+				}
+				if(k == brands.length) {
+					let brand = new Object();
+					brand.num = k+1;
+					brand.brandNome = qunpd.brandNome;
+					brands.push(brand)
+				}
+			}
 			res.render('./user/sler/inquot/qun/detail', {
 				title: '询价单详情',
 				crUser,
 				qun,
-				qunpds: qun.compds,
+				qunpds,
+
+				brands,
 			})
 		}
 	})

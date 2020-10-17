@@ -1,0 +1,23 @@
+.row
+	.col-4.col-md-1.pt-2 筛选:
+	.col-8.col-md-3
+		if brands && brands.length > 1
+			-a;
+			select#brandSel.form-control(name="obj[pdnome]", data-style="btn-info")
+				option(value="全部品牌") 全部品牌
+				each brand in brands
+					-a;
+					option(value=brand.num) #{brand.brandNome}
+	.col-md-8.col-lg-6
+		.row.text-righr
+			.col-3
+				.form-check.form-check-inline
+					input.form-check-input#pdSts-All(type="radio", name="qntpdSts" value="全部", checked="checked")
+					label.form-check-label(for="pdSts-All") 全部
+			each sts in Conf.qntpdSts
+				-a;
+				.col-3
+					.form-check.form-check-inline
+						input.form-check-input(id="pdSts-"+sts, type="radio", name="qntpdSts" value=Conf.status[sts].num)
+						label.form-check-label(for="pdSts-"+sts) #{Conf.status[sts].val}
+script(src="/js/user/sler/qunpd/filter.js")
