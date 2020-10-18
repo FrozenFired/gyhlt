@@ -115,37 +115,6 @@
 			.col-6
 				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
 			.col-6
-if qut.status == Conf.status.pricing.num
-	-a;
-	.row.py-4.text-right
-		.col-4.col-md-9 同步供应商:
-		.col-8.col-md-3
-			if qut.strmup
-				- strmup = qut.strmup;
-				button.btn.btn-default.inquotUpClick#strmup-span #{strmup.nome}
-			else
-				button.btn.btn-default.inquotUpClick#strmup-span 未分配
-			form#strmup-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
-				input(type="hidden", name="obj[_id]", value=qut._id)
-				.form-group.row.text-center
-					.col-12
-						select.inquotUpSel#strmup-ipt.form-control(name="obj[strmup]", data-style="btn-info")
-							option(value='null') 未分配:
-							each strmup in strmups
-								-a;
-								if !qut.strmup
-									-a;
-									option(value=strmup._id) #{strmup.nome}
-								else if String(strmup._id) == String(qut.strmup._id)
-									-a;
-									option(value=strmup._id, selected="selected") #{strmup.nome}
-								else
-									option(value=strmup._id) #{strmup.nome}
-				.form-group.row
-					.col-6.text-left
-						button.inquotCancelClick#strmup-cancel.btn.btn-secondary(type="button") 取消
-					.col-6
-						input.btn.btn-success(type="submit" value="提交")
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/dbs/compd/total.js")
 script(src="/js/user/mger/qut/detail.js")

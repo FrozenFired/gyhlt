@@ -40,32 +40,3 @@
 	.row.my-3
 		.col-12 !{brand.desp}
 	hr
-	.row
-		.col-6
-			if buys && buys.length > 0
-				-a;
-				.buy.text-center 供应商折扣信息
-				each buy in buys
-					-let strmup = buy.strmup;
-					.row.mt-3.border
-						.col-6 #{strmup.nome}
-						.col-6 
-							h3 #{buy.discount}
-							div #{buy.note}
-		.col-6
-			if sells && sells.length > 0
-				- a;
-				.sell.text-center 下游客户折扣信息
-				each sell in sells
-					-let strmdw = sell.strmdw;
-					.row.mt-3.border
-						.col-6
-							if strmdw
-								-a;
-								span #{strmdw.nome}
-							else
-								span 客户数据丢失
-						.col-6 
-							h3 #{sell.discount}
-							div #{sell.note}
-	hr

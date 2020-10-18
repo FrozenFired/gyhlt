@@ -53,8 +53,9 @@ var strmupRender = (strmup, role) => {
 	elem += '<div class="col-12 col-md-6 col-xl-4 p-2 text-center strmupCard">'
 	elem += '<div class="border p-2">'
 		elem += '<a class="text-info mb-2 text-muted '+nomeBg+'" href="/'+role+'Strmup/'+strmup._id+'">';
-		elem += strmup.nome+' ['+strmup.categFirm+']</a>'
+		elem += strmup.nome+' ['+strmup.buynum+']</a>'
 
+		elem += '<div>' + strmup.categFirm + '</div>'
 		elem += '<div>' + strmup.resp + '</div>'
 		elem += '<div>' + strmup.tel + '</div>'
 		elem += '<div>' + strmup.email + '</div>'

@@ -29,6 +29,9 @@ let dbSchema = new Schema({
 	sa: String,								// 尾款比例
 	payNote: String,						// 首位款比例备注
 
+	buys: [{type: ObjectId, ref: 'Buy'}],
+	buynum: Number,							// 供应商折扣排序用的
+
 	shelf: {type: Number, default: 0},	// 上架 下架
 	weight: {type: Number, default: 0},	// 权重 排序用的
 	status: Number,						// 供应商状态 

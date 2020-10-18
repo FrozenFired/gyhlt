@@ -52,6 +52,9 @@ module.exports = function(app){
 	app.post('/bnBuyNew', MdRole.bnerIsLogin, postForm, Buy.bnBuyNew)
 	app.post('/bnBuyUpd', MdRole.bnerIsLogin, postForm, Buy.bnBuyUpd)
 
+	app.get('/bnBuyBrands', MdRole.bnerIsLogin, Buy.bnBuyBrands)
+	app.get('/bnBuyBrand/:id', MdRole.bnerIsLogin, Buy.bnBuyBrand)
+
 	/* =================================== Brand =================================== */
 	app.get('/bnBrands', MdRole.bnerIsLogin, Brand.bnBrands)
 	app.post('/bnBrandNew', MdRole.bnerIsLogin, postForm, MdPicture.pictureNew, Brand.bnBrandNew)

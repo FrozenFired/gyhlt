@@ -140,22 +140,26 @@ table.mt-3.table.table-bordered
 									span.text-warning.clickup(id="span-strmup-"+qutpd._id) #{strmup.nome}
 								else
 									span.text-warning.clickup(id="span-strmup-"+qutpd._id) 选供应商
-								form(id="form-strmup-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
-									input(type="hidden", name="obj[_id]", value=qutpd._id)
-									.form-group.row
-										.col-12
-											select.selectup.form-control(id="sel-strmup-"+qutpd._id, name="obj[strmup]", data-style="btn-info")
-												option(value='null') 选供应商
-												each strmup in strmups
-													-a;
-													if !qutpd.strmup
-														-a;
-														option(value=strmup._id) #{strmup.nome}
-													else if String(strmup._id) == String(qutpd.strmup._id)
-														-a;
-														option(value=strmup._id, selected="selected") #{strmup.nome}
-													else
-														option(value=strmup._id) #{strmup.nome}
+								if brand && brand.buys
+									- buys = brand.buys;
+									form(id="form-strmup-"+qutpd._id, action="/mgQutpdUpdAjax", style="display:none")
+										input(type="hidden", name="obj[_id]", value=qutpd._id)
+										input(type="hidden", name="obj[brand]", value=qutpd.brand._id)
+										input(type="hidden", name="orgPrice", value=qutpd.pdthd.price)
+										.form-group.row
+											.col-12
+												select.selectup.form-control(id="sel-strmup-"+qutpd._id, name="obj[strmup]", data-style="btn-info")
+													option(value='null') 选供应商
+													each buy in buys
+														-strmup = buy.strmup;
+														if !qutpd.strmup
+															-a;
+															option(value=strmup._id) #{strmup.nome}
+														else if String(strmup._id) == String(qutpd.strmup._id)
+															-a;
+															option(value=strmup._id, selected="selected") #{strmup.nome}
+														else
+															option(value=strmup._id) #{strmup.nome}
 							.dutPr.mt-2
 								span.text-dark 采购单价:
 								if qutpd.dutPr && !isNaN(qutpd.dutPr)

@@ -171,8 +171,8 @@ block content
 						- checked = true;
 					.col-md-2.mt-3
 						.form-check.form-check-inline
-							input.form-check-input(type="radio", name="obj[qntpdSts]", value=Conf.status[sts].num, checked=checked)
-							label.form-check-label(for="ctercterNome") #{Conf.status[sts].val}
+							input.form-check-input(id="status-"+sts, type="radio", name="obj[qntpdSts]", value=Conf.status[sts].num, checked=checked)
+							label.form-check-label(for="status-"+sts) #{Conf.status[sts].val}
 			.row.my-3.delNoteRow(style="display:none")
 				.col-md-2.mt-3.text-right 删除备注
 				.col-md-8.mt-3

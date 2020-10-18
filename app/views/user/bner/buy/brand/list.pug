@@ -1,0 +1,15 @@
+extends ../../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 品牌折扣
+		.row
+			each brand in brands
+				-a;
+				.col-md-3
+					a(href="/bnBuyBrand/"+brand._id)
+						span.mr-3 #{brand.nome}
+						span [#{brand.buynum}]

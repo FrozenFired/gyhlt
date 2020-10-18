@@ -28,6 +28,9 @@ let dbSchema = new Schema({
 	// categs: [{type: ObjectId, ref: 'Categ'}],
 	pdfirs: [{type: ObjectId, ref: 'Pdfir'}],	// 品牌下的系列
 
+	buys: [{type: ObjectId, ref: 'Buy'}],
+	buynum: Number,		// 品牌折扣排序用的
+
 	shelf: {type: Number, default: 0},	// 上架 下架
 	status: Number,								// 品牌状态 
 	weight: {type: Number, default: 0},	// 权重 排序用的

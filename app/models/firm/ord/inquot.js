@@ -22,7 +22,6 @@ let dbSchema = new Schema({
 	/* ========== 基本信息 ========== */
 	code: String,								// 编号
 	times: Number,								// 报价次数
-	strmup: {type: ObjectId, ref: 'Strmup'},	// 同步采购公司用的
 
 	/* ========== 商品信息 ========== */
 	compds: [{type: ObjectId, ref: 'Compd'}],

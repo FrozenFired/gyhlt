@@ -30,6 +30,7 @@ exports.bnStrmup = (req, res) => {
 
 	Strmup.findOne({_id: id})
 	.populate('firmUp')
+	.populate({path: "buys", populate: {path: 'brand'}})
 	.exec((err, strmup) => {
 		if(err) {
 			console.log(err);
@@ -39,22 +40,11 @@ exports.bnStrmup = (req, res) => {
 			info = "这个供应商已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			Buy.find({firm: crUser.firm, strmup: id})
-			.populate('brand')
-			.exec((err, buys) => {
-				if(err) {
-					console.log(err);
-					info = "user StrmupFilter, Strmup.findOne, Error!";
-					Err.usError(req, res, info);
-				} else {
-					res.render('./user/bner/strmup/detail', {
-						title: '供应商详情',
-						crUser,
+			res.render('./user/bner/strmup/detail', {
+				title: '供应商详情',
+				crUser,
 
-						strmup,
-						buys
-					})
-				}
+				strmup,
 			})
 		}
 	})

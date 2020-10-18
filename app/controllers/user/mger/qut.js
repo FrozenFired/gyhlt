@@ -38,7 +38,7 @@ exports.mgQut = (req, res) => {
 		path: 'compds',
 		options: { sort: {'qntpdSts': 1, 'qntnum': 1 } },
 		populate: [
-			{path: 'brand'},
+			{path: 'brand', populate: {path: 'buys', populate: {path: 'strmup'}}},
 			{path: 'pdfir'},
 			{path: 'pdsec'},
 			{path: 'pdthd'},
@@ -208,10 +208,10 @@ let mgerQuterSel = (req, res, obj, inquot) => {
 let mgercterSel = (req, res, obj, inquot) => {
 	if(String(inquot.cter) == String(obj.cter)) {
 		// 如果是更新， 则判断如果 cter 没有变化, 则跳过此步骤
-		mgerStrmupSel(req, res, obj, inquot);
+		mgerqutSave(req, res, obj, inquot);
 	} else if(!obj.cter) {
 		obj.cter = inquot.cter;
-		mgerStrmupSel(req, res, obj, inquot);
+		mgerqutSave(req, res, obj, inquot);
 	} else {
 		if(obj.cter == "null") obj.cter = null;
 		Compd.updateMany({
@@ -223,31 +223,6 @@ let mgercterSel = (req, res, obj, inquot) => {
 			if(err) {
 				console.log(err);
 				info = "mger cterSel, Compd.find(), Error!";
-				Err.usError(req, res, info);
-			} else {
-				mgerStrmupSel(req, res, obj, inquot);
-			}
-		})
-	}
-}
-let mgerStrmupSel = (req, res, obj, inquot) => {
-	if(inquot && (String(inquot.strmup) == String(obj.strmup))) {
-		// 如果是更新， 则判断如果 strmup 没有变化, 则跳过此步骤
-		mgerqutSave(req, res, obj, inquot);
-	} else if(!obj.strmup) {
-		obj.strmup = inquot.strmup;
-		mgerqutSave(req, res, obj, inquot);
-	} else {
-		if(obj.strmup == "null") obj.strmup = null;
-		Compd.updateMany({
-			_id: inquot.compds,
-			strmup: inquot.strmup
-		}, {
-			strmup: obj.strmup
-		},(err, compds) => {
-			if(err) {
-				console.log(err);
-				info = "mger QuterSel, Compd.find(), Error!";
 				Err.usError(req, res, info);
 			} else {
 				mgerqutSave(req, res, obj, inquot);

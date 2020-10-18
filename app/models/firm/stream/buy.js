@@ -12,7 +12,7 @@ let dbSchema = new Schema({
 	strmup: {type: ObjectId, ref: 'Strmup'},
 	brand: {type: ObjectId, ref: 'Brand'},
 
-	discount: String,							// 折扣
+	discount: Number,							// 折扣
 	note: String,							// 备注
 
 	shelf: {type: Number, default: 0},	// 上架 下架
