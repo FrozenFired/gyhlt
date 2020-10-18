@@ -57,6 +57,12 @@ $(function() {
 	})
 	// ajaxForm 不提交 交给js中的ajax处理
 	$(".ajaxForm").submit(function(e) {
+		// let htmlId = $(this).attr("id").split('-')[1]
+		// $("#ipt-"+htmlId).blur();
+		let strids = $(this).attr("id").split("-")
+		let field = strids[1];
+		let id = strids[2];
+		$("#ipt-"+field+"-"+id).blur();
 		e.preventDefault();
 	})
 	// 图片放大

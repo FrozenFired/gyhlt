@@ -77,25 +77,25 @@ $(function() {
 
 						let orgTotal = parseInt($("#ipt-quantTotal").val());	// 改变总数量
 						let newTotal = orgTotal - orgVal + newVal;
-						$("#ipt-quantTotal").val(newTotal)
-						$("#span-quantTotal").text(newTotal)
+						$("#ipt-quantTotal").val(parseFloat(newTotal).toFixed(2))
+						$("#span-quantTotal").text(parseFloat(newTotal).toFixed(2))
 
-						$("#span-qntPrtot-"+id).text(data.qntPrTot);	// 改变 一种商品的总价
-						$("#span-dinPrtot-"+id).text(data.dinPrTot);	// 改变 一种商品的售价
+						$("#span-qntPrtot-"+id).text(parseFloat(data.qntPrTot).toFixed(2));	// 改变 一种商品的总价
+						$("#span-dinPrtot-"+id).text(parseFloat(data.dinPrTot).toFixed(2));	// 改变 一种商品的售价
 
 						// 改变报价总价值
 						let orgQntPr = parseFloat($("#org-qntPr-"+id).val());
 						let orgQntImp = parseFloat($("#ipt-qntPrImp").val());
 						let newQntImp = orgQntImp + (newVal-orgVal)*orgQntPr;
-						$("#ipt-qntPrImp").val(newQntImp)
-						$("#span-qntPrImp").text(newQntImp)
+						$("#ipt-qntPrImp").val(parseFloat(newQntImp).toFixed(2))
+						$("#span-qntPrImp").text(parseFloat(newQntImp).toFixed(2))
 
 						// 改变销售总价值
 						let orgDinPr = parseFloat($("#org-dinPr-"+id).val());
 						let orgDinImp = parseFloat($("#ipt-dinPrImp").val());
 						let newDinImp = orgDinImp + (newVal-orgVal)*orgDinPr;
-						$("#ipt-dinPrImp").val(newDinImp)
-						$("#span-dinPrImp").text(newDinImp)
+						$("#ipt-dinPrImp").val(parseFloat(newDinImp).toFixed(2))
+						$("#span-dinPrImp").text(parseFloat(newDinImp).toFixed(2))
 						// $("#span-qntPrtot-"+id).val(data.qntPr);
 					} else if(results.status === 0) {
 						alert(results.msg)
@@ -138,18 +138,18 @@ $(function() {
 					success: function(results) {
 						if(results.status === 1) {
 							let data = results.data;
-							$("#org-"+field+"-"+id).val(newVal);	// org原价格
-							$("#ipt-"+field+"-"+id).val(newVal);	// ipt的价格
-							$("#span-"+field+"-"+id).text(newVal);	// span的价格
+							$("#org-"+field+"-"+id).val(parseFloat(newVal).toFixed(2));	// org原价格
+							$("#ipt-"+field+"-"+id).val(parseFloat(newVal).toFixed(2));	// ipt的价格
+							$("#span-"+field+"-"+id).text(parseFloat(newVal).toFixed(2));	// span的价格
 
-							$("#span-dinPrtot-"+id).text(data.dinPrTot);	// 改变 一种商品的售价
+							$("#span-dinPrtot-"+id).text(parseFloat(data.dinPrTot).toFixed(2));	// 改变 一种商品的售价
 
 							// 改变销售总价值
 							let orgQuant = parseFloat($("#org-quant-"+id).val());
 							let orgDinImp = parseFloat($("#ipt-dinPrImp").val());
 							let newDinImp = orgDinImp + (newVal-orgVal)*orgQuant;
-							$("#ipt-dinPrImp").val(newDinImp)
-							$("#span-dinPrImp").text(newDinImp)
+							$("#ipt-dinPrImp").val(parseFloat(newDinImp).toFixed(2))
+							$("#span-dinPrImp").text(parseFloat(newDinImp).toFixed(2))
 						} else if(results.status === 0) {
 							alert(results.msg)
 						}

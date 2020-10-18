@@ -128,14 +128,13 @@ exports.qtQutpdUpd = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			// 自动改变商品状态
-			// if(obj.qntpdSts != Conf.status.del.num) {
-			// 	if(obj.pdthd) {
-			// 		obj.qntpdSts = Conf.status.done.num;
-			// 	} else {
-			// 		obj.qntpdSts = Conf.status.quoting.num;
-			// 	}
+
+			// if(obj.qntpdSts == Conf.status.del.num && compd.qntpdSts != Conf.status.del.num) {
+			// 	obj.qntnum = compd.qntnum + Conf.status.del.num;
+			// } else if(obj.qntpdSts != Conf.status.del.num && compd.qntpdSts == Conf.status.del.num) {
+			// 	obj.qntnum = compd.qntnum - Conf.status.del.num;
 			// }
+			// return
 			if(obj.images && compd.images) {
 				for(let i=0; i<obj.images.length; i++) {
 					if(compd.images.length>=i && !obj.images[i]) {

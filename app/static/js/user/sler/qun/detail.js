@@ -33,16 +33,20 @@ $(function() {
 		$(".qntPrTd").toggle();
 	})
 
-	$(".inquotUpClick").click(function(e) {
-		let htmlId = $(this).attr("id").split('-')[0]
-		$("#"+htmlId+"-form").show();
+	$(".cterNomeClickup").click(function(e) {
+		let strids = $(this).attr("id").split("-")
+		let field = strids[1];
+		let id = strids[2];
+		$("#form-"+field+"-"+id).show();
 	})
-	$(".inquotUpIpt").blur(function(e) {
-		let htmlId = $(this).attr("id").split('-')[0]
-		let orgVal = $("#"+htmlId+"-org").val();
+	$(".cterNomeBlurup").blur(function(e) {
+		let strids = $(this).attr("id").split("-")
+		let field = strids[1];
+		let id = strids[2];
+		let orgVal = $("#org-"+field+"-"+id).val();
 		let newVal = $(this).val();
 		if(newVal.length>0 && orgVal != newVal) {
-			let form =$("#"+htmlId+"-form");
+			let form =$("#form-"+field+"-"+id);
 			let data = form.serialize();
 			let url = form.attr('action');
 			$.ajax({
@@ -51,17 +55,17 @@ $(function() {
 				data: data,
 				success: function(results) {
 					if(results.status === 1) {
-						$("#"+htmlId+"-span").text(newVal);
-						$("#"+htmlId+"-org").val(newVal);
-						$("#"+htmlId+"-form").hide();
-						$("#"+htmlId+"-span").show();
+						$("#span-"+field+"-"+id).text(newVal);
+						$("#org-"+field+"-"+id).val(newVal);
+						$("#form-"+field+"-"+id).hide();
+						$("#span-"+field+"-"+id).show();
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}
 				}
 			});
 		} else {
-			$("#"+htmlId+"-form").hide();
+			$("#form-"+field+"-"+id).hide();
 		}
 	})
 })

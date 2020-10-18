@@ -300,7 +300,10 @@ exports.slQunpdNew = (req, res) => {
 		firm: crUser.firm,
 		_id: obj.inquot
 	})
-	.populate('compds')
+	.populate({
+		path: 'compds',
+		options: { sort: {'qntnum': -1} },
+	})
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
@@ -313,11 +316,13 @@ exports.slQunpdNew = (req, res) => {
 			info = "状态已经改变, 不可操作!"
 			Err.usError(req, res, info);
 		} else {
+			let compds = inquot.compds;
+			// 系统自动给询价商品添加询价编号
 			obj.qntnum = 1;
-			if(inquot.compds && inquot.compds.length > 0) {
-				obj.qntnum = inquot.compds[0].qntnum + 1
+			if(compds && compds.length > 0) {
+				obj.qntnum = compds[0].qntnum + 1
 			}
-			// return;
+			// 询价商品自动添加信息
 			obj.firm = inquot.firm
 			obj.quner = inquot.quner
 			obj.quter = inquot.quter
@@ -326,18 +331,14 @@ exports.slQunpdNew = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			// if(obj.pdthd) obj.qntpdSts = Conf.status.done.num;
 			let _compd = new Compd(obj)
-			// console.log(_compd)
-			// if(!inquot.compds.includes(_compd._id)) {
-			// 	inquot.compds.unshift(_compd._id);
-			// }
+
 			i=0
-			for(; i<inquot.compds.length; i++) {
-				if(inquot.compds[i]._id == _compd._id) break;
+			for(; i<compds.length; i++) {
+				if(compds[i]._id == _compd._id) break;
 			}
-			if(i==inquot.compds.length) {
-				inquot.compds.unshift(_compd)
+			if(i==compds.length) {
+				compds.unshift(_compd)
 			}
 			inquot.save((err, inquotSave) => {
 				if(err) {

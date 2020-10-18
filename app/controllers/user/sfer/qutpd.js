@@ -76,6 +76,8 @@ exports.sfQutpdUpdAjax = (req, res) => {
 		if(isNaN(obj.qntPr)) {
 			info = "请输入正确的报价"
 		}
+	} else if(obj.strmup) {
+		if(obj.strmup == "null") obj.strmup = null;
 	}
 	if(info) {
 		Err.jsonErr(req, res, info);

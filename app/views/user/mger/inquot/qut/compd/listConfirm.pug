@@ -129,18 +129,18 @@ table.mt-3.table.table-bordered
 						.dutPr.mt-3.text-white
 							span 采购单价:
 							br
-							span #{qutpd.dutPr}
+							span #{(qutpd.dutPr).toFixed(2)}
 							input(id="org-dutPr-"+qutpd._id, type="hidden", value=qutpd.dutPr)
 						.qntPr.mt-3.text-white
 							.qntPr
 								span 报价单价:
 								br
-								span #{qutpd.qntPr}
+								span #{(qutpd.qntPr).toFixed(2)}
 								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
 							.qntPrTot.mt-2
 								span 总价:
 								br
-								span(id="span-qntPrtot-"+qutpd._id) #{qntPrtot}
+								span(id="span-qntPrtot-"+qutpd._id) #{(qntPrtot).toFixed(2)}
 				td
 					if qutpd.qntpdSts != Conf.status.del.num
 						- quantTotal += qutpd.quant;
@@ -152,33 +152,18 @@ table.mt-3.table.table-bordered
 								- dinPrImp = "未完成销售价";
 						.quant
 							span.text-dark 数量: 
-							span.text-warning.quantClickup(id="span-quant-"+qutpd._id) #{qutpd.quant}
-							input(id="org-quant-"+qutpd._id, type="hidden", value=qutpd.quant)
-							form.ajaxForm(id="form-quant-"+qutpd._id, action="/slQunpdUpdAjax", style="display:none")
-								input(type="hidden", name="obj[_id]", value=qutpd._id)
-								.form-group.row
-									.col-12
-										input.quantBlurup.form-control(id="ipt-quant-"+qutpd._id, type="number", name="obj[quant]", placeholder="采购数量", autocomplete="off", value=qutpd.quant)
-							.text-danger(id="opt-quant-"+qutpd._id)
-
-
+							span #{qutpd.quant}
 						.dinPr.mt-3
 							span.text-dark 单价: 
 							if qutpd.dinPr
 								-a;
-								span.text-warning.dinPrClickup(id="span-dinPr-"+qutpd._id) #{qutpd.dinPr}
+								span #{(qutpd.dinPr).toFixed(2)}
 							else
-								span.text-warning.dinPrClickup(id="span-dinPr-"+qutpd._id) 填写售价
-							input(id="org-dinPr-"+qutpd._id, type="hidden", value=qutpd.dinPr)
-							form.ajaxForm(id="form-dinPr-"+qutpd._id, action="/slQunpdUpdAjax", style="display:none")
-								input(type="hidden", name="obj[_id]", value=qutpd._id)
-								.form-group.row
-									.col-12
-										input.dinPrBlurup.form-control(id="ipt-dinPr-"+qutpd._id, type="text", name="obj[dinPr]", placeholder="采购价格", autocomplete="off", value=qutpd.dinPr)
-							.text-danger(id="opt-dinPr-"+qutpd._id)
+								span 填写售价
+						.total
 							strong
 								span.text-dark 总价: 
-								span(id="span-dinPrtot-"+qutpd._id) #{qutpd.quant * qutpd.dinPr}
+								span(id="span-dinPrtot-"+qutpd._id) #{(qutpd.quant * qutpd.dinPr).toFixed(2)}
 					else
 						.del.text-danger
 							div.text-center 删除原因:

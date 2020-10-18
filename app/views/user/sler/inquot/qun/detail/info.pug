@@ -16,13 +16,13 @@
 		.col-md-6
 			.cterNome
 				span 客户姓名: 
-				span.text-warning.inquotUpClick#cterNome-span #{qun.cterNome}
-				form.ajaxForm#cterNome-form(action="/slQunUpdAjax", style="display:none")
-					input#cterNome-org(type="hidden", value=qun.cterNome)
+				span.text-warning.cterNomeClickup#span-cterNome-obj #{qun.cterNome}
+				form.ajaxForm#form-cterNome-obj(action="/slQunUpdAjax", style="display:none")
+					input#org-cterNome-obj(type="hidden", value=qun.cterNome)
 					input(type="hidden", name="obj[_id]", value=qun._id)
 					.form-group.row
 						.col-12
-							input.inquotUpIpt#cterNome-ipt.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off", value=qun.cterNome)
+							input.cterNomeBlurup#ipt-cterNome-obj.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off", value=qun.cterNome)
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status

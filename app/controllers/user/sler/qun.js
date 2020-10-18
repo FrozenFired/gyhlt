@@ -30,7 +30,7 @@ exports.slQun = (req, res) => {
 	.populate('quner')
 	.populate({
 		path: 'compds',
-		options: { sort: { 'qntnum': 1} },
+		options: { sort: {'qntpdSts': 1, 'qntnum': 1} },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},
