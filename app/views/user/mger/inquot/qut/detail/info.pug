@@ -17,14 +17,14 @@
 			.cter.text-warning
 				if qut.cter
 					- cter = qut.cter;
-					span.text-info.inquotUpClick#cter-span #{cter.nome} [#{cter.code}]
+					span.text-info.inquotUpClick#span-cter-obj #{cter.nome} [#{cter.code}]
 				else
-					span.text-info.inquotUpClick#cter-span 未分配
-				form#cter-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+					span.text-info.inquotUpClick#span-cter-obj 未分配
+				form#form-cter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
 					input(type="hidden", name="obj[_id]", value=qut._id)
 					.form-group.row.px-5.text-center
-						.col-12
-							select.inquotUpSel#qutNote-ipt.form-control(name="obj[cter]", data-style="btn-info")
+						.col-8
+							select.inquotUpSel#ipt-qutNote-obj.form-control(name="obj[cter]", data-style="btn-info")
 								option(value='null') 请选择客户
 								each cter in cters
 									-a;
@@ -36,10 +36,7 @@
 										option(value=cter._id, selected="selected") #{cter.nome}[#{cter.code}]
 									else
 										option(value=cter._id) #{cter.nome}[#{cter.code}]
-					.form-group.row
-						.col-6
-							button.inquotCancelClick#cter-cancel.btn.btn-secondary(type="button") 取消
-						.col-6
+						.col-4
 							input.btn.btn-success(type="submit" value="提交")
 		.col-md-6
 			.quter
@@ -48,14 +45,14 @@
 					-a;
 					if qut.quter
 						- quter = qut.quter;
-						button.btn.btn-default.text-info.inquotUpClick#quter-span #{quter.nome} [ #{quter.code} ]
+						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj #{quter.nome} [ #{quter.code} ]
 					else
-						button.btn.btn-default.text-info.inquotUpClick#quter-span 未分配
-					form#quter-form(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj 未分配
+					form#form-quter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
 						input(type="hidden", name="obj[_id]", value=qut._id)
 						.form-group.row.px-5.text-center
-							.col-12
-								select.inquotUpSel#quter-ipt.form-control(name="obj[quter]", data-style="btn-info")
+							.col-8
+								select.inquotUpSel#ipt-quter-obj.form-control(name="obj[quter]", data-style="btn-info")
 									option(value='null') 请选择报价员
 									each quter in quters
 										-a;
@@ -67,10 +64,7 @@
 											option(value=quter._id, selected="selected") #{quter.nome}[#{quter.code}]
 										else
 											option(value=quter._id) #{quter.nome}[#{quter.code}]
-						.form-group.row
-							.col-6
-								button.inquotCancelClick#quter-cancel.btn.btn-secondary(type="button") 取消
-							.col-6
+							.col-4
 								input.btn.btn-success(type="submit" value="提交")
 				else
 					if qut.quter
@@ -78,6 +72,21 @@
 						div #{quter.nome} [ #{quter.code} ]
 					else
 						div.text-warning 未分配
+			.percenter
+				- percent = "同步报价的比例";
+				if qut.percent && qut.percent > 0
+					- percent = qut.percent;
+				span 加点百分比: 
+				span.text-warning.inquotUpClick#span-percent-obj #{percent}
+				span %
+				form#form-percent-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+					input(type="hidden", name="obj[_id]", value=qut._id)
+					.form-group.row
+						.col-4
+						.col-4
+							input.percentBlurup#ipt-percent-obj.form-control(type="text", name="obj[percent]", placeholder="加点百分比", autocomplete="off", value=qut.percent)
+						.col-4
+							input.btn.btn-success(type="submit" value="提交")
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status

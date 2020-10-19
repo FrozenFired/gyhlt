@@ -73,6 +73,10 @@ $(function() {
 					$("#span-dutPr-"+id).text(compd.dutPr);
 					$("#org-dutPr-"+id).val(compd.dutPr);
 					$("#ipt-dutPr-"+id).val(compd.dutPr);
+
+					$("#span-qntPr-"+id).text(compd.qntPr);
+					$("#org-qntPr-"+id).val(compd.qntPr);
+					$("#ipt-qntPr-"+id).val(compd.qntPr);
 				} else if(results.status === 0) {
 					alert(results.msg)
 				}
