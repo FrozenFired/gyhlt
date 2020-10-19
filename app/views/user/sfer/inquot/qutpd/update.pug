@@ -56,7 +56,7 @@ block content
 					if qutpd.photo
 						- photo = qutpd.photo;
 					img.thumbnailImg#img-photo(src=photo, width="120px")
-					.changeImg#imgEdit-photo.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-photo.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
 				.col-md-3.mt-4#firImg(align="center")
 					if qutpd.firphoto
@@ -103,7 +103,7 @@ block content
 					if qutpd.sketch
 						- sketch = qutpd.sketch;
 					img.thumbnailImg#img-sketch(src=sketch, width="120px")
-					.changeImg#imgEdit-sketch.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-sketch.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
 				.col-md-3.mt-4#secImg(align="center")
 					if pdsec.photo && pdsec.photo.length > 0
@@ -135,28 +135,28 @@ block content
 					if images.length > 0 && images[0]
 						- images0 = images[0];
 					img.thumbnailImg#img-images0(src=images0, width="120px")
-					.changeImg#imgEdit-images0.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-images0.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images1 = "";
 					if images.length > 1 && images[1]
 						- images1 = images[1];
 					img.thumbnailImg#img-images1(src=images1, width="120px")
-					.changeImg#imgEdit-images1.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-images1.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images2 = "";
 					if images.length > 2 && images[2]
 						- images2 = images[2];
 					img.thumbnailImg#img-images2(src=images2, width="120px")
-					.changeImg#imgEdit-images2.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-images2.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images3 = "";
 					if images.length > 3 && images[3]
 						- images3 = images[3];
 					img.thumbnailImg#img-images3(src=images3, width="120px")
-					.changeImg#imgEdit-images3.text-info <span class="oi oi-pencil"></span>
+					.changeImg#imgEdit-images3.text-info <span class="oi oi-pencil"></span>[点击]
 					input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
 
 			.row.my-3

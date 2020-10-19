@@ -8,13 +8,13 @@ module.exports = function(app){
 			if(err) {
 				console.log(err);
 				let info = '信息加载错误, 请联系工作人员 +39 3888787897'
-				res.render('./aaViews/index/wrongPage', {
+				res.render('./wrongPage', {
 					title: '500-15 Page',
 					info: info
 				});
 			} else if(!firm) {
 				let info = '信息加载错误, 请联系工作人员 +39 3888787897'
-				res.render('./aaViews/index/wrongPage', {
+				res.render('./wrongPage', {
 					title: '500-15 Page',
 					info: info
 				});

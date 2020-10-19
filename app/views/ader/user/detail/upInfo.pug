@@ -1,10 +1,10 @@
-a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>
+a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") <span class="oi oi-pencil"></span>[点击]
 
 #upInfo.modal.fade
 	.modal-dialog
 		.modal-content
 			form#upInfo(method="post", action="/adUserUpInfo", enctype="multipart/form-data")
-				.modal-header: h3 <span class="oi oi-pencil"></span>
+				.modal-header: h3 <span class="oi oi-pencil"></span>[点击]
 				.modal-body
 					input(type="hidden", name="obj[firm]", value=user.firm._id)
 					input(type="hidden", name="obj[_id]", value=user._id)

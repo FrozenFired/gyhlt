@@ -23,13 +23,14 @@
 		.row.m-5
 			.col-lg-5
 				.row
-					- var i = 0;
-					each pdnome in firm .pdnomes
-						- i++;
-						if i > 10
-							- break;
-						.col-6.mt-3
-							a.text-white(href="/ctPdfirs?pdnome="+pdnome) #{pdnome}
+					if firm && firm.pdnomes
+						- var i = 0;
+						each pdnome in firm.pdnomes
+							- i++;
+							if i > 10
+								- break;
+							.col-6.mt-3
+								a.text-white(href="/ctPdfirs?pdnome="+pdnome) #{pdnome}
 			.col-lg-7
 				.row#navPdfirs
 
