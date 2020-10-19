@@ -56,8 +56,8 @@ var qutRender = (qut, role) => {
 	elem += '<div class="row py-2 mt-2 text-center border qutCard">'
 
 		elem += '<div class="col-md-4">'
-			elem += '<a class="btn btn-info" href="/'+role+'Qut/'+qut._id+'">'
-				elem += '<div style="font-size: 23px;">'+qut.code+'</div>'
+			elem += '<a class="mt-4 btn btn-info" href="/'+role+'Qut/'+qut._id+'">'
+				elem += '<div style="font-size: 23px;">'+qut.code+' <span class="text-warning">[ '+qut.compds.length+' ]</span></div>'
 			elem += '</a>'
 		elem += '</div>'
 
@@ -69,7 +69,7 @@ var qutRender = (qut, role) => {
 				elem += transformTime(crtAt, 0, 10)
 			elem += '</div>'
 
-			elem += '<div>'
+			elem += '<div class="mt-2">'
 				elem += '询价人:'
 				if(qut.quner) {
 					elem += qut.quner.nome + ' [' + qut.quner.code + ']'
@@ -78,15 +78,15 @@ var qutRender = (qut, role) => {
 				}
 			elem += '</div>'
 
-			elem += '<div>'
-				elem += '报价次数: '+ qut.times
-			elem += '</div>'
+			elem += '<div class="mt-3 text-info">客户姓名: ' + qut.cterNome +'</div>'
 
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
-			elem += '<div class="text-info">客户姓名: ' + qut.cterNome +'</div>'
 			elem += '<div>'
+				elem += '报价次数: '+ qut.times
+			elem += '</div>'
+			elem += '<div class="mt-2">'
 				elem += '报价人:'
 				if(qut.quter) {
 					elem += qut.quter.nome + ' [' + qut.quter.code + ']'
@@ -95,7 +95,7 @@ var qutRender = (qut, role) => {
 				}
 			elem += '</div>'
 
-			elem += '<div class="mt-3">'
+			elem += '<div class="mt-3 text-danger">'
 				elem += status
 			elem += '</div>'
 		elem += '</div>'

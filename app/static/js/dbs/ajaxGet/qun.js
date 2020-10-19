@@ -56,7 +56,7 @@ var qunRender = (qun, role) => {
 	elem += '<div class="row py-2 mt-2 text-center border qunCard">'
 		elem += '<div class="col-md-4">'
 			elem += '<a class="btn btn-info mt-3" href="/'+role+'Qun/'+qun._id+'">'
-				elem += '<div style="font-size: 23px;">'+qun.code+'</div>'
+				elem += '<div style="font-size: 23px;">'+qun.code+' <span class="text-warning">[ '+qun.compds.length+' ]</span></div>'
 			elem += '</a>'
 
 		elem += '</div>'
@@ -82,9 +82,8 @@ var qunRender = (qun, role) => {
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
-			elem += '<div>产品种类: ' + qun.compds.length +'</div>'
-			elem += '<div class="mt-1">报价次数: '+ qun.times + '</div>'
-			elem += '<div class="mt-2 text-danger">'
+			elem += '<div class="mt-3">报价次数: '+ qun.times + '</div>'
+			elem += '<div class="mt-3 text-danger">'
 				elem += '状态: ' + status
 			elem += '</div>'
 		elem += '</div>'

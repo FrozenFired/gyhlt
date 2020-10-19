@@ -17,8 +17,8 @@ $(function() {
 
 	var trFilter = function(selBrand, selSts) {
 		$(".pdTr").each(function(index,elem) {
-			if(selBrand == '全部品牌' || selBrand == $(this).attr("pdbrand")) {
-				if(selSts == '全部' || selSts == $(this).attr("pdSts")) {
+			if(!selBrand || selBrand == '全部品牌' || selBrand == $(this).attr("pdbrand")) {
+				if(!selSts || selSts == '全部' || selSts == $(this).attr("pdSts")) {
 					$(this).show();
 				} else {
 					$(this).hide();

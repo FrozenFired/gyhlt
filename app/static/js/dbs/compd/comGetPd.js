@@ -55,7 +55,7 @@ $(function() {
 					brandElemFunc(brand)
 				}
 			} else {
-				$(".brandweb").remove();
+				// $(".brandweb").remove();
 			}
 		}, 300);
 	})
@@ -143,8 +143,10 @@ $(function() {
 			let elem = '<div class="brandweb">'
 				elem += '<a href="'+website+'" target="_blank">'+brand.nome+'官网</a>'
 			elem += '</div>';
+			console.log(1)
 			$(".brandweb").remove();
 			$("#brandweb").append(elem)
+			console.log(2)
 		}
 	}
 
@@ -169,7 +171,7 @@ $(function() {
 					pdfirElemFunc(pdfir)
 				}
 			} else {
-				$(".firImgs").remove();
+				// $(".firImgs").remove();
 			}
 		}, 300)
 	})
@@ -289,7 +291,6 @@ $(function() {
 	$("#selPhotos").click(function(e) {
 		$("#firImgs").show();
 		$("#selPhotos").hide();
-
 	})
 
 	/* ======================== 产品选择 ======================== */

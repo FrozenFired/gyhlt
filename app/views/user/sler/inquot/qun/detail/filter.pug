@@ -9,15 +9,17 @@
 					-a;
 					option(value=brand.num) #{brand.brandNome}
 	.col-md-8.col-lg-6
-		.row.text-righr
-			.col-3
-				.form-check.form-check-inline
-					input.form-check-input#pdSts-All(type="radio", name="qntpdSts" value="全部", checked="checked")
-					label.form-check-label(for="pdSts-All") 全部
-			each sts in Conf.qntpdSts
-				-a;
+		if qun.status != Conf.status.init.num
+			-a;
+			.row.text-righr
 				.col-3
 					.form-check.form-check-inline
-						input.form-check-input(id="pdSts-"+sts, type="radio", name="qntpdSts" value=Conf.status[sts].num)
-						label.form-check-label(for="pdSts-"+sts) #{Conf.status[sts].val}
+						input.form-check-input#pdSts-All(type="radio", name="qntpdSts" value="全部", checked="checked")
+						label.form-check-label(for="pdSts-All") 全部
+				each sts in Conf.qntpdSts
+					-a;
+					.col-3
+						.form-check.form-check-inline
+							input.form-check-input(id="pdSts-"+sts, type="radio", name="qntpdSts" value=Conf.status[sts].num)
+							label.form-check-label(for="pdSts-"+sts) #{Conf.status[sts].val}
 script(src="/js/user/sler/qunpd/filter.js")
