@@ -102,7 +102,7 @@ exports.qtQutpdUpdAjax = (req, res) => {
 exports.qtQutpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qntupdAt = Date.now();
+	obj.updAt = Date.now();
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id

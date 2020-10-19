@@ -419,7 +419,7 @@ exports.lgTranExcel = (req, res) => {
 	Tran.findOne({_id: id})
 	.populate({
 		path: 'compds', 
-		options: { sort: { 'qntpdSts': 1, 'qntupdAt': -1 } },
+		options: { sort: { 'qntpdSts': 1, 'updAt': -1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},

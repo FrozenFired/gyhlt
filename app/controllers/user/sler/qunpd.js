@@ -111,7 +111,7 @@ exports.slQunpdDel = (req, res) => {
 exports.slQunpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qntupdAt = Date.now();
+	obj.updAt = Date.now();
 	obj.qntpdSts = Conf.status.quoting.num;
 	Compd.findOne({
 		firm: crUser.firm,
@@ -292,7 +292,6 @@ exports.slQunpdDelPic = (req, res) => {
 exports.slQunpdNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qntcrtAt = obj.qntupdAt = Date.now();
 	obj.qntpdSts = Conf.status.quoting.num;
 	obj.quant = parseInt(obj.quant);
 	if(isNaN(obj.quant)) obj.quant = 1;

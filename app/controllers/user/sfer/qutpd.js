@@ -112,7 +112,7 @@ exports.sfQutpdUpdAjax = (req, res) => {
 exports.sfQutpdUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qntupdAt = Date.now();
+	obj.updAt = Date.now();
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id

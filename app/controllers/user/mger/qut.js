@@ -36,7 +36,7 @@ exports.mgQut = (req, res) => {
 	.populate('strmup')
 	.populate({
 		path: 'compds',
-		options: { sort: {'qntpdSts': 1, 'qntnum': 1 } },
+		options: { sort: {'qntpdSts': 1, 'qntnum': 1}},
 		populate: [
 			{path: 'brand', populate: {path: 'buys', populate: {path: 'strmup'}}},
 			{path: 'pdfir'},
@@ -73,52 +73,39 @@ exports.mgQut = (req, res) => {
 					info = 'mger QutAdd, User.find, Error!';
 					Err.usError(req, res, info);
 				} else {
-					Strmup.find({
+					User.find({
 						firm: crUser.firm,
+						role: Conf.roleUser.customer.num
 					})
-					.sort({'role': -1})
-					.exec((err, strmups) => {
+					.exec((err, cters) => {
 						if(err) {
 							console.log(err);
 							info = 'mger QutAdd, Strmup.find, Error!';
 							Err.usError(req, res, info);
 						} else {
-							User.find({
-								firm: crUser.firm,
-								role: Conf.roleUser.customer.num
-							})
-							.exec((err, cters) => {
-								if(err) {
-									console.log(err);
-									info = 'mger QutAdd, Strmup.find, Error!';
-									Err.usError(req, res, info);
-								} else {
-									let brands = new Array();
-									for(let i=0; i<qutpds.length; i++) {
-										let qutpd = qutpds[i];
-										let k=0;
-										for(; k<brands.length; k++) {
-											if(brands[k].brandNome == qutpd.brandNome) break;
-										}
-										if(k == brands.length) {
-											let brand = new Object();
-											brand.num = k+1;
-											brand.brandNome = qutpd.brandNome;
-											brands.push(brand)
-										}
-									}
-									res.render('./user/mger/inquot/qut/detail', {
-										title: '报价单详情',
-										crUser,
-
-										qut,
-										qutpds,
-										quters,
-										strmups,
-										cters,
-										brands
-									})
+							let brands = new Array();
+							for(let i=0; i<qutpds.length; i++) {
+								let qutpd = qutpds[i];
+								let k=0;
+								for(; k<brands.length; k++) {
+									if(brands[k].brandNome == qutpd.brandNome) break;
 								}
+								if(k == brands.length) {
+									let brand = new Object();
+									brand.num = k+1;
+									brand.brandNome = qutpd.brandNome;
+									brands.push(brand)
+								}
+							}
+							res.render('./user/mger/inquot/qut/detail', {
+								title: '报价单详情',
+								crUser,
+
+								qut,
+								qutpds,
+								quters,
+								cters,
+								brands
 							})
 						}
 					})

@@ -64,9 +64,9 @@ var qutRender = (qut, role) => {
 		elem += '<div class="col-md-4">'
 			elem += '<div>'
 				elem += '询价时间: '
-				qntcrtAt = Date.now();
-				if(qut.qntcrtAt) qntcrtAt = new Date(qut.qntcrtAt)
-				elem += transformTime(qntcrtAt, 0, 10)
+				crtAt = Date.now();
+				if(qut.crtAt) crtAt = new Date(qut.crtAt)
+				elem += transformTime(crtAt, 0, 10)
 			elem += '</div>'
 
 			elem += '<div>'

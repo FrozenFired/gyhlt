@@ -40,9 +40,6 @@ let dbSchema = new Schema({
 	inquot: {type: ObjectId, ref: 'Inquot'},	// 所属询报价单
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
 
-	qntcrtAt: Date,								// 询价时间
-	qntupdAt: Date,								// 询价更新
-	qntfnlAt: Date,								// 报价完成时间
 	estimate: String,							// 预估价格
 	qntPr: Float,								// 报价价格
 
@@ -69,11 +66,15 @@ let dbSchema = new Schema({
 	trpAt:Date,
 
 	compdSts: Number,							// 商品状态 
+
+	crtAt: Date,								// 创建时间
+	updAt: Date,								// 更新更新
 });
 
 dbSchema.pre('save', function(next) {
 	if(this.isNew) {
-		this.qntcrtAt = Date.now();
+		if(!this.crtAt) this.crtAt = Date.now();
+		if(!this.updAt) this.updAt = Date.now();
 		if(!this.qntPr) this.qntPr = 0;
 		if(!this.dinPr) this.dinPr = 0;
 		if(!this.dutAt) this.dutAt = 0;

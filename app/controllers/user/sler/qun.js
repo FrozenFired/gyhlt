@@ -142,7 +142,6 @@ exports.slQunNew = (req, res) => {
 	let obj = req.body.obj;
 	obj.firm = crUser.firm;
 	obj.quner = crUser._id;
-	obj.qntcrtAt = obj.qntupdAt = Date.now();
 	obj.status = Conf.status.init.num;
 
 	let now = new Date();
@@ -152,9 +151,9 @@ exports.slQunNew = (req, res) => {
 	Inquot.findOne({
 		firm: crUser.firm,
 		quner: crUser._id,
-		qntcrtAt: {"$gte": initDate},
+		crtAt: {"$gte": initDate},
 	})
-	.sort({'qntcrtAt': -1})
+	.sort({'crtAt': -1})
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
@@ -195,7 +194,7 @@ exports.slQunNew = (req, res) => {
 exports.slQunUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-	obj.qntupdAt = Date.now();
+	obj.updAt = Date.now();
 	Inquot.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -235,7 +234,7 @@ exports.slInquotExcel = (req, res) => {
 	Inquot.findOne({_id: id, firm: crUser.firm})
 	.populate({
 		path: 'compds', 
-		options: { sort: { 'qntpdSts': 1, 'qntupdAt': -1 } },
+		options: { sort: { 'qntpdSts': 1, 'updAt': -1 } },
 		populate: [
 			{path: 'brand'},
 			{path: 'pdfir'},

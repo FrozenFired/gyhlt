@@ -199,7 +199,7 @@ exports.qtQutExcel = (req, res) => {
 			// console.log(qut)
 			Compd.find({inquot: id})
 			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
-			.sort({'status': 1, 'qntcrtAt': -1})
+			.sort({'status': 1, 'crtAt': -1})
 			.exec((err, qutpds) => {
 				if(err) {
 					info = "cter CompdsAjax, Compd.find(), Error!";

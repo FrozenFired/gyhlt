@@ -64,9 +64,9 @@ var qunRender = (qun, role) => {
 		elem += '<div class="col-md-4">'
 			elem += '<div>'
 				elem += '创建时间: '
-				qntcrtAt = Date.now();
-				if(qun.qntcrtAt) qntcrtAt = new Date(qun.qntcrtAt)
-				elem += transformTime(qntcrtAt, 0, 10)
+				crtAt = Date.now();
+				if(qun.crtAt) crtAt = new Date(qun.crtAt)
+				elem += transformTime(crtAt, 0, 10)
 			elem += '</div>'
 
 			elem += '<div>'

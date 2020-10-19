@@ -12,16 +12,18 @@ let dbSchema = new Schema({
 	quner : {type: ObjectId, ref: 'User'},		// 询价员
 	cter: {type: ObjectId, ref: 'User'}, 		// 客户
 	cterNome: String, 							// 客户姓名
+	percent: Number,							// 客户加点
 
-	qntcrtAt: Date,								// 询价时间
-	qntupdAt: Date,								// 询价时间
-	qntfnlAt: Date,								// 报价完成时间
+	crtAt: Date,								// 询价创建时间
+	updAt: Date,								// 询价更新时间
+	fnlAt: Date,								// 报价完成时间
 
 	quter: {type: ObjectId, ref: 'User'},		// 报价报价负责人
 
 	/* ========== 基本信息 ========== */
 	code: String,								// 编号
 	times: Number,								// 报价次数
+
 
 	/* ========== 商品信息 ========== */
 	compds: [{type: ObjectId, ref: 'Compd'}],
@@ -37,7 +39,8 @@ dbSchema.pre('save', function(next) {
 		if(!this.quterSt) this.quterSt = 10;
 		if(!this.times) this.times = 1;
 		if(!this.qntPr) this.qntPr = 0;
-		this.crtAt = Date.now();
+		if(!this.crtAt) this.crtAt = Date.now();
+		if(!this.updAt) this.updAt = Date.now();
 	} else {
 
 	}
