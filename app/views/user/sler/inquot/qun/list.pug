@@ -20,10 +20,10 @@ block content
 			if crUser.role == Conf.roleUser.seller.num
 				-a;
 				include ./add
-		.qunsList
-			input#qunFilterAjax(type="hidden", value="/usQunsAjax?@#qunsElem@sl@")
-			//- input#qunFilterAjax(type="hidden", value="?key=xxx@#qunsElem")
-			#qunsElem.mt-5
+		.inquotsList
+			input#qunFilterAjax(type="hidden", value="/usQunsAjax?@#inquotsElem@sl@")
+			//- input#qunFilterAjax(type="hidden", value="?key=xxx@#inquotsElem")
+			#inquotsElem.mt-5
 		script(src="/js/user/sler/qun/add.js")
 
 		script(src="/js/dbs/ajaxGet/qun.js")

@@ -4,7 +4,7 @@
 	.col-md-6
 		.quantTotal
 			span 总条目: 
-			span #{qunpds.length}
+			span #{compds.length}
 	.col-md-3.text-right
 		button.btn.btn-link.qntPrTdBtn(type="button") <span class="oi oi-eye"></span>
 	.col-md-3.text-right
@@ -30,72 +30,72 @@ table.mt-3.table.table-bordered
 				h5.text-info
 					span#span-dinPrImp
 					span &nbsp;€
-		each qunpd in qunpds
+		each compd in compds
 			- let brandnum = '';
 			each brand in brands
-				if brand.brandNome == qunpd.brandNome
+				if brand.brandNome == compd.brandNome
 					- brandnum = brand.num;
-			tr.text-info.pdTr(pdbrand=brandnum, pdSts=qunpd.qntpdSts, id="tr-compdid-"+qunpd._id)
+			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
 				td
 					span.border.p-1
 						span.text-dark N. 
 						- let qntnum = '-'
-						if qunpd.qntnum
-							- qntnum = qunpd.qntnum;
-						if qun.status == Conf.status.confirm.num
+						if compd.qntnum
+							- qntnum = compd.qntnum;
+						if inquot.status == Conf.status.confirm.num
 							-a;
-							span.text-warning.qntnumClickup(id="span-qntnum-"+qunpd._id) #{qntnum}
-							input(id="org-qntnum-"+qunpd._id, type="hidden", value=qunpd.qntnum)
+							span.text-warning.qntnumClickup(id="span-qntnum-"+compd._id) #{qntnum}
+							input(id="org-qntnum-"+compd._id, type="hidden", value=compd.qntnum)
 						else
 							span #{qntnum}
-					form.ajaxForm(id="form-qntnum-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
-						input(type="hidden", name="obj[_id]", value=qunpd._id)
+					form.ajaxForm(id="form-qntnum-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+						input(type="hidden", name="obj[_id]", value=compd._id)
 						.form-group.row
 							.col-12
-								input.qntnumBlurup.form-control(id="ipt-qntnum-"+qunpd._id, type="number", name="obj[qntnum]", placeholder="询价编号", autocomplete="off", value=qunpd.qntnum)
+								input.qntnumBlurup.form-control(id="ipt-qntnum-"+compd._id, type="number", name="obj[qntnum]", placeholder="询价编号", autocomplete="off", value=compd.qntnum)
 
-					.text-danger(id="opt-qntnum-"+qunpd._id)
+					.text-danger(id="opt-qntnum-"+compd._id)
 					.brandnome.mt-3
-						if qunpd.brand
-							- brand = qunpd.brand;
+						if compd.brand
+							- brand = compd.brand;
 							span [#{brand.nome}]
 						else
-							span #{qunpd.brandNome}
+							span #{compd.brandNome}
 
-					if qunpd.area
+					if compd.area
 						-a;
 						.pdarea.mt-3
 							span.text-dark 区域: 
-							span #{qunpd.area}
+							span #{compd.area}
 				td
 					.pdnome
 						span.text-dark 品类: 
-						span #{qunpd.pdNome}
-					if qunpd.pdfir
-						- pdfir = qunpd.pdfir;
+						span #{compd.pdNome}
+					if compd.pdfir
+						- pdfir = compd.pdfir;
 						.pdfircode.mt-3
 							span.text-dark 系列名: 
 							span [#{pdfir.code}]
 					else
 						- let firNome = '产品系列名称';
-						if qunpd.firNome
-							- firNome = qunpd.firNome;
+						if compd.firNome
+							- firNome = compd.firNome;
 						.firnome.mt-3
 							span.text-dark 系列名: 
 							span #{firNome}
 					.photo.mt-3
 						- let photo = "/imgs/createPicture.jpg";
-						if qunpd.photo
-							- photo = qunpd.photo;
+						if compd.photo
+							- photo = compd.photo;
 							img.thumbnailImg(src=photo, width="120px")
-						else if qunpd.firphoto
-							- photo = qunpd.firphoto;
+						else if compd.firphoto
+							- photo = compd.firphoto;
 							img.thumbnailImg(src=photo, width="120px")
 						else
 							img(src=photo, width="120px")
 				td
-					if qunpd.pdsec
-						- pdsec = qunpd.pdsec;
+					if compd.pdsec
+						- pdsec = compd.pdsec;
 						.pdseccode
 							span.text-dark 产品编码: 
 							span [#{pdsec.code}]
@@ -105,109 +105,115 @@ table.mt-3.table.table-bordered
 					else
 						.pdseccode
 							span.text-dark 产品编码: 
-							span #{qunpd.secNome}
+							span #{compd.secNome}
 						.pdsecspec.mt-3
 							span.text-dark 产品尺寸: 
-							span #{qunpd.specf}
+							span #{compd.specf}
 
 					.sketch.mt-3
 						- let sketch = "/imgs/createPicture.jpg";
-						if qunpd.sketch
-							- sketch = qunpd.sketch;
+						if compd.sketch
+							- sketch = compd.sketch;
 							img.thumbnailImg(src=sketch, width="120px")
-						else if qunpd.pdsec
+						else if compd.pdsec
 							-a;
-							- sketch = qunpd.pdsec.photo;
+							- sketch = compd.pdsec.photo;
 							img.thumbnailImg(src=sketch, width="120px")
 						else
 							img(src=sketch, width="120px")
 				td
 					- let pdthdcode = '查找数据库';
-					if qunpd.pdthd
-						- pdthdcode = '['+qunpd.pdthd.code+']';
+					if compd.pdthd
+						- pdthdcode = '['+compd.pdthd.code+']';
 					.pdthdcode #{pdthdcode}
-					.pdmater.mt-2 #{qunpd.mater}
-					.pdcraft #{qunpd.craft}
+					.pdmater.mt-2 #{compd.mater}
+					.pdcraft #{compd.craft}
 					.images.row
 						- let subsp = -1;
-						each image in qunpd.images
+						each image in compd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
 								.col-6
 									img.thumbnailImg.mt-2(src=image, width="120px")
+									form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
+										input(type="hidden", name="compdId", value=compd._id)
+										input(type="hidden", name="picField", value="images")
+										input(type="hidden", name="subsp", value=subsp)
+										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+					include ../../../../aaPlugin/compd/imagesUpd
 				td.qntPrTd.bg-dark(style="display:")
-					if qunpd.qntpdSts != Conf.status.del.num
-						- let qntPrtot = qunpd.quant * qunpd.qntPr;
+					if compd.qntpdSts != Conf.status.del.num
+						- let qntPrtot = compd.quant * compd.qntPr;
 						- qntPrImp += qntPrtot;
 						.qntPr.mt-3.text-white
 							.qntPr
 								span 单价:
 								br
-								span #{(qunpd.qntPr).toFixed(2)}
-								input(id="org-qntPr-"+qunpd._id, type="hidden", value=qunpd.qntPr)
+								span #{(compd.qntPr).toFixed(2)}
+								input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
 							.qntPrTot.mt-3
 								span 总价:
 								br
-								span(id="span-qntPrtot-"+qunpd._id) #{qntPrtot.toFixed(2)}
+								span(id="span-qntPrtot-"+compd._id) #{qntPrtot.toFixed(2)}
 				td
-					if qunpd.qntpdSts != Conf.status.del.num
-						- quantTotal += qunpd.quant;
+					if compd.qntpdSts != Conf.status.del.num
+						- quantTotal += compd.quant;
 						if !isNaN(parseFloat(dinPrImp))
 							-a;
-							if qunpd.dinPr && !isNaN(parseFloat(qunpd.dinPr))
-								- dinPrImp += qunpd.quant * qunpd.dinPr;
+							if compd.dinPr && !isNaN(parseFloat(compd.dinPr))
+								- dinPrImp += compd.quant * compd.dinPr;
 							else
 								- dinPrImp = "未完成销售价";
 						.quant
 							span.text-dark 数量: 
-							if qun.status == Conf.status.confirm.num
+							if inquot.status == Conf.status.confirm.num
 								-a;
-								span.text-warning.quantClickup(id="span-quant-"+qunpd._id) #{qunpd.quant}
-								input(id="org-quant-"+qunpd._id, type="hidden", value=qunpd.quant)
-								form.ajaxForm(id="form-quant-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
-									input(type="hidden", name="obj[_id]", value=qunpd._id)
+								span.text-warning.quantClickup(id="span-quant-"+compd._id) #{compd.quant}
+								input(id="org-quant-"+compd._id, type="hidden", value=compd.quant)
+								form.ajaxForm(id="form-quant-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+									input(type="hidden", name="obj[_id]", value=compd._id)
 									.form-group.row
 										.col-12
-											input.quantBlurup.form-control(id="ipt-quant-"+qunpd._id, type="number", name="obj[quant]", placeholder="采购数量", autocomplete="off", value=qunpd.quant)
-								.text-danger(id="opt-quant-"+qunpd._id)
+											input.quantBlurup.form-control(id="ipt-quant-"+compd._id, type="number", name="obj[quant]", placeholder="采购数量", autocomplete="off", value=compd.quant)
+								.text-danger(id="opt-quant-"+compd._id)
 							else
-								span #{qunpd.quant}
+								span #{compd.quant}
 
 
 						.dinPr.mt-3
 							span.text-dark 单价: 
-							if qun.status == Conf.status.confirm.num
+							if inquot.status == Conf.status.confirm.num
 								-a;
-								if qunpd.dinPr
+								if compd.dinPr
 									-a;
-									span.text-warning.dinPrClickup(id="span-dinPr-"+qunpd._id) #{(qunpd.dinPr).toFixed(2)}
+									span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) #{(compd.dinPr).toFixed(2)}
 								else
-									span.text-warning.dinPrClickup(id="span-dinPr-"+qunpd._id) 填写售价
-								input(id="org-dinPr-"+qunpd._id, type="hidden", value=qunpd.dinPr)
-								form.ajaxForm(id="form-dinPr-"+qunpd._id, action="/slQunpdUpdAjax", style="display:none")
-									input(type="hidden", name="obj[_id]", value=qunpd._id)
+									span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) 填写售价
+								input(id="org-dinPr-"+compd._id, type="hidden", value=compd.dinPr)
+								form.ajaxForm(id="form-dinPr-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+									input(type="hidden", name="obj[_id]", value=compd._id)
 									.form-group.row
 										.col-12
-											input.dinPrBlurup.form-control(id="ipt-dinPr-"+qunpd._id, type="text", name="obj[dinPr]", placeholder="采购价格", autocomplete="off", value=qunpd.dinPr)
-								.text-danger(id="opt-dinPr-"+qunpd._id)
+											input.dinPrBlurup.form-control(id="ipt-dinPr-"+compd._id, type="text", name="obj[dinPr]", placeholder="采购价格", autocomplete="off", value=compd.dinPr)
+								.text-danger(id="opt-dinPr-"+compd._id)
 							else
-								if qunpd.dinPr
+								if compd.dinPr
 									-a;
-									span #{(qunpd.dinPr).toFixed(2)}
+									span #{(compd.dinPr).toFixed(2)}
 								else
 									span 售价填写错误
 						.dinPrtot
 							strong
 								span.text-dark 总价: 
-								span(id="span-dinPrtot-"+qunpd._id) #{(qunpd.quant * qunpd.dinPr).toFixed(2)}
+								span(id="span-dinPrtot-"+compd._id) #{(compd.quant * compd.dinPr).toFixed(2)}
 					else
 						.del.text-danger
 							div.text-center 删除原因:
-							.delNote.mt-2 #{qunpd.delNote}
+							.delNote.mt-2 #{compd.delNote}
 .hideImp
 	input#ipt-quantTotal(type="hidden", value=quantTotal)
 	input#ipt-qntPrImp(type="hidden", value=qntPrImp)
 	input#ipt-dinPrImp(type="hidden", value=dinPrImp)
 
-script(src="/js/user/sler/qunpd/soleup.js")
+script(src="/js/user/sler/compd/soleup.js")

@@ -1,83 +1,83 @@
 .border.border-dark.p-3
 	.row.text-center
 		.col-md-6
-			h5.code 询价单号: #{qun.code}
+			h5.code 询价单号: #{inquot.code}
 
 			.time
 				span 询价时间: 
-				span #{moment(qun.crtAt).format('YYYY年MM月DD日')}
+				span #{moment(inquot.crtAt).format('YYYY年MM月DD日')}
 			.qun 
 				span 询价人:
-				if qun.quner
-					- quner = qun.quner;
+				if inquot.quner
+					- quner = inquot.quner;
 					span #{quner.nome} [ #{quner.code} ]
 				else
 					span 数据丢失
 		.col-md-6
 			.cterNome
 				span 客户姓名: 
-				span.text-warning.cterNomeClickup#span-cterNome-obj #{qun.cterNome}
+				span.text-warning.cterNomeClickup#span-cterNome-obj #{inquot.cterNome}
 				form.ajaxForm#form-cterNome-obj(action="/slQunUpdAjax", style="display:none")
-					input#org-cterNome-obj(type="hidden", value=qun.cterNome)
-					input(type="hidden", name="obj[_id]", value=qun._id)
+					input#org-cterNome-obj(type="hidden", value=inquot.cterNome)
+					input(type="hidden", name="obj[_id]", value=inquot._id)
 					.form-group.row
 						.col-12
-							input.cterNomeBlurup#ipt-cterNome-obj.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off", value=qun.cterNome)
+							input.cterNomeBlurup#ipt-cterNome-obj.form-control(type="text", name="obj[cterNome]", placeholder="填写客户姓名", autocomplete="off", value=inquot.cterNome)
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
 					- status = '';
-					if sts.num == qun.status
+					if sts.num == inquot.status
 						- status = sts.val;
 						- break;
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
-				a(href="/slInquotExcel/"+qun._id) Excel <span class="oi oi-data-transfer-download"></span>
+				a(href="/slInquotExcel/"+inquot._id) Excel <span class="oi oi-data-transfer-download"></span>
 	.statusChange.row.mt-3.text-center
-		if qun.status == Conf.status.init.num
+		if inquot.status == Conf.status.init.num
 			-a;
 			.col-6
 				button.btn.btn-danger.delObjectBtn(type="button") 删除此询价单
 				.delObject(style="display:none")
-					a.mx-4.my-2.btn.btn-danger(href="/slQunDel/"+qun._id) 确定删除
+					a.mx-4.my-2.btn.btn-danger(href="/slQunDel/"+inquot._id) 确定删除
 					button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消删除
 
 			.col-6
-				if qunpds && qunpds.length > 0
+				if compds && compds.length > 0
 					- a;
-					button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num) 提交询价单
-		else if qun.status == Conf.status.quoting.num
+					button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+inquot._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.quoting.num) 提交询价单
+		else if inquot.status == Conf.status.quoting.num
 				- a;
 				.col-6
 				.col-6
-					if qun.compds.length == 0
+					if inquot.compds.length == 0
 						-a;
 						.textinfo
 							span.p-2.border.border-danger 请添加询价商品
 							span.p-2 或
 							span.p-2.border.border-danger.text-danger.delObjectBtn 删除此询价单
 						.delObject(style="display:none")
-							a.btn.btn-danger(href="/slQunDel/"+qun._id) 删除
+							a.btn.btn-danger(href="/slQunDel/"+inquot._id) 删除
 							button.mx-4.my-2.delObjectCancel.border.border-danger.text-danger.btn.btn-default(type="button") 取消
-					else if qun.quterSt == Conf.status.init.num
+					else if inquot.quterSt == Conf.status.init.num
 						-a;
 						span.p-2.border.border-danger 请等待报价员完成报价
 					else
 						button.btn.btn-secondary.quotingBtnShow(type="button", title="必须完善具体工艺面料等细节") 申请精确报价
-						button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qun._id+"-pricing", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pricing.num, style="display:none") 申请精确报价
-		else if qun.status == Conf.status.confirm.num
+						button.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+inquot._id+"-pricing", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.pricing.num, style="display:none") 申请精确报价
+		else if inquot.status == Conf.status.confirm.num
 			-a;
 			.col-3
-				button.btn.btn-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-unord", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.unord.num, title="客户不需要") 无效询价
+				button.btn.btn-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-unord", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.unord.num, title="客户不需要") 无效询价
 			.col-3
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qun._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.quoting.num, title="其他需求") 重新报价
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-quoting", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.quoting.num, title="其他需求") 重新报价
 			.col-6
-				button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+qun._id+"-pending", type="button", data-url="/usInquotStatusAjax", data-id=qun._id, data-stsf=qun.status, data-stst=Conf.status.pending.num, title="客户确认采购") 确定
-		else if qun.status == Conf.status.ord.num
+				button.btn.btn-success.changeStsAjax(id="changeStsAjax-"+inquot._id+"-pending", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.pending.num, title="客户确认采购") 确定
+		else if inquot.status == Conf.status.ord.num
 			-a;
 			.col-6
 			.col-6
-				a.btn.btn-success(href="/slDin/"+qun.ordin) 查看订单
+				a.btn.btn-success(href="/slDin/"+inquot.ordin) 查看订单
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/dbs/compd/total.js")
 script(src="/js/user/sler/qun/detail.js")

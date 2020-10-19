@@ -14,16 +14,18 @@ block content
 		div(style="height:40px")
 
 		.compds.mt-3
-			if qun.status >= Conf.status.confirm.num
+			if inquot.status >= Conf.status.confirm.num
 				-a;
 				include ./compd/listConfirm
 			else
 				include ./compd/list
 		.compdAdd.mt-5
-			if qun.status == Conf.status.init.num || qun.status == Conf.status.quoting.num
+			if inquot.status == Conf.status.init.num || inquot.status == Conf.status.quoting.num
 				-a;
 				include ./compd/add
-		if qun.quter
+		if inquot.quter
 			-a;
-			- let toUser = qun.quter;
+			- let toUser = inquot.quter;
 			include ../../../aaPlugin/notify/list
+
+	script(src="/js/user/sler/compd/edit.js")

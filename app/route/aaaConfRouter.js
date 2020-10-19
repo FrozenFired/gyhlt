@@ -13,5 +13,6 @@ module.exports = function(app){
 	require('./lgerRouter')(app);
 	require('./oderRouter')(app);
 	require('./pmerRouter')(app);
+	require('./userRouter')(app);
 	require('./usAjaxRouter')(app);
 };

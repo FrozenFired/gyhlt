@@ -17,13 +17,13 @@ var getQuns = (urlQuery, elemId, isReload, role) => {
 					// 如果数据错误 则不输出
 				} else {
 					// console.log(results.data)
-					let quns = results.data.inquots;
+					let inquots = results.data.inquots;
 					statusConb = results.data.statusConb;
 					page = results.data.page
 					isMore = results.data.isMore
 					count = results.data.count
 					$("#qunCount").text(count)
-					qunsRender(quns, elemId, isReload, role)
+					inquotsRender(inquots, elemId, isReload, role)
 				}
 			} else if(results.status === 0) {
 				alert(results.msg);
@@ -32,15 +32,15 @@ var getQuns = (urlQuery, elemId, isReload, role) => {
 	});
 }
 
-var qunsRender = (quns, elemId, isReload, role) => {
-	let elem = '<div class="qunsElem">'
-		for(let i=0; i<quns.length; i++) {
-			let qun = quns[i];
+var inquotsRender = (inquots, elemId, isReload, role) => {
+	let elem = '<div class="inquotsElem">'
+		for(let i=0; i<inquots.length; i++) {
+			let qun = inquots[i];
 			elem += qunRender(qun, role);
 		}
 	elem += '</div>'
-	if(isReload == 1) $(".qunsElem").remove();
-	if(!elemId) elemId = "#qunsElem";
+	if(isReload == 1) $(".inquotsElem").remove();
+	if(!elemId) elemId = "#inquotsElem";
 	$(elemId).append(elem);
 }
 var qunRender = (qun, role) => {
@@ -98,7 +98,7 @@ $(function() {
 	let qunElemId = '';
 	let role = '';
 	let statusParam = '';
-	qunsInit = () => {
+	inquotsInit = () => {
 		let qunFilter = $("#qunFilterAjax").val();
 		if(qunFilter) {
 			qunParam = qunFilter.split('@')[0];
@@ -109,7 +109,7 @@ $(function() {
 		urlQuery = qunParam+statusParam;
 		getQuns(urlQuery, qunElemId, 1, role);
 	}
-	qunsInit();
+	inquotsInit();
 
 	/* ====== 点击品类名 显示系列 ====== */
 	$(".statusClick").click(function(e) {

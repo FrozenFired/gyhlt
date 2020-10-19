@@ -4,7 +4,7 @@ $(function() {
 	let qunpdParam = '';
 	let qunpdElemId = '';
 	let role = '';
-	qunpdsInit = () => {
+	compdsInit = () => {
 		let qunpdFilter = $("#qunpdFilterAjax").val();
 		if(qunpdFilter) {
 			qunpdParam = qunpdFilter.split('@')[0];
@@ -14,7 +14,7 @@ $(function() {
 		urlQuery = qunpdParam;
 		getQunpds(urlQuery, qunpdElemId, 1, role);
 	}
-	qunpdsInit();
+	compdsInit();
 
 	$("#searchTog").click(function(e) {
 		$("#searchElem").toggle();

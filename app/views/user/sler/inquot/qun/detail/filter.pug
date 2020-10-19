@@ -3,13 +3,13 @@
 	.col-8.col-md-3
 		if brands && brands.length > 1
 			-a;
-			select#brandSel.form-control(name="obj[pdnome]", data-style="btn-info")
+			select#brandSel.form-control(data-style="btn-info")
 				option(value="全部品牌") 全部品牌
 				each brand in brands
 					-a;
 					option(value=brand.num) #{brand.brandNome}
 	.col-md-8.col-lg-6
-		if qun.status != Conf.status.init.num
+		if inquot.status != Conf.status.init.num
 			-a;
 			.row.text-righr
 				.col-3
@@ -22,4 +22,4 @@
 						.form-check.form-check-inline
 							input.form-check-input(id="pdSts-"+sts, type="radio", name="qntpdSts" value=Conf.status[sts].num)
 							label.form-check-label(for="pdSts-"+sts) #{Conf.status[sts].val}
-script(src="/js/user/sler/qunpd/filter.js")
+script(src="/js/user/sler/compd/filter.js")

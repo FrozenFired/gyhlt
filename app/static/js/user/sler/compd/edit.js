@@ -1,12 +1,12 @@
 $(() => {
 	/* ======== 询价单下的商品添加页面的切换 ======*/
 	$("#qunpdAddPageShow").click((e) => {
-		$("#qunpdsPage").hide();
+		$("#compdsPage").hide();
 		$("#qunpdAddPage").show();
 	})
-	$("#qunpdsPageShow").click((e) => {	// 取消添加
+	$("#compdsPageShow").click((e) => {	// 取消添加
 		$("#qunpdAddPage").hide();
-		$("#qunpdsPage").show();
+		$("#compdsPage").show();
 	})
 	var ifNegativeFunc = function() {
 		let num = $("#quantIpt").val();
@@ -54,14 +54,29 @@ $(() => {
 	})
 
 	$(".changeImg").click(function(e) {
-		let id = $(this).attr("id").split('-')[1];
-		$("#ipt-"+id).click();
+		let strs = $(this).attr("id").split('-');
+		let field = strs[1];
+		if(strs.length == 2) {
+			$("#ipt-"+field).click();
+		} else if(strs.length == 3) {
+			let id = strs[2];
+			$("#ipt-"+field+"-"+id).click();
+		}
 	})
 	$(".picIpt").change(function(e) {
-		let id = $(this).attr("id").split('-')[1];
-		var f = document.getElementById('ipt-'+id).files[0];
-		var src = window.URL.createObjectURL(f);
-		document.getElementById('img-'+id).src = src;
-		$("#img-"+id).removeClass("rounded-circle")
+		let strs = $(this).attr("id").split('-');
+		let field = strs[1];
+		if(strs.length == 2) {
+			var f = document.getElementById('ipt-'+field).files[0];
+			var src = window.URL.createObjectURL(f);
+			document.getElementById('img-'+field).src = src;
+			$("#img-"+field).removeClass("rounded-circle")
+		} else if(strs.length == 3) {
+			let id = strs[2];
+			var f = document.getElementById('ipt-'+field+'-'+id).files[0];
+			var src = window.URL.createObjectURL(f);
+			document.getElementById('img-'+field+'-'+id).src = src;
+			$("#img-"+field+'-'+id).removeClass("rounded-circle")
+		}
 	})
 })

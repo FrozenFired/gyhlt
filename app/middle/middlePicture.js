@@ -56,8 +56,8 @@ let MiddlePicture = {
 		let picData = req.files.photo;	// 图片数据
 		if(picData && picData.originalFilename && picDir) {
 			let filePath = picData.path;		// 图片的位置
-			if(obj && obj.picOld){
-				MiddlePicture.deletePicture(obj.picOld, picDir);
+			if(obj && obj.photoOld){
+				MiddlePicture.deletePicture(obj.photoOld, picDir);
 			}
 			fs.readFile(filePath, (err, data) => {
 				let type = picData.type.split('/')[1];		// 图片类型
@@ -86,8 +86,8 @@ let MiddlePicture = {
 		let picData = req.files.sketch;	// 图片数据
 		if(picData && picData.originalFilename && picDir) {
 			let filePath = picData.path;		// 图片的位置
-			if(obj && obj.picOld){
-				MiddlePicture.deletePicture(obj.picOld, picDir);
+			if(obj && obj.sketchOld){
+				MiddlePicture.deletePicture(obj.sketchOld, picDir);
 			}
 			fs.readFile(filePath, (err, data) => {
 				let type = picData.type.split('/')[1];		// 图片类型
@@ -120,13 +120,14 @@ let MiddlePicture = {
 			let crUserId = '';
 			if(req.session.crUser) crUserId = req.session.crUser._id + '_';
 			let obj = req.body.obj;
+			// console.log(obj.images)
 			let picName = req.body.picName;			// 获取图片主要名称
 			let picDir = req.body.picDir;		// 图片要储存的位置
 			let picData = imgsDatas[n]
 			if(picData && picData.originalFilename && picDir) {
 				let filePath = picData.path;		// 图片的位置
-				if(obj && obj.picOld){
-					MiddlePicture.deletePicture(obj.picOld, picDir);
+				if(obj && obj.images[n]){
+					MiddlePicture.deletePicture(obj.images[n], picDir);
 				}
 				fs.readFile(filePath, (err, data) => {
 					let type = picData.type.split('/')[1];		// 图片类型

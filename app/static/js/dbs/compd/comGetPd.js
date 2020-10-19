@@ -143,10 +143,8 @@ $(function() {
 			let elem = '<div class="brandweb">'
 				elem += '<a href="'+website+'" target="_blank">'+brand.nome+'官网</a>'
 			elem += '</div>';
-			console.log(1)
 			$(".brandweb").remove();
 			$("#brandweb").append(elem)
-			console.log(2)
 		}
 	}
 

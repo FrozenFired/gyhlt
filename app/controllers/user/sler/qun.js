@@ -40,28 +40,28 @@ exports.slQun = (req, res) => {
 			{path: 'quner'},
 		]
 	})
-	.exec((err, qun) => {
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "sler Qun, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qun) {
+		} else if(!inquot) {
 			info = "这个询价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qun)
-			let qunpds = qun.compds;
+			// console.log(inquot)
+			let compds = inquot.compds;
 			let brands = new Array();
-			for(let i=0; i<qunpds.length; i++) {
-				let qunpd = qunpds[i];
+			for(let i=0; i<compds.length; i++) {
+				let compd = compds[i];
 				let k=0;
 				for(; k<brands.length; k++) {
-					if(brands[k].brandNome == qunpd.brandNome) break;
+					if(brands[k].brandNome == compd.brandNome) break;
 				}
 				if(k == brands.length) {
 					let brand = new Object();
 					brand.num = k+1;
-					brand.brandNome = qunpd.brandNome;
+					brand.brandNome = compd.brandNome;
 					brands.push(brand)
 				}
 			}
@@ -69,8 +69,8 @@ exports.slQun = (req, res) => {
 			res.render('./user/sler/inquot/qun/detail', {
 				title: '询价单详情',
 				crUser,
-				qun,
-				qunpds,
+				inquot,
+				compds,
 
 				brands,
 			})

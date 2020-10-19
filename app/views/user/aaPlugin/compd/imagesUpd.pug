@@ -1,0 +1,50 @@
+.imagesEdit.text-right
+	a(href="#thdPdPicUp-"+compd._id data-toggle="modal") [修改材质图片]
+.modal.fade(id="thdPdPicUp-"+compd._id)
+	.modal-dialog
+		.modal-content
+			form(method="post", action="/compdImagesUpd", enctype="multipart/form-data")
+				.modal-header 修改材质图片
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=compd._id)
+
+					input(type="hidden", name="picDir", value=Conf.picPath.compd)
+					input(type="hidden", name="picName", value=crUser.firm.code)
+					- let images = new Array();
+					if compd.images
+						- images = compd.images;
+					.mt-3(align="center")
+						- let images0 = "";
+						if images.length > 0 && images[0]
+							- images0 = images[0];
+						img(id="img-images0-"+compd._id, src=images0, width="240px")
+						.changeImg.text-info(id="imgEdit-images0-"+compd._id) <span class="oi oi-pencil"></span>[点击]
+						input(type="hidden", name="obj[images][0]", value=compd.images[0])
+						input.picIpt.btn.btn-info.btn-block(id="ipt-images0-"+compd._id, type="file", name="images[0]", style="display:none")
+					.mt-3(align="center")
+						- let images1 = "";
+						if images.length > 1 && images[1]
+							- images1 = images[1];
+						img(id="img-images1-"+compd._id, src=images1, width="240px")
+						.changeImg.text-info(id="imgEdit-images1-"+compd._id) <span class="oi oi-pencil"></span>[点击]
+						input(type="hidden", name="obj[images][1]", value=compd.images[1])
+						input.picIpt.btn.btn-info.btn-block(id="ipt-images1-"+compd._id, type="file", name="images[1]", style="display:none")
+					.mt-3(align="center")
+						- let images2 = "";
+						if images.length > 2 && images[2]
+							- images2 = images[2];
+						img(id="img-images2-"+compd._id, src=images2, width="240px")
+						.changeImg.text-info(id="imgEdit-images2-"+compd._id) <span class="oi oi-pencil"></span>[点击]
+						input(type="hidden", name="obj[images][2]", value=compd.images[2])
+						input.picIpt.btn.btn-info.btn-block(id="ipt-images2-"+compd._id, type="file", name="images[2]", style="display:none")
+					.mt-3(align="center")
+						- let images3 = "";
+						if images.length > 3 && images[3]
+							- images3 = images[3];
+						img(id="img-images3-"+compd._id, src=images3, width="240px")
+						.changeImg.text-info(id="imgEdit-images3-"+compd._id) <span class="oi oi-pencil"></span>[点击]
+						input(type="hidden", name="obj[images][3]", value=compd.images[3])
+						input.picIpt.btn.btn-info.btn-block(id="ipt-images3-"+compd._id, type="file", name="images[3]", style="display:none")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal")  取消
+					button.btn.btn-success(type="submit")  修改
