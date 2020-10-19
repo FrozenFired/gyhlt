@@ -67,13 +67,9 @@ table.mt-3.table.table-bordered
 						if qutpd.photo
 							- photo = qutpd.photo;
 							img.thumbnailImg(src=photo, width="120px")
-							.picLink.text-right
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.firphoto
 							- photo = qutpd.firphoto;
 							img.thumbnailImg(src=photo, width="120px")
-							.picLink.text-right
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")
 				td
@@ -98,14 +94,10 @@ table.mt-3.table.table-bordered
 						if qutpd.sketch
 							- sketch = qutpd.sketch;
 							img.thumbnailImg(src=sketch, width="120px")
-							.picLink.text-right
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qutpd.pdsec
 							-a;
 							- sketch = qutpd.pdsec.photo;
 							img.thumbnailImg(src=sketch, width="120px")
-							.picLink.text-right
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=sketch, width="120px")
 				td
@@ -124,8 +116,6 @@ table.mt-3.table.table-bordered
 								-a;
 								.col-6
 									img.thumbnailImg.mt-2(src=image, width="120px")
-									.picLink.text-right
-										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td
 					span #{qutpd.note}
 

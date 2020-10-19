@@ -88,13 +88,9 @@ table.mt-3.table.table-bordered
 						if qunpd.photo
 							- photo = qunpd.photo;
 							img.thumbnailImg(src=photo, width="120px")
-							.picLink
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.firphoto
 							- photo = qunpd.firphoto;
 							img.thumbnailImg(src=photo, width="120px")
-							.picLink.text-right
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")
 				td
@@ -119,14 +115,10 @@ table.mt-3.table.table-bordered
 						if qunpd.sketch
 							- sketch = qunpd.sketch;
 							img.thumbnailImg(src=sketch, width="120px")
-							.picLink
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else if qunpd.pdsec
 							-a;
 							- sketch = qunpd.pdsec.photo;
 							img.thumbnailImg(src=sketch, width="120px")
-							.picLink
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=sketch, width="120px")
 				td
@@ -144,8 +136,6 @@ table.mt-3.table.table-bordered
 								-a;
 								.col-6
 									img.thumbnailImg.mt-2(src=image, width="120px")
-									.picLink
-										a(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
 				td.qntPrTd.bg-dark(style="display:")
 					if qunpd.qntpdSts != Conf.status.del.num
 						- let qntPrtot = qunpd.quant * qunpd.qntPr;

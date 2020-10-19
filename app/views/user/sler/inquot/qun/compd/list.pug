@@ -82,16 +82,10 @@ table.mt-2.table.table-bordered
 							form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
 								input(type="hidden", name="compdId", value=qunpd._id)
 								input(type="hidden", name="picField", value="photo")
-								.form-group.row
-									.col-6
-										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-									.col-6
-										a.btn(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
+								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
 						else if qunpd.firphoto
 							- photo = qunpd.firphoto;
 							img.thumbnailImg(src=photo, width="120px")
-							.picLink.text-right
-								a(href=photo, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=photo, width="120px")
 				td
@@ -119,17 +113,11 @@ table.mt-2.table.table-bordered
 							form(method="post", action="/slQunpdDelPic", enctype="multipart/form-data")
 								input(type="hidden", name="compdId", value=qunpd._id)
 								input(type="hidden", name="picField", value="sketch")
-								.form-group.row
-									.col-6
-										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-									.col-6
-										a.btn(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
+								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
 						else if qunpd.pdsec
 							-a;
 							- sketch = qunpd.pdsec.photo;
 							img.thumbnailImg(src=sketch, width="120px")
-							.picLink.text-right
-								a(href=sketch, target="_blank") <span class="oi oi-zoom-in"></span>
 						else
 							img(src=sketch, width="120px")
 				td
@@ -151,11 +139,7 @@ table.mt-2.table.table-bordered
 										input(type="hidden", name="compdId", value=qunpd._id)
 										input(type="hidden", name="picField", value="images")
 										input(type="hidden", name="subsp", value=subsp)
-										.form-group.row
-											.col-6
-												button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-											.col-6
-												a.btn(href=image, target="_blank") <span class="oi oi-zoom-in"></span>
+										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
 				td
 					span #{qunpd.note}
 				td
