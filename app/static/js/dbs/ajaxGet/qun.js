@@ -55,7 +55,7 @@ var qunRender = (qun, role) => {
 	let elem = '';
 	elem += '<div class="row py-2 mt-2 text-center border qunCard">'
 		elem += '<div class="col-md-4">'
-			elem += '<a class="btn btn-info" href="/'+role+'Qun/'+qun._id+'">'
+			elem += '<a class="btn btn-info mt-3" href="/'+role+'Qun/'+qun._id+'">'
 				elem += '<div style="font-size: 23px;">'+qun.code+'</div>'
 			elem += '</a>'
 
@@ -69,7 +69,8 @@ var qunRender = (qun, role) => {
 				elem += transformTime(crtAt, 0, 10)
 			elem += '</div>'
 
-			elem += '<div>'
+
+			elem += '<div class="mt-1">'
 				elem += '询价人:'
 				if(qun.quner) {
 					elem += qun.quner.nome + ' [' + qun.quner.code + ']'
@@ -77,20 +78,94 @@ var qunRender = (qun, role) => {
 					elem += '数据丢失';
 				}
 			elem += '</div>'
-
-			elem += '<div>'
-				elem += '报价次数: '+ qun.times
-			elem += '</div>'
-
+			elem += '<div class="mt-2 text-info">客户姓名: ' + qun.cterNome +'</div>'
 		elem += '</div>'
 
 		elem += '<div class="col-md-4">'
-			elem += '<div class="text-info">客户姓名: ' + qun.cterNome +'</div>'
-
-			elem += '<div class="mt-2">'
+			elem += '<div>产品种类: ' + qun.compds.length +'</div>'
+			elem += '<div class="mt-1">报价次数: '+ qun.times + '</div>'
+			elem += '<div class="mt-2 text-danger">'
 				elem += '状态: ' + status
 			elem += '</div>'
 		elem += '</div>'
 	elem += '</div>'
 	return elem;
 }
+
+$(function() {
+	/* ====== 初始加载 =====*/
+	let urlQuery = '';
+	let qunParam = '';
+	let qunElemId = '';
+	let role = '';
+	let statusParam = '';
+	qunsInit = () => {
+		let qunFilter = $("#qunFilterAjax").val();
+		if(qunFilter) {
+			qunParam = qunFilter.split('@')[0];
+			qunElemId = qunFilter.split('@')[1];
+			role = qunFilter.split('@')[2];
+			statusParam = qunFilter.split('@')[3];
+		}
+		urlQuery = qunParam+statusParam;
+		getQuns(urlQuery, qunElemId, 1, role);
+	}
+	qunsInit();
+
+	/* ====== 点击品类名 显示系列 ====== */
+	$(".statusClick").click(function(e) {
+		let target = $(e.target);
+		let status = target.data("status");
+
+		if((!status && status != 0) || status.length < 1) {
+			statusParam = '';
+		} else {
+			statusParam = "&status=" + status;
+		}
+		// console.log(statusParam)
+		page = 0;
+		urlQuery = qunParam + statusParam;
+		getQuns(urlQuery, qunElemId, 1, role);
+
+		$(".statusClick").removeClass("btn-success");
+		$(".statusClick").addClass("btn-default");
+
+		$(this).removeClass("btn-default");
+		$(this).addClass("btn-success");
+
+		$("#qunSearch").val('');
+	})
+
+	$("#searchTog").click(function(e) {
+		$("#searchElem").toggle();
+	})
+	/* ====== 根据搜索关键词 显示系列 ====== */
+	$("#qunSearch").blur((e) => {
+		$(".statusClick").removeClass("btn-success");
+		$(".statusClick").addClass("btn-default");
+
+		let keyword = $("#qunSearch").val().replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		if(keyword && keyword.length > 0) {
+			keyword = "&keyword=" + keyword;
+		} else {
+			keyword = "";
+			$("#statusAll").removeClass("btn-default");
+			$("#statusAll").addClass("btn-success");
+		}
+		page = 0;
+		// statusParam = '&status='+statusCond
+		urlQuery = qunParam + keyword;
+		getQuns(urlQuery, qunElemId, 1, role);
+	})
+
+	$(window).scroll(function(){
+		var scrollTop = $(this).scrollTop();
+		var scrollHeight = $(document).height();
+		var windowHeight = $(this).height();
+		if(scrollTop + windowHeight + 58 > scrollHeight){
+			if(isMore == 1) {
+				getQuns(urlQuery+'&page='+(parseInt(page)+1), qunElemId, 0, role);
+			}
+		}
+	});
+})

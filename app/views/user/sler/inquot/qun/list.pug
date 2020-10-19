@@ -12,21 +12,18 @@ block content
 				button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 		.filter.p-3
 			span.mr-5 查看询价单:
+			button.mr-5.btn.btn-success.statusClick#statusAll(class=stsBtn, type="button") 全部
 			each sts in Conf.qunSts
-				- let stsBtn = "btn-default";
-				if sts == 'init'
-					- stsBtn = "btn-success";
-				button.mr-3.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
-			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+				-a;
+				button.ml-3.btn.btn-default.statusClick(type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 		.add.mt-3
 			if crUser.role == Conf.roleUser.seller.num
 				-a;
 				include ./add
 		.qunsList
-			input#qunFilterAjax(type="hidden", value="/usQunsAjax?@#qunsElem@sl@&status="+Conf.status.init.num)
+			input#qunFilterAjax(type="hidden", value="/usQunsAjax?@#qunsElem@sl@")
 			//- input#qunFilterAjax(type="hidden", value="?key=xxx@#qunsElem")
 			#qunsElem.mt-5
 		script(src="/js/user/sler/qun/add.js")
 
 		script(src="/js/dbs/ajaxGet/qun.js")
-		script(src="/js/user/sler/qun/list.js")
