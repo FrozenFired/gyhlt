@@ -19,8 +19,8 @@ let dbSchema = new Schema({
 	weight: {type: Number, default: 0},	// 权重 排序用的
 	status: Number,						// 供应商状态 
 
-	creater: {type: ObjectId, ref: 'User'},
-	updater: {type: ObjectId, ref: 'User'},
+	crter: {type: ObjectId, ref: 'User'},
+	upder: {type: ObjectId, ref: 'User'},
 	crtAt: Date,
 	updAt: Date,
 });

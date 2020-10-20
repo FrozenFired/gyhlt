@@ -125,7 +125,7 @@ exports.pmSellNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	obj.firm = crUser.firm;
-	obj.creater = crUser._id;
+	obj.crter = crUser._id;
 
 	Sell.findOne({
 		firm: crUser.firm,
@@ -158,7 +158,7 @@ exports.pmSellNew = (req, res) => {
 exports.pmSellUpd = (req, res) => {
 	let crUser = req.session.crUser;
 
-	obj.updater = crUser._id;
+	obj.upder = crUser._id;
 	let obj = req.body.obj;
 	Sell.findOne({_id: obj._id, firm: crUser.firm}, (err, sell) => {
 		if(err) {

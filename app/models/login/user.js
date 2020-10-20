@@ -21,11 +21,13 @@ let dbSchema = new Schema({
 	tel: String,
 	addr: String,
 
-	shelf: Number,	// 如果shelf为下架, 则此人上传的数据默认为下架
+	percent: Number, 	// 销售或者客户的加点数
 
+
+	shelf: Number,	// 如果shelf为下架, 则此人上传的数据默认为下架
 	logAt: Date,	// 上次登录时间
 
-	creater: {type: ObjectId, ref: 'User'},
+	crter: {type: ObjectId, ref: 'User'},
 	crtAt: Date,
 	updAt: Date,
 });

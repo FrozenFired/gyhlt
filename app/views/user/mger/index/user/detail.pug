@@ -68,10 +68,16 @@ block content
 																option(value=key, selected="selected") #{Conf.shelf[key]}
 															else
 																option(value=key) #{Conf.shelf[key]}
+										if user.role == Conf.roleUser.customer.num || user.role == Conf.roleUser.seller.num
+											-a;
+											.form-group.row
+												label.col-4.col-form-label(for="percentIpt") 加点数
+												.col-8
+													input#percentIpt.form-control(type="number", name="obj[percent]" value=user.percent, autocomplete="off")
 										.form-group.row
-											label.col-4.col-form-label(for="iptName") 名字
+											label.col-4.col-form-label(for="nomeIpt") 名字
 											.col-8
-												input#iptName.form-control(type="text", name="obj[nome]" value=user.nome, autocomplete="off")
+												input#nomeIpt.form-control(type="text", name="obj[nome]" value=user.nome, autocomplete="off")
 										.form-group.row
 											label.col-4.col-form-label(for="iptLang") 语言
 											.col-8
@@ -104,6 +110,11 @@ block content
 								- role = roleUser.val;
 								- break;
 						span #{role}
+				if Conf.roleAdmin.includes(crUser.role) && (user.role == Conf.roleUser.customer.num || user.role == Conf.roleUser.seller.num)
+					-a;
+					tr
+						td 加点:
+						td #{user.percent} %
 				tr
 					td 语言:
 					td

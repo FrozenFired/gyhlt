@@ -143,6 +143,7 @@ exports.slQunNew = (req, res) => {
 	obj.firm = crUser.firm;
 	obj.quner = crUser._id;
 	obj.status = Conf.status.init.num;
+	obj.percent = crUser.percent;
 
 	let now = new Date();
 	let year = now.getFullYear();

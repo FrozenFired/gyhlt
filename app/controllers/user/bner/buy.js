@@ -51,7 +51,7 @@ exports.bnBuyNew = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	obj.firm = crUser.firm;
-	obj.creater = crUser._id;
+	obj.crter = crUser._id;
 	info = null;
 	if(!obj.discount) {
 		info = "请输入折扣"
@@ -227,7 +227,7 @@ exports.bnBuyDel = (req, res) => {
 exports.bnBuyUpd = (req, res) => {
 	let crUser = req.session.crUser;
 
-	obj.updater = crUser._id;
+	obj.upder = crUser._id;
 	let obj = req.body.obj;
 	Buy.findOne({_id: obj._id, firm: crUser.firm}, (err, buy) => {
 		if(err) {
