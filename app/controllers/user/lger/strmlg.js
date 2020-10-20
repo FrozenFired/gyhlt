@@ -1,12 +1,12 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let Conf = require('../../../../conf');
+const Conf = require('../../../../conf');
 
-let Strmlg = require('../../../models/firm/stream/strmlg');
-let Buy = require('../../../models/firm/stream/buy');
-let Firm = require('../../../models/login/firm');
+const Strmlg = require('../../../models/firm/stream/strmlg');
+const Buy = require('../../../models/firm/stream/buy');
+const Firm = require('../../../models/login/firm');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 exports.lgStrmlgs = (req, res) => {
 	let crUser = req.session.crUser;

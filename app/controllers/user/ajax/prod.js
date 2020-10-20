@@ -1,10 +1,10 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Brand = require('../../../models/firm/brand');
-let Pdfir = require('../../../models/firm/pd/pdfir');
-let Pdsec = require('../../../models/firm/pd/pdsec');
-let Pdthd = require('../../../models/firm/pd/pdthd');
+const Brand = require('../../../models/firm/brand');
+const Pdfir = require('../../../models/firm/pd/pdfir');
+const Pdsec = require('../../../models/firm/pd/pdsec');
+const Pdthd = require('../../../models/firm/pd/pdthd');
 
 exports.usBrandsAjax = (req, res) => {
 	let crUser = req.session.crUser;

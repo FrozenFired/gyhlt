@@ -7,8 +7,24 @@ block content
 				li.breadcrumb-item: a(href="/") Home
 				li.breadcrumb-item: a(href="/bnBuyBrands") 品牌折扣列表
 				li.breadcrumb-item.active(aria-current="page") 品牌折扣
-		.info #{brand.nome}
-		.buys
+		.info
+			h5 #{brand.nome}
+			.discout.mt-3
+				span(title="预估报价用的") 默认折扣: 
+				- discount = "未设置";
+				if brand.discount && brand.discount > 0
+					- discount = brand.discount;
+				span.text-warning.buyBrandUpClick#span-discount-obj #{discount}
+				span  %
+				form#form-discount-obj(method="post", action="/bnBuyBrandUpd", enctype="multipart/form-data", style="display:none")
+					input(type="hidden", name="obj[_id]", value=brand._id)
+					.form-group.row
+						.col-4
+						.col-4
+							input.discountBlurup#ipt-discount-obj.form-control(type="number", name="obj[discount]", placeholder="默认折扣", autocomplete="off", value=brand.discount)
+						.col-4
+							input.btn.btn-success(type="submit" value="提交")
+		.buys.mt-5
 			each buy in brand.buys
 				-a;
 				.row
@@ -19,3 +35,5 @@ block content
 					.col-6
 						a(href="/bnBuy/"+buy._id)
 							span #{buy.discount}
+
+	script(src="/js/user/bner/buy/buyBrandUp.js")

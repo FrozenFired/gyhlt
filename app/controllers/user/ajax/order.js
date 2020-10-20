@@ -1,12 +1,12 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Ordin = require('../../../models/firm/ord/ordin');
-let Ordut = require('../../../models/firm/ord/ordut');
-let Tran = require('../../../models/firm/ord/tran');
-let Compd = require('../../../models/firm/ord/compd');
+const Ordin = require('../../../models/firm/ord/ordin');
+const Ordut = require('../../../models/firm/ord/ordut');
+const Tran = require('../../../models/firm/ord/tran');
+const Compd = require('../../../models/firm/ord/compd');
 
-let Bill = require('../../../models/firm/bill');
+const Bill = require('../../../models/firm/bill');
 
 exports.usDinsAjax = (req, res) => {
 	let crUser = req.session.crUser;

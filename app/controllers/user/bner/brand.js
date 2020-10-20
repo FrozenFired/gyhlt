@@ -1,16 +1,16 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let MdPicture = require('../../../middle/middlePicture');
-let Conf = require('../../../../conf');
+const MdPicture = require('../../../middle/middlePicture');
+const Conf = require('../../../../conf');
 
-let Brand = require('../../../models/firm/brand');
-let Pdfir = require('../../../models/firm/pd/pdfir');
-let Firm = require('../../../models/login/firm');
+const Brand = require('../../../models/firm/brand');
+const Pdfir = require('../../../models/firm/pd/pdfir');
+const Firm = require('../../../models/login/firm');
 
-let Buy = require('../../../models/firm/stream/buy');
-let Sell = require('../../../models/firm/stream/sell');
+const Buy = require('../../../models/firm/stream/buy');
+const Sell = require('../../../models/firm/stream/sell');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 exports.bnBrands = (req, res) => {
 	let crUser = req.session.crUser;

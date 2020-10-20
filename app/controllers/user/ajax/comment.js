@@ -1,7 +1,7 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Comment = require('../../../models/firm/comment');
+const Comment = require('../../../models/firm/comment');
 
 /* ===================== 客户搜索系列名或产品编号出的结果 ===================== */
 exports.usCommentsAjax = (req, res) => {

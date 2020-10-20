@@ -30,6 +30,7 @@ let dbSchema = new Schema({
 
 	buys: [{type: ObjectId, ref: 'Buy'}],
 	buynum: Number,		// 品牌折扣排序用的
+	discount: Number,	// 品牌默认折扣
 
 	shelf: {type: Number, default: 0},	// 上架 下架
 	status: Number,								// 品牌状态 

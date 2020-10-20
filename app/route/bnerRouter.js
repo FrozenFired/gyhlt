@@ -54,6 +54,7 @@ module.exports = function(app){
 
 	app.get('/bnBuyBrands', MdRole.bnerIsLogin, Buy.bnBuyBrands)
 	app.get('/bnBuyBrand/:id', MdRole.bnerIsLogin, Buy.bnBuyBrand)
+	app.post('/bnBuyBrandUpd', MdRole.bnerIsLogin, postForm, Buy.bnBuyBrandUpd)
 
 	/* =================================== Brand =================================== */
 	app.get('/bnBrands', MdRole.bnerIsLogin, Brand.bnBrands)

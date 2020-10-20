@@ -9,7 +9,8 @@ block content
 		.row
 			each brand in brands
 				-a;
-				.col-md-3
+				.col-md-4
 					a(href="/bnBuyBrand/"+brand._id)
 						span.mr-3 #{brand.nome}
-						span [#{brand.buynum}]
+						span [#{brand.buynum}] 
+						span - #{brand.discount} %

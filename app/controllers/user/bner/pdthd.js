@@ -1,12 +1,12 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let Conf = require('../../../../conf');
+const Conf = require('../../../../conf');
 
-let Pdthd = require('../../../models/firm/pd/pdthd');
-let Pdsec = require('../../../models/firm/pd/pdsec');
-let Firm = require('../../../models/login/firm');
+const Pdthd = require('../../../models/firm/pd/pdthd');
+const Pdsec = require('../../../models/firm/pd/pdsec');
+const Firm = require('../../../models/login/firm');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 
 exports.bnPdthd = (req, res) => {

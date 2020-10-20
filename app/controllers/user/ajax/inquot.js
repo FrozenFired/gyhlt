@@ -1,8 +1,8 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Inquot = require('../../../models/firm/ord/inquot');
-let Compd = require('../../../models/firm/ord/compd');
+const Inquot = require('../../../models/firm/ord/inquot');
+const Compd = require('../../../models/firm/ord/compd');
 
 exports.usQunsAjax = (req, res) => {
 	let crUser = req.session.crUser;

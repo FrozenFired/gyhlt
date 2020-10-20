@@ -1,13 +1,13 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let Conf = require('../../../../conf');
+const Conf = require('../../../../conf');
 
-let Buy = require('../../../models/firm/stream/buy');
-let Strmup = require('../../../models/firm/stream/strmup');
-let Brand = require('../../../models/firm/brand');
-let Firm = require('../../../models/login/firm');
+const Buy = require('../../../models/firm/stream/buy');
+const Strmup = require('../../../models/firm/stream/strmup');
+const Brand = require('../../../models/firm/brand');
+const Firm = require('../../../models/login/firm');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 exports.bnBuys = (req, res) => {
 	let crUser = req.session.crUser;
@@ -297,4 +297,43 @@ exports.bnBuyBrand = (req, res) => {
 			})
 		}
 	})
+}
+exports.bnBuyBrandUpd = (req, res) => {
+	let crUser = req.session.crUser;
+	let obj = req.body.obj;
+	info = null;
+	if(!obj.discount) {
+		info = "请输入品牌的默认折扣"
+	} else if(isNaN(parseInt(obj.discount))) {
+		info = "折扣必须是数字"
+	}
+	if(info) {
+		Err.usError(req, res, info);
+	} else {
+		Brand.findOne({
+			firm: crUser.firm,
+			_id: obj._id
+		})
+		.exec((err, brand) => {
+			if(err) {
+				console.log(err);
+				info = "bner BuyBrand, Brand.findOne, Error!";
+				Err.usError(req, res, info);
+			} else if(!brand) {
+				info = "没有找到此品牌";
+				Err.usError(req, res, info);
+			} else {
+				brand.discount = parseInt(obj.discount)
+				brand.save((err, brandSave) => {
+					if(err) {
+						console.log(err);
+						info = "bner BuyBrandUpd, brand.save, Error!";
+						Err.usError(req, res, info);
+					} else {
+						res.redirect('/bnBuyBrand/'+brandSave._id)
+					}
+				})
+			}
+		})
+	}
 }

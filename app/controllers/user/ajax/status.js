@@ -1,11 +1,11 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Ordin = require('../../../models/firm/ord/ordin');
-let Ordut = require('../../../models/firm/ord/ordut');
-let Tran = require('../../../models/firm/ord/tran');
-let Inquot = require('../../../models/firm/ord/inquot');
-let Compd = require('../../../models/firm/ord/compd');
+const Ordin = require('../../../models/firm/ord/ordin');
+const Ordut = require('../../../models/firm/ord/ordut');
+const Tran = require('../../../models/firm/ord/tran');
+const Inquot = require('../../../models/firm/ord/inquot');
+const Compd = require('../../../models/firm/ord/compd');
 
 exports.usInquotQuterStAjax = (req, res) => {
 	let crUser = req.session.crUser;

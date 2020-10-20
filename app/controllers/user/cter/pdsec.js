@@ -1,13 +1,13 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let MdPicture = require('../../../middle/middlePicture');
-let Conf = require('../../../../conf');
+const MdPicture = require('../../../middle/middlePicture');
+const Conf = require('../../../../conf');
 
-let Pdsec = require('../../../models/firm/pd/pdsec');
-let Brand = require('../../../models/firm/brand');
-let Firm = require('../../../models/login/firm');
+const Pdsec = require('../../../models/firm/pd/pdsec');
+const Brand = require('../../../models/firm/brand');
+const Firm = require('../../../models/login/firm');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 exports.ctPdsecs = (req, res) => {
 	let crUser = req.session.crUser;

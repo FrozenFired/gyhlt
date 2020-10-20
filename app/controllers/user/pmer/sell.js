@@ -1,13 +1,13 @@
-let Err = require('../../aaIndex/err');
+const Err = require('../../aaIndex/err');
 
-let Conf = require('../../../../conf');
+const Conf = require('../../../../conf');
 
-let Sell = require('../../../models/firm/stream/sell');
-let Strmdw = require('../../../models/firm/stream/strmdw');
-let Brand = require('../../../models/firm/brand');
-let Firm = require('../../../models/login/firm');
+const Sell = require('../../../models/firm/stream/sell');
+const Strmdw = require('../../../models/firm/stream/strmdw');
+const Brand = require('../../../models/firm/brand');
+const Firm = require('../../../models/login/firm');
 
-let _ = require('underscore');
+const _ = require('underscore');
 
 exports.pmSells = (req, res) => {
 	let crUser = req.session.crUser;

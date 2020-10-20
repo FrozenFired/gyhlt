@@ -1,7 +1,7 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Notify = require('../../../models/firm/notify');
+const Notify = require('../../../models/firm/notify');
 
 /* ===================== 客户搜索系列名或产品编号出的结果 ===================== */
 exports.usNotifysAjax = (req, res) => {

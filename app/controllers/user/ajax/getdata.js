@@ -1,9 +1,9 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Brand = require('../../../models/firm/brand');
-let Pdfir = require('../../../models/firm/pd/pdfir');
-let Pdsec = require('../../../models/firm/pd/pdsec');
+const Brand = require('../../../models/firm/brand');
+const Pdfir = require('../../../models/firm/pd/pdfir');
+const Pdsec = require('../../../models/firm/pd/pdsec');
 
 /* ===================== 客户搜索系列名或产品编号出的结果 ===================== */
 exports.usGetdataAjax = (req, res) => {

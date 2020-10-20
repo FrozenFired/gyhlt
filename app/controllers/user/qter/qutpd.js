@@ -6,6 +6,8 @@ const Conf = require('../../../../conf');
 const Inquot = require('../../../models/firm/ord/inquot');
 const Compd = require('../../../models/firm/ord/compd');
 
+const Brand = require('../../../models/firm/brand');
+const Pdthd = require('../../../models/firm/pd/pdthd');
 const User = require('../../../models/login/user');
 
 const _ = require('underscore');
@@ -129,12 +131,6 @@ exports.qtQutpdUpd = (req, res) => {
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
 
-			// if(obj.qntpdSts == Conf.status.del.num && compd.qntpdSts != Conf.status.del.num) {
-			// 	obj.qntnum = compd.qntnum + Conf.status.del.num;
-			// } else if(obj.qntpdSts != Conf.status.del.num && compd.qntpdSts == Conf.status.del.num) {
-			// 	obj.qntnum = compd.qntnum - Conf.status.del.num;
-			// }
-			// return
 			if(obj.images && compd.images) {
 				for(let i=0; i<obj.images.length; i++) {
 					if(compd.images.length>=i && !obj.images[i]) {
@@ -142,19 +138,61 @@ exports.qtQutpdUpd = (req, res) => {
 					}
 				}
 			}
-			let _compd = _.extend(compd, obj);
-			_compd.save((err, objSave) => {
-				if(err) {
-					console.log(err)
-					info = "添加询价单时 qter QutpdUpd, 请截图后, 联系管理员";
-					Err.usError(req, res, info);
-				} else {
-					res.redirect('/qtQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
-				}
-			})
+			if(obj.brand && obj.pdthd && obj.qntpdSts == Conf.status.done.num) {
+				Brand.findOne({_id: obj.brand}, (err, brand) => {
+					if(err) {
+						console.log(err);
+						info = "qter QutpdUpd, Brand.findOne, Error! 请截图后, 联系管理员";
+						Err.usError(req, res, info);
+					} else if(!brand) {
+						info = "qter QutpdUpd, !brand, Error! 请截图后, 联系管理员";
+						Err.usError(req, res, info);
+					} else {
+						Pdthd.findOne({_id: obj.pdthd}, (err, pdthd) => {
+							if(err) {
+								console.log(err);
+								info = "qter QutpdUpd, Brand.findOne, Error! 请截图后, 联系管理员";
+								Err.usError(req, res, info);
+							} else if(!brand) {
+								info = "qter QutpdUpd, !brand, Error! 请截图后, 联系管理员";
+								Err.usError(req, res, info);
+							} else {
+								let discount = parseInt(brand.discount)
+								let price = parseFloat(pdthd.price)
+								let percent = parseInt(compd.inquot.percent)
+								let estimate = price * (1 - discount/100) * (1 + percent/100);
+								if(isNaN(estimate)) {
+									obj.estimate = "";
+								} else {
+									obj.estimate = String(estimate.toFixed(2))
+								}
+								qtQutpdSave(req, res, compd, obj);
+							}
+						})
+					}
+				})
+			} else {
+				obj.estimate = '';
+				qtQutpdSave(req, res, compd, obj);
+			}
 		}
 	})
 }
+let qtQutpdSave = (req, res, compd, obj) => {
+	let _compd = _.extend(compd, obj);
+	_compd.save((err, objSave) => {
+		if(err) {
+			console.log(err)
+			info = "qter QutpdUpd, _compd.save, Error! 请截图后, 联系管理员";
+			Err.usError(req, res, info);
+		} else {
+			res.redirect('/qtQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
+		}
+	})
+
+}
+
+
 exports.qtQutpdDelPic = (req, res) => {
 	let crUser = req.session.crUser;
 	let compdId = req.body.compdId;

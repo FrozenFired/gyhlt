@@ -1,10 +1,10 @@
-let Err = require('../../aaIndex/err');
-let Conf = require('../../../../conf');
+const Err = require('../../aaIndex/err');
+const Conf = require('../../../../conf');
 
-let Strmup = require('../../../models/firm/stream/strmup');
-let Buy = require('../../../models/firm/stream/buy');
-let Strmdw = require('../../../models/firm/stream/strmdw');
-let Sell = require('../../../models/firm/stream/sell');
+const Strmup = require('../../../models/firm/stream/strmup');
+const Buy = require('../../../models/firm/stream/buy');
+const Strmdw = require('../../../models/firm/stream/strmdw');
+const Sell = require('../../../models/firm/stream/sell');
 
 /* ============ 供应商 ============ */
 exports.usStrmupsAjax = (req, res) => {
