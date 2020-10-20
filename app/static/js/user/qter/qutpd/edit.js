@@ -15,12 +15,12 @@ $(() => {
 
 	/* ======== 询价单下的商品添加页面的切换 ======*/
 	$("#qutpdAddPageShow").click((e) => {
-		$("#qutpdsPage").hide();
+		$("#compdsPage").hide();
 		$("#qutpdAddPage").show();
 	})
-	$("#qutpdsPageShow").click((e) => {	// 取消添加
+	$("#compdsPageShow").click((e) => {	// 取消添加
 		$("#qutpdAddPage").hide();
-		$("#qutpdsPage").show();
+		$("#compdsPage").show();
 	})
 
 	$("#objectForm").submit(function(e) {
@@ -71,17 +71,5 @@ $(() => {
 				e.preventDefault();
 			}
 		}
-	})
-
-	$(".changeImg").click(function(e) {
-		let id = $(this).attr("id").split('-')[1];
-		$("#ipt-"+id).click();
-	})
-	$(".picIpt").change(function(e) {
-		let id = $(this).attr("id").split('-')[1];
-		var f = document.getElementById('ipt-'+id).files[0];
-		var src = window.URL.createObjectURL(f);
-		document.getElementById('img-'+id).src = src;
-		$("#img-"+id).removeClass("rounded-circle")
 	})
 })

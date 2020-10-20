@@ -58,7 +58,7 @@ exports.sfQut = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			// console.log(qut)
-			let qutpds = qut.compds;
+			let compds = qut.compds;
 			Strmup.find({
 				firm: crUser.firm,
 			})
@@ -70,16 +70,16 @@ exports.sfQut = (req, res) => {
 					Err.usError(req, res, info);
 				} else {
 					let brands = new Array();
-					for(let i=0; i<qutpds.length; i++) {
-						let qutpd = qutpds[i];
+					for(let i=0; i<compds.length; i++) {
+						let compd = compds[i];
 						let k=0;
 						for(; k<brands.length; k++) {
-							if(brands[k].brandNome == qutpd.brandNome) break;
+							if(brands[k].brandNome == compd.brandNome) break;
 						}
 						if(k == brands.length) {
 							let brand = new Object();
 							brand.num = k+1;
-							brand.brandNome = qutpd.brandNome;
+							brand.brandNome = compd.brandNome;
 							brands.push(brand)
 						}
 					}
@@ -88,7 +88,7 @@ exports.sfQut = (req, res) => {
 						crUser,
 
 						qut,
-						qutpds,
+						compds,
 						strmups,
 						brands
 					})

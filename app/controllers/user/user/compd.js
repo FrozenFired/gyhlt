@@ -3,19 +3,14 @@ const Err = require('../../aaIndex/err');
 const MdPicture = require('../../../middle/middlePicture');
 const Conf = require('../../../../conf');
 
-const Inquot = require('../../../models/firm/ord/inquot');
 const Compd = require('../../../models/firm/ord/compd');
-
-const Strmup = require('../../../models/firm/stream/strmup');
-const Strmdw = require('../../../models/firm/stream/strmdw');
-const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
 exports.compdImagesUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-
+	let reUrl = req.body.reUrl;
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id
@@ -25,7 +20,7 @@ exports.compdImagesUpd = (req, res) => {
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "sler QunpdUpd, Strmup.findOne, Error!"
+			info = "compd ImagesUpd, Compd.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!compd) {
 			info = '此询价单已经被删除, 请刷新查看';
@@ -45,10 +40,10 @@ exports.compdImagesUpd = (req, res) => {
 			_compd.save((err, objSave) => {
 				if(err) {
 					console.log(err)
-					info = "添加询价单时 sler QunpdUpd, 请截图后, 联系管理员";
+					info = "添加询价单时 compd ImagesUpd, 请截图后, 联系管理员";
 					Err.usError(req, res, info);
 				} else {
-					res.redirect('/slQun/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
+					res.redirect(reUrl+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
 				}
 			})
 		}

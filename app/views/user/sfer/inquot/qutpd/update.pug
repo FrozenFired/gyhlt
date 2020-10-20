@@ -5,25 +5,25 @@ block content
 		nav(aria-label="breadcrumb")
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/") Home
-				li.breadcrumb-item: a(href="/qtQut/"+qutpd.inquot._id) 报价单
+				li.breadcrumb-item: a(href="/qtQut/"+compd.inquot._id) 报价单
 				li.breadcrumb-item.active(aria-current="page") 更新报价商品
 
 		form#objectForm(method="post", action="/qtQutpdUpd", enctype="multipart/form-data")
-			input#inquotIpt(type="hidden", name="obj[_id]", value=qutpd._id)
+			input#inquotIpt(type="hidden", name="obj[_id]", value=compd._id)
 
 			input(type="hidden", name="picDir", value=Conf.picPath.compd)
 			input#picName(type="hidden", name="picName", value=crUser.firm.code)
 
 			- let brand = new Object();
-			if qutpd.brand
-				- brand = qutpd.brand;
+			if compd.brand
+				- brand = compd.brand;
 			.row.my-3
 				.col-md-2.mt-3.text-right 品牌信息:
 				.col-md-3.mt-3
 					input.form-control#brandIpt(type="hidden", name="obj[brand]", readonly="readonly", value=brand._id)
-					input.border-danger.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名", value=qutpd.brandNome)
+					input.border-danger.form-control#brandNomeIpt(type="text", name="obj[brandNome]", autocomplete="off", placeholder="* 填写品牌名", value=compd.brandNome)
 				.col-md-3.mt-3
-					input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...", value=qutpd.area)
+					input.form-control#areaIpt(type="text", name="obj[area]", autocomplete="off", placeholder="区域: 卧室/客厅...", value=compd.area)
 				.col-md-3.mt-3#brandweb
 					if brand.website
 						- let website = brand.website;
@@ -35,15 +35,15 @@ block content
 			.ajax#brandsElem
 
 			- let pdfir = new Object();
-			if qutpd.pdfir
-				- pdfir = qutpd.pdfir;
+			if compd.pdfir
+				- pdfir = compd.pdfir;
 			.row.my-3
 				.col-md-2.mt-3.text-right 系列信息:
 				.col-md-3.mt-3
-					input.border-danger.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...", value=qutpd.pdNome)
+					input.border-danger.form-control#pdNomeIpt(type="text", name="obj[pdNome]", autocomplete="off", placeholder="品类: 桌子/椅子/床...", value=compd.pdNome)
 				.col-md-3.mt-3
 					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=pdfir._id)
-					input.border-danger.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=qutpd.firNome)
+					input.border-danger.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=compd.firNome)
 			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@qt")
 			.ajax#pdfirsElem
 			.row.my-3
@@ -51,19 +51,19 @@ block content
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let photo = "";
-					if qutpd.photo
-						- photo = qutpd.photo;
+					if compd.photo
+						- photo = compd.photo;
 					img.thumbnailImg#img-photo(src=photo, width="120px")
 					.changeImg#imgEdit-photo.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[photoOld]", value=qutpd.photo)
+					input(type="hidden", name="obj[photoOld]", value=compd.photo)
 					input.picIpt#ipt-photo.btn.btn-info.btn-block(type="file", name="photo", style="display:none")
 				.col-md-3.mt-4#firImg(align="center")
-					if qutpd.firphoto
+					if compd.firphoto
 						-a;
 						.firImg.text-right
-							img.thumbnailImg(src=qutpd.firphoto, width="120px")
+							img.thumbnailImg(src=compd.firphoto, width="120px")
 				.col-md-4.text-center.border-left
-					input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly", value=qutpd.firphoto)
+					input.form-control#firphotoIpt(type="hidden", name="obj[firphoto]", readonly="readonly", value=compd.firphoto)
 					button#selPhotos.btn.btn-link(type="button") 选择其他图片
 					#firImgs(style="display:none")
 						.firImgs.row.text-right
@@ -83,15 +83,15 @@ block content
 											img.thumbnailImg(id="thumbnailImg-hlt-i-hlt-"+selphoto src=selphoto, width="120px")
 											.photoSel.text-info(id="photoSel-hlt-i-hlt-"+selphoto) <span class="oi oi-check"></span>
 			- let pdsec = new Object();
-			if qutpd.pdsec
-				- pdsec = qutpd.pdsec;
+			if compd.pdsec
+				- pdsec = compd.pdsec;
 			.row.my-3
 				.col-md-2.mt-3.text-right 产品信息:
 				.col-md-3.mt-3
-					input.border-danger.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=qutpd.specf)
+					input.border-danger.form-control#specfIpt(type="text", name="obj[specf]", autocomplete="off", placeholder="* 产品规格: 长*宽*高", value=compd.specf)
 				.col-md-3.mt-3
 					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=pdsec._id)
-					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="* 产品编号", value=qutpd.secNome)
+					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="* 产品编号", value=compd.secNome)
 			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@qt")
 			.ajax#pdsecsElem
 			.row.my-3
@@ -99,11 +99,11 @@ block content
 				.col-md-3.mt-3(align="center")
 					div 上传指定图片:
 					- let sketch = "";
-					if qutpd.sketch
-						- sketch = qutpd.sketch;
+					if compd.sketch
+						- sketch = compd.sketch;
 					img.thumbnailImg#img-sketch(src=sketch, width="120px")
 					.changeImg#imgEdit-sketch.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[sketchOld]", value=qutpd.sketch)
+					input(type="hidden", name="obj[sketchOld]", value=compd.sketch)
 					input.picIpt#ipt-sketch.btn.btn-info.btn-block(type="file", name="sketch", style="display:none")
 				.col-md-3.mt-4#secImg(align="center")
 					if pdsec.photo && pdsec.photo.length > 0
@@ -112,31 +112,31 @@ block content
 							img.thumbnailImg(src=pdsec.photo, width="120px")
 
 			- let pdthd = new Object();
-			if qutpd.pdthd
-				- pdthd = qutpd.pdthd;
+			if compd.pdthd
+				- pdthd = compd.pdthd;
 			.row.my-3
 				.col-md-2.mt-3.text-right 材质工艺:
 				.col-md-3.mt-3
-					input.border-danger.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 填写/材质", value=qutpd.mater)
+					input.border-danger.form-control#materIpt(type="text", name="obj[mater]", autocomplete="off", placeholder="* 填写/材质", value=compd.mater)
 				.col-md-3.mt-3
-					input.border-danger.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="* 填写/工艺,面料,颜色", value=qutpd.craft)
+					input.border-danger.form-control#craftIpt(type="text", name="obj[craft]", autocomplete="off", placeholder="* 填写/工艺,面料,颜色", value=compd.craft)
 				.col-md-3.mt-3
 					input.form-control#pdthdIpt(type="hidden", name="obj[pdthd]", readonly="readonly", value=pdthd._id)
-					input.border-info.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="* 平台工艺搭配", value=qutpd.thdNome)
+					input.border-info.form-control#thdNomeIpt(type="text", name="obj[thdNome]", autocomplete="off", placeholder="* 平台工艺搭配", value=compd.thdNome)
 			input#pdthdFilterAjax(type="hidden", value="/usPdthdsAjax?@#pdthdsElem@priceShow")
 			.ajax#pdthdsElem
 			.row.my-3
 				.col-md-2.mt-3.pt-5.text-right 材质图片:
 				- let images = new Array();
-				if qutpd.images
-					- images = qutpd.images;
+				if compd.images
+					- images = compd.images;
 				.col-md-2.mt-3(align="center")
 					- let images0 = "";
 					if images.length > 0 && images[0]
 						- images0 = images[0];
 					img.thumbnailImg#img-images0(src=images0, width="120px")
 					.changeImg#imgEdit-images0.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[images][0]", value=qutpd.images[0])
+					input(type="hidden", name="obj[images][0]", value=compd.images[0])
 					input.picIpt#ipt-images0.btn.btn-info.btn-block(type="file", name="images[0]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images1 = "";
@@ -144,7 +144,7 @@ block content
 						- images1 = images[1];
 					img.thumbnailImg#img-images1(src=images1, width="120px")
 					.changeImg#imgEdit-images1.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[images][1]", value=qutpd.images[1])
+					input(type="hidden", name="obj[images][1]", value=compd.images[1])
 					input.picIpt#ipt-images1.btn.btn-info.btn-block(type="file", name="images[1]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images2 = "";
@@ -152,7 +152,7 @@ block content
 						- images2 = images[2];
 					img.thumbnailImg#img-images2(src=images2, width="120px")
 					.changeImg#imgEdit-images2.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[images][2]", value=qutpd.images[2])
+					input(type="hidden", name="obj[images][2]", value=compd.images[2])
 					input.picIpt#ipt-images2.btn.btn-info.btn-block(type="file", name="images[2]", style="display:none")
 				.col-md-2.mt-3(align="center")
 					- let images3 = "";
@@ -160,18 +160,18 @@ block content
 						- images3 = images[3];
 					img.thumbnailImg#img-images3(src=images3, width="120px")
 					.changeImg#imgEdit-images3.text-info <span class="oi oi-pencil"></span>[点击]
-					input(type="hidden", name="obj[images][3]", value=qutpd.images[3])
+					input(type="hidden", name="obj[images][3]", value=compd.images[3])
 					input.picIpt#ipt-images3.btn.btn-info.btn-block(type="file", name="images[3]", style="display:none")
 
 			.row.my-3
 				.col-md-2.mt-3.text-right 备注:
 				.col-md-8.mt-3
-					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=qutpd.note)
+					input.form-control#noteIpt(type="text", name="obj[note]", autocomplete="off", placeholder="备注", value=compd.note)
 			.row.my-3
 				.col-md-2.mt-3.text-right 状态
 				each sts in Conf.qntpdSts
 					- checked = false;
-					if Conf.status[sts].num == qutpd.qntpdSts
+					if Conf.status[sts].num == compd.qntpdSts
 						- checked = true;
 					.col-md-2.mt-3
 						.form-check.form-check-inline
@@ -180,10 +180,10 @@ block content
 			.row.my-3.delNoteRow(style="display:none")
 				.col-md-2.mt-3.text-right 删除备注
 				.col-md-8.mt-3
-					input.form-control#delNoteIpt(type="text", name="obj[delNote]", autocomplete="off", placeholder="必填, 删除原因", value=qutpd.delNote)
+					input.form-control#delNoteIpt(type="text", name="obj[delNote]", autocomplete="off", placeholder="必填, 删除原因", value=compd.delNote)
 			.form-group.row
 				.col-12.text-right
-					a.border.border-danger.mr-4.btn.btn-default.text-danger#qutpdsPageShow(href="/qtQut/"+qutpd.inquot._id) 取消
+					a.border.border-danger.mr-4.btn.btn-default.text-danger#compdsPageShow(href="/qtQut/"+compd.inquot._id) 取消
 					input.btn.btn-success(type="submit", value="确认更新")
 
 	script(src="/js/user/qter/qutpd/edit.js")

@@ -44,36 +44,36 @@ exports.qtQut = (req, res) => {
 			{path: 'quter'},
 		]
 	})
-	.exec((err, qut) => {
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "qter Qut, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qut) {
+		} else if(!inquot) {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qut);
+			// console.log(inquot);
 			// return;
-			let qutpds = qut.compds;
+			let compds = inquot.compds;
 			let i=0;
-			for(; i<qutpds.length; i++) {
-				if(qutpds[i].qntpdSts == Conf.status.quoting.num) {
+			for(; i<compds.length; i++) {
+				if(compds[i].qntpdSts == Conf.status.quoting.num) {
 					break;
 				}
 			}
-			if(i == qutpds.length) {
-				qterQutRender(req, res, qut, qutpds);
+			if(i == compds.length) {
+				qterQutRender(req, res, inquot, compds);
 			} else {
 				// 报价状态未完成
-				qut.quterSt = Conf.status.init.num;
-				qut.save((err, qutSave) => {
+				inquot.quterSt = Conf.status.init.num;
+				inquot.save((err, objSave) => {
 					if(err) {
 						console.log(err);
-						info = "qter Qut, qut.save, Error!"
+						info = "qter Qut, inquot.save, Error!"
 						Err.usError(req, res, info);
 					} else {
-						qterQutRender(req, res, qutSave, qutpds);
+						qterQutRender(req, res, objSave, compds);
 					}
 				})
 			}
@@ -81,28 +81,28 @@ exports.qtQut = (req, res) => {
 		}
 	})
 }
-let qterQutRender = (req, res, qut, qutpds) => {
+let qterQutRender = (req, res, inquot, compds) => {
 	let crUser = req.session.crUser;
 
 	let brands = new Array();
-	for(let i=0; i<qutpds.length; i++) {
-		let qutpd = qutpds[i];
+	for(let i=0; i<compds.length; i++) {
+		let compd = compds[i];
 		let k=0;
 		for(; k<brands.length; k++) {
-			if(brands[k].brandNome == qutpd.brandNome) break;
+			if(brands[k].brandNome == compd.brandNome) break;
 		}
 		if(k == brands.length) {
 			let brand = new Object();
 			brand.num = k+1;
-			brand.brandNome = qutpd.brandNome;
+			brand.brandNome = compd.brandNome;
 			brands.push(brand)
 		}
 	}
 	res.render('./user/qter/inquot/qut/detail', {
 		title: '报价单详情',
 		crUser,
-		qut,
-		qutpds,
+		inquot,
+		compds,
 		brands
 	})
 }
@@ -187,20 +187,20 @@ exports.qtQutExcel = (req, res) => {
 	.populate('firm')
 	.populate('quner')
 	.populate('quter')
-	.exec((err, qut) => {
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "qter Qut, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qut) {
+		} else if(!inquot) {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qut)
+			// console.log(inquot)
 			Compd.find({inquot: id})
 			.populate('brand').populate('pdfir').populate('pdsec').populate('pdthd')
 			.sort({'status': 1, 'crtAt': -1})
-			.exec((err, qutpds) => {
+			.exec((err, compds) => {
 				if(err) {
 					info = "cter CompdsAjax, Compd.find(), Error!";
 					Err.jsonErr(req, res, info);
@@ -233,17 +233,17 @@ exports.qtQutExcel = (req, res) => {
 					ws.cell(1,7).string('Qunant');
 					ws.cell(1,8).string('Total');
 
-					for(let i=0; i<qutpds.length; i++){
+					for(let i=0; i<compds.length; i++){
 						ws.cell((i+2), 1).string(String(i+1));
-						let qutpd = qutpds[i];
-						if(qutpd.brand) {
-							ws.cell((i+2), 2).string(String(qutpd.brand.nome));
-						} else if(qutpd.brandNome) {
-							ws.cell((i+2), 2).string(String(qutpd.brandNome));
+						let compd = compds[i];
+						if(compd.brand) {
+							ws.cell((i+2), 2).string(String(compd.brand.nome));
+						} else if(compd.brandNome) {
+							ws.cell((i+2), 2).string(String(compd.brandNome));
 						}
-						if(qutpd.pdfir) {
+						if(compd.pdfir) {
 							// ws.addImage({
-							// 	path: qutpd.pdfir.photo,
+							// 	path: compd.pdfir.photo,
 							// 	type: 'picture',
 							// 	position: {
 							// 		type: 'oneCellAnchor',
@@ -255,28 +255,28 @@ exports.qtQutExcel = (req, res) => {
 							// 		},
 							// 	},
 							// });
-							ws.cell((i+2), 3).string(String(qutpd.pdfir.code));
-						} else if(qutpd.firNome) {
-							ws.cell((i+2), 3).string(String(qutpd.firNome));
+							ws.cell((i+2), 3).string(String(compd.pdfir.code));
+						} else if(compd.firNome) {
+							ws.cell((i+2), 3).string(String(compd.firNome));
 						}
-						if(qutpd.pdsec) {
-							ws.cell((i+2), 4).string(String(qutpd.pdsec.code));
-						} else if(qutpd.firNome) {
-							ws.cell((i+2), 4).string(String(qutpd.firNome));
+						if(compd.pdsec) {
+							ws.cell((i+2), 4).string(String(compd.pdsec.code));
+						} else if(compd.firNome) {
+							ws.cell((i+2), 4).string(String(compd.firNome));
 						}
-						if(qutpd.pdthd) {
+						if(compd.pdthd) {
 							let maters = '';
-							for(let j=0; j<qutpd.pdthd.maters.length; j++){
-								maters += qutpd.pdthd.maters[j] + ' ';
+							for(let j=0; j<compd.pdthd.maters.length; j++){
+								maters += compd.pdthd.maters[j] + ' ';
 							}
 							ws.cell((i+2), 5).string(maters);
-						} else if(qutpd.thdNome) {
-							ws.cell((i+2), 5).string(String(qutpd.thdNome));
+						} else if(compd.thdNome) {
+							ws.cell((i+2), 5).string(String(compd.thdNome));
 						}
 
-						if(qutpd.price && qutpd.quant) {
-							let price = parseFloat(qutpd.price);
-							let quant = parseInt(qutpd.quant);
+						if(compd.price && compd.quant) {
+							let price = parseFloat(compd.price);
+							let quant = parseInt(compd.quant);
 							ws.cell((i+2), 6).string(String(price + ' €'));
 							ws.cell((i+2), 7).string(String(quant));
 							if(!isNaN(price) && !isNaN(quant)) {

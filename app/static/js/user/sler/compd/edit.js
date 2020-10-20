@@ -52,31 +52,4 @@ $(() => {
 			e.preventDefault();
 		}
 	})
-
-	$(".changeImg").click(function(e) {
-		let strs = $(this).attr("id").split('-');
-		let field = strs[1];
-		if(strs.length == 2) {
-			$("#ipt-"+field).click();
-		} else if(strs.length == 3) {
-			let id = strs[2];
-			$("#ipt-"+field+"-"+id).click();
-		}
-	})
-	$(".picIpt").change(function(e) {
-		let strs = $(this).attr("id").split('-');
-		let field = strs[1];
-		if(strs.length == 2) {
-			var f = document.getElementById('ipt-'+field).files[0];
-			var src = window.URL.createObjectURL(f);
-			document.getElementById('img-'+field).src = src;
-			$("#img-"+field).removeClass("rounded-circle")
-		} else if(strs.length == 3) {
-			let id = strs[2];
-			var f = document.getElementById('ipt-'+field+'-'+id).files[0];
-			var src = window.URL.createObjectURL(f);
-			document.getElementById('img-'+field+'-'+id).src = src;
-			$("#img-"+field+'-'+id).removeClass("rounded-circle")
-		}
-	})
 })

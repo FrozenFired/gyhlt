@@ -4,7 +4,7 @@
 	.col-sm-6
 		.quantTotal
 			span 总条目: 
-			span #{qutpds.length}
+			span #{compds.length}
 	.col-sm-6.text-right
 		.quantTotal
 			span 总数量: 
@@ -28,60 +28,60 @@ table.mt-3.table.table-bordered
 				h5.text-info
 					span#span-dinPrImp
 					span &nbsp;€
-		each qutpd in qutpds
+		each compd in compds
 			- let brandnum = '';
 			each brand in brands
-				if brand.brandNome == qutpd.brandNome
+				if brand.brandNome == compd.brandNome
 					- brandnum = brand.num;
-			tr.text-info.pdTr(pdbrand=brandnum, pdSts=qutpd.qntpdSts, id="tr-compdid-"+qutpd._id)
+			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
 				td
 					span.border.p-1
 						span.text-dark N. 
 						- let qntnum = '-'
-						if qutpd.qntnum
-							- qntnum = qutpd.qntnum;
-						span(id="span-qntnum-"+qutpd._id) #{qntnum}
+						if compd.qntnum
+							- qntnum = compd.qntnum;
+						span(id="span-qntnum-"+compd._id) #{qntnum}
 					.brandnome.mt-4
-						if qutpd.brand
-							- brand = qutpd.brand;
+						if compd.brand
+							- brand = compd.brand;
 							span [#{brand.nome}]
 						else
-							span #{qutpd.brandNome}
+							span #{compd.brandNome}
 
-					if qutpd.area
+					if compd.area
 						-a;
 						.pdarea.mt-3
 							span.text-dark 区域: 
-							span #{qutpd.area}
+							span #{compd.area}
 				td
 					.pdnome
 						span.text-dark 品类: 
-						span #{qutpd.pdNome}
-					if qutpd.pdfir
-						- pdfir = qutpd.pdfir;
+						span #{compd.pdNome}
+					if compd.pdfir
+						- pdfir = compd.pdfir;
 						.pdfircode.mt-3
 							span.text-dark 系列名: 
 							span [#{pdfir.code}]
 					else
 						- let firNome = '产品系列名称';
-						if qutpd.firNome
-							- firNome = qutpd.firNome;
+						if compd.firNome
+							- firNome = compd.firNome;
 						.firnome.mt-3
 							span.text-dark 系列名: 
 							span #{firNome}
 					.photo.mt-3
 						- let photo = "/imgs/createPicture.jpg";
-						if qutpd.photo
-							- photo = qutpd.photo;
+						if compd.photo
+							- photo = compd.photo;
 							img.thumbnailImg(src=photo, width="120px")
-						else if qutpd.firphoto
-							- photo = qutpd.firphoto;
+						else if compd.firphoto
+							- photo = compd.firphoto;
 							img.thumbnailImg(src=photo, width="120px")
 						else
 							img(src=photo, width="120px")
 				td
-					if qutpd.pdsec
-						- pdsec = qutpd.pdsec;
+					if compd.pdsec
+						- pdsec = compd.pdsec;
 						.pdseccode
 							span.text-dark 产品编码: 
 							span [#{pdsec.code}]
@@ -91,86 +91,84 @@ table.mt-3.table.table-bordered
 					else
 						.pdseccode
 							span.text-dark 产品编码: 
-							span #{qutpd.secNome}
+							span #{compd.secNome}
 						.pdsecspec.mt-3
 							span.text-dark 产品尺寸: 
-							span #{qutpd.specf}
+							span #{compd.specf}
 
 					.sketch.mt-3
 						- let sketch = "/imgs/createPicture.jpg";
-						if qutpd.sketch
-							- sketch = qutpd.sketch;
+						if compd.sketch
+							- sketch = compd.sketch;
 							img.thumbnailImg(src=sketch, width="120px")
-						else if qutpd.pdsec
+						else if compd.pdsec
 							-a;
-							- sketch = qutpd.pdsec.photo;
+							- sketch = compd.pdsec.photo;
 							img.thumbnailImg(src=sketch, width="120px")
 						else
 							img(src=sketch, width="120px")
 				td
 					- let pdthdcode = '查找数据库';
-					if qutpd.pdthd
-						- pdthdcode = '['+qutpd.pdthd.code+']';
+					if compd.pdthd
+						- pdthdcode = '['+compd.pdthd.code+']';
 					.pdthdcode #{pdthdcode}
-					.pdmater.mt-3 #{qutpd.mater}
-					.pdcraft.mt-3 #{qutpd.craft}
+					.pdmater.mt-3 #{compd.mater}
+					.pdcraft.mt-3 #{compd.craft}
 					.images.row
 						- let subsp = -1;
-						each image in qutpd.images
+						each image in compd.images
 							- subsp++;
 							if image && image.length > 5
 								-a;
 								.col-6
 									img.thumbnailImg.mt-2(src=image, width="120px")
 				td.qntPrTd.bg-dark(style="display:")
-					if qutpd.qntpdSts != Conf.status.del.num
-						- let qntPrtot = qutpd.quant * qutpd.qntPr;
+					if compd.qntpdSts != Conf.status.del.num
+						- let qntPrtot = compd.quant * compd.qntPr;
 						- qntPrImp += qntPrtot;
 						.dutPr.mt-3.text-white
 							span 采购单价:
 							br
-							span #{(qutpd.dutPr).toFixed(2)}
-							input(id="org-dutPr-"+qutpd._id, type="hidden", value=qutpd.dutPr)
+							span #{(compd.dutPr).toFixed(2)}
+							input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
 						.qntPr.mt-3.text-white
 							.qntPr
 								span 报价单价:
 								br
-								span #{(qutpd.qntPr).toFixed(2)}
-								input(id="org-qntPr-"+qutpd._id, type="hidden", value=qutpd.qntPr)
+								span #{(compd.qntPr).toFixed(2)}
+								input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
 							.qntPrTot.mt-2
 								span 总价:
 								br
-								span(id="span-qntPrtot-"+qutpd._id) #{(qntPrtot).toFixed(2)}
+								span(id="span-qntPrtot-"+compd._id) #{(qntPrtot).toFixed(2)}
 				td
-					if qutpd.qntpdSts != Conf.status.del.num
-						- quantTotal += qutpd.quant;
+					if compd.qntpdSts != Conf.status.del.num
+						- quantTotal += compd.quant;
 						if !isNaN(parseFloat(dinPrImp))
 							-a;
-							if qutpd.dinPr && !isNaN(parseFloat(qutpd.dinPr))
-								- dinPrImp += qutpd.quant * qutpd.dinPr;
+							if compd.dinPr && !isNaN(parseFloat(compd.dinPr))
+								- dinPrImp += compd.quant * compd.dinPr;
 							else
 								- dinPrImp = "未完成销售价";
 						.quant
 							span.text-dark 数量: 
-							span #{qutpd.quant}
+							span #{compd.quant}
 						.dinPr.mt-3
 							span.text-dark 单价: 
-							if qutpd.dinPr
+							if compd.dinPr
 								-a;
-								span #{(qutpd.dinPr).toFixed(2)}
+								span #{(compd.dinPr).toFixed(2)}
 							else
 								span 填写售价
 						.total
 							strong
 								span.text-dark 总价: 
-								span(id="span-dinPrtot-"+qutpd._id) #{(qutpd.quant * qutpd.dinPr).toFixed(2)}
+								span(id="span-dinPrtot-"+compd._id) #{(compd.quant * compd.dinPr).toFixed(2)}
 					else
 						.del.text-danger
 							div.text-center 删除原因:
-							.delNote.mt-2 #{qutpd.delNote}
+							.delNote.mt-2 #{compd.delNote}
 .hideImp
 	input#ipt-quantTotal(type="hidden", value=quantTotal)
 	input#ipt-qntPrImp(type="hidden", value=qntPrImp)
 	input#ipt-dinPrImp(type="hidden", value=dinPrImp)
-
-//- script(src="/js/user/sler/qutpd/soleup.js")

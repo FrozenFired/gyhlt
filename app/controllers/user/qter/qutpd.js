@@ -21,18 +21,18 @@ exports.qtQutpdUp = (req, res) => {
 	.populate('pdsec')
 	.populate('pdthd')
 	.populate('ordin')
-	.exec((err, qutpd) => {
+	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
 			info = "qter Qutpd, Compd.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qutpd) {
+		} else if(!compd) {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
-		} else if(qutpd.ordin) {
+		} else if(compd.ordin) {
 			info = "您现在无权修改此商品信息, 因为已经生成订单";
 			Err.usError(req, res, info);
-		} else if(qutpd.inquot.status != Conf.status.quoting.num) {
+		} else if(compd.inquot.status != Conf.status.quoting.num) {
 			info = "您现在无权修改此商品信息, 因为询价单状态已经被修改";
 			Err.usError(req, res, info);
 		} else {
@@ -56,7 +56,7 @@ exports.qtQutpdUp = (req, res) => {
 					res.render('./user/qter/inquot/qutpd/update', {
 						title: '报价单修改',
 						crUser,
-						qutpd,
+						compd,
 
 						quters
 					})

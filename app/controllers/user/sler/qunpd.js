@@ -318,7 +318,7 @@ exports.slQunpdNew = (req, res) => {
 			let compds = inquot.compds;
 			// 系统自动给询价商品添加询价编号
 			obj.qntnum = 1;
-			if(compds && compds.length > 0) {
+			if(compds && compds.length > 0 && !isNaN(parseInt(compds[0].qntnum))) {
 				obj.qntnum = compds[0].qntnum + 1
 			}
 			// 询价商品自动添加信息
