@@ -38,7 +38,7 @@ exports.sfQut = (req, res) => {
 		path: 'compds',
 		options: { sort: {'qntpdSts': 1, 'qntnum': 1 } },
 		populate: [
-			{path: 'brand'},
+			{path: 'brand', populate: {path: 'buys', populate: {path: 'strmup'}}},
 			{path: 'pdfir'},
 			{path: 'pdsec'},
 			{path: 'pdthd'},
@@ -48,51 +48,38 @@ exports.sfQut = (req, res) => {
 			{path: 'quter'},
 		]
 	})
-	.exec((err, qut) => {
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "sfer Qut, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qut) {
+		} else if(!inquot) {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qut)
-			let compds = qut.compds;
-			Strmup.find({
-				firm: crUser.firm,
-			})
-			.sort({'role': -1})
-			.exec((err, strmups) => {
-				if(err) {
-					console.log(err);
-					info = 'sfer QutAdd, Strmup.find, Error!';
-					Err.usError(req, res, info);
-				} else {
-					let brands = new Array();
-					for(let i=0; i<compds.length; i++) {
-						let compd = compds[i];
-						let k=0;
-						for(; k<brands.length; k++) {
-							if(brands[k].brandNome == compd.brandNome) break;
-						}
-						if(k == brands.length) {
-							let brand = new Object();
-							brand.num = k+1;
-							brand.brandNome = compd.brandNome;
-							brands.push(brand)
-						}
-					}
-					res.render('./user/sfer/inquot/qut/detail', {
-						title: '报价单详情',
-						crUser,
-
-						qut,
-						compds,
-						strmups,
-						brands
-					})
+			// console.log(inquot)
+			let compds = inquot.compds;
+			let brands = new Array();
+			for(let i=0; i<compds.length; i++) {
+				let compd = compds[i];
+				let k=0;
+				for(; k<brands.length; k++) {
+					if(brands[k].brandNome == compd.brandNome) break;
 				}
+				if(k == brands.length) {
+					let brand = new Object();
+					brand.num = k+1;
+					brand.brandNome = compd.brandNome;
+					brands.push(brand)
+				}
+			}
+			res.render('./user/sfer/inquot/qut/detail', {
+				title: '报价单详情',
+				crUser,
+
+				inquot,
+				compds,
+				brands
 			})
 		}
 	})

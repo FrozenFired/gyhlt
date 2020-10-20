@@ -17,10 +17,9 @@ block content
 			each sts in Conf.qutSts
 				-a;
 				button.mr-3.btn.btn-default.statusClick(type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
-		.qutsList.mt-3
-			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#qutsElem@sf@")
-			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#qutsElem")
-			#qutsElem.mt-5
+		.inquotsList.mt-3
+			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#inquotsElem@sf@")
+			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#inquotsElem")
+			#inquotsElem.mt-5
 
 		script(src="/js/dbs/ajaxGet/qut.js")
-		script(src="/js/user/sfer/qut/list.js")

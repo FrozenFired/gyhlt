@@ -20,10 +20,9 @@ block content
 				if sts == 'quoting'
 					- stsBtn = "btn-success";
 				button.mr-3.btn.statusClick.btn-default(type="button", data-quter="&quter=nenull", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
-		.qutsList.mt-3
-			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#qutsElem@mg@&status="+Conf.status.quoting.num)
-			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#qutsElem")
-			#qutsElem.mt-5
+		.inquotsList.mt-3
+			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#inquotsElem@mg@&status="+Conf.status.quoting.num)
+			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#inquotsElem")
+			#inquotsElem.mt-5
 
 		script(src="/js/dbs/ajaxGet/qut.js")
-		script(src="/js/user/mger/qut/list.js")

@@ -13,17 +13,17 @@ block content
 			include ./detail/filter
 
 		.compds
-			if qut.status == Conf.status.quoting.num
+			if inquot.status == Conf.status.quoting.num
 				-a;
 				include ./compd/listQuoting
-			else if qut.status >= Conf.status.confirm.num
+			else if inquot.status >= Conf.status.confirm.num
 				-a;
 				include ./compd/listConfirm
 			else
 				include ./compd/list
 
 		//- include ../../../aaPlugin/comment/list
-		if qut.quter
+		if inquot.quter
 			-a;
-			- let toUser = qut.quner;
+			- let toUser = inquot.quner;
 			include ../../../aaPlugin/notify/list

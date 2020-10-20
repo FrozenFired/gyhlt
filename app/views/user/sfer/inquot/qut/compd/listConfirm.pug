@@ -154,7 +154,7 @@ table.mt-3.table.table-bordered
 							span.text-dark 数量: 
 							span.text-warning.quantClickup(id="span-quant-"+compd._id) #{compd.quant}
 							input(id="org-quant-"+compd._id, type="hidden", value=compd.quant)
-							form.ajaxForm(id="form-quant-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+							form.ajaxForm(id="form-quant-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
 								input(type="hidden", name="obj[_id]", value=compd._id)
 								.form-group.row
 									.col-12
@@ -170,7 +170,7 @@ table.mt-3.table.table-bordered
 							else
 								span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) 填写售价
 							input(id="org-dinPr-"+compd._id, type="hidden", value=compd.dinPr)
-							form.ajaxForm(id="form-dinPr-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+							form.ajaxForm(id="form-dinPr-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
 								input(type="hidden", name="obj[_id]", value=compd._id)
 								.form-group.row
 									.col-12

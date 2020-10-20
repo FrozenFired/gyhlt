@@ -77,6 +77,7 @@ $(function() {
 					$("#span-qntPr-"+id).text(compd.qntPr);
 					$("#org-qntPr-"+id).val(compd.qntPr);
 					$("#ipt-qntPr-"+id).val(compd.qntPr);
+					$("#tot-qntPr-"+id).text(compd.qntPr * compd.quant);
 				} else if(results.status === 0) {
 					alert(results.msg)
 				}

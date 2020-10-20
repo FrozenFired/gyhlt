@@ -1,37 +1,37 @@
 .border.border-dark.p-3
 	.row.text-center
 		.col-md-6
-			h5.code 询价单号: #{qut.code}
+			h5.code 询价单号: #{inquot.code}
 			.time
 				span 询价时间: 
-				span #{moment(qut.crtAt).format('YYYY年MM月DD日')}
-			.qut 
+				span #{moment(inquot.crtAt).format('YYYY年MM月DD日')}
+			.inquot 
 				span 询价人:
-				if qut.quner
-					- quner = qut.quner;
+				if inquot.quner
+					- quner = inquot.quner;
 					span #{quner.nome} [ #{quner.code} ]
 				else
 					span 数据丢失
 			.cterNome
-				span 客户: #{qut.cterNome}
+				span 客户: #{inquot.cterNome}
 			.cter.text-warning
-				if qut.cter
-					- cter = qut.cter;
+				if inquot.cter
+					- cter = inquot.cter;
 					span.text-info.inquotUpClick#span-cter-obj #{cter.nome} [#{cter.code}]
 				else
 					span.text-info.inquotUpClick#span-cter-obj 未分配
 				form#form-cter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
-					input(type="hidden", name="obj[_id]", value=qut._id)
+					input(type="hidden", name="obj[_id]", value=inquot._id)
 					.form-group.row.px-5.text-center
 						.col-8
 							select.inquotUpSel#ipt-qutNote-obj.form-control(name="obj[cter]", data-style="btn-info")
 								option(value='null') 请选择客户
 								each cter in cters
 									-a;
-									if !qut.cter
+									if !inquot.cter
 										-a;
 										option(value=cter._id) #{cter.nome}[#{cter.code}]
-									else if String(cter._id) == String(qut.cter._id)
+									else if String(cter._id) == String(inquot.cter._id)
 										-a;
 										option(value=cter._id, selected="selected") #{cter.nome}[#{cter.code}]
 									else
@@ -41,25 +41,25 @@
 		.col-md-6
 			.quter
 				div 报价人:
-				if qut.status == Conf.status.quoting.num
+				if inquot.status == Conf.status.quoting.num
 					-a;
-					if qut.quter
-						- quter = qut.quter;
+					if inquot.quter
+						- quter = inquot.quter;
 						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj #{quter.nome} [ #{quter.code} ]
 					else
 						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj 未分配
 					form#form-quter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
-						input(type="hidden", name="obj[_id]", value=qut._id)
+						input(type="hidden", name="obj[_id]", value=inquot._id)
 						.form-group.row.px-5.text-center
 							.col-8
 								select.inquotUpSel#ipt-quter-obj.form-control(name="obj[quter]", data-style="btn-info")
 									option(value='null') 请选择报价员
 									each quter in quters
 										-a;
-										if !qut.quter
+										if !inquot.quter
 											-a;
 											option(value=quter._id) #{quter.nome}[#{quter.code}]
-										else if String(quter._id) == String(qut.quter._id)
+										else if String(quter._id) == String(inquot.quter._id)
 											-a;
 											option(value=quter._id, selected="selected") #{quter.nome}[#{quter.code}]
 										else
@@ -67,62 +67,62 @@
 							.col-4
 								input.btn.btn-success(type="submit" value="提交")
 				else
-					if qut.quter
-						- quter = qut.quter;
+					if inquot.quter
+						- quter = inquot.quter;
 						div #{quter.nome} [ #{quter.code} ]
 					else
 						div.text-warning 未分配
 			.percenter
 				- percent = "同步报价的比例";
-				if qut.percent && qut.percent > 0
-					- percent = qut.percent;
+				if inquot.percent && inquot.percent > 0
+					- percent = inquot.percent;
 				span 加点百分比: 
 				span.text-warning.inquotUpClick#span-percent-obj #{percent}
 				span %
 				form#form-percent-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
-					input(type="hidden", name="obj[_id]", value=qut._id)
+					input(type="hidden", name="obj[_id]", value=inquot._id)
 					.form-group.row
 						.col-4
 						.col-4
-							input.percentBlurup#ipt-percent-obj.form-control(type="text", name="obj[percent]", placeholder="加点百分比", autocomplete="off", value=qut.percent)
+							input.percentBlurup#ipt-percent-obj.form-control(type="text", name="obj[percent]", placeholder="加点百分比", autocomplete="off", value=inquot.percent)
 						.col-4
 							input.btn.btn-success(type="submit" value="提交")
 			.status.mt-3
 				- let status = '';
 				each sts in Conf.status
 					- status = '';
-					if sts.num == qut.status
+					if sts.num == inquot.status
 						- status = sts.val;
 						- break;
 				span.p-2.text-danger 状态: #{status}
 			.excel.text-right
-				a(href="/slInquotExcel/"+qut._id) Excel <span class="oi oi-data-transfer-download"></span>
+				a(href="/slInquotExcel/"+inquot._id) Excel <span class="oi oi-data-transfer-download"></span>
 	.statusChange.text-center.row.mt-3
-		if qut.status == Conf.status.quoting.num
+		if inquot.status == Conf.status.quoting.num
 			-a;
 			.col-6
-				button.mr-5.btn.border-danger.text-danger.changeStsAjax.initBtn(id="changeStsAjax-"+qut._id+"-pricing_init", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.init.num) 返回初始状态
-		else if qut.status == Conf.status.pricing.num
+				button.mr-5.btn.border-danger.text-danger.changeStsAjax.initBtn(id="changeStsAjax-"+inquot._id+"-pricing_init", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.init.num) 返回初始状态
+		else if inquot.status == Conf.status.pricing.num
 			- a;
 			.col-6
-				button.mr-5.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_quoting", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.quoting.num) 返回处理
+				button.mr-5.btn.border-danger.text-danger.changeStsAjax.quotingBtn(id="changeStsAjax-"+inquot._id+"-pricing_quoting", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.quoting.num) 返回处理
 			.col-6
-				button.ml-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+qut._id+"-pricing_confirm", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.confirm.num) 完成
-		else if qut.status == Conf.status.confirm.num
+				button.ml-5.btn.btn-warning.changeStsAjax.quotingBtn(id="changeStsAjax-"+inquot._id+"-pricing_confirm", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.confirm.num) 完成
+		else if inquot.status == Conf.status.confirm.num
 			-a;
 			.col-6
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-confirm_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 返回定价
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-confirm_pricing", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.pricing.num) 返回定价
 			.col-6
-		else if qut.status == Conf.status.pending.num
+		else if inquot.status == Conf.status.pending.num
 			-a;
 			.col-6
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-pending_confirm", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.confirm.num) 返回确认状态
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-pending_confirm", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.confirm.num) 返回确认状态
 			.col-6
-				a.btn.btn-success(href="/mgDinGen/"+qut._id) 去生成订单
-		else if qut.status == Conf.status.unord.num
+				a.btn.btn-success(href="/mgDinGen/"+inquot._id) 去生成订单
+		else if inquot.status == Conf.status.unord.num
 			-a;
 			.col-6
-				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+qut._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=qut._id, data-stsf=qut.status, data-stst=Conf.status.pricing.num) 重新定价
+				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-unord_pricing", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.pricing.num) 重新定价
 			.col-6
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/dbs/compd/total.js")

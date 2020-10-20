@@ -42,10 +42,6 @@ table.mt-3.table.table-bordered
 						.pdarea.mt-3
 							span.text-dark 区域: 
 							span #{compd.area}
-
-					if qut.status == Conf.status.pricing.num
-							a-;
-							a.btn.border-warning.text-warning.mt-5(href="/sfQunpdUp/"+compd._id) 更改商品
 				td
 					.pdnome
 						span.text-dark 品类: 
@@ -116,6 +112,8 @@ table.mt-3.table.table-bordered
 								-a;
 								.col-6
 									img.thumbnailImg.mt-2(src=image, width="120px")
+					- reUrl = "/sfQut/";
+					include ../../../../aaPlugin/compd/imagesUpd
 				td
 					span #{compd.note}
 
@@ -135,7 +133,7 @@ table.mt-3.table.table-bordered
 							else
 								span 未预估
 
-						if qut.status >= Conf.status.pricing.num
+						if inquot.status >= Conf.status.pricing.num
 							-a;
 							.strmup.mt-3
 								span.text-dark 供应商: 
@@ -143,23 +141,27 @@ table.mt-3.table.table-bordered
 									- strmup = compd.strmup;
 									span.text-warning.clickup(id="span-strmup-"+compd._id) #{strmup.nome}
 								else
-									span.text-warning.clickup(id="span-strmup-"+compd._id) 未分配
-							form(id="form-strmup-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
-								input(type="hidden", name="obj[_id]", value=compd._id)
-								.form-group.row
-									.col-12
-										select.selectup.form-control(id="sel-strmup-"+compd._id, name="obj[strmup]", data-style="btn-info")
-											option(value='null') 请选供应商
-											each strmup in strmups
-												-a;
-												if !compd.strmup
-													-a;
-													option(value=strmup._id) #{strmup.nome}
-												else if String(strmup._id) == String(compd.strmup._id)
-													-a;
-													option(value=strmup._id, selected="selected") #{strmup.nome}
-												else
-													option(value=strmup._id) #{strmup.nome}
+									span.text-warning.clickup(id="span-strmup-"+compd._id) 选供应商
+								if brand && brand.buys
+									- buys = brand.buys;
+									form(id="form-strmup-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
+										input(type="hidden", name="obj[_id]", value=compd._id)
+										input(type="hidden", name="obj[brand]", value=compd.brand._id)
+										input(type="hidden", name="orgPrice", value=compd.pdthd.price)
+										.form-group.row
+											.col-12
+												select.selectup.form-control(id="sel-strmup-"+compd._id, name="obj[strmup]", data-style="btn-info")
+													option(value='null') 选供应商
+													each buy in buys
+														-strmup = buy.strmup;
+														if !compd.strmup
+															-a;
+															option(value=strmup._id) #{strmup.nome}
+														else if String(strmup._id) == String(compd.strmup._id)
+															-a;
+															option(value=strmup._id, selected="selected") #{strmup.nome}
+														else
+															option(value=strmup._id) #{strmup.nome}
 							.dutPr.mt-2
 								span.text-dark 采购单价:
 								if compd.dutPr && !isNaN(compd.dutPr)
@@ -169,7 +171,7 @@ table.mt-3.table.table-bordered
 								else
 									span.text-warning.clickup(id="span-dutPr-"+compd._id) 未报价
 									span &nbsp;€
-								if qut.status == Conf.status.pricing.num
+								if inquot.status == Conf.status.pricing.num
 									-a;
 									input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
 									form.ajaxForm(id="form-dutPr-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
@@ -187,7 +189,7 @@ table.mt-3.table.table-bordered
 								else
 									span.text-warning.clickup(id="span-qntPr-"+compd._id) 未报价
 									span &nbsp;€
-								if qut.status == Conf.status.pricing.num
+								if inquot.status == Conf.status.pricing.num
 									-a;
 									input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
 									form.ajaxForm(id="form-qntPr-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
@@ -221,7 +223,7 @@ table.mt-3.table.table-bordered
 								- status = sts.val;
 								- break;
 						span.text-dark 商品状态: 
-						if qut.status > Conf.status.init.num
+						if inquot.status > Conf.status.init.num
 							-a;
 							span.text-danger #{status}
 						else

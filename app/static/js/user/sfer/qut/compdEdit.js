@@ -43,6 +43,7 @@ $(function() {
 		$("#form-"+field+"-"+id).hide();
 	})
 
+	// 供应商修改
 	$(".selectup").blur(function(e) {
 		let strids = $(this).attr("id").split("-")
 		let field = strids[1];
@@ -65,7 +66,16 @@ $(function() {
 			data: data,
 			success: function(results) {
 				if(results.status === 1) {
+					let compd = results.data.compd;
 					$("#span-"+field+"-"+id).text(newText);
+					$("#span-dutPr-"+id).text(compd.dutPr);
+					$("#org-dutPr-"+id).val(compd.dutPr);
+					$("#ipt-dutPr-"+id).val(compd.dutPr);
+
+					$("#span-qntPr-"+id).text(compd.qntPr);
+					$("#org-qntPr-"+id).val(compd.qntPr);
+					$("#ipt-qntPr-"+id).val(compd.qntPr);
+					$("#tot-qntPr-"+id).text(compd.qntPr * compd.quant);
 				} else if(results.status === 0) {
 					alert(results.msg)
 				}

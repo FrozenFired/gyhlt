@@ -48,17 +48,17 @@ exports.mgQut = (req, res) => {
 			{path: 'quter'},
 		]
 	})
-	.exec((err, qut) => {
+	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
 			info = "mger Qut, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
-		} else if(!qut) {
+		} else if(!inquot) {
 			info = "这个报价单已经被删除";
 			Err.usError(req, res, info);
 		} else {
-			// console.log(qut)
-			let compds = qut.compds;
+			// console.log(inquot)
+			let compds = inquot.compds;
 			User.find({
 				firm: crUser.firm,
 				$or:[
@@ -101,7 +101,7 @@ exports.mgQut = (req, res) => {
 								title: '报价单详情',
 								crUser,
 
-								qut,
+								inquot,
 								compds,
 								quters,
 								cters,

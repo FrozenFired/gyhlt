@@ -43,7 +43,7 @@ table.mt-3.table.table-bordered
 							span.text-dark 区域: 
 							span #{compd.area}
 
-					if qut.status == Conf.status.quoting.num
+					if inquot.status == Conf.status.quoting.num
 						if compd.qntpdSts == Conf.status.quoting.num
 							-a;
 							a.btn.btn-info.mt-5(href="/sfQutpdUp/"+compd._id) 开始报价
@@ -61,7 +61,7 @@ table.mt-3.table.table-bordered
 								- status = sts.val;
 								- break;
 						//- span.text-dark 商品状态: 
-						if qut.status > Conf.status.init.num
+						if inquot.status > Conf.status.init.num
 							-a;
 							span.text-danger #{status}
 						else
@@ -149,6 +149,8 @@ table.mt-3.table.table-bordered
 										input(type="hidden", name="picField", value="images")
 										input(type="hidden", name="subsp", value=subsp)
 										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+					- reUrl = "/sfQut/";
+					include ../../../../aaPlugin/compd/imagesUpd
 				td
 					span #{compd.note}
 				td
@@ -166,7 +168,7 @@ table.mt-3.table.table-bordered
 								span.text-warning.clickup(id="span-estimate-"+compd._id) #{compd.estimate}
 							else
 								span.text-warning.clickup(id="span-estimate-"+compd._id) 未预估
-							if qut.status == Conf.status.quoting.num
+							if inquot.status == Conf.status.quoting.num
 								-a;
 								input(id="org-estimate-"+compd._id, type="hidden", value=compd.estimate)
 								form.ajaxForm(id="form-estimate-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
@@ -181,4 +183,4 @@ table.mt-3.table.table-bordered
 .row
 	.col-12.text-right
 		input#ipt-quantTotal(type="hidden", value=quantTotal)
-script(src="/js/user/qter/qutpd/soleup.js")
+script(src="/js/user/qter/qut/compdEdit.js")

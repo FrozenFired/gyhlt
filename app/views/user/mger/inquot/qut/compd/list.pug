@@ -131,7 +131,7 @@ table.mt-3.table.table-bordered
 							else
 								span 未预估
 
-						if qut.status >= Conf.status.pricing.num
+						if inquot.status >= Conf.status.pricing.num
 							-a;
 							.strmup.mt-3
 								span.text-dark 供应商: 
@@ -169,7 +169,7 @@ table.mt-3.table.table-bordered
 								else
 									span.text-warning.clickup(id="span-dutPr-"+compd._id) 未报价
 									span &nbsp;€
-								if qut.status == Conf.status.pricing.num
+								if inquot.status == Conf.status.pricing.num
 									-a;
 									input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
 									form.ajaxForm(id="form-dutPr-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
@@ -186,7 +186,7 @@ table.mt-3.table.table-bordered
 								else
 									span.text-warning.clickup(id="span-qntPr-"+compd._id) 未报价
 									span &nbsp;€
-								if qut.status == Conf.status.pricing.num
+								if inquot.status == Conf.status.pricing.num
 									-a;
 									input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
 									form.ajaxForm(id="form-qntPr-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
@@ -220,7 +220,7 @@ table.mt-3.table.table-bordered
 								- status = sts.val;
 								- break;
 						span.text-dark 商品状态: 
-						if qut.status > Conf.status.init.num
+						if inquot.status > Conf.status.init.num
 							-a;
 							span.text-danger #{status}
 						else

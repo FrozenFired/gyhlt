@@ -5,10 +5,10 @@ block content
 		nav(aria-label="breadcrumb")
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/") Home
-				li.breadcrumb-item: a(href="/qtQut/"+compd.inquot._id) 报价单
+				li.breadcrumb-item: a(href="/sfQut/"+compd.inquot._id) 报价单
 				li.breadcrumb-item.active(aria-current="page") 更新报价商品
 
-		form#objectForm(method="post", action="/qtQutpdUpd", enctype="multipart/form-data")
+		form#objectForm(method="post", action="/sfQutpdUpd", enctype="multipart/form-data")
 			input#inquotIpt(type="hidden", name="obj[_id]", value=compd._id)
 
 			input(type="hidden", name="picDir", value=Conf.picPath.compd)
@@ -31,7 +31,7 @@ block content
 							- website = 'http://'+website;
 						.brandweb
 							a(href=website target="_blank") #{brand.nome}官网
-			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@qt")
+			input#brandFilterAjax(type="hidden", value="/usBrandsAjax?shelf=1&shelf=2@#brandsElem@sf")
 			.ajax#brandsElem
 
 			- let pdfir = new Object();
@@ -44,7 +44,7 @@ block content
 				.col-md-3.mt-3
 					input.form-control#pdfirIpt(type="hidden", name="obj[pdfir]", readonly="readonly", value=pdfir._id)
 					input.border-danger.form-control#firNomeIpt(type="text", name="obj[firNome]", autocomplete="off", placeholder="* 系列名称", value=compd.firNome)
-			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@qt")
+			input#pdfirFilterAjax(type="hidden", value="/usPdfirsAjax?@#pdfirsElem@sf")
 			.ajax#pdfirsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 产品图片:
@@ -92,7 +92,7 @@ block content
 				.col-md-3.mt-3
 					input.form-control#pdsecIpt(type="hidden", name="obj[pdsec]", readonly="readonly", value=pdsec._id)
 					input.form-control#secNomeIpt(type="text", name="obj[secNome]", autocomplete="off", placeholder="* 产品编号", value=compd.secNome)
-			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@qt")
+			input#pdsecFilterAjax(type="hidden", value="/usPdsecsAjax?@#pdsecsElem@sf")
 			.ajax#pdsecsElem
 			.row.my-3
 				.col-md-2.mt-3.text-right 线稿图:
@@ -183,8 +183,8 @@ block content
 					input.form-control#delNoteIpt(type="text", name="obj[delNote]", autocomplete="off", placeholder="必填, 删除原因", value=compd.delNote)
 			.form-group.row
 				.col-12.text-right
-					a.border.border-danger.mr-4.btn.btn-default.text-danger#compdsPageShow(href="/qtQut/"+compd.inquot._id) 取消
+					a.border.border-danger.mr-4.btn.btn-default.text-danger#compdsPageShow(href="/sfQut/"+compd.inquot._id) 取消
 					input.btn.btn-success(type="submit", value="确认更新")
 
-	script(src="/js/user/qter/qutpd/edit.js")
+	script(src="/js/user/qter/qut/compdUp.js")
 	script(src="/js/dbs/compd/comGetPd.js")
