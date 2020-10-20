@@ -17,142 +17,67 @@ table.mt-3.table.table-bordered
 		th(style="width:18%") 数量 | 价格(欧元)
 	thead
 		- let quantTotal = 0;
+		- let len = 0;
 		each compd in compds
+			- len++;
 			- let brandnum = '';
 			each brand in brands
 				if brand.brandNome == compd.brandNome
 					- brandnum = brand.num;
 			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
 				td
-					span.border.p-1
-						span.text-dark N. 
-						- let qntnum = '-'
-						if compd.qntnum
-							- qntnum = compd.qntnum;
-						span(id="span-qntnum-"+compd._id) #{qntnum}
-					.brandnome.mt-3
-						if compd.brand
-							- brand = compd.brand;
-							span [#{brand.nome}]
-						else
-							span #{compd.brandNome}
+					.qntpdnumFixed
+						include ../../../../aaPlugin/compd/basic/qntpdnumFixed
+					.brandFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/brandFixed
 
 					if compd.area
 						-a;
 						.pdarea.mt-3
 							span.text-dark 区域: 
 							span #{compd.area}
-
-					if inquot.status == Conf.status.quoting.num
-						if compd.qntpdSts == Conf.status.quoting.num
+					.qntpdStsFixed.mt-4
+						include ../../../../aaPlugin/compd/basic/qntpdStsFixed
+					.option.mt-4
+						if inquot.status == Conf.status.quoting.num
 							-a;
-							a.btn.btn-info.mt-5(href="/sfQutpdUp/"+compd._id) 开始报价
-						else if compd.qntpdSts == Conf.status.done.num
-							-a;
-							a.btn.btn-success.mt-5(href="/sfQutpdUp/"+compd._id) 修改报价
-						else if compd.qntpdSts == Conf.status.del.num
-							-a;
-							a.btn.btn-danger.mt-5(href="/sfQutpdUp/"+compd._id) 重新报价
-					.compdSts.mt-4
-						- let status = '';
-						each sts in Conf.status
-							- status = '';
-							if sts.num == compd.qntpdSts
-								- status = sts.val;
-								- break;
-						//- span.text-dark 商品状态: 
-						if inquot.status > Conf.status.init.num
-							-a;
-							span.text-danger #{status}
-						else
-							span.text-danger 创建中
+							if compd.qntpdSts == Conf.status.quoting.num
+								-a;
+								a.btn.btn-info(href="/sfQutpdUp/"+compd._id) 开始报价
+							else if compd.qntpdSts == Conf.status.done.num
+								-a;
+								a.btn.btn-success(href="/sfQutpdUp/"+compd._id) 修改报价
+							else if compd.qntpdSts == Conf.status.del.num
+								-a;
+								a.btn.btn-danger(href="/sfQutpdUp/"+compd._id) 重新报价
 				td
 					.pdnome
 						span.text-dark 品类: 
 						span #{compd.pdNome}
-					if compd.pdfir
-						- pdfir = compd.pdfir;
-						.pdfircode.mt-3
-							span.text-dark 系列名: 
-							span [#{pdfir.code}]
-					else
-						- let firNome = '产品系列名称';
-						if compd.firNome
-							- firNome = compd.firNome;
-						.firnome.mt-3
-							span.text-dark 系列名: 
-							span #{firNome}
-					.photo.mt-3
-						- let photo = "/imgs/createPicture.jpg";
-						if compd.photo
-							- photo = compd.photo;
-							img.thumbnailImg(src=photo, width="120px")
-							form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
-								input(type="hidden", name="compdId", value=compd._id)
-								input(type="hidden", name="picField", value="photo")
-								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-						else if compd.firphoto
-							- photo = compd.firphoto;
-							img.thumbnailImg(src=photo, width="120px")
-						else
-							img(src=photo, width="120px")
+					.pdfirFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/pdfirFixed
+					.photoUpd.mt-2
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/photoUpd
 				td
-					if compd.pdsec
-						- pdsec = compd.pdsec;
-						.pdseccode
-							span.text-dark 产品编码: 
-							span [#{pdsec.code}]
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span [#{pdsec.spec}]
-					else
-						.pdseccode
-							span.text-dark 产品编码: 
-							span #{compd.secNome}
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span #{compd.specf}
+					.pdsecFixed
+						include ../../../../aaPlugin/compd/basic/pdsecFixed
 
-					.sketch.mt-3
-						- let sketch = "/imgs/createPicture.jpg";
-						if compd.sketch
-							- sketch = compd.sketch;
-							img.thumbnailImg(src=sketch, width="120px")
-							form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
-								input(type="hidden", name="compdId", value=compd._id)
-								input(type="hidden", name="picField", value="sketch")
-								button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-						else if compd.pdsec
-							-a;
-							- sketch = compd.pdsec.photo;
-							img.thumbnailImg(src=sketch, width="120px")
-						else
-							img(src=sketch, width="120px")
+					.sketchUpd.mt-3
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/sketchUpd
 				td
-					- let pdthdcode = '查找数据库';
-					if compd.pdthd
-						- pdthdcode = '['+compd.pdthd.code+']';
-						.pdthdPrice.text-dark [原价: #{compd.pdthd.price} €]
-					.pdthdcode #{pdthdcode}
-					.pdmater.mt-2 #{compd.mater}
-					.pdcraft #{compd.craft}
-					.images.row
-						- let subsp = -1;
-						each image in compd.images
-							- subsp++;
-							if image && image.length > 5
-								-a;
-								.col-6
-									img.thumbnailImg.mt-2(src=image, width="120px")
-									form(method="post", action="/sfQutpdDelPic", enctype="multipart/form-data")
-										input(type="hidden", name="compdId", value=compd._id)
-										input(type="hidden", name="picField", value="images")
-										input(type="hidden", name="subsp", value=subsp)
-										button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-					- reUrl = "/sfQut/";
-					include ../../../../aaPlugin/compd/imagesUpd
+					.pdthdin
+						include ../../../../aaPlugin/compd/basic/pdthdin
+
+					.thdDespAjax
+						- action = "/qtQutpdUpdAjax";
+						include ../../../../aaPlugin/compd/ajax/thdDespAjax
 				td
 					span #{compd.note}
+					.imagesUpd
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/imagesUpd
 				td
 					input.statusInput(type="hidden", value=compd.qntpdSts)
 					if compd.qntpdSts != Conf.status.del.num
@@ -161,21 +86,23 @@ table.mt-3.table.table-bordered
 							span.text-dark 数量: 
 							span #{compd.quant}
 
-						.estimate.mt-3
-							span.text-dark 预估单价:
-							if compd.estimate
-								- a;
-								span.text-warning.clickup(id="span-estimate-"+compd._id) #{compd.estimate}
-							else
-								span.text-warning.clickup(id="span-estimate-"+compd._id) 未预估
-							if inquot.status == Conf.status.quoting.num
-								-a;
-								input(id="org-estimate-"+compd._id, type="hidden", value=compd.estimate)
-								form.ajaxForm(id="form-estimate-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
-									input(type="hidden", name="obj[_id]", value=compd._id)
-									.form-group.row
-										.col-12
-											input.blurup.form-control(id="ipt-estimate-"+compd._id, type="text", name="obj[estimate]", placeholder="预估单价可以是范围", autocomplete="off", value=compd.estimate)
+						.estimateAjax.mt-3
+							- action = "/sfQutpdUpdAjax";
+							include ../../../../aaPlugin/compd/ajax/estimateAjax
+							//- span.text-dark 预估单价:
+							//- if compd.estimate
+							//- 	- a;
+							//- 	span.text-warning.clickup(id="span-estimate-"+compd._id) #{compd.estimate}
+							//- else
+							//- 	span.text-warning.clickup(id="span-estimate-"+compd._id) 未预估
+							//- if inquot.status == Conf.status.quoting.num
+							//- 	-a;
+							//- 	input(id="org-estimate-"+compd._id, type="hidden", value=compd.estimate)
+							//- 	form.ajaxForm(id="form-estimate-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
+							//- 		input(type="hidden", name="obj[_id]", value=compd._id)
+							//- 		.form-group.row
+							//- 			.col-12
+							//- 				input.blurup.form-control(id="ipt-estimate-"+compd._id, type="text", name="obj[estimate]", placeholder="预估单价可以是范围", autocomplete="off", value=compd.estimate)
 					else 
 						.del.text-danger
 							div.text-center 删除原因:
@@ -183,4 +110,3 @@ table.mt-3.table.table-bordered
 .row
 	.col-12.text-right
 		input#ipt-quantTotal(type="hidden", value=quantTotal)
-script(src="/js/user/qter/qut/compdEdit.js")

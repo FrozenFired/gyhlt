@@ -6,6 +6,9 @@ const Conf = require('../../../../conf');
 const Inquot = require('../../../models/firm/ord/inquot');
 const Compd = require('../../../models/firm/ord/compd');
 
+const Brand = require('../../../models/firm/brand');
+const Pdthd = require('../../../models/firm/pd/pdthd');
+
 const Buy = require('../../../models/firm/stream/buy');
 const User = require('../../../models/login/user');
 

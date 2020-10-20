@@ -118,7 +118,8 @@ $(function() {
 			role = qutFilter.split('@')[2];
 			statusParam = qutFilter.split('@')[3];
 		}
-		urlQuery = qutParam+'&quter=null'+statusParam;
+		urlQuery = qutParam+statusParam;
+		// urlQuery = qutParam+'&quter=null'+statusParam;
 		getQuts(urlQuery, qutElemId, 1, role);
 	}
 	inquotsInit();

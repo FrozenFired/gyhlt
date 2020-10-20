@@ -68,13 +68,8 @@ table.mt-3.table.table-bordered
 						- reUrl = "/slQun/";
 						include ../../../../aaPlugin/compd/upd/sketchUpd
 				td
-					.pdthdInfo
-						- let pdthdcode = '查找数据库';
-						if compd.pdthd
-							- pdthdcode = '['+compd.pdthd.code+']';
-						.pdthdcode #{pdthdcode}
-						.pdmater.mt-2 #{compd.mater}
-						.pdcraft #{compd.craft}
+					.pdthdout
+						include ../../../../aaPlugin/compd/basic/pdthdout
 					.thdDespAjax
 						- action = "/slQunpdUpdAjax";
 						include ../../../../aaPlugin/compd/ajax/thdDespAjax

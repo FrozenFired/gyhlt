@@ -17,25 +17,19 @@ table.mt-3.table.table-bordered
 		th(style="width:10%") 备注
 		th(style="width:18%") 数量 | 价格(欧元)
 	thead
+		- let len = 0;
 		each compd in compds
+			- len++;
 			- let brandnum = '';
 			each brand in brands
 				if brand.brandNome == compd.brandNome
 					- brandnum = brand.num;
 			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
 				td
-					span.border.p-1
-						span.text-dark N. 
-						- let qntnum = '-'
-						if compd.qntnum
-							- qntnum = compd.qntnum;
-						span(id="span-qntnum-"+compd._id) #{qntnum}
-					.brandnome.mt-3
-						if compd.brand
-							- brand = compd.brand;
-							span [#{brand.nome}]
-						else
-							span #{compd.brandNome}
+					.qntpdnumFixed
+						include ../../../../aaPlugin/compd/basic/qntpdnumFixed
+					.brandFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/brandFixed
 
 					if compd.area
 						-a;
@@ -46,77 +40,30 @@ table.mt-3.table.table-bordered
 					.pdnome
 						span.text-dark 品类: 
 						span #{compd.pdNome}
-					if compd.pdfir
-						- pdfir = compd.pdfir;
-						.pdfircode.mt-3
-							span.text-dark 系列名: 
-							span [#{pdfir.code}]
-					else
-						- let firNome = '产品系列名称';
-						if compd.firNome
-							- firNome = compd.firNome;
-						.firnome.mt-3
-							span.text-dark 系列名: 
-							span #{firNome}
-					.photo.mt-3
-						- let photo = "/imgs/createPicture.jpg";
-						if compd.photo
-							- photo = compd.photo;
-							img.thumbnailImg(src=photo, width="120px")
-						else if compd.firphoto
-							- photo = compd.firphoto;
-							img.thumbnailImg(src=photo, width="120px")
-						else
-							img(src=photo, width="120px")
+					.pdfirFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/pdfirFixed
+					.photoUpd.mt-2
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/photoUpd
 				td
-					if compd.pdsec
-						- pdsec = compd.pdsec;
-						.pdseccode
-							span.text-dark 产品编码: 
-							span [#{pdsec.code}]
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span [#{pdsec.spec}]
-					else
-						.pdseccode
-							span.text-dark 产品编码: 
-							span #{compd.secNome}
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span #{compd.specf}
+					.pdsecFixed
+						include ../../../../aaPlugin/compd/basic/pdsecFixed
 
-					.sketch.mt-3
-						- let sketch = "/imgs/createPicture.jpg";
-						if compd.sketch
-							- sketch = compd.sketch;
-							img.thumbnailImg(src=sketch, width="120px")
-						else if compd.pdsec
-							-a;
-							- sketch = compd.pdsec.photo;
-							img.thumbnailImg(src=sketch, width="120px")
-						else
-							img(src=sketch, width="120px")
+					.sketchUpd.mt-3
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/sketchUpd
 				td
-					- let pdthdcode = '查找数据库';
-					if compd.pdthd
-						- pdthdcode = '['+compd.pdthd.code+']';
-						.pdthdPrice.text-dark [原价: #{compd.pdthd.price} €]
-					.pdthdcode #{pdthdcode}
-					.pdmater.mt-2 #{compd.mater}
-					.pdcraft #{compd.craft}
-					.images.row
-						- let subsp = -1;
-						each image in compd.images
-							- subsp++;
-							if image && image.length > 5
-								-a;
-								.col-6
-									img.thumbnailImg.mt-2(src=image, width="120px")
-					- reUrl = "/sfQut/";
-					include ../../../../aaPlugin/compd/imagesUpd
+					.pdthdin
+						include ../../../../aaPlugin/compd/basic/pdthdin
+
+					.thdDespAjax
+						- action = "/sfQutpdUpdAjax";
+						include ../../../../aaPlugin/compd/ajax/thdDespAjax
 				td
 					span #{compd.note}
-
+					.imagesUpd
+						- reUrl = "/sfQut/";
+						include ../../../../aaPlugin/compd/upd/imagesUpd
 				td
 					if compd.qntpdSts != Conf.status.del.num
 						- quantTotal += compd.quant;
@@ -135,101 +82,24 @@ table.mt-3.table.table-bordered
 
 						if inquot.status >= Conf.status.pricing.num
 							-a;
-							.strmup.mt-3
-								span.text-dark 供应商: 
-								if compd.strmup
-									- strmup = compd.strmup;
-									span.text-warning.clickup(id="span-strmup-"+compd._id) #{strmup.nome}
-								else
-									span.text-warning.clickup(id="span-strmup-"+compd._id) 选供应商
-								if brand && brand.buys
-									- buys = brand.buys;
-									form(id="form-strmup-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
-										input(type="hidden", name="obj[_id]", value=compd._id)
-										input(type="hidden", name="obj[brand]", value=compd.brand._id)
-										input(type="hidden", name="orgPrice", value=compd.pdthd.price)
-										.form-group.row
-											.col-12
-												select.selectup.form-control(id="sel-strmup-"+compd._id, name="obj[strmup]", data-style="btn-info")
-													option(value='null') 选供应商
-													each buy in buys
-														-strmup = buy.strmup;
-														if !compd.strmup
-															-a;
-															option(value=strmup._id) #{strmup.nome}
-														else if String(strmup._id) == String(compd.strmup._id)
-															-a;
-															option(value=strmup._id, selected="selected") #{strmup.nome}
-														else
-															option(value=strmup._id) #{strmup.nome}
-							.dutPr.mt-2
-								span.text-dark 采购单价:
-								if compd.dutPr && !isNaN(compd.dutPr)
-									- a;
-									span.text-warning.clickup(id="span-dutPr-"+compd._id) #{(compd.dutPr).toFixed(2)}
-									span &nbsp;€
-								else
-									span.text-warning.clickup(id="span-dutPr-"+compd._id) 未报价
-									span &nbsp;€
-								if inquot.status == Conf.status.pricing.num
-									-a;
-									input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
-									form.ajaxForm(id="form-dutPr-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
-										input(type="hidden", name="obj[_id]", value=compd._id)
-										.form-group.row
-											.col-12
-												input.blurup.form-control(id="ipt-dutPr-"+compd._id, type="text", name="obj[dutPr]", placeholder="填写采购价格", autocomplete="off", value=compd.dutPr)
+							.strmupSelAjax.mt-3
+								- action = "/sfQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/strmupSelAjax
 
+							.dutPrAjax.mt-2
+								- action = "/sfQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/dutPrAjax
 							.qntPr.mt-3
-								span.text-dark 报价单价:
-								if compd.qntPr && !isNaN(compd.qntPr)
-									- a;
-									span.text-warning.clickup(id="span-qntPr-"+compd._id) #{(compd.qntPr).toFixed(2)}
-									span &nbsp;€
-								else
-									span.text-warning.clickup(id="span-qntPr-"+compd._id) 未报价
-									span &nbsp;€
-								if inquot.status == Conf.status.pricing.num
-									-a;
-									input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
-									form.ajaxForm(id="form-qntPr-"+compd._id, action="/sfQutpdUpdAjax", style="display:none")
-										input(type="hidden", name="obj[_id]", value=compd._id)
-										.form-group.row
-											.col-12
-												input.blurup.form-control(id="ipt-qntPr-"+compd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=compd.qntPr)
-							h5.text-dark.total
-								span 总价:
-								if compd.qntPr && !isNaN(compd.qntPr)
-									- a;
-									if !isNaN(qntPrImp)
-										- qntPrImp += compd.quant * compd.qntPr;
-									span(id="tot-qntPr-"+compd._id) #{(compd.qntPr * compd.quant).toFixed(2)}
-									span &nbsp;€
-								else
-									- qntPrImp = '未完成报价';
-									span(id="tot-qntPr-"+compd._id)  未报价
-									span &nbsp;€
-
+								- action = "/sfQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/qntPrAjax
 					else
 						.del.text-danger
 							div.text-center 删除原因:
 							.delNote.mt-2 #{compd.delNote}
-					.compdSts.mt-3
-						input.statusInput(type="hidden", value=compd.qntpdSts)
-						- let status = '';
-						each sts in Conf.status
-							- status = '';
-							if sts.num == compd.qntpdSts
-								- status = sts.val;
-								- break;
-						span.text-dark 商品状态: 
-						if inquot.status > Conf.status.init.num
-							-a;
-							span.text-danger #{status}
-						else
-							span.text-danger 创建中
+
+					.qntpdStsFixed.mt-5
+							include ../../../../aaPlugin/compd/basic/qntpdStsFixed
 .row
 	.col-12.text-right
 		input#ipt-quantTotal(type="hidden", value=quantTotal)
 		input#ipt-qntPrImp(type="hidden", value=qntPrImp)
-script(src="/js/user/sfer/qut/compdEdit.js")

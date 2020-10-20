@@ -1,0 +1,10 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/qntpdnumFixed.pug, compd Error!
+else
+	span.border.p-1
+		span.text-dark N. 
+		- let qntnum = '-'
+		if compd.qntnum
+			- qntnum = compd.qntnum;
+		span(id="span-qntnum-"+compd._id) #{qntnum}

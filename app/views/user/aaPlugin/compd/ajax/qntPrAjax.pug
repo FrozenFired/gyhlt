@@ -1,0 +1,45 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntPrAjax.pug, action Error!
+else if !inquot
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntPrAjax.pug, inquot Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntPrAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntPrAjax.pug, len Error!
+else
+	span.text-dark 报价单价:
+	if compd.qntPr && !isNaN(compd.qntPr)
+		- a;
+		span.text-warning.qntPrClickup(id="span-qntPr-"+compd._id) #{(compd.qntPr).toFixed(2)}
+		span &nbsp;€
+	else
+		span.text-warning.qntPrClickup(id="span-qntPr-"+compd._id) 未报价
+		span &nbsp;€
+	if inquot.status == Conf.status.pricing.num
+		-a;
+		input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
+		form.ajaxForm(id="form-qntPr-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
+			input(type="hidden", name="obj[_id]", value=compd._id)
+			.form-group.row
+				.col-12
+					input.qntPrBlurup.form-control(id="ipt-qntPr-"+compd._id, type="text", name="obj[qntPr]", placeholder="填写报价", autocomplete="off", value=compd.qntPr)
+	h5.text-dark.total
+		span 总价:
+		if compd.qntPr && !isNaN(compd.qntPr)
+			- a;
+			if !isNaN(qntPrImp)
+				- qntPrImp += compd.quant * compd.qntPr;
+			span(id="tot-qntPr-"+compd._id) #{(compd.qntPr * compd.quant).toFixed(2)}
+			span &nbsp;€
+		else
+			- qntPrImp = '未完成报价';
+			span(id="tot-qntPr-"+compd._id)  未报价
+			span &nbsp;€
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/qntPrAjax.js")

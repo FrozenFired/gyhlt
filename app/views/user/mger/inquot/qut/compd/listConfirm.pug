@@ -15,11 +15,12 @@ table.mt-3.table.table-bordered
 		th 系列
 		th 产品规格
 		th 工艺面料
+		th 备注
 		th.qntPrTd(style="width:10%; display:") 平台报价
 		th(style="width:18%") 客户成交价
 	thead
 		tr
-			td.text-right(colspan=4) 总价值:
+			td.text-right(colspan=5) 总价值:
 			td.qntPrTd.bg-dark.text-white(style="display:")
 				h5
 					span#span-qntPrImp
@@ -28,25 +29,19 @@ table.mt-3.table.table-bordered
 				h5.text-info
 					span#span-dinPrImp
 					span &nbsp;€
+		- let len = 0;
 		each compd in compds
+			- len++;
 			- let brandnum = '';
 			each brand in brands
 				if brand.brandNome == compd.brandNome
 					- brandnum = brand.num;
 			tr.text-info.pdTr(pdbrand=brandnum, pdSts=compd.qntpdSts, id="tr-compdid-"+compd._id)
 				td
-					span.border.p-1
-						span.text-dark N. 
-						- let qntnum = '-'
-						if compd.qntnum
-							- qntnum = compd.qntnum;
-						span(id="span-qntnum-"+compd._id) #{qntnum}
-					.brandnome.mt-4
-						if compd.brand
-							- brand = compd.brand;
-							span [#{brand.nome}]
-						else
-							span #{compd.brandNome}
+					.qntpdnumFixed
+						include ../../../../aaPlugin/compd/basic/qntpdnumFixed
+					.brandFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/brandFixed
 
 					if compd.area
 						-a;
@@ -57,71 +52,29 @@ table.mt-3.table.table-bordered
 					.pdnome
 						span.text-dark 品类: 
 						span #{compd.pdNome}
-					if compd.pdfir
-						- pdfir = compd.pdfir;
-						.pdfircode.mt-3
-							span.text-dark 系列名: 
-							span [#{pdfir.code}]
-					else
-						- let firNome = '产品系列名称';
-						if compd.firNome
-							- firNome = compd.firNome;
-						.firnome.mt-3
-							span.text-dark 系列名: 
-							span #{firNome}
-					.photo.mt-3
-						- let photo = "/imgs/createPicture.jpg";
-						if compd.photo
-							- photo = compd.photo;
-							img.thumbnailImg(src=photo, width="120px")
-						else if compd.firphoto
-							- photo = compd.firphoto;
-							img.thumbnailImg(src=photo, width="120px")
-						else
-							img(src=photo, width="120px")
+					.pdfirFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/pdfirFixed
+					.photoUpd.mt-2
+						- reUrl = "/mgQut/";
+						include ../../../../aaPlugin/compd/upd/photoUpd
 				td
-					if compd.pdsec
-						- pdsec = compd.pdsec;
-						.pdseccode
-							span.text-dark 产品编码: 
-							span [#{pdsec.code}]
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span [#{pdsec.spec}]
-					else
-						.pdseccode
-							span.text-dark 产品编码: 
-							span #{compd.secNome}
-						.pdsecspec.mt-3
-							span.text-dark 产品尺寸: 
-							span #{compd.specf}
+					.pdsecFixed
+						include ../../../../aaPlugin/compd/basic/pdsecFixed
 
-					.sketch.mt-3
-						- let sketch = "/imgs/createPicture.jpg";
-						if compd.sketch
-							- sketch = compd.sketch;
-							img.thumbnailImg(src=sketch, width="120px")
-						else if compd.pdsec
-							-a;
-							- sketch = compd.pdsec.photo;
-							img.thumbnailImg(src=sketch, width="120px")
-						else
-							img(src=sketch, width="120px")
+					.sketchUpd.mt-3
+						- reUrl = "/mgQut/";
+						include ../../../../aaPlugin/compd/upd/sketchUpd
 				td
-					- let pdthdcode = '查找数据库';
-					if compd.pdthd
-						- pdthdcode = '['+compd.pdthd.code+']';
-					.pdthdcode #{pdthdcode}
-					.pdmater.mt-3 #{compd.mater}
-					.pdcraft.mt-3 #{compd.craft}
-					.images.row
-						- let subsp = -1;
-						each image in compd.images
-							- subsp++;
-							if image && image.length > 5
-								-a;
-								.col-6
-									img.thumbnailImg.mt-2(src=image, width="120px")
+					.pdthdin
+						include ../../../../aaPlugin/compd/basic/pdthdin
+					.thdDespAjax
+						- action = "/mgQutpdUpdAjax";
+						include ../../../../aaPlugin/compd/ajax/thdDespAjax
+				td
+					span #{compd.note}
+					.imagesUpd
+						- reUrl = "/mgQut/";
+						include ../../../../aaPlugin/compd/upd/imagesUpd
 				td.qntPrTd.bg-dark(style="display:")
 					if compd.qntpdSts != Conf.status.del.num
 						- let qntPrtot = compd.quant * compd.qntPr;

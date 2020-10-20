@@ -1,0 +1,40 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/strmupSelAjax.pug, action Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/strmupSelAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/strmupSelAjax.pug, len Error!
+else
+	span.text-dark 供应商: 
+	if compd.strmup
+		- strmup = compd.strmup;
+		span.text-warning.strmupClickup(id="span-strmup-"+compd._id) #{strmup.nome}
+	else
+		span.text-warning.strmupClickup(id="span-strmup-"+compd._id) 选供应商
+	if compd.brand && compd.brand.buys
+		- buys = compd.brand.buys;
+		form(id="form-strmup-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
+			input(type="hidden", name="obj[_id]", value=compd._id)
+			input(type="hidden", name="obj[brand]", value=compd.brand._id)
+			input(type="hidden", name="orgPrice", value=compd.pdthd.price)
+			.form-group.row
+				.col-12
+					select.selectup.form-control(id="sel-strmup-"+compd._id, name="obj[strmup]", data-style="btn-info")
+						option(value='null') 选供应商
+						each buy in buys
+							-strmup = buy.strmup;
+							if !compd.strmup
+								-a;
+								option(value=strmup._id) #{strmup.nome}
+							else if String(strmup._id) == String(compd.strmup._id)
+								-a;
+								option(value=strmup._id, selected="selected") #{strmup.nome}
+							else
+								option(value=strmup._id) #{strmup.nome}
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/strmupSelAjax.js")

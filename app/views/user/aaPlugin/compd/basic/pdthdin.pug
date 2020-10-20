@@ -1,0 +1,14 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/pdthdin.pug, compd Error!
+else
+	- let pdthdcode = '查找数据库';
+	- let pdthdPrice = "";
+	if compd.pdthd
+		- pdthdcode = '['+compd.pdthd.code+']';
+		- pdthdPrice = '[原价: '+ compd.pdthd.price + '€]';
+	.pdthdcode
+		span.mr-5 #{pdthdcode}
+		span.text-dark #{pdthdPrice}
+	.pdmater.mt-2 #{compd.mater}
+	.pdcraft #{compd.craft}
