@@ -12,5 +12,5 @@ const postForm = multipart();
 module.exports = function(app){
 
 	app.post('/compdImagesUpd', MdRole.userIsLogin, postForm, MdPicture.imgsNew, Compd.compdImagesUpd)
-	// app.post('/slQunpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdUpd)
+	app.post('/compdDelPic', MdRole.userIsLogin, postForm, Compd.compdDelPic)
 };

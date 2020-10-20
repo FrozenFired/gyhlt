@@ -1,0 +1,27 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntnumAjax.pug, action Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntnumAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/qntnumAjax.pug, len Error!
+else
+	span.border.p-1
+		span.text-dark N. 
+		- let qntnum = '-'
+		if compd.qntnum
+			- qntnum = compd.qntnum;
+		span.text-warning.qntnumClickup(id="span-qntnum-"+compd._id) #{qntnum}
+	input(id="org-qntnum-"+compd._id, type="hidden", value=compd.qntnum)
+	form.ajaxForm(id="form-qntnum-"+compd._id, action=action, style="display:none")
+		input(type="hidden", name="obj[_id]", value=compd._id)
+		.form-group.row
+			.col-12
+				input.qntnumBlurup.form-control(id="ipt-qntnum-"+compd._id, type="number", name="obj[qntnum]", placeholder="询价编号", autocomplete="off", value=compd.qntnum)
+	.text-danger(id="opt-qntnum-"+compd._id)
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/qntnumAjax.js")

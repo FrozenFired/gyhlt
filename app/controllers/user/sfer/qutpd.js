@@ -36,7 +36,7 @@ exports.sfQutpdUpdAjax = (req, res) => {
 				if(obj.strmup == "null") {
 					obj.strmup = null;
 					obj.dutPr = null;
-					sferQutpdSave(req, res, compd, obj)
+					sferQutpdAjaxSave(req, res, compd, obj)
 				} else if(!compd.inquot.percent || isNaN(parseFloat(compd.inquot.percent))) {
 					info = "请先输入出售所加点数";
 					Err.jsonErr(req, res, info);
@@ -65,7 +65,7 @@ exports.sfQutpdUpdAjax = (req, res) => {
 							} else {
 								obj.dutPr = orgPrice * (1 - discount/100);
 								obj.qntPr = obj.dutPr * (1 + percent/100);
-								sferQutpdSave(req, res, compd, obj)
+								sferQutpdAjaxSave(req, res, compd, obj)
 							}
 						}
 					})
@@ -86,15 +86,13 @@ exports.sfQutpdUpdAjax = (req, res) => {
 				if(info) {
 					Err.jsonErr(req, res, info);
 				} else {
-					sferQutpdSave(req, res, compd, obj)
+					sferQutpdAjaxSave(req, res, compd, obj)
 				}
 			}
 		}
 	})
 }
-let sferQutpdSave = (req, res, compd, obj) => {
-	let crUser = req.session.crUser;
-
+let sferQutpdAjaxSave = (req, res, compd, obj) => {
 	_compd = _.extend(compd, obj)
 	_compd.save((err, compdSave) => {
 		if(err) {
@@ -192,14 +190,7 @@ exports.sfQutpdUpd = (req, res) => {
 			if(!obj.pdfir || obj.pdfir.length < 20) obj.pdfir = null;
 			if(!obj.pdsec || obj.pdsec.length < 20) obj.pdsec = null;
 			if(!obj.pdthd || obj.pdthd.length < 20) obj.pdthd = null;
-			// 自动改变商品状态
-			// if(obj.qntpdSts != Conf.status.del.num) {
-			// 	if(obj.pdthd) {
-			// 		obj.qntpdSts = Conf.status.done.num;
-			// 	} else {
-			// 		obj.qntpdSts = Conf.status.quoting.num;
-			// 	}
-			// }
+
 			if(obj.images && compd.images) {
 				for(let i=0; i<obj.images.length; i++) {
 					if(compd.images.length>=i && !obj.images[i]) {
@@ -207,18 +198,58 @@ exports.sfQutpdUpd = (req, res) => {
 					}
 				}
 			}
-			let _compd = _.extend(compd, obj);
-			_compd.save((err, objSave) => {
-				if(err) {
-					console.log(err)
-					info = "添加询价单时 sfer QutpdUpd, 请截图后, 联系管理员";
-					Err.usError(req, res, info);
-				} else {
-					res.redirect('/sfQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
-				}
-			})
+			if(obj.brand && obj.pdthd && obj.qntpdSts == Conf.status.done.num) {
+				Brand.findOne({_id: obj.brand}, (err, brand) => {
+					if(err) {
+						console.log(err);
+						info = "sfer QutpdUpd, Brand.findOne, Error! 请截图后, 联系管理员";
+						Err.usError(req, res, info);
+					} else if(!brand) {
+						info = "sfer QutpdUpd, !brand, Error! 请截图后, 联系管理员";
+						Err.usError(req, res, info);
+					} else {
+						Pdthd.findOne({_id: obj.pdthd}, (err, pdthd) => {
+							if(err) {
+								console.log(err);
+								info = "sfer QutpdUpd, Brand.findOne, Error! 请截图后, 联系管理员";
+								Err.usError(req, res, info);
+							} else if(!brand) {
+								info = "sfer QutpdUpd, !brand, Error! 请截图后, 联系管理员";
+								Err.usError(req, res, info);
+							} else {
+								let discount = parseInt(brand.discount)
+								let price = parseFloat(pdthd.price)
+								let percent = parseInt(compd.inquot.percent)
+								let estimate = price * (1 - discount/100) * (1 + percent/100);
+								if(isNaN(estimate)) {
+									obj.estimate = "";
+								} else {
+									obj.estimate = String(estimate.toFixed(2))
+								}
+								sferQutpdSave(req, res, compd, obj);
+							}
+						})
+					}
+				})
+			} else {
+				obj.estimate = '';
+				sferQutpdSave(req, res, compd, obj);
+			}
 		}
 	})
+}
+let sferQutpdSave = (req, res, compd, obj) => {
+	let _compd = _.extend(compd, obj);
+	_compd.save((err, objSave) => {
+		if(err) {
+			console.log(err)
+			info = "sfer QutpdUpd, _compd.save, Error! 请截图后, 联系管理员";
+			Err.usError(req, res, info);
+		} else {
+			res.redirect('/sfQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
+		}
+	})
+
 }
 
 exports.sfQutpdDel = (req, res) => {

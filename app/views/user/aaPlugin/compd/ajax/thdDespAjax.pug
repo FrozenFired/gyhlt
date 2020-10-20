@@ -1,0 +1,26 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/thdDespAjax.pug, action Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/thdDespAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/thdDespAjax.pug, len Error!
+else
+	- var thdDesp = "点击修改描述";
+	if compd.thdDesp && compd.thdDesp.length > 0
+		- thdDesp = compd.thdDesp;
+	span.text-dark 描述: 
+	span.text-warning.thdDespClickup(id="span-thdDesp-"+compd._id) #{thdDesp}
+	input(id="org-thdDesp-"+compd._id, type="hidden", value=compd.thdDesp)
+	form.ajaxForm(id="form-thdDesp-"+compd._id, action=action, style="display:none")
+		input(type="hidden", name="obj[_id]", value=compd._id)
+		.form-group.row
+			.col-12
+				input.thdDespBlurup.form-control(id="ipt-thdDesp-"+compd._id, type="text", name="obj[thdDesp]", placeholder="描述产品, 如颜色等", autocomplete="off", value=compd.thdDesp)
+	.text-danger(id="opt-thdDesp-"+compd._id)
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/thdDespAjax.js")

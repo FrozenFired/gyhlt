@@ -1,0 +1,23 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/quantAjax.pug, action Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/quantAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/quantAjax.pug, len Error!
+else
+	span.text-dark 数量: 
+	span.text-warning.quantClickup(id="span-quant-"+compd._id) #{compd.quant}
+	input(id="org-quant-"+compd._id, type="hidden", value=compd.quant)
+	form.ajaxForm(id="form-quant-"+compd._id, action=action, style="display:none")
+		input(type="hidden", name="obj[_id]", value=compd._id)
+		.form-group.row
+			.col-12
+				input.quantBlurup.form-control(id="ipt-quant-"+compd._id, type="number", name="obj[quant]", placeholder="采购价格", autocomplete="off", value=compd.quant)
+	.text-danger(id="opt-quant-"+compd._id)
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/quantAjax.js")

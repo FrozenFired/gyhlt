@@ -1,0 +1,19 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/pdsecFixed.pug, compd Error!
+else
+	if compd.pdsec
+		- pdsec = compd.pdsec;
+		.pdseccode
+			span.text-dark 产品编码: 
+			span [#{pdsec.code}]
+		.pdsecspec.mt-3
+			span.text-dark 产品尺寸: 
+			span [#{pdsec.spec}]
+	else
+		.pdseccode
+			span.text-dark 产品编码: 
+			span #{compd.secNome}
+		.pdsecspec.mt-3
+			span.text-dark 产品尺寸: 
+			span #{compd.specf}

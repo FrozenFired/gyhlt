@@ -1,0 +1,13 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/pdfirFixed.pug, compd Error!
+else
+	span.text-dark 系列名: 
+	if compd.pdfir
+		- pdfir = compd.pdfir;
+		span [#{pdfir.code}]
+	else
+		- let firNome = '产品系列名称';
+		if compd.firNome
+		- firNome = compd.firNome;
+		span #{firNome}

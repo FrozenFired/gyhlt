@@ -1,0 +1,16 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/qntpdSts.pug, compd Error!
+else
+	- let status = '';
+	each sts in Conf.status
+		- status = '';
+		if sts.num == compd.qntpdSts
+			- status = sts.val;
+			- break;
+	span.text-dark 商品状态: 
+	if inquot.status > Conf.status.init.num
+		-a;
+		span.text-danger #{status}
+	else
+		span.text-danger 创建中

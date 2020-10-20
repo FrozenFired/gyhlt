@@ -31,6 +31,7 @@ let dbSchema = new Schema({
 	thdNome: String,
 	mater: String,
 	craft: String,
+	thdDesp: String,
 	images: [{type: String}],					// 材质图片
 
 	note: String,

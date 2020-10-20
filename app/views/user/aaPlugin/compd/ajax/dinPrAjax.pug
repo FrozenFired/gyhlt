@@ -1,0 +1,27 @@
+if !action
+	-a;
+	.text-danger 请联系管理员, compd/ajax/dinPrAjax.pug, action Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/ajax/dinPrAjax.pug, compd Error!
+else if !len
+	-a;
+	.text-danger 请联系管理员, compd/ajax/dinPrAjax.pug, len Error!
+else
+	span.text-dark 单价: 
+	if compd.dinPr
+		-a;
+		span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) #{(compd.dinPr).toFixed(2)}
+	else
+		span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) 填写售价
+	input(id="org-dinPr-"+compd._id, type="hidden", value=compd.dinPr)
+	form.ajaxForm(id="form-dinPr-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+		input(type="hidden", name="obj[_id]", value=compd._id)
+		.form-group.row
+			.col-12
+				input.dinPrBlurup.form-control(id="ipt-dinPr-"+compd._id, type="text", name="obj[dinPr]", placeholder="采购价格", autocomplete="off", value=compd.dinPr)
+	.text-danger(id="opt-dinPr-"+compd._id)
+
+if len == 1
+	-a;
+	script(src="/js/dbs/compd/independ/dinPrAjax.js")

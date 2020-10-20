@@ -28,7 +28,6 @@ module.exports = function(app){
 	app.get('/slQunpdUp/:id', MdRole.slerIsLogin, Qunpd.slQunpdUp)
 	app.get('/slQunpdDel/:id', MdRole.slerIsLogin, Qunpd.slQunpdDel)
 
-	app.post('/slQunpdDelPic', MdRole.slerIsLogin, postForm, Qunpd.slQunpdDelPic)
 	app.post('/slQunpdNew', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdNew)
 	app.post('/slQunpdUpd', MdRole.slerIsLogin, postForm, MdPicture.photoNew,MdPicture.sketchNew,MdPicture.imgsNew, Qunpd.slQunpdUpd)
 	app.post('/slQunpdUpdAjax', MdRole.slerIsLogin, postForm, Qunpd.slQunpdUpdAjax)

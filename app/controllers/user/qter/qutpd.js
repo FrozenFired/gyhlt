@@ -166,19 +166,19 @@ exports.qtQutpdUpd = (req, res) => {
 								} else {
 									obj.estimate = String(estimate.toFixed(2))
 								}
-								qtQutpdSave(req, res, compd, obj);
+								qterQutpdSave(req, res, compd, obj);
 							}
 						})
 					}
 				})
 			} else {
 				obj.estimate = '';
-				qtQutpdSave(req, res, compd, obj);
+				qterQutpdSave(req, res, compd, obj);
 			}
 		}
 	})
 }
-let qtQutpdSave = (req, res, compd, obj) => {
+let qterQutpdSave = (req, res, compd, obj) => {
 	let _compd = _.extend(compd, obj);
 	_compd.save((err, objSave) => {
 		if(err) {
@@ -189,7 +189,6 @@ let qtQutpdSave = (req, res, compd, obj) => {
 			res.redirect('/qtQut/'+objSave.inquot._id+'/#tr-compdid-'+objSave._id)
 		}
 	})
-
 }
 
 

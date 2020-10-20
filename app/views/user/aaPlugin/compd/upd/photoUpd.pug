@@ -1,0 +1,21 @@
+if !reUrl
+	-a;
+	.text-danger 请联系管理员, compd/upd/photoUpd.pug, reUrl Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/upd/photoUpd.pug, compd Error!
+else
+	- var photo = "/imgs/createPicture.jpg";
+	if compd.photo
+		- photo = compd.photo;
+		img.thumbnailImg(src=photo, width="120px")
+		form(method="post", action="/compdDelPic", enctype="multipart/form-data")
+			input(type="hidden", name="reUrl", value=reUrl)
+			input(type="hidden", name="compdId", value=compd._id)
+			input(type="hidden", name="picField", value="photo")
+			button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+	else if compd.firphoto
+		- photo = compd.firphoto;
+		img.thumbnailImg(src=photo, width="120px")
+	else
+		img(src=photo, width="120px")

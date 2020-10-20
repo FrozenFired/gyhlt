@@ -49,3 +49,54 @@ exports.compdImagesUpd = (req, res) => {
 		}
 	})
 }
+
+exports.compdDelPic = (req, res) => {
+	let crUser = req.session.crUser;
+	let compdId = req.body.compdId;
+	let picField = req.body.picField;
+	let subsp = req.body.subsp;
+	if(!picField) {
+		info = '操作错误, 请截图 联系管理员 compdDelPic';
+		Err.usError(req, res, info);
+	} else {
+		Compd.findOne({
+			_id: compdId,
+			firm: crUser.firm
+		})
+		.populate('ordin')
+		.exec((err, compd) => {
+			if(err) {
+				console.log(err);
+				info = "compdDelPic, Compd.findOne, Error!"
+				Err.usError(req, res, info);
+			} else if(!compd) {
+				info = '此询价单已经被删除, 请刷新查看';
+				Err.usError(req, res, info);
+			} else if(compd.ordin) {
+				info = '已经生成了订单, 不可删除图片, 请截图 联系管理员 compdDelPic';
+				Err.usError(req, res, info);
+			} else {
+				let picDel = compd[picField];
+				if(subsp) {
+					picDel = compd[picField][subsp];
+					// compd[picField][subsp] = '';
+					compd.images.remove(picDel)
+				} else {
+					picDel = compd[picField];
+					compd[picField] = '';
+				}
+				// return;
+				compd.save((err, compdSave) => {
+					if(err) {
+						console.log(err);
+						info = "compdDelPic, Compd.save, Error!"
+						Err.usError(req, res, info);
+					} else {
+						MdPicture.deletePicture(picDel, Conf.picPath.compd);
+						res.redirect(req.body.reUrl+compdSave.inquot)
+					}
+				})
+			}
+		})
+	}
+}

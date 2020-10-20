@@ -1,0 +1,22 @@
+if !reUrl
+	-a;
+	.text-danger 请联系管理员, compd/upd/sketchUpd.pug, reUrl Error!
+else if !compd
+	-a;
+	.text-danger 请联系管理员, compd/upd/sketchUpd.pug, compd Error!
+else
+	- let sketch = "/imgs/createPicture.jpg";
+	if compd.sketch
+		- sketch = compd.sketch;
+		img.thumbnailImg(src=sketch, width="120px")
+		form(method="post", action="/compdDelPic", enctype="multipart/form-data")
+			input(type="hidden", name="reUrl", value=reUrl)
+			input(type="hidden", name="compdId", value=compd._id)
+			input(type="hidden", name="picField", value="sketch")
+			button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+	else if compd.pdsec
+		-a;
+		- sketch = compd.pdsec.photo;
+		img.thumbnailImg(src=sketch, width="120px")
+	else
+		img(src=sketch, width="120px")

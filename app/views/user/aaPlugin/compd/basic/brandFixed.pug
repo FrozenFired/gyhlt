@@ -1,0 +1,9 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/brandFixed.pug, compd Error!
+else
+	if compd.brand
+		- a;
+		span [#{compd.brand.nome}]
+	else
+		span #{compd.brandNome}

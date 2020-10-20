@@ -126,7 +126,7 @@ let MiddlePicture = {
 			let picData = imgsDatas[n]
 			if(picData && picData.originalFilename && picDir) {
 				let filePath = picData.path;		// 图片的位置
-				if(obj && obj.images[n]){
+				if(obj && obj.images && obj.images[n]){
 					MiddlePicture.deletePicture(obj.images[n], picDir);
 				}
 				fs.readFile(filePath, (err, data) => {
