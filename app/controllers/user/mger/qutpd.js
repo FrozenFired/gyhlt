@@ -14,7 +14,7 @@ const _ = require('underscore');
 exports.mgQutpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
-
+	if(obj.thdDesp) obj.thdDesp = obj.thdDesp.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	Compd.findOne({
 		firm: crUser.firm,
 		_id: obj._id

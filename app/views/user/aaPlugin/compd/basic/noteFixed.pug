@@ -1,0 +1,7 @@
+if !compd
+	-a;
+	.text-danger 请联系管理员, compd/basic/noteFixed.pug, compd Error!
+else
+	if compd.note && compd.note.length > 0
+		-a;
+		.text-dark 备注: #{compd.note}

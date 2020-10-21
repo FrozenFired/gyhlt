@@ -183,7 +183,7 @@ exports.slQunpdUpdAjax = (req, res) => {
 		} else if(obj.dinPr < 0) {
 			info = '售价不能是负数';
 		}
-	} else if(obj.thdDesp) {
+	} else if(obj.thdDesp || obj.thdDesp == "") {
 
 	} else {
 		info = "您传入的参数有错误";
@@ -223,8 +223,8 @@ exports.slQunpdUpdAjax = (req, res) => {
 					compd.quant = obj.quant;
 				} else if(obj.dinPr) {
 					compd.dinPr = obj.dinPr;
-				} else if(obj.thdDesp) {
-					compd.thdDesp = obj.thdDesp;
+				} else if(obj.thdDesp || obj.thdDesp == "") {
+					compd.thdDesp = obj.thdDesp.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 				}
 
 				compd.save((err, compdSave) => {

@@ -5,23 +5,20 @@ else if !compd
 	-a;
 	.text-danger 请联系管理员, compd/upd/imagesUpd.pug, compd Error!
 else
-	.row
-		- let subsp = -1;
-		each image in compd.images
-			- subsp++;
-			if image && image.length > 5
-				-a;
-				.col-6
-					img.thumbnailImg.mt-2(src=image, width="120px")
-					form(method="post", action="/compdDelPic", enctype="multipart/form-data")
-						input(type="hidden", name="reUrl", value=reUrl)
-						input(type="hidden", name="compdId", value=compd._id)
-						input(type="hidden", name="picField", value="images")
-						input(type="hidden", name="subsp", value=subsp)
-						button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
-		.col-12
-			.imagesEdit.text-right
-				a(href="#thdPdPicUp-"+compd._id data-toggle="modal") [修改材质图片]
+	- let subsp = -1;
+	each image in compd.images
+		- subsp++;
+		if image && image.length > 5
+			-a;
+			img.thumbnailImg.mt-2(src=image, width="120px")
+			form(method="post", action="/compdDelPic", enctype="multipart/form-data")
+				input(type="hidden", name="reUrl", value=reUrl)
+				input(type="hidden", name="compdId", value=compd._id)
+				input(type="hidden", name="picField", value="images")
+				input(type="hidden", name="subsp", value=subsp)
+				button.btn.btn-link.text-danger(type="submit") <span class="oi oi-trash"></span>
+	.imagesEdit.text-right
+		a(href="#thdPdPicUp-"+compd._id data-toggle="modal") [修改材质图片]
 
 	.modal.fade(id="thdPdPicUp-"+compd._id)
 		.modal-dialog

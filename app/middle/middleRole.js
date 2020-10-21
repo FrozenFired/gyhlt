@@ -47,7 +47,7 @@ exports.bserIsLogin = function(req, res, next) {
 	} else if(crUser.role == Conf.roleUser.boss.num) {
 		next();
 	} else {
-		info = "您没有此权限, 需要bser部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 bser!";
 		Err.usError(req, res, info);
 	}
 };
@@ -62,7 +62,7 @@ exports.mgerIsLogin = function(req, res, next) {
 	} else if(crUser.role == Conf.roleUser.manager.num) {
 		next();
 	} else {
-		info = "您没有此权限, 需要mger部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 mger!";
 		Err.usError(req, res, info);
 	}
 };
@@ -77,7 +77,7 @@ exports.fnerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要fner部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 fner!";
 		Err.usError(req, res, info);
 	}
 };
@@ -92,7 +92,7 @@ exports.sferIsLogin = function(req, res, next) {
 	} else if(crUser.role == Conf.roleUser.staff.num) {
 		next();
 	} else {
-		info = "您没有此权限, 需要sfer部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 sfer!";
 		Err.usError(req, res, info);
 	}
 };
@@ -113,7 +113,7 @@ exports.bnerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要bner部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 bner!";
 		Err.usError(req, res, info);
 	}
 };
@@ -131,7 +131,7 @@ exports.qterIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要qter部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 qter!";
 		Err.usError(req, res, info);
 	}
 };
@@ -146,7 +146,7 @@ exports.slerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要sler部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 sler!";
 		Err.usError(req, res, info);
 	}
 };
@@ -161,7 +161,7 @@ exports.oderIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要oder部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 oder!";
 		Err.usError(req, res, info);
 	}
 };
@@ -176,7 +176,7 @@ exports.lgerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要lger部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 lger!";
 		Err.usError(req, res, info);
 	}
 };
@@ -191,7 +191,7 @@ exports.pmerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要pmer部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 pmer!";
 		Err.usError(req, res, info);
 	}
 };
@@ -206,7 +206,7 @@ exports.cterIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		info = "您没有此权限, 需要cter部, 请联系管理员!";
+		info = "请登陆您相应的账号, 或联系管理员 cter!";
 		Err.usError(req, res, info);
 	}
 };

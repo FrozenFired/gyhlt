@@ -11,7 +11,7 @@ $(function() {
 		let field = strids[1];
 		let id = strids[2];
 		let orgVal = $("#org-"+field+"-"+id).val();
-		let newVal = $(this).val();
+		let newVal = $(this).val().replace(/(\s*$)/g, "").replace( /^\s*/, '');
 		if(orgVal != newVal) {
 			let form =$("#form-"+field+"-"+id);
 			let data = form.serialize();
@@ -25,7 +25,11 @@ $(function() {
 						let data = results.data;
 						$("#org-"+field+"-"+id).val(newVal);	// org原数量
 						$("#ipt-"+field+"-"+id).val(newVal);	// ipt的数量
-						$("#span-"+field+"-"+id).text(newVal);	// span的数量
+						if(newVal == "") {
+							$("#span-"+field+"-"+id).text("点击修改描述");	// span的数量
+						} else {
+							$("#span-"+field+"-"+id).text(newVal);	// span的数量
+						}
 					} else if(results.status === 0) {
 						alert(results.msg)
 					}

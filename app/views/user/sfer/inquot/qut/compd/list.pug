@@ -13,9 +13,9 @@ table.mt-3.table.table-bordered
 		th 品牌
 		th 系列
 		th 产品规格
-		th 工艺面料
-		th(style="width:10%") 备注
-		th(style="width:18%") 数量 | 价格(欧元)
+		th(style="width:18%") 材质面料描述
+		th 材质面料图片
+		th(style="width:14%") 数量 | 价格(欧元)
 	thead
 		- let len = 0;
 		each compd in compds
@@ -59,8 +59,9 @@ table.mt-3.table.table-bordered
 					.thdDespAjax
 						- action = "/sfQutpdUpdAjax";
 						include ../../../../aaPlugin/compd/ajax/thdDespAjax
+					.noteFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/noteFixed
 				td
-					span #{compd.note}
 					.imagesUpd
 						- reUrl = "/sfQut/";
 						include ../../../../aaPlugin/compd/upd/imagesUpd

@@ -16,10 +16,10 @@ table.mt-3.table.table-bordered
 		th 品牌
 		th 系列
 		th 产品规格
-		th 工艺面料
-		th 备注
+		th(style="width:18%") 材质面料描述
+		th 材质面料图片
 		th.qntPrTd(style="width:10%; display:") 平台报价
-		th(style="width:18%") 客户成交价
+		th(style="width:14%") 客户成交价
 	thead
 		tr
 			td.text-right(colspan=5) 总价值:
@@ -73,8 +73,9 @@ table.mt-3.table.table-bordered
 					.thdDespAjax
 						- action = "/slQunpdUpdAjax";
 						include ../../../../aaPlugin/compd/ajax/thdDespAjax
+					.noteFixed.mt-3
+						include ../../../../aaPlugin/compd/basic/noteFixed
 				td
-					span #{compd.note}
 					.imagesUpd
 						- reUrl = "/slQun/";
 						include ../../../../aaPlugin/compd/upd/imagesUpd
