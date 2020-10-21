@@ -63,8 +63,6 @@ module.exports = function(app){
 
 	/* =================================== Album =================================== */
 	app.get('/ctAlbums', MdRole.userIsLogin, Album.ctAlbums)
-	app.get('/ctAlbum/:id', MdRole.userIsLogin, Album.ctAlbum)
-
 
 	/* =================================== Ordin =================================== */
 	app.get('/ctOrdins', MdRole.userIsLogin, Ordin.ctOrdins)

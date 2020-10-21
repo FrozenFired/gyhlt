@@ -56,9 +56,14 @@ var albumRender = (album, role) => {
 				elem += '<div class="year">'+album.year+'年</div>'
 		elem += '</div>'
 		elem += '<div class="col-4">'
-			elem += '<a href="/'+role+'Album/'+album._id+'">'
+			console.log(role)
+			if(role == "bn") {
+				elem += '<a href="/'+role+'Album/'+album._id+'">'
+					elem += '<div class="text-info text-center">'+album.nome+'</div>'
+				elem += '</a>'
+			} else {
 				elem += '<div class="text-info text-center">'+album.nome+'</div>'
-			elem += '</a>'
+			}
 		elem += '</div>'
 		elem += '<div class="col-4 text-right">'
 			elem += '<a class="text-warning" href='+album.pdf+' target="_blank">'
