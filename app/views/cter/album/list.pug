@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/") Home
+				li.breadcrumb-item.active(aria-current="page") 图册列表
+		.list
+			input#albumFilterAjax(type="hidden", value="/usAlbumsAjax?@#albumsElem@bn")
+			#albumsElem.mt-4
+
+	script(src="/js/dbs/ajaxGet/album.js")
+	script(src="/js/user/bner/album/list.js")

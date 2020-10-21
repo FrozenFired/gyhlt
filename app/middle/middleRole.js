@@ -31,7 +31,8 @@ exports.singleUsLogin = function(req, res, next){
 			if(crLog == atLog){
 				next();
 			}else{
-				res.redirect('/usLogin');
+				info = "此账号在其他地方登陆过, 请退出后 重新登陆!";
+				Err.usError(req, res, info);
 			}
 		} 
 	});
@@ -41,57 +42,66 @@ exports.singleUsLogin = function(req, res, next){
 exports.bserIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.boss.num) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要bser部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.mgerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.boss.num) {
 		next();
 	} else if(crUser.role == Conf.roleUser.manager.num) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要mger部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.fnerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.finance.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要fner部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.sferIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else if(crUser.role == Conf.roleUser.staff.num) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要sfer部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.bnerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.brander.num) {
 		next();
 	} else if(crUser.role == Conf.roleUser.quotation.num) {
@@ -103,14 +113,16 @@ exports.bnerIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要bner部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.qterIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.quotation.num) {
 		next();
 	} else if(crUser.role == Conf.roleUser.order.num) {
@@ -119,72 +131,83 @@ exports.qterIsLogin = function(req, res, next) {
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要qter部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.slerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.seller.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要sler部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.oderIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.order.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要oder部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.lgerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.logistic.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要lger部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.pmerIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.promotion.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要pmer部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
 exports.cterIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else if(crUser.role == Conf.roleUser.customer.num) {
 		next();
 	} else if(Conf.roleAdmin.includes(crUser.role)) {
 		next();
 	} else {
-		res.redirect('/usLogin');
+		info = "您没有此权限, 需要cter部, 请联系管理员!";
+		Err.usError(req, res, info);
 	}
 };
 
@@ -192,7 +215,8 @@ exports.cterIsLogin = function(req, res, next) {
 exports.userIsLogin = function(req, res, next) {
 	let crUser = req.session.crUser;
 	if(!crUser) {
-		res.redirect('/usLogin');
+		info = "请登陆您的账号!";
+		Err.usError(req, res, info);
 	} else {
 		next();
 	}

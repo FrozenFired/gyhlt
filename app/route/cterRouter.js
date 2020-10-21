@@ -9,6 +9,7 @@ const Footer = require('../controllers/user/cter/footer');
 const Brand = require('../controllers/user/cter/brand');
 const Pdfir = require('../controllers/user/cter/pdfir');
 const Pdsec = require('../controllers/user/cter/pdsec');
+const Album = require('../controllers/user/cter/album');
 
 const Ordin = require('../controllers/user/cter/ordin');
 const Inquot = require('../controllers/user/cter/inquot');
@@ -27,7 +28,7 @@ module.exports = function(app){
 		res.redirect('/');
 	});
 	/* =================================== User =================================== */
-	app.get('/ctUser', MdRole.cterIsLogin, User.ctUser)
+	// app.get('/ctUser', User.ctUser)
 	app.post('/ctUserUpdInfo', MdRole.cterIsLogin, postForm, User.ctUserUpd)
 	app.post('/ctUserUpdPwd', MdRole.cterIsLogin, postForm, MdBcrypt.rqBcrypt, User.ctUserUpd)
 
@@ -60,9 +61,13 @@ module.exports = function(app){
 	app.get('/ctPdsecs', Pdsec.ctPdsecs)
 	app.get('/ctPdsec/:id', Pdsec.ctPdsec)
 
+	/* =================================== Album =================================== */
+	app.get('/ctAlbums', MdRole.userIsLogin, Album.ctAlbums)
+	app.get('/ctAlbum/:id', MdRole.userIsLogin, Album.ctAlbum)
+
 
 	/* =================================== Ordin =================================== */
-	app.get('/ctOrdins', MdRole.cterIsLogin, Ordin.ctOrdins)
+	app.get('/ctOrdins', MdRole.userIsLogin, Ordin.ctOrdins)
 	app.get('/ordin/:id', Ordin.ordin)
 
 	app.get('/compd/:id', Ordin.compd)

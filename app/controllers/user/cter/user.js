@@ -76,21 +76,25 @@ let usUser_save = (req, res, obj, user) => {
 
 exports.ctUser = (req, res) => {
 	let crUser = req.session.crUser;
-	User.findOne({_id: crUser._id, firm: crUser.firm})
-	.exec((err, user) => {
-		if(err) {
-			info = "cter User, User FindOne Error!";
-			Err.usError(req, res, info);
-		} else if(!user) {
-			info = "此帐号已经被删除";
-			Err.usError(req, res, info);
-		} else {
-			res.render('./cter/index/user', {
-				title: '我的信息',
-				crUser: crUser,
+	if(crUser && crUser.role == Conf.roleUser.customer) {
+		User.findOne({_id: crUser._id, firm: crUser.firm})
+		.exec((err, user) => {
+			if(err) {
+				info = "cter User, User FindOne Error!";
+				Err.usError(req, res, info);
+			} else if(!user) {
+				info = "此帐号已经被删除";
+				Err.usError(req, res, info);
+			} else {
+				res.render('./cter/index/user', {
+					title: '我的信息',
+					crUser: crUser,
 
-				user: user
-			})
-		}
-	})
+					user: user
+				})
+			}
+		})
+	} else {
+		res.redirect('/usLogin')
+	}
 }

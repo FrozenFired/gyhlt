@@ -61,9 +61,13 @@ exports.index = (req, res) => {
 
 
 exports.usLogin = (req, res) => {
-	res.render('./login', {
-		title: 'Login',
-	});
+	if(req.session.crUser) {
+		res.redirect('/')
+	} else {
+		res.render('./login', {
+			title: 'Login',
+		});
+	}
 }
 
 
@@ -135,5 +139,5 @@ exports.logout = (req, res) => {
 	// Ader
 	if(req.session.crAder) delete req.session.crAder;
 
-	res.redirect('/');
+	res.redirect('/usLogin');
 }
