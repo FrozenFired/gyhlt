@@ -187,7 +187,7 @@ exports.mgBillDel = (req, res) => {
 					}
 				})
 			} else {
-				info = "mger BillDel, 没有找到采购单, 也没有找到销售单";
+				info = "mger BillDel, 没有找到采购单, 也没有找到订单";
 				Err.usError(req, res, info);
 			}
 		}

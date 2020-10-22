@@ -1,4 +1,4 @@
-// 销售单
+// 订单
 const Err = require('../../aaIndex/err');
 const Conf = require('../../../../conf');
 
@@ -15,12 +15,12 @@ const _ = require('underscore');
 const moment = require('moment');
 const xl = require('excel4node');
 
-// 销售单
+// 订单
 exports.fnDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/fner/order/din/list', {
-		title: '销售单',
+		title: '订单',
 		crUser,
 	})
 }
@@ -78,7 +78,7 @@ exports.fnDin = (req, res) => {
 							Err.usError(req, res, info);
 						} else {
 							res.render('./user/fner/order/din/detail', {
-								title: '销售单详情',
+								title: '订单详情',
 								crUser,
 								din,
 								dinpds: din.compds,

@@ -1,4 +1,4 @@
-// 销售单
+// 订单
 const Err = require('../../aaIndex/err');
 const Conf = require('../../../../conf');
 
@@ -146,12 +146,12 @@ let mgerOrdinSave = (req, res, ordin, inquot, dinNum, compds, n) => {
 }
 
 
-// 销售单
+// 订单
 exports.mgDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/mger/order/din/list', {
-		title: '销售单',
+		title: '订单',
 		crUser,
 	})
 }
@@ -209,7 +209,7 @@ exports.mgDin = (req, res) => {
 							Err.usError(req, res, info);
 						} else {
 							res.render('./user/mger/order/din/detail', {
-								title: '销售单详情',
+								title: '订单详情',
 								crUser,
 								din,
 								dinpds: din.compds,
@@ -236,16 +236,16 @@ exports.mgDinDel = (req, res) => {
 			info = "mger QunDel, Ordin.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!ordin) {
-			info = "此销售单已经被删除";
+			info = "此订单已经被删除";
 			Err.usError(req, res, info);
 		} else if(ordin.status != Conf.status.unpaid.num) {
-			info = "销售单状态已经改变, 不可删除";
+			info = "订单状态已经改变, 不可删除";
 			Err.usError(req, res, info);
 		} else if(!ordin.inquot) {
-			info = "此销售单的询价单, 已经不存在, 请联系管理员";
+			info = "此订单的询价单, 已经不存在, 请联系管理员";
 			Err.usError(req, res, info);
 		} else if(ordin.bills && ordin.bills.length > 0) {
-			info = "此销售单已经有收款, 不可删除";
+			info = "此订单已经有收款, 不可删除";
 			Err.usError(req, res, info);
 		} else {
 			let inquot = ordin.inquot;
@@ -288,7 +288,7 @@ exports.mgDinUpd = (req, res) => {
 			info = "mger QunUpd, Strmup.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!ordin) {
-			info = '此销售单已经被删除, 请刷新查看';
+			info = '此订单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
 			mgerDinCterSel(req, res, obj, ordin);
@@ -330,7 +330,7 @@ let mgerdinSave = (req, res, obj, ordin) => {
 	_ordin.save((err, objSave) => {
 		if(err) {
 			console.log(err);
-			info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+			info = "添加订单时 数据库保存错误, 请截图后, 联系管理员";
 			Err.usError(req, res, info);
 		} else {
 			res.redirect('/mgDin/'+objSave._id)
@@ -351,7 +351,7 @@ exports.mgDinUpdAjax = (req, res) => {
 			info = "mger DinUpdAjax, Strmup.findOne, Error!"
 			Err.jsonErr(req, res, info);
 		} else if(!ordin) {
-			info = 'mger DinUpdAjax, 此销售单已经被删除, 请刷新查看';
+			info = 'mger DinUpdAjax, 此订单已经被删除, 请刷新查看';
 			Err.jsonErr(req, res, info);
 		} else {
 			info = null;
@@ -383,7 +383,7 @@ exports.mgDinUpdAjax = (req, res) => {
 				_ordin.save((err, objSave) => {
 					if(err) {
 						console.log(err);
-						info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+						info = "添加订单时 数据库保存错误, 请截图后, 联系管理员";
 						Err.jsonErr(req, res, info);
 					} else {
 						res.json({

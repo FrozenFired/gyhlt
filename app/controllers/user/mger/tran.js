@@ -389,7 +389,7 @@ exports.mgTranUpdAjax = (req, res) => {
 				_tran.save((err, objSave) => {
 					if(err) {
 						console.log(err);
-						info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+						info = "添加订单时 数据库保存错误, 请截图后, 联系管理员";
 						Err.jsonErr(req, res, info);
 					} else {
 						res.json({

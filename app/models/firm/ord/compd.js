@@ -49,7 +49,7 @@ let dbSchema = new Schema({
 	qntpdSts: Number,							// 商品询报价状态
 	delNote: String, 							// 为什么是无效产品
 
-	/* ============================= 销售单 ============================= */
+	/* ============================= 订单 ============================= */
 	ordin: {type: ObjectId, ref: 'Ordin'},		// 所属订单
 	cter: {type: ObjectId, ref: 'User'}, 		// 客户
 	cterNome: String,							// 销售价格

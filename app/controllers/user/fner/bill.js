@@ -187,7 +187,7 @@ exports.fnBillDel = (req, res) => {
 					}
 				})
 			} else {
-				info = "fner BillDel, 没有找到采购单, 也没有找到销售单";
+				info = "fner BillDel, 没有找到采购单, 也没有找到订单";
 				Err.usError(req, res, info);
 			}
 		}

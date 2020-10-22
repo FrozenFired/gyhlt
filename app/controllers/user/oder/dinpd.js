@@ -32,10 +32,10 @@ exports.odDinpdUpdAjax = (req, res) => {
 			info = 'oder DinpdUpdAjax 此产品已经被删除, 请截图后, 联系管理员';
 			Err.jsonErr(req, res, info);
 		} else if(!compd.ordin) {
-			info = 'oder DinpdUpdAjax 此产品所属销售单已经被删除, 请截图后, 联系管理员';
+			info = 'oder DinpdUpdAjax 此产品所属订单已经被删除, 请截图后, 联系管理员';
 			Err.jsonErr(req, res, info);
 		} else if(compd.ordin.status != Conf.status.init.num) {
-			info = 'oder DinpdUpdAjax 此产品所属销售单状态已经改变, 价格不可更改';
+			info = 'oder DinpdUpdAjax 此产品所属订单状态已经改变, 价格不可更改';
 			Err.jsonErr(req, res, info);
 		} else {
 			if(obj.dinPr) obj.dinPr = parseFloat(obj.dinPr);
@@ -46,7 +46,7 @@ exports.odDinpdUpdAjax = (req, res) => {
 				let _compd = _.extend(compd, obj);
 				_compd.save((err, objSave) => {
 					if(err) {
-						info = "添加销售单时 数据库保存错误, 请截图后, 联系管理员";
+						info = "添加订单时 数据库保存错误, 请截图后, 联系管理员";
 						Err.jsonErr(req, res, info);
 					} else {
 						res.json({

@@ -35,7 +35,7 @@ exports.usDinsAjax = (req, res) => {
 		sellerSymb = '$eq';
 		sellerConb = crUser._id;
 	}
-	/* 销售公司筛选, 如果是查询销售单, 则销售公司一定是本公司*/
+	/* 销售公司筛选, 如果是查询订单, 则销售公司一定是本公司*/
 	// dinSymb = '$eq';
 	// dinCond = crUser.firm._id;
 
@@ -129,7 +129,7 @@ exports.usDutsAjax = (req, res) => {
 	}
 	let skip = (page-1)*pagesize;
 
-	/* 销售公司筛选, 如果是查询销售单, 则销售公司一定是本公司*/
+	/* 销售公司筛选, 如果是查询订单, 则销售公司一定是本公司*/
 	// dutSymb = '$eq';
 	// dutCond = crUser.firm._id;
 
@@ -233,7 +233,7 @@ exports.usTransAjax = (req, res) => {
 	}
 	let skip = (page-1)*pagesize;
 
-	/* 销售公司筛选, 如果是查询销售单, 则销售公司一定是本公司*/
+	/* 销售公司筛选, 如果是查询订单, 则销售公司一定是本公司*/
 	// dutSymb = '$eq';
 	// dutCond = crUser.firm._id;
 

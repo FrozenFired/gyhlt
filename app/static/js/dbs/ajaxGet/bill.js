@@ -70,7 +70,7 @@ var billRender = (bill) => {
 
 		elem += '<div class="col-4">'
 			if(bill.ordin) {
-				elem += '<span class="text-success"> 销售单: </span>'
+				elem += '<span class="text-success"> 订单: </span>'
 				elem += '[<a href="/mgDin/'+bill.ordin._id+'">' + bill.ordin.code + '</a>]'
 			} else if(bill.ordut) {
 				elem += '<span class="text-danger"> 采购单: </span>'

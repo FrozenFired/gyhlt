@@ -7,6 +7,7 @@ block content
 				li.breadcrumb-item: a(href="/") Home
 				li.breadcrumb-item: a(href="/qtQut/"+compd.inquot._id) 报价单
 				li.breadcrumb-item.active(aria-current="page") 更新报价商品
+				li.breadcrumb-item: a.ml-5.text-warning(href="/bnBrands", target="_blank") [点击录入产品信息]
 
 		form#objectForm(method="post", action="/qtQutpdUpd", enctype="multipart/form-data")
 			input#inquotIpt(type="hidden", name="obj[_id]", value=compd._id)
@@ -49,7 +50,7 @@ block content
 			.row.my-3
 				.col-md-2.mt-3.text-right 产品图片:
 				.col-md-3.mt-3(align="center")
-					div 上传指定图片:
+					div 上传指定产品图:
 					- let photo = "";
 					if compd.photo
 						- photo = compd.photo;
@@ -97,7 +98,7 @@ block content
 			.row.my-3
 				.col-md-2.mt-3.text-right 线稿图:
 				.col-md-3.mt-3(align="center")
-					div 上传指定图片:
+					div 上传指定线稿图:
 					- let sketch = "";
 					if compd.sketch
 						- sketch = compd.sketch;
