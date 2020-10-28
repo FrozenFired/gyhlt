@@ -4,8 +4,11 @@ block content
 	.container.mt-3
 		if crUser._id == user._id || user.role != 1
 			-a;
-			.row.text-right
+			.row
 				.col-8
+					if crUser._id == user._id
+						-a;
+						a.btn.btn-danger(href="/logout") 退出
 				.col-2
 					a.btn.btn-info(href="#", data-toggle="modal", data-target="#upPw") <span class="oi oi-key"></span>
 
@@ -33,7 +36,7 @@ block content
 									.modal-footer
 										button.btn.btn-default(type="button" data-dismiss="modal") <span class="oi oi-x"></span>
 										button.btn.btn-success(type="submit") <span class="oi oi-location"></span>
-				.col-2
+				.col-2.text-right
 					a.btn.btn-info(href="#", data-toggle="modal", data-target="#upMgerInfo") <span class="oi oi-cog"></span>
 
 					#upMgerInfo.modal.fade

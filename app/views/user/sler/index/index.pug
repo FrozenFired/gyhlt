@@ -3,9 +3,32 @@ extends ../../aalayout/layout
 block content
 	.container.mt-3
 		.text-center
-			h2 设计师操作后台
-		- let whsize = "50px";
-		.text-info.mt-5
+			h2 平台操作系统
+		- let whsize = "30px";
+		.text-info
 			include ../../aaPage/index/sler
 		hr
+
 		include ../../aaPage/index/cterBrand
+		hr
+
+		.row
+			.col-12 报价管理系统
+			.col-6.col-md-3.col-lg-2.text-center.mt-3
+				a.btn.btn-default(href="/qtQuts")
+					img(src="/imgs/index/deposits.png", width=whsize, height=whsize)
+					.text-dark.mt-2 报价单
+			.col-6.col-md-3.col-lg-2.text-center.mt-3
+				a.btn.btn-default(href="/odDins")
+					img(src="/imgs/index/deposits.png", width=whsize, height=whsize)
+					.text-dark.mt-2 订单管理
+			.col-6.col-md-3.col-lg-2.text-center.mt-3
+				a.btn.btn-default(href="/odDuts")
+					img(src="/imgs/index/deposits.png", width=whsize, height=whsize)
+					.text-dark.mt-2 采购单
+		hr
+		include ../../aaPage/index/lger
+		hr
+		include ../../aaPage/index/hrer
+		hr
+		include ../../aaPage/index/pmer

@@ -131,7 +131,7 @@ exports.user = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/mger/index/user/detail', {
-				title: '成员信息',
+				title: '个人中心',
 				crUser: crUser,
 
 				user: user
