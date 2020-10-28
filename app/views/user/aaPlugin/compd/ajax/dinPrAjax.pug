@@ -15,7 +15,7 @@ else
 	else
 		span.text-warning.dinPrClickup(id="span-dinPr-"+compd._id) 填写售价
 	input(id="org-dinPr-"+compd._id, type="hidden", value=compd.dinPr)
-	form.ajaxForm(id="form-dinPr-"+compd._id, action="/slQunpdUpdAjax", style="display:none")
+	form.ajaxForm(id="form-dinPr-"+compd._id, action=action, style="display:none")
 		input(type="hidden", name="obj[_id]", value=compd._id)
 		.form-group.row
 			.col-12

@@ -20,7 +20,7 @@
 					span.text-info.inquotUpClick#span-cter-obj #{cter.nome} [#{cter.code}]
 				else
 					span.text-info.inquotUpClick#span-cter-obj 未分配
-				form#form-cter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+				form#form-cter-obj(method="post", action="/odQutUpd", enctype="multipart/form-data", style="display:none")
 					input(type="hidden", name="obj[_id]", value=inquot._id)
 					.form-group.row.px-5.text-center
 						.col-8
@@ -48,7 +48,7 @@
 						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj #{quter.nome} [ #{quter.code} ]
 					else
 						button.btn.btn-default.text-info.inquotUpClick#span-quter-obj 未分配
-					form#form-quter-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+					form#form-quter-obj(method="post", action="/odQutUpd", enctype="multipart/form-data", style="display:none")
 						input(type="hidden", name="obj[_id]", value=inquot._id)
 						.form-group.row.px-5.text-center
 							.col-8
@@ -79,7 +79,7 @@
 				span 加点百分比: 
 				span.text-warning.inquotUpClick#span-percent-obj #{percent}
 				span %
-				form#form-percent-obj(method="post", action="/mgQutUpd", enctype="multipart/form-data", style="display:none")
+				form#form-percent-obj(method="post", action="/odQutUpd", enctype="multipart/form-data", style="display:none")
 					input(type="hidden", name="obj[_id]", value=inquot._id)
 					.form-group.row
 						.col-4
@@ -118,7 +118,7 @@
 			.col-6
 				button.btn.border-danger.text-danger.changeStsAjax(id="changeStsAjax-"+inquot._id+"-pending_confirm", type="button", data-url="/usInquotStatusAjax", data-id=inquot._id, data-stsf=inquot.status, data-stst=Conf.status.confirm.num) 返回确认状态
 			.col-6
-				a.btn.btn-success(href="/mgDinGen/"+inquot._id) 去生成订单
+				a.btn.btn-success(href="/odDinGen/"+inquot._id) 去生成订单
 		else if inquot.status == Conf.status.unord.num
 			-a;
 			.col-6
@@ -126,4 +126,4 @@
 			.col-6
 script(src="/js/user/ajaxChange/status.js")
 script(src="/js/dbs/compd/total.js")
-script(src="/js/user/mger/qut/detail.js")
+script(src="/js/user/oder/qut/detail.js")

@@ -151,7 +151,7 @@ exports.odDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/oder/order/din/list', {
-		title: '订单',
+		title: '销售单列表',
 		crUser,
 	})
 }

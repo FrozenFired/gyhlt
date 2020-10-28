@@ -22,7 +22,7 @@ exports.slDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/sler/ordin/din/list', {
-		title: '订单',
+		title: '订单列表',
 		crUser,
 	})
 }

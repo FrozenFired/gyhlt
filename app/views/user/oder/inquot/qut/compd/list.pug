@@ -1,5 +1,4 @@
-- let quantTotal = 0;
-- let qntPrImp = dinPrImp = 0;
+- let quantTotal = qntPrImp = 0;
 .row.mt-3
 	.col-sm-6
 		.quantTotal
@@ -16,19 +15,8 @@ table.mt-3.table.table-bordered
 		th 产品规格
 		th(style="width:18%") 材质面料描述
 		th 材质面料图片
-		th.qntPrTd(style="width:10%; display:") 平台报价
-		th(style="width:14%") 客户成交价
+		th(style="width:14%") 数量 | 价格(欧元)
 	thead
-		tr
-			td.text-right(colspan=5) 总价值:
-			td.qntPrTd.bg-dark.text-white(style="display:")
-				h5
-					span#span-qntPrImp
-					span &nbsp;€
-			td
-				h5.text-info
-					span#span-dinPrImp
-					span &nbsp;€
 		- let len = 0;
 		each compd in compds
 			- len++;
@@ -55,74 +43,64 @@ table.mt-3.table.table-bordered
 					.pdfirFixed.mt-3
 						include ../../../../aaPlugin/compd/basic/pdfirFixed
 					.photoUpd.mt-2
-						- reUrl = "/mgQut/";
+						- reUrl = "/odQut/";
 						include ../../../../aaPlugin/compd/upd/photoUpd
 				td
 					.pdsecFixed
 						include ../../../../aaPlugin/compd/basic/pdsecFixed
 
 					.sketchUpd.mt-3
-						- reUrl = "/mgQut/";
+						- reUrl = "/odQut/";
 						include ../../../../aaPlugin/compd/upd/sketchUpd
 				td
 					.pdthdin
 						include ../../../../aaPlugin/compd/basic/pdthdin
+
 					.thdDespAjax
-						- action = "/mgQutpdUpdAjax";
+						- action = "/odQutpdUpdAjax";
 						include ../../../../aaPlugin/compd/ajax/thdDespAjax
 					.noteFixed.mt-3
 						include ../../../../aaPlugin/compd/basic/noteFixed
 				td
 					.imagesUpd
-						- reUrl = "/mgQut/";
+						- reUrl = "/odQut/";
 						include ../../../../aaPlugin/compd/upd/imagesUpd
-				td.qntPrTd.bg-dark(style="display:")
-					if compd.qntpdSts != Conf.status.del.num
-						- let qntPrtot = compd.quant * compd.qntPr;
-						- qntPrImp += qntPrtot;
-						.dutPr.mt-3.text-white
-							span 采购单价:
-							br
-							span #{(compd.dutPr).toFixed(2)}
-							input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
-						.qntPr.mt-3.text-white
-							.qntPr
-								span 报价单价:
-								br
-								span #{(compd.qntPr).toFixed(2)}
-								input(id="org-qntPr-"+compd._id, type="hidden", value=compd.qntPr)
-							.qntPrTot.mt-2
-								span 总价:
-								br
-								span(id="span-qntPrtot-"+compd._id) #{(qntPrtot).toFixed(2)}
 				td
 					if compd.qntpdSts != Conf.status.del.num
 						- quantTotal += compd.quant;
-						if !isNaN(parseFloat(dinPrImp))
-							-a;
-							if compd.dinPr && !isNaN(parseFloat(compd.dinPr))
-								- dinPrImp += compd.quant * compd.dinPr;
-							else
-								- dinPrImp = "未完成销售价";
 						.quant
 							span.text-dark 数量: 
 							span #{compd.quant}
-						.dinPr.mt-3
-							span.text-dark 单价: 
-							if compd.dinPr
-								-a;
-								span #{(compd.dinPr).toFixed(2)}
+							input(id="quant-qntPr-"+compd._id, type="hidden", value=compd.quant)
+
+						.estimate.text-dark.mt-2
+							span 预估单价:
+							if compd.estimate
+								- a;
+								span #{compd.estimate}
 							else
-								span 填写售价
-						.total
-							strong
-								span.text-dark 总价: 
-								span(id="span-dinPrtot-"+compd._id) #{(compd.quant * compd.dinPr).toFixed(2)}
+								span 未预估
+
+						if inquot.status >= Conf.status.pricing.num
+							-a;
+							.strmupSelAjax.mt-3
+								- action = "/odQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/strmupSelAjax
+
+							.dutPrAjax.mt-2
+								- action = "/odQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/dutPrAjax
+							.qntPr.mt-3
+								- action = "/odQutpdUpdAjax";
+								include ../../../../aaPlugin/compd/ajax/qntPrAjax
 					else
 						.del.text-danger
 							div.text-center 删除原因:
 							.delNote.mt-2 #{compd.delNote}
-.hideImp
-	input#ipt-quantTotal(type="hidden", value=quantTotal)
-	input#ipt-qntPrImp(type="hidden", value=qntPrImp)
-	input#ipt-dinPrImp(type="hidden", value=dinPrImp)
+
+					.qntpdStsFixed.mt-5
+							include ../../../../aaPlugin/compd/basic/qntpdStsFixed
+.row
+	.col-12.text-right
+		input#ipt-quantTotal(type="hidden", value=quantTotal)
+		input#ipt-qntPrImp(type="hidden", value=qntPrImp)

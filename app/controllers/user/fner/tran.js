@@ -24,7 +24,7 @@ exports.fnTrans = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/fner/tran/list', {
-				title: '运输管理',
+				title: '运输清单(财务)',
 				crUser,
 				strmlgs
 			})

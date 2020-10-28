@@ -85,7 +85,7 @@ exports.usDinsAjax = (req, res) => {
 			.populate('cter')
 			.populate('strmup')
 			.skip(skip).limit(pagesize)
-			.sort({'crtAt': -1})
+			.sort({'status' : 1, 'crtAt': -1})
 			.exec((err, ordins) => {
 				if(err) {
 					info = "cter OrdinsAjax, Ordin.find(), Error!";

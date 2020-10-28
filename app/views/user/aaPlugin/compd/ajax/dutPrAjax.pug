@@ -22,7 +22,7 @@ else
 	if inquot.status == Conf.status.pricing.num
 		-a;
 		input(id="org-dutPr-"+compd._id, type="hidden", value=compd.dutPr)
-		form.ajaxForm(id="form-dutPr-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
+		form.ajaxForm(id="form-dutPr-"+compd._id, action=action, style="display:none")
 			input(type="hidden", name="obj[_id]", value=compd._id)
 			.form-group.row
 				.col-12

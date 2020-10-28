@@ -11,16 +11,15 @@ block content
 				input.form-control#dutSearch(type="text", placeholder="采购单搜索")
 				.input-group-append
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
+			span.mr-5 查看采购订单:
+			button.mr-5.btn.btn-success.statusClick#statusAll(class=stsBtn, type="button") 全部
 			each sts in Conf.dutSts
-				- let stsBtn = "btn-default";
-				if sts == 'init'
-					- stsBtn = "btn-success";
-				button.mr-3.btn.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
-			button.btn.statusClick#statusAll(class=stsBtn, type="button") 全部
+				- a;
+				button.ml-3.btn.btn-default.statusClick(class=stsBtn, type="button", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 		.add.mt-3
 			include ./add
 		.dutsList.mt-3
-			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@od@&status="+Conf.status.init.num)
+			input#dutFilterAjax(type="hidden", value="/usDutsAjax?@#dutsElem@od@")
 			//- input#dutFilterAjax(type="hidden", value="?key=xxx@#dutsElem")
 			#dutsElem.mt-5
 

@@ -1,9 +1,10 @@
 const Index = require('../controllers/aaIndex/index');
 
+const Qutpd = require('../controllers/user/oder/qutpd');
+const Qut = require('../controllers/user/oder/qut');
+
 const Din = require('../controllers/user/oder/din');
 const Dinpd = require('../controllers/user/oder/dinpd');
-
-// const Bill = require('../controllers/user/oder/bill');
 
 const Dut = require('../controllers/user/oder/dut');
 const Dutpd = require('../controllers/user/oder/dutpd');
@@ -26,6 +27,16 @@ module.exports = function(app){
 			crUser : crUser,
 		})
 	});
+	/* =================================== qutpd 报价商品 =================================== */
+	app.get('/odQutpdDel/:id', MdRole.oderIsLogin, Qutpd.odQutpdDel)
+
+	app.post('/odQutpdUpdAjax', MdRole.oderIsLogin, postForm, Qutpd.odQutpdUpdAjax)
+	/* =================================== Inquot 报价 =================================== */
+	app.get('/odQuts', MdRole.oderIsLogin, Qut.odQuts)
+	app.get('/odQut/:id', MdRole.oderIsLogin, Qut.odQut)
+	app.get('/odQutDel/:id', MdRole.oderIsLogin, Qut.odQutDel)
+
+	app.post('/odQutUpd', MdRole.oderIsLogin, postForm, Qut.odQutUpd)
 
 	/* =================================== Din =================================== */
 	app.get('/odDinGen/:inquotId', MdRole.oderIsLogin, Din.odDinGen)

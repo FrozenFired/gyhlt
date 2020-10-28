@@ -23,7 +23,7 @@ exports.odDuts = (req, res) => {
 			info = "oder Duts, Strmup.find, Error!"
 		} else {
 			res.render('./user/oder/order/dut/list', {
-				title: '采购单',
+				title: '采购单列表',
 				crUser,
 				strmups
 			})

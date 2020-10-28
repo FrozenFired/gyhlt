@@ -91,7 +91,7 @@ var dutRender = (dut) => {
 				}
 			elem += '</div>'
 
-			elem += '<div>'
+			elem += '<div class="text-danger">'
 				elem += '状态: ' + status
 			elem += '</div>'
 		elem += '</div>'

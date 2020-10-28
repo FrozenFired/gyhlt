@@ -13,15 +13,13 @@ block content
 					button.btn.btn-outline-secondary(type="button") <span class="oi oi-magnifying-glass"></span>
 
 			span.mr-5 查看报价单:
-			button.mr-5.btn.statusClick#statusAll.btn-default(type="button") 全部
-			button.mr-3.btn.statusClick.btn-success(type="button", data-quter="&quter=null", data-status=Conf.status.quoting.num) 未分配
+			button.mr-5.btn.btn-success.statusClick#statusAll.btn-default(type="button") 全部
+			button.mr-3.btn.statusClick.btn-default(type="button", data-quter="&quter=null", data-status=Conf.status.quoting.num) 未分配
 			each sts in Conf.qutSts
-				- let stsBtn = "btn-default";
-				if sts == 'quoting'
-					- stsBtn = "btn-success";
+				-a;
 				button.mr-3.btn.statusClick.btn-default(type="button", data-quter="&quter=nenull", data-status=Conf.status[sts].num) #{Conf.status[sts].val}
 		.inquotsList.mt-3
-			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#inquotsElem@mg@&status="+Conf.status.quoting.num)
+			input#qutFilterAjax(type="hidden", value="/usQutsAjax?@#inquotsElem@od@&")
 			//- input#qutFilterAjax(type="hidden", value="?key=xxx@#inquotsElem")
 			#inquotsElem.mt-5
 

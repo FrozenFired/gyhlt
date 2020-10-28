@@ -11,7 +11,7 @@ const User = require('../../../models/login/user');
 
 const _ = require('underscore');
 
-exports.mgQutpdUpdAjax = (req, res) => {
+exports.odQutpdUpdAjax = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	if(obj.thdDesp) obj.thdDesp = obj.thdDesp.replace(/(\s*$)/g, "").replace( /^\s*/, '');
@@ -23,7 +23,7 @@ exports.mgQutpdUpdAjax = (req, res) => {
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "mger QutpdUpdAjax, Compd.findOne, Error!"
+			info = "oder QutpdUpdAjax, Compd.findOne, Error!"
 			Err.jsonErr(req, res, info);
 		} else if(!compd) {
 			info = '此商品不存在, 请刷新查看';
@@ -36,7 +36,7 @@ exports.mgQutpdUpdAjax = (req, res) => {
 				if(obj.strmup == "null") {
 					obj.strmup = null;
 					obj.dutPr = null;
-					mgerQutpdSave(req, res, compd, obj)
+					oderQutpdSave(req, res, compd, obj)
 				} else if(!compd.inquot.percent || isNaN(parseFloat(compd.inquot.percent))) {
 					info = "请先输入出售所加点数";
 					Err.jsonErr(req, res, info);
@@ -44,7 +44,7 @@ exports.mgQutpdUpdAjax = (req, res) => {
 					Buy.findOne({strmup: obj.strmup, brand: obj.brand}, (err, buy) => {
 						if(err) {
 							console.log(err);
-							info = "mger QutpdUpdAjax, Buy.findOne, Error!"
+							info = "oder QutpdUpdAjax, Buy.findOne, Error!"
 							Err.jsonErr(req, res, info);
 						} else if(!buy) {
 							info = "此供应商不销售此品牌"
@@ -65,7 +65,7 @@ exports.mgQutpdUpdAjax = (req, res) => {
 							} else {
 								obj.dutPr = orgPrice * (1 - discount/100);
 								obj.qntPr = obj.dutPr * (1 + percent/100);
-								mgerQutpdSave(req, res, compd, obj)
+								oderQutpdSave(req, res, compd, obj)
 							}
 						}
 					})
@@ -86,20 +86,20 @@ exports.mgQutpdUpdAjax = (req, res) => {
 				if(info) {
 					Err.jsonErr(req, res, info);
 				} else {
-					mgerQutpdSave(req, res, compd, obj)
+					oderQutpdSave(req, res, compd, obj)
 				}
 			}
 		}
 	})
 }
-let mgerQutpdSave = (req, res, compd, obj) => {
+let oderQutpdSave = (req, res, compd, obj) => {
 	let crUser = req.session.crUser;
 
 	_compd = _.extend(compd, obj)
 	_compd.save((err, compdSave) => {
 		if(err) {
 			console.log(err);
-			info = "mger QutpdUpdAjax, _compd.save, Error!"
+			info = "oder QutpdUpdAjax, _compd.save, Error!"
 			Err.jsonErr(req, res, info);
 		} else {
 			res.json({ status: 1, msg: '', data: {compd: compdSave} })
@@ -107,7 +107,7 @@ let mgerQutpdSave = (req, res, compd, obj) => {
 	})
 }
 
-exports.mgQutpdDel = (req, res) => {
+exports.odQutpdDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 
@@ -117,7 +117,7 @@ exports.mgQutpdDel = (req, res) => {
 	.exec((err, compd) => {
 		if(err) {
 			console.log(err);
-			info = "mger QutpdDel, Compd.findOne, Error!";
+			info = "oder QutpdDel, Compd.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!compd) {
 			info = "这个报价单已经被删除";
@@ -144,7 +144,7 @@ exports.mgQutpdDel = (req, res) => {
 						} else {
 							MdPicture.deletePicture(photoDel, Conf.picPath.compd);
 							MdPicture.deletePicture(sketchDel, Conf.picPath.compd);
-							res.redirect("/mgQut/"+qutId);
+							res.redirect("/odQut/"+qutId);
 						}
 					})
 				}

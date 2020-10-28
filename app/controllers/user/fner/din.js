@@ -20,7 +20,7 @@ exports.fnDins = (req, res) => {
 	let crUser = req.session.crUser;
 
 	res.render('./user/fner/order/din/list', {
-		title: '订单',
+		title: '销售单列表(财务)',
 		crUser,
 	})
 }

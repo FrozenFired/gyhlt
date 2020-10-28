@@ -23,7 +23,7 @@ exports.fnDuts = (req, res) => {
 			info = "fner Duts, Strmup.find, Error!"
 		} else {
 			res.render('./user/fner/order/dut/list', {
-				title: '采购单',
+				title: '采购单列表(财务)',
 				crUser,
 				strmups
 			})

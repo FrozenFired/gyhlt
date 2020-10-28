@@ -16,7 +16,7 @@ else
 		span.text-warning.strmupClickup(id="span-strmup-"+compd._id) 选供应商
 	if compd.brand && compd.brand.buys
 		- buys = compd.brand.buys;
-		form(id="form-strmup-"+compd._id, action="/mgQutpdUpdAjax", style="display:none")
+		form(id="form-strmup-"+compd._id, action=action, style="display:none")
 			input(type="hidden", name="obj[_id]", value=compd._id)
 			input(type="hidden", name="obj[brand]", value=compd.brand._id)
 			input(type="hidden", name="orgPrice", value=compd.pdthd.price)

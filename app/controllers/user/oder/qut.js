@@ -15,16 +15,16 @@ const moment = require('moment');
 const xl = require('excel4node');
 
 // 报价单
-exports.mgQuts = (req, res) => {
+exports.odQuts = (req, res) => {
 	let crUser = req.session.crUser;
 
-	res.render('./user/mger/inquot/qut/list', {
+	res.render('./user/oder/inquot/qut/list', {
 		title: '报价单',
 		crUser,
 	})
 }
 
-exports.mgQut = (req, res) => {
+exports.odQut = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 
@@ -51,7 +51,7 @@ exports.mgQut = (req, res) => {
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
-			info = "mger Qut, Inquot.findOne, Error!";
+			info = "oder Qut, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!inquot) {
 			info = "这个报价单已经被删除";
@@ -70,7 +70,7 @@ exports.mgQut = (req, res) => {
 			.exec((err, quters) => {
 				if(err) {
 					console.log(err);
-					info = 'mger QutAdd, User.find, Error!';
+					info = 'oder QutAdd, User.find, Error!';
 					Err.usError(req, res, info);
 				} else {
 					User.find({
@@ -80,7 +80,7 @@ exports.mgQut = (req, res) => {
 					.exec((err, cters) => {
 						if(err) {
 							console.log(err);
-							info = 'mger QutAdd, Strmup.find, Error!';
+							info = 'oder QutAdd, Strmup.find, Error!';
 							Err.usError(req, res, info);
 						} else {
 							let brands = new Array();
@@ -97,7 +97,7 @@ exports.mgQut = (req, res) => {
 									brands.push(brand)
 								}
 							}
-							res.render('./user/mger/inquot/qut/detail', {
+							res.render('./user/oder/inquot/qut/detail', {
 								title: '报价单详情',
 								crUser,
 
@@ -115,7 +115,7 @@ exports.mgQut = (req, res) => {
 	})
 }
 
-exports.mgQutDel = (req, res) => {
+exports.odQutDel = (req, res) => {
 	let crUser = req.session.crUser;
 	let id = req.params.id;
 
@@ -123,7 +123,7 @@ exports.mgQutDel = (req, res) => {
 	.exec((err, inquot) => {
 		if(err) {
 			console.log(err);
-			info = "mger QutDel, Inquot.findOne, Error!";
+			info = "oder QutDel, Inquot.findOne, Error!";
 			Err.usError(req, res, info);
 		} else if(!inquot) {
 			info = "这个报价单已经被删除";
@@ -138,7 +138,7 @@ exports.mgQutDel = (req, res) => {
 						info = "user InquotDel, Inquot.deleteOne, Error!";
 						Err.usError(req, res, info);
 					} else {
-						res.redirect("/mgQuts");
+						res.redirect("/odQuts");
 					}
 				})
 			}
@@ -148,7 +148,7 @@ exports.mgQutDel = (req, res) => {
 
 
 
-exports.mgQutUpd = (req, res) => {
+exports.odQutUpd = (req, res) => {
 	let crUser = req.session.crUser;
 	let obj = req.body.obj;
 	Inquot.findOne({
@@ -157,23 +157,23 @@ exports.mgQutUpd = (req, res) => {
 	}, (err, inquot) => {
 		if(err) {
 			console.log(err);
-			info = "mger QutUpd, Inquot.findOne, Error!"
+			info = "oder QutUpd, Inquot.findOne, Error!"
 			Err.usError(req, res, info);
 		} else if(!inquot) {
 			info = '此报价单已经被删除, 请刷新查看';
 			Err.usError(req, res, info);
 		} else {
-			mgerQuterSel(req, res, obj, inquot);
+			oderQuterSel(req, res, obj, inquot);
 		}
 	})
 }
-let mgerQuterSel = (req, res, obj, inquot) => {
+let oderQuterSel = (req, res, obj, inquot) => {
 	if(String(inquot.quter) == String(obj.quter)) {
 		// 如果是更新， 则判断如果 quter 没有变化, 则跳过此步骤
-		mgercterSel(req, res, obj, inquot);
+		odercterSel(req, res, obj, inquot);
 	} else if(!obj.quter) {
 		obj.quter = inquot.quter;
-		mgercterSel(req, res, obj, inquot);
+		odercterSel(req, res, obj, inquot);
 	} else {
 		if(obj.quter == "null") obj.quter = null;
 		Compd.updateMany({
@@ -184,21 +184,21 @@ let mgerQuterSel = (req, res, obj, inquot) => {
 		},(err, compds) => {
 			if(err) {
 				console.log(err);
-				info = "mger QuterSel, Compd.find(), Error!";
+				info = "oder QuterSel, Compd.find(), Error!";
 				Err.usError(req, res, info);
 			} else {
-				mgercterSel(req, res, obj, inquot);
+				odercterSel(req, res, obj, inquot);
 			}
 		})
 	}
 }
-let mgercterSel = (req, res, obj, inquot) => {
+let odercterSel = (req, res, obj, inquot) => {
 	if(String(inquot.cter) == String(obj.cter)) {
 		// 如果是更新， 则判断如果 cter 没有变化, 则跳过此步骤
-		mgerqutSave(req, res, obj, inquot);
+		oderqutSave(req, res, obj, inquot);
 	} else if(!obj.cter) {
 		obj.cter = inquot.cter;
-		mgerqutSave(req, res, obj, inquot);
+		oderqutSave(req, res, obj, inquot);
 	} else {
 		if(obj.cter == "null") obj.cter = null;
 		Compd.updateMany({
@@ -209,15 +209,15 @@ let mgercterSel = (req, res, obj, inquot) => {
 		},(err, compds) => {
 			if(err) {
 				console.log(err);
-				info = "mger cterSel, Compd.find(), Error!";
+				info = "oder cterSel, Compd.find(), Error!";
 				Err.usError(req, res, info);
 			} else {
-				mgerqutSave(req, res, obj, inquot);
+				oderqutSave(req, res, obj, inquot);
 			}
 		})
 	}
 }
-let mgerqutSave = (req, res, obj, inquot) => {
+let oderqutSave = (req, res, obj, inquot) => {
 	let _inquot = Object();
 	if(inquot) {
 		_inquot = _.extend(inquot, obj)
@@ -230,7 +230,7 @@ let mgerqutSave = (req, res, obj, inquot) => {
 			info = "添加报价单时 数据库保存错误, 请截图后, 联系管理员";
 			Err.usError(req, res, info);
 		} else {
-			res.redirect('/mgQut/'+objSave._id)
+			res.redirect('/odQut/'+objSave._id)
 		}
 	})
 }

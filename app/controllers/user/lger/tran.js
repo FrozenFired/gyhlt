@@ -24,7 +24,7 @@ exports.lgTrans = (req, res) => {
 			Err.usError(req, res, info);
 		} else {
 			res.render('./user/lger/tran/list', {
-				title: '运输管理',
+				title: '运输清单管理',
 				crUser,
 				strmlgs
 			})
